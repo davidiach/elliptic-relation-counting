@@ -8,6 +8,8 @@ This AI-assisted research preprint studies a fixed-target counting problem behin
 
 ## Results
 
+**Nonlinear signed moments.** Over the field of order 13, an exact search found a two-moment table that favors the correct tuple on one target. In six-slot trials over the field of order 65,521, a cheap nonlinear character score ranked the witness above a wrong legal tuple at essentially the chance rate on two independent targets. We prove bounds for random coefficient searches and target-specific sparse lookups, and show how an exact parity decoder can require exponentially many signed determinant values. The general-prime log-time bound stays at $(24.00246+o(1))b/(\log_2 b)^{1/4}$. [Results, costs and open cases](derivations/nonlinear_moments/README.md)
+
 | Question | Result | Scope |
 |---|---|---|
 | Can the hash be encoded more cheaply? | Checking the short inverse image reduces the leading arithmetic word budget from 38 to 36 per slot per field bit. The time coefficient falls from 27.0138774237 to 26.2933775156, a 2.6671% reduction. | Conditional on the supplied finite-packet Assumption A.1 and inherited graph and relation-reduction estimates. The scale is $b/(\log_2 b)^{1/4}$ in the log of expected bit time. |
@@ -38,6 +40,9 @@ The runner compares every output with its committed transcript. Each script can 
 | [Block support](checks/check_block_support.py) · [Seed cuts](checks/check_seed_cuts.py) | Independent collision-energy, complete-table and optimal hidden-slot coverage calculations on 100,352 weighted seeds, including a noncyclic curve group. |
 | [Grid values and partial-sum dictionaries](checks/check_grid_values.py) | Leading mixed coefficients on liftable grids, direct elliptic zero checks, and exact finite-seed probability and energy bounds. |
 | [Address parity](checks/check_address_parity.py) · [Joint determinant probe](checks/probe_signed_moment.py) | Walsh recovery controls, separated block bounds, and a comparison of the true address with uniform addresses on the same isolated seeds. |
+| [Nonlinear moments](checks/probe_nonlinear_moments.py) · [Pinned signs](checks/probe_pinned_moments.py) · [Field residues](checks/probe_dense_residues.py) | Matched comparisons against other legal addresses, including independent six-slot repeats. |
+| [Optimal small tables and collision energies](checks/check_nonlinear_readout.py) · [Adaptive equalities](checks/check_nonlinear_branches.py) · [Fourth moments](checks/check_character_fourth.py) | Exact finite checks of nonlinear scores, target averaging, field shifts, and a character-sum diagnostic. |
+| [Signed spectrum](checks/check_signed_spectrum.py) · [Private measurement weights](checks/check_hidden_weights.py) | Exact parity recovery by Hankel reconstruction and Fermat, and the effect of refreshing independent field weights. |
 
 The reference code enumerates small curves and tuples to establish ground truth. Its running time does not measure the asymptotic contractor. Fixed pseudorandom seeds reproduce the trials. The empirical confidence statements in the supplement concern the specified finite distributions and model classes.
 

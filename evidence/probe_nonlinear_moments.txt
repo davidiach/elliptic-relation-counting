@@ -1,0 +1,79 @@
+p=13, m=3, w=2, exact conditional law, training 1000; 16 joint moment checks
+  all: 940 singleton seeds
+    chi(M1): witness 0.05652, wrong 0.06085, gap -0.00434, rank 0.4859, signed gap -0.01108
+    chi(M2): witness 0.07517, wrong 0.07464, gap +0.00053, rank 0.4922, signed gap -0.00438
+    chi(M2+M1^2): witness 0.09528, wrong 0.09991, gap -0.00463, rank 0.4698, signed gap +0.01072
+    chi(M0*M2-M1^2): witness 0.06310, wrong 0.06727, gap -0.00417, rank 0.4910, signed gap -0.01069
+    fit81-contrast: witness 0.09880, wrong 0.11922, gap -0.02042, rank 0.4697, signed gap +0.03656
+    fit81-power: witness 0.09684, wrong 0.08862, gap +0.00823, rank 0.4997, signed gap +0.00388
+  one determinant zero: 276 singleton seeds
+    chi(M1): witness 0.09307, wrong 0.07736, gap +0.01571, rank 0.5342, signed gap -0.03144
+    chi(M2): witness 0.11549, wrong 0.10541, gap +0.01008, rank 0.4994, signed gap -0.02619
+    chi(M2+M1^2): witness 0.16384, wrong 0.13551, gap +0.02833, rank 0.5339, signed gap +0.01507
+    chi(M0*M2-M1^2): witness 0.06748, wrong 0.07590, gap -0.00842, rank 0.4894, signed gap -0.00087
+    fit81-contrast: witness 0.11866, wrong 0.14039, gap -0.02173, rank 0.4937, signed gap +0.03911
+    fit81-power: witness 0.15625, wrong 0.10211, gap +0.05414, rank 0.5801, signed gap -0.03954
+p=101, m=3, w=2, independent conditional draws, training 1000; 16 joint moment checks
+  all: 1200 singleton seeds
+    chi(M1): witness 0.02672, wrong 0.02508, gap +0.00164, paired SE 0.00148, rank 0.4989, signed gap +0.00203
+    chi(M2): witness 0.03202, wrong 0.03300, gap -0.00098, paired SE 0.00180, rank 0.4979, signed gap +0.00273
+    chi(M2+M1^2): witness 0.11424, wrong 0.11334, gap +0.00090, paired SE 0.00277, rank 0.5047, signed gap -0.00065
+    chi(M0*M2-M1^2): witness 0.02043, wrong 0.02068, gap -0.00025, paired SE 0.00168, rank 0.4999, signed gap -0.00021
+    fit81-contrast: witness 0.09827, wrong 0.09746, gap +0.00080, paired SE 0.00255, rank 0.4986, signed gap -0.00414
+    fit81-power: witness 0.08810, wrong 0.08704, gap +0.00106, paired SE 0.00246, rank 0.5053, signed gap -0.00206
+  one determinant zero: 1063 singleton seeds
+    chi(M1): witness 0.02593, wrong 0.02397, gap +0.00196, paired SE 0.00153, rank 0.5007, signed gap +0.00279
+    chi(M2): witness 0.03182, wrong 0.03191, gap -0.00009, paired SE 0.00192, rank 0.4996, signed gap +0.00205
+    chi(M2+M1^2): witness 0.11609, wrong 0.11595, gap +0.00014, paired SE 0.00297, rank 0.5019, signed gap -0.00128
+    chi(M0*M2-M1^2): witness 0.01961, wrong 0.01959, gap +0.00002, paired SE 0.00178, rank 0.5007, signed gap +0.00177
+    fit81-contrast: witness 0.09925, wrong 0.09861, gap +0.00064, paired SE 0.00270, rank 0.4965, signed gap -0.00397
+    fit81-power: witness 0.08916, wrong 0.08814, gap +0.00102, paired SE 0.00258, rank 0.5036, signed gap -0.00104
+p=1031, m=4, w=4, independent conditional draws, training 800; 16 joint moment checks
+  all: 1200 singleton seeds
+    chi(M1): witness 0.03586, wrong 0.03518, gap +0.00067, paired SE 0.00088, rank 0.5105, signed gap +0.00141
+    chi(M2): witness 0.04457, wrong 0.04499, gap -0.00041, paired SE 0.00123, rank 0.4942, signed gap +0.00220
+    chi(M2+M1^2): witness 0.03747, wrong 0.03821, gap -0.00074, paired SE 0.00094, rank 0.4946, signed gap +0.00070
+    chi(M0*M2-M1^2): witness 0.00146, wrong 0.00142, gap +0.00004, paired SE 0.00025, rank 0.4984, signed gap +0.00035
+    fit81-contrast: witness 0.03895, wrong 0.03826, gap +0.00069, paired SE 0.00097, rank 0.5021, signed gap +0.00234
+    fit81-power: witness 0.04408, wrong 0.04508, gap -0.00100, paired SE 0.00122, rank 0.4949, signed gap -0.00228
+  one determinant zero: 1146 singleton seeds
+    chi(M1): witness 0.03624, wrong 0.03555, gap +0.00070, paired SE 0.00091, rank 0.5117, signed gap +0.00092
+    chi(M2): witness 0.04536, wrong 0.04542, gap -0.00007, paired SE 0.00127, rank 0.4963, signed gap +0.00227
+    chi(M2+M1^2): witness 0.03807, wrong 0.03859, gap -0.00052, paired SE 0.00097, rank 0.4961, signed gap +0.00062
+    chi(M0*M2-M1^2): witness 0.00149, wrong 0.00144, gap +0.00005, paired SE 0.00026, rank 0.4978, signed gap +0.00035
+    fit81-contrast: witness 0.03952, wrong 0.03859, gap +0.00092, paired SE 0.00100, rank 0.5039, signed gap +0.00222
+    fit81-power: witness 0.04483, wrong 0.04548, gap -0.00065, paired SE 0.00127, rank 0.4973, signed gap -0.00248
+p=1031, m=5, w=2, independent conditional draws, training 800; 16 joint moment checks
+  all: 1200 singleton seeds
+    chi(M1): witness 0.04933, wrong 0.04823, gap +0.00110, paired SE 0.00124, rank 0.5043, signed gap +0.00003
+    chi(M2): witness 0.06964, wrong 0.07033, gap -0.00069, paired SE 0.00168, rank 0.4959, signed gap -0.00035
+    chi(M2+M1^2): witness 0.06311, wrong 0.06271, gap +0.00040, paired SE 0.00153, rank 0.4944, signed gap +0.00231
+    chi(M0*M2-M1^2): witness 0.00463, wrong 0.00391, gap +0.00072, paired SE 0.00068, rank 0.5042, signed gap +0.00074
+    fit81-contrast: witness 0.03907, wrong 0.03858, gap +0.00049, paired SE 0.00108, rank 0.5065, signed gap -0.00412
+    fit81-power: witness 0.06551, wrong 0.06681, gap -0.00130, paired SE 0.00155, rank 0.4933, signed gap -0.00018
+  one determinant zero: 1166 singleton seeds
+    chi(M1): witness 0.05001, wrong 0.04868, gap +0.00133, paired SE 0.00127, rank 0.5053, signed gap -0.00006
+    chi(M2): witness 0.07067, wrong 0.07102, gap -0.00035, paired SE 0.00172, rank 0.4980, signed gap -0.00054
+    chi(M2+M1^2): witness 0.06385, wrong 0.06327, gap +0.00058, paired SE 0.00156, rank 0.4955, signed gap +0.00207
+    chi(M0*M2-M1^2): witness 0.00475, wrong 0.00399, gap +0.00077, paired SE 0.00070, rank 0.5042, signed gap +0.00077
+    fit81-contrast: witness 0.03958, wrong 0.03909, gap +0.00049, paired SE 0.00111, rank 0.5062, signed gap -0.00407
+    fit81-power: witness 0.06632, wrong 0.06741, gap -0.00109, paired SE 0.00158, rank 0.4948, signed gap -0.00008
+p=65521, m=6, w=2, independent conditional draws, training 800; 16 joint moment checks
+  all: 1200 singleton seeds
+    chi(M1): witness 0.00359, wrong 0.00334, gap +0.00025, paired SE 0.00018, rank 0.5053, signed gap +0.00030
+    chi(M2): witness 0.00439, wrong 0.00454, gap -0.00015, paired SE 0.00024, rank 0.5000, signed gap +0.00032
+    chi(M2+M1^2): witness 0.02133, wrong 0.02242, gap -0.00109, paired SE 0.00055, rank 0.4783, signed gap +0.00293
+    chi(M0*M2-M1^2): witness 0.00096, wrong 0.00122, gap -0.00026, paired SE 0.00017, rank 0.4973, signed gap +0.00004
+    fit81-contrast: witness 0.02179, wrong 0.02242, gap -0.00064, paired SE 0.00053, rank 0.4852, signed gap +0.00259
+    fit81-power: witness 0.02109, wrong 0.02183, gap -0.00075, paired SE 0.00054, rank 0.4846, signed gap +0.00045
+  one determinant zero: 1198 singleton seeds
+    chi(M1): witness 0.00360, wrong 0.00335, gap +0.00025, paired SE 0.00018, rank 0.5054, signed gap +0.00030
+    chi(M2): witness 0.00439, wrong 0.00455, gap -0.00015, paired SE 0.00025, rank 0.5000, signed gap +0.00032
+    chi(M2+M1^2): witness 0.02134, wrong 0.02243, gap -0.00109, paired SE 0.00055, rank 0.4782, signed gap +0.00290
+    chi(M0*M2-M1^2): witness 0.00096, wrong 0.00122, gap -0.00026, paired SE 0.00017, rank 0.4973, signed gap +0.00005
+    fit81-contrast: witness 0.02179, wrong 0.02244, gap -0.00064, paired SE 0.00054, rank 0.4851, signed gap +0.00257
+    fit81-power: witness 0.02107, wrong 0.02184, gap -0.00077, paired SE 0.00054, rank 0.4843, signed gap +0.00049
+p=65521, m=6, w=2, independent repeat T=[1]G, n=5000, chi(M2+M1^2): magnitude gap +0.00019 (SE 0.00026), rank 0.5003 (SE 0.0041), signed gap -0.00019 (SE 0.00043)
+  chi(M0*M2), abscissa-only T=[1]G, n=4920 with alternatives: witness 0.01277, other 0.01277, gap +0.00000 (SE 0.00000), rank 0.5000 (SE 0.0000)
+p=65521, m=6, w=2, independent repeat T=[2]G, n=5000, chi(M2+M1^2): magnitude gap -0.00037 (SE 0.00026), rank 0.4963 (SE 0.0041), signed gap +0.00006 (SE 0.00043)
+  chi(M0*M2), abscissa-only T=[2]G, n=4909 with alternatives: witness 0.01602, other 0.01602, gap +0.00000 (SE 0.00000), rank 0.5000 (SE 0.0000)

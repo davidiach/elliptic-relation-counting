@@ -16,6 +16,14 @@ CHECKS = (
     "check_grid_values",
     "check_address_parity",
     "probe_signed_moment",
+    "check_nonlinear_branches",
+    "check_nonlinear_readout",
+    "check_signed_spectrum",
+    "check_hidden_weights",
+    "check_character_fourth",
+    "probe_nonlinear_moments",
+    "probe_pinned_moments",
+    "probe_dense_residues",
 )
 
 

@@ -1,0 +1,13 @@
+p=13, T=[1]G: 940/8192 guarded singletons, 256 joint binary tables up to global sign.
+  Best absolute witness correlation: first only 0.081516, second only 0.092420, joint 0.102992 (same-table wrong 0.103175).
+  Largest witness-minus-wrong gap among binary tables 0.008189 (witness 0.094082, wrong 0.085894).
+  Two-challenge energy, character pair: witness 0.028814, wrong 0.037797.
+  Two-challenge energy, field pair: witness 0.034787, wrong 0.045043.
+p=13, T=[2]G: 1054/8192 guarded singletons, 256 joint binary tables up to global sign.
+  Best absolute witness correlation: first only 0.114386, second only 0.119782, joint 0.144509 (same-table wrong 0.103856).
+  Largest witness-minus-wrong gap among binary tables 0.044929 (witness 0.144331, wrong 0.099403).
+  Two-challenge energy, character pair: witness 0.043724, wrong 0.036640.
+  Two-challenge energy, field pair: witness 0.050186, wrong 0.045781.
+p=101: 102 targets, 22 singletons, 64 challenges, 57 distinct symbolic moment pairs.
+  Most extra target collisions for a distinct pair 8 (bound 8); sum of singleton energies 1444/4096 (bound 9).
+  All 101 character parameters: singleton squared coefficient sums 145036/413696 (shift) and 66616/413696 (active relative coefficient).

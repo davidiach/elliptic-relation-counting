@@ -1,0 +1,4 @@
+p=1031, m=3, M2, 64 masks: 154,112 nonzero products, 9,296 with even divisor (all diagonal), out of 262,144 additive quadruples; target-averaged fourth energy 0.035176.
+p=1031, m=3, M2+M1^2, 64 masks: 154,112 nonzero products, 9,296 with even divisor (all diagonal), out of 262,144 additive quadruples; target-averaged fourth energy 0.036127.
+p=1031, m=4, M2, 256 masks: 16,777,216 nonzero products, 196,096 with even divisor (all diagonal), out of 16,777,216 additive quadruples; target-averaged fourth energy 0.011747.
+p=1031, m=4, M2+M1^2, 256 masks: 16,777,216 nonzero products, 196,096 with even divisor (all diagonal), out of 16,777,216 additive quadruples; target-averaged fourth energy 0.011633.

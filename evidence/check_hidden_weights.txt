@@ -1,0 +1,3 @@
+p=101, m=3, target=[3]G, regular singleton, wide slot 16 points.
+  Of 104,060,401 weight choices in the first two slots, 102,010,000 give rank four for orders 0..3; 5,040,401 have a missing leading coefficient.
+  Two varying final-slot weights produced all 10,201 pairs of orders one and two.

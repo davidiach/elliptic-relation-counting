@@ -1,0 +1,57 @@
+p=1031, m=4, w=4, T=[1]G, 600 regular singleton draws; 1 with no wrong pinned tuple, 507 in an affine hull excluding zero.
+  with alternatives: n=599, median pinned tuples 18.
+    chi(M1): witness 0.16187, wrong 0.18876, gap -0.02689 (SE 0.00852), rank 0.4854 (SE 0.0109).
+    chi(M2): witness 0.16720, wrong 0.18572, gap -0.01852 (SE 0.00875), rank 0.4938 (SE 0.0111).
+    chi(M2+M1^2): witness 0.12238, wrong 0.13480, gap -0.01241 (SE 0.00610), rank 0.5020 (SE 0.0117).
+    chi(M0*M2-M1^2): witness 0.01685, wrong 0.01475, gap +0.00210 (SE 0.00257), rank 0.5032 (SE 0.0040).
+    recentered mix: witness 0.15491, wrong 0.18475, gap -0.02985 (SE 0.00779), rank 0.4702 (SE 0.0108).
+    recentered discriminant: witness 0.16305, wrong 0.16064, gap +0.00240 (SE 0.00992), rank 0.5024 (SE 0.0100).
+    mix all legal origins: witness 0.16661, wrong 0.18245, gap -0.01584 (SE 0.00476), rank 0.4957 (SE 0.0054).
+    discriminant all legal origins: witness 0.16251, wrong 0.16274, gap -0.00023 (SE 0.00119), rank 0.5012 (SE 0.0019).
+  at least two per slot: n=157, median pinned tuples 36.
+    chi(M1): witness 0.11151, wrong 0.10707, gap +0.00445 (SE 0.00720), rank 0.5122 (SE 0.0230).
+    chi(M2): witness 0.10696, wrong 0.10678, gap +0.00018 (SE 0.00671), rank 0.5035 (SE 0.0222).
+    chi(M2+M1^2): witness 0.09253, wrong 0.08452, gap +0.00801 (SE 0.00504), rank 0.5472 (SE 0.0229).
+    chi(M0*M2-M1^2): witness 0.01224, wrong 0.01564, gap -0.00340 (SE 0.00134), rank 0.5004 (SE 0.0097).
+    recentered mix: witness 0.09818, wrong 0.10928, gap -0.01110 (SE 0.00668), rank 0.4527 (SE 0.0224).
+    recentered discriminant: witness 0.09300, wrong 0.07826, gap +0.01475 (SE 0.01515), rank 0.5056 (SE 0.0200).
+    mix all legal origins: witness 0.11373, wrong 0.10806, gap +0.00566 (SE 0.00348), rank 0.5146 (SE 0.0105).
+    discriminant all legal origins: witness 0.08052, wrong 0.07981, gap +0.00071 (SE 0.00068), rank 0.5052 (SE 0.0037).
+p=65521, m=6, w=4, T=[1]G, 600 regular singleton draws; 0 with no wrong pinned tuple, 540 in an affine hull excluding zero.
+  with alternatives: n=600, median pinned tuples 144.
+    chi(M1): witness 0.00359, wrong 0.00339, gap +0.00020 (SE 0.00037), rank 0.5062 (SE 0.0039).
+    chi(M2): witness 0.00331, wrong 0.00333, gap -0.00002 (SE 0.00041), rank 0.4958 (SE 0.0038).
+    chi(M2+M1^2): witness 0.04418, wrong 0.04331, gap +0.00088 (SE 0.00175), rank 0.4969 (SE 0.0119).
+    chi(M0*M2-M1^2): witness 0.00129, wrong 0.00154, gap -0.00025 (SE 0.00014), rank 0.4995 (SE 0.0032).
+    recentered mix: witness 0.06320, wrong 0.05933, gap +0.00386 (SE 0.00255), rank 0.5187 (SE 0.0118).
+    recentered discriminant: witness 0.04608, wrong 0.03460, gap +0.01147 (SE 0.00540), rank 0.5201 (SE 0.0103).
+    mix all legal origins: witness 0.06084, wrong 0.05950, gap +0.00134 (SE 0.00128), rank 0.5032 (SE 0.0053).
+    discriminant all legal origins: witness 0.03472, wrong 0.03496, gap -0.00023 (SE 0.00025), rank 0.5006 (SE 0.0018).
+  at least two per slot: n=258, median pinned tuples 288.
+    chi(M1): witness 0.00544, wrong 0.00459, gap +0.00085 (SE 0.00058), rank 0.5133 (SE 0.0075).
+    chi(M2): witness 0.00367, wrong 0.00454, gap -0.00087 (SE 0.00043), rank 0.4911 (SE 0.0067).
+    chi(M2+M1^2): witness 0.02638, wrong 0.02731, gap -0.00094 (SE 0.00146), rank 0.4822 (SE 0.0184).
+    chi(M0*M2-M1^2): witness 0.00129, wrong 0.00190, gap -0.00062 (SE 0.00020), rank 0.4931 (SE 0.0061).
+    recentered mix: witness 0.03769, wrong 0.03647, gap +0.00123 (SE 0.00189), rank 0.5131 (SE 0.0180).
+    recentered discriminant: witness 0.02206, wrong 0.01510, gap +0.00696 (SE 0.00654), rank 0.5148 (SE 0.0153).
+    mix all legal origins: witness 0.03615, wrong 0.03657, gap -0.00041 (SE 0.00091), rank 0.4957 (SE 0.0076).
+    discriminant all legal origins: witness 0.01507, wrong 0.01511, gap -0.00004 (SE 0.00008), rank 0.4998 (SE 0.0027).
+p=65521, m=6, w=4, T=[2]G, 600 regular singleton draws; 0 with no wrong pinned tuple, 546 in an affine hull excluding zero.
+  with alternatives: n=600, median pinned tuples 144.
+    chi(M1): witness 0.00385, wrong 0.00305, gap +0.00081 (SE 0.00047), rank 0.5012 (SE 0.0040).
+    chi(M2): witness 0.00311, wrong 0.00306, gap +0.00005 (SE 0.00032), rank 0.5005 (SE 0.0034).
+    chi(M2+M1^2): witness 0.04742, wrong 0.04610, gap +0.00132 (SE 0.00217), rank 0.4985 (SE 0.0121).
+    chi(M0*M2-M1^2): witness 0.00095, wrong 0.00116, gap -0.00021 (SE 0.00011), rank 0.5013 (SE 0.0029).
+    recentered mix: witness 0.06726, wrong 0.06333, gap +0.00394 (SE 0.00324), rank 0.5044 (SE 0.0117).
+    recentered discriminant: witness 0.03199, wrong 0.03784, gap -0.00585 (SE 0.00360), rank 0.4867 (SE 0.0098).
+    mix all legal origins: witness 0.06602, wrong 0.06432, gap +0.00170 (SE 0.00166), rank 0.5013 (SE 0.0051).
+    discriminant all legal origins: witness 0.03789, wrong 0.03773, gap +0.00016 (SE 0.00017), rank 0.5015 (SE 0.0017).
+  at least two per slot: n=227, median pinned tuples 256.
+    chi(M1): witness 0.00494, wrong 0.00485, gap +0.00009 (SE 0.00073), rank 0.4902 (SE 0.0084).
+    chi(M2): witness 0.00432, wrong 0.00484, gap -0.00052 (SE 0.00065), rank 0.4933 (SE 0.0080).
+    chi(M2+M1^2): witness 0.02776, wrong 0.02770, gap +0.00007 (SE 0.00150), rank 0.4915 (SE 0.0198).
+    chi(M0*M2-M1^2): witness 0.00159, wrong 0.00178, gap -0.00020 (SE 0.00018), rank 0.5016 (SE 0.0067).
+    recentered mix: witness 0.03926, wrong 0.03700, gap +0.00226 (SE 0.00234), rank 0.4992 (SE 0.0197).
+    recentered discriminant: witness 0.01183, wrong 0.01559, gap -0.00376 (SE 0.00120), rank 0.4897 (SE 0.0169).
+    mix all legal origins: witness 0.03724, wrong 0.03710, gap +0.00015 (SE 0.00103), rank 0.4978 (SE 0.0080).
+    discriminant all legal origins: witness 0.01558, wrong 0.01558, gap +0.00000 (SE 0.00009), rank 0.4988 (SE 0.0027).

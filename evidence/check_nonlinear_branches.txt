@@ -1,0 +1,2 @@
+p=101: 102 targets x 64 challenges, 22 singleton targets, 84 departures from generic transcripts (84 changed scores).
+  Generic/actual singleton coefficient sums in units of 1/64: 112/120; checked Parseval and all generic path degree budgets.

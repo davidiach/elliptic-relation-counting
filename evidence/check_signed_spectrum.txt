@@ -1,0 +1,4 @@
+p=13, exact width-one mixed law: 1,248 regular guarded singletons, mean nonzero bins 6.0769, mean signed recurrence order 5.6154, 1,248 independent Hankel and Fermat recoveries.
+  32,768 weighted seeds, regular collision energy 891/1024, bound 19915/1024; 1,792 compared pairs of tail sections.
+  Off-diagonal collision energy 219/1024, refined bound 55017/4096.
+p=101, width-two conditional sample (330 planted draws): 256 regular guarded singletons, mean nonzero bins 15.4570, mean signed recurrence order 14.8159, 512 independent Hankel and Fermat recoveries.
