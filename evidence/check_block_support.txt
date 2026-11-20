@@ -1,0 +1,3 @@
+p=13, m=3, w=4: 2,048 weighted roots; 7 block collision identities; cap 4: 128 admissible roots, 1,192 nonidentity root-target pairs.
+p=13, m=4, w=2: 65,536 weighted roots; 15 block collision identities; cap 4: 37,864 admissible roots, 103,480 nonidentity root-target pairs.
+p=19, m=3, w=4: 32,768 weighted roots; 7 block collision identities; cap 4: 25,382 admissible roots, 25,040 nonidentity root-target pairs.

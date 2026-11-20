@@ -4,6 +4,8 @@
 
 This AI-assisted research preprint studies a fixed-target counting problem behind elliptic-curve relation search. Each slot retains points using an independent hash of the abscissa. How much computation, and how much joint information about the slots, is needed to decide whether any tuple sums to a prescribed target?
 
+**20 November 2026 follow-up.** When we can choose the sampler, fixing most abscissa bits in all but one slot gives the previously derived conditional time coefficient **24.00246** for general primes in the inherited input class. With slightly narrower slots, almost every successful seed has one signed relation whose entire address takes $b+O(m)$ bits. We prove a communication lower bound for verifiers that keep each seed local. Using every public seed, we can cheaply compute a signed determinant score. Its correlation with the correct address is exponentially small at growing arity. Constructing the short address at a cost that improves the end-to-end exponent remains open. The archived PDF gives the original all-affine result. [Sampled-slot results and cost comparison](derivations/sampled_slots/README.md) · [Joint determinant test](derivations/sampled_slots/signed_moment.md)
+
 ## Results
 
 | Question | Result | Scope |
@@ -24,7 +26,7 @@ python -m pip install -r requirements.txt
 python reproduce.py
 ```
 
-The runner checks all four outputs against the committed transcripts. The finite-rank check is usually the slowest. Each script can also be run independently.
+The runner compares every output with its committed transcript. Each script can also be run independently.
 
 | Script | What it checks |
 |---|---|
@@ -32,6 +34,10 @@ The runner checks all four outputs against the committed transcripts. The finite
 | [Exact population](checks/check_pooled_zero.py) | All eligible small-curve seed multiplicities, pooled count certificates, planted calibration, and 756 exact marginal-likelihood comparisons. |
 | [Fresh-seed trials](checks/probe_pooled_zero.py) | Independent planted training and fresh evaluation on two larger finite fields. Reproduces the raw-moment rank and error measurements. |
 | [Generic packet span](checks/verify_span.py) | Literal indicator marginals, endpoint identities and modular span ranks, including full width-64 and a selected width-128 layer. |
+| [Mixed-slot isolation and batching](checks/check_strided_isolation.py) | Exact counts on two fields, signed-address pinning, and the failure probability of two simultaneous field checks with one free auxiliary. |
+| [Block support](checks/check_block_support.py) · [Seed cuts](checks/check_seed_cuts.py) | Independent collision-energy, complete-table and optimal hidden-slot coverage calculations on 100,352 weighted seeds, including a noncyclic curve group. |
+| [Grid values and partial-sum dictionaries](checks/check_grid_values.py) | Leading mixed coefficients on liftable grids, direct elliptic zero checks, and exact finite-seed probability and energy bounds. |
+| [Address parity](checks/check_address_parity.py) · [Joint determinant probe](checks/probe_signed_moment.py) | Walsh recovery controls, separated block bounds, and a comparison of the true address with uniform addresses on the same isolated seeds. |
 
 The reference code enumerates small curves and tuples to establish ground truth. Its running time does not measure the asymptotic contractor. Fixed pseudorandom seeds reproduce the trials. The empirical confidence statements in the supplement concern the specified finite distributions and model classes.
 

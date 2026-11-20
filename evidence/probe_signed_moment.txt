@@ -1,0 +1,6 @@
+p=13, T=[1]G, w=2, exact law, 8192 seeds, singletons=940: witness 0.056516, uniform 0.028840, legal 0.060805, 20 explicit determinant comparisons
+p=13, T=[2]G, w=2, exact law, 8192 seeds, singletons=1054: witness 0.071928, uniform 0.032197, legal 0.070855, 20 explicit determinant comparisons
+p=101, T=[1]G, w=2, sampled conditional law, 1723 plant draws, singletons=1500: witness 0.028979, uniform 0.035275, legal 0.029559, 20 explicit determinant comparisons
+p=1031, T=[1]G, w=4, sampled conditional law, 1082 plant draws, singletons=1000: witness 0.064668, uniform 0.010685, legal 0.064587, 20 explicit determinant comparisons
+p=1031, m=4: all 256 Walsh masks agree with the sign-slice product; 160 masks on permitted slices, 150 nonzero determinants.
+p=1031, m=5: all 1024 Walsh masks agree with the sign-slice product; 480 masks on permitted slices, 470 nonzero determinants.

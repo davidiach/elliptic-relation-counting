@@ -1,0 +1,3 @@
+Field 13: 8,192 mixed seeds, 18 targets, per-target guarded-singleton counts 940..1298.
+Field 127: 2,097,152 width-one abscissa patterns, 14,410 guarded singletons, 364 ambiguous, 2,082,019 absent. The proven isolation lower bound is positive.
+Field 127: exact two-check failure probability 0.00794 over 4,195,872,914,689 challenge matrices on one guarded singleton (bound 8/127).

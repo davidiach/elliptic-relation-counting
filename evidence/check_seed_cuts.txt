@@ -1,0 +1,13 @@
+  affine slot 1: peak optimal K=1,2,4 coverage 1/4, 1/2, 1
+  fixed slot 2: peak optimal K=1,2,4 coverage 1/4, 1/2, 1
+  fixed slot 3: peak optimal K=1,2,4 coverage 1/4, 1/2, 1
+p=13, m=3, w=4, 2,048 weighted roots: 34,200 ordinary and 33,452 guarded nonidentity root-target hits.
+  affine slot 1: peak optimal K=1,2,4 coverage 1/8, 1/4, 1/2
+  fixed slot 2: peak optimal K=1,2,4 coverage 1/8, 1/4, 1/2
+  fixed slot 3: peak optimal K=1,2,4 coverage 1/8, 1/4, 1/2
+  fixed slot 4: peak optimal K=1,2,4 coverage 1/8, 1/4, 1/2
+p=13, m=4, w=2, 65,536 weighted roots: 569,280 ordinary and 504,588 guarded nonidentity root-target hits.
+  affine slot 1: peak optimal K=1,2,4 coverage 1/8, 1/4, 29/64
+  fixed slot 2: peak optimal K=1,2,4 coverage 1/8, 1/4, 1/2
+  fixed slot 3: peak optimal K=1,2,4 coverage 1/8, 1/4, 1/2
+p=19, m=3, w=4, 32,768 weighted roots: 145,644 ordinary and 138,332 guarded nonidentity root-target hits.

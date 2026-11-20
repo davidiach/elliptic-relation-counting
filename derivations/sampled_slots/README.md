@@ -1,0 +1,44 @@
+# Can the sampled slots make joint curve arithmetic cheaper?
+
+**20 November 2026.** For general primes in the project's input class, the best conditional log-time bound we can justify is still $(24.00245996+o(1))Z_b$, where $b=\lceil\log_2p\rceil$ and $Z_b=b/(\log_2 b)^{1/4}$. This uses the previously derived mixed sampler and the supplied finite-packet Assumption A.1, graph-contraction estimate and verified outer reduction. We obtained a shorter description of the answer on successful seeds, two restrictions on how to compute it, and a sufficient condition for a faster algorithm. Constructing a uniformly cheaper public-seed verifier remains open.
+
+## What the slots buy
+
+Let $N=\#E(\mathbb F_p)$, $M=2^b$ and $w=2^\ell$. In slot 1, apply a random odd affine permutation modulo $M$ to the abscissa and keep the first $w$ addresses. In each other slot, keep $\ell$ predetermined free bits of the abscissa and sample all the other bits once, independently across slots. Each prescribed affine point survives with probability $\rho=w/M$. Keep both signs, with a single address for rational two-torsion. A legal address must lift to a curve point. The target is fixed throughout the sampling argument.
+
+* **One short address.** Write $\lambda=N^{m-1}\rho^m$. At slightly thinned widths with $\ell=b/m+O(1)$ and $2T\ne O$, the expected retry count for a unique guarded tuple is at most $2^{O(m)}m^2$. Conditional on any ordinary hit, ambiguity has probability $O(m^{-2})$. All signed slot choices together take $m(\ell+1)=b+O(m)$ bits. On a singleton, equality to this literal also answers every pinned query. Computing the literal already gives the witness. [Isolation, packing and pins](isolation.md)
+* **One scalar comparison is possible if the intermediates are determined.** With $D=(2w)^m$ possible signed addresses and $r$ further freely guessed field elements, $r+1$ random field-linear checks simultaneously preserve all residual zeros with probability at least $1-D/p$. At the thinned widths $D/p=O(m^{-2})$. The current chord equations have $e$ residuals and $e-1$ free field elements; this bound gives all $e$ checks. The number of comparisons alone also omits the arithmetic to compute the residuals. [Batching calculation](isolation.md)
+* **An exact limit for private slot seeds.** If at most $a_i$ bits about a slot seed can affect everything outside its own region and $c_i$ bits cross its boundary, a sound verifier with locally decoded points can succeed with probability at most $2^{a_i+c_i}\rho$. For disjoint regions, with $a_i=o(b)$ uniformly and fresh success $2^{-o(b)}$, the charged total is at least $(1/2-o(1))mb$ in the growing-arity regime. This works even on a graph with cycles. The actual compiler may use every seed in every local predicate. [Cut theorem and public-seed example](seed_cuts.md)
+* **Partial sums and polynomials.** Target-specific chains with locally constructed dictionaries of exact partial sums also need $\Omega(mb)$ bits under the stated advice and success bounds. A balanced tree can carry all its address labels in $O(b\log m)$ bits, but its root would then have to check a $\Theta(b)$-bit input. Building complete block tables incurs a separate cost in the number of entries. Direct polynomial reduction on a typical sampled grid preserves the full degree of the elliptic relation's field values. A zero-only verifier may use a different polynomial. [Partial-sum chains](prefix_dictionary.md) · [Tree and table costs](block_support.md) · [Field-value and zero-test bounds](grid_values.md)
+* **A weaker target for joint arithmetic.** On unique guarded inputs, a bounded score with mean absolute correlation $\delta$ with a random parity of the correct address permits verified recovery with probability $\Omega(\lambda\delta)$ using $\operatorname{poly}(b,1/\delta)$ score calls. For example, at $m\asymp\sqrt b$, a uniformly charged score of cost $2^{O(\sqrt b)}$ and $\delta\ge 2^{-O(\sqrt b)}$ would suffice for the square-root-in-bitlength time goal under the inherited outer reduction. Across any split into two nonempty blocks, a score of rank $R$ on the separate seed-and-challenge inputs satisfies $\Pr(U)\delta\le\sqrt{R\lambda/N}$, where $U$ is the unique guarded event. Achieving the required correlation thus takes rank $2^{b-o(b)}$ at these widths. High rank is compatible with fast joint evaluation. [Recovery proof, rank bound and protocol assumptions](address_parity.md)
+
+## A joint calculation we could evaluate
+
+We tested a score computable from every public seed in $w\,\operatorname{poly}(b,m)$ expected bit operations per query. It takes the quadratic character of a determinant formed from signed sums of the evaluation rows in each slot. In 1,000 singleton samples at $p=1031$, the mean absolute correlation at the witness was $0.064668$. It was $0.064587$ at a uniform legal address on those same seeds. At growing arity we can prove more. The sign bits split the determinant into two independent blocks on every contributing slice. For general primes at the isolating widths the resulting conditional correlation is at most $2^{-b/2+O(m+\log m)}$. This eliminates the signed first-moment character as a route to faster recovery by this criterion. [Proof for general primes and finite comparisons](signed_moment.md)
+
+## Which exponent is already covered
+
+The archived paper uses independent affine permutations in every slot and gives coefficient $26.29337752$. The baseline $24.00245996$ for this follow-up uses the freedom to choose the mixed sampler. Here is the accounting on the same finite-packet assumptions. [Original release and attribution](../../README.md)
+
+The supplied C38 graph has $8m-7+3t$ complete transform arrays, $t=\lfloor(m-1)/2\rfloor$. Each array costs $(4+o(1))b$ Boolean-equivalent word edges. An abscissa bit $i$ belongs to row $\lfloor i/k\rfloor\bmod V$ where $k=\Theta((\log b)^2)$ and $V=\Theta(\sqrt b/\log b)$. Sort positions by owner and then by bit position and take the first $\ell$ as the free bits. Each owner contains $\Omega(b/V)$ positions. The free bits meet $h=O(1+\ell V/b)$ owners and form at most $s=\lceil b/(kV)\rceil$ runs. Thus $h/V=o(1)$ at the optimized arity and $m2^s/w=o(1)$, as required for isolation.
+
+In each of the last $m-1$ slots, substitute public constants for the first-stage transform values of wholly fixed source rows. Active rows check the pattern when they invert their limbs. Remove the separate affine hash output and its hash-only carries. The substituted constants have unique values, so the specialized predicate preserves witnesses and pins for the mixed sampler. Keep the original range, carry and group checks. This leaves
+
+$$
+8m-7+3t-(m-1)-(m-1)(1-h/V)=(7.5+o(1))m
+$$
+
+full-array equivalents, hence $(30+o(1))mb$ word bits. The auxiliary binary edges are $O(mb/\log b)$ at the optimized arity; specialization only deletes edges and fixes public values. With $K=2\pi\sqrt{14\log_2 90}/(9\ln 2)$, a verified witness attempt has conditional log cost at most $(15K+o(1))mb/\sqrt{\log_2 b}$.
+
+Each seed has at most $B=2mw$ labeled columns. The inherited reduction charges training and factor generation on the order of $(B+BC_m)/\kappa$, a sparse solve on the order of $mB^2$ field operations, and online attempts on the order of $C_m/\kappa$, up to polynomial factors. Here $C_m$ is the per-attempt bound and $\kappa$ is mean verified success under the common training and masked-query law. The isolation bound suffices at the thinned widths on nonidentity targets in the odd prime-order subgroup, with inverse success $2^{O(m)}m^2$. Fresh nonzero subgroup masks give $2T\ne O$; the original small-subgroup fallback still applies. All repetitions are charged. At $m\asymp(\log_2 b)^{1/4}$ the leading log-time terms are
+
+$$
+\frac bm+\frac{15Kmb}{\sqrt{\log_2 b}}
+\quad\text{and}\quad \frac{2b}{m}.
+$$
+
+Choosing $m\sim(\log_2 b)^{1/4}/\sqrt{15K}$ gives the coefficient $2\sqrt{15K}=24.00245996\ldots$. This general-prime coefficient was known in the project before the cost-per-slot investigation. The original external paper gives a conditional big-O bound without this coefficient. [Earlier all-affine accounting](../short_hash_count/count.tex) · [Source provenance](../../README.md#attribution-and-provenance)
+
+## What would change the answer
+
+One concrete benchmark would be a uniform graph of $O(b\log m)$ total Boolean-equivalent edges that computes the joint test on the public seeds, permits pinning or verified extraction, and meets the inherited bounds on degree, parallel edges, local-entry access, success and preprocessing. If it worked through $m\asymp\sqrt{\log b}/\log\log b$, the complete log-time estimate including the outer reduction would be $O(b\log\log b/\sqrt{\log b})=o(Z_b)$. The address length meets the bit budget. The cost of evaluating the elliptic sum from those addresses is the outstanding term.

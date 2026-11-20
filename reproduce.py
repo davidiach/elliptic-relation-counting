@@ -5,7 +5,18 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parent
-CHECKS = ("check_accounting", "check_pooled_zero", "probe_pooled_zero", "verify_span")
+CHECKS = (
+    "check_accounting",
+    "check_pooled_zero",
+    "probe_pooled_zero",
+    "verify_span",
+    "check_strided_isolation",
+    "check_block_support",
+    "check_seed_cuts",
+    "check_grid_values",
+    "check_address_parity",
+    "probe_signed_moment",
+)
 
 
 def main():

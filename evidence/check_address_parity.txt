@@ -1,0 +1,2 @@
+Exact prefix energies and Parseval verified for pure and noisy signed-address parities.
+Field 13: 8,192 weighted seeds (2695 distinct mask combinations), all 64 joint Walsh coefficients checked on each. Across 18 fixed targets, singleton-weighted magnitudes 0.00308..0.00827, upper bound 0.19264.

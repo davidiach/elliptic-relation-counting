@@ -1,0 +1,5 @@
+m=2, field 101, grid [15, 14], top degree 4, top coefficient 1, 9 hitting tuples
+m=3, field 101, grid [15, 14, 18], top degree 12, top coefficient 1, 289 hitting tuples
+Conditional size bound checked on 2,048 weighted seeds, 18 targets, 4 thresholds
+affine/fixed block energy 103/16, adaptive dictionary bounds at 19 targets
+fixed/fixed block energy 235/32, adaptive dictionary bounds at 19 targets
