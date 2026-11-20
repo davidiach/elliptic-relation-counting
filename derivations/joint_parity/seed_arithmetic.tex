@@ -1,0 +1,233 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prb}{\mathbb P}
+\title{How accurately must a fresh-seed parity predictor preserve an affine window?}
+\author{Project research note}
+\date{20 November 2026}
+\begin{document}
+\maketitle
+
+Use $b=\lceil\log_2p\rceil$, $L=\log_2b$, $g=\log_2L$,
+$M=2^b$, and $N=\#E(\mathbb F_p)$. As in \texttt{fresh\_windows.tex},
+$p>3$, the adjusted target has $2T\ne O$, and the independently
+seeded dyadic widths $w_j$ have $\rho_j=w_j/M$, $\nu_j=N\rho_j$,
+$1/(2L)<\lambda=N^{-1}\prod_j\nu_j\le1/L$.
+The proposed arity is $m\asymp L^{1/4}\sqrt g$. Let $H$ be the
+ordinary ordered target count, $X$ its guarded count, and $V=H\bmod2$.
+At these widths $\mu=\E H$ is between $(1-3m/N)\lambda$ and
+$\lambda$, $\E(H-X)\le3m\lambda/N$, and
+$\E[H(H-1)]=O(\lambda^2)$. These bounds and the two-abscissa hash
+law are from \texttt{../mixed\_coefficient/mixed.tex}. Error means
+the probability of a wrong bit at the prescribed target.
+
+\section{An error budget that permits rounding}
+In each slot round the offset $\beta_j$ down to a multiple of a dyadic
+$s_j\mid w_j$, retaining the original odd multiplier. For fixed
+abscissa and multiplier, exactly a fraction $\rho_j$ of uniform offsets
+accept after rounding: a length-$w_j$ interval contains $w_j/s_j$
+grid points. At most $2(s_j-1)$ offsets change the membership of this
+abscissa, on the two edges of the interval. Replace slots in sequence.
+In every other slot, original or rounded, a specified point has
+retention probability $\rho_k$, independently. There are at most
+$N^{m-1}$ tuples of sum $T$. Therefore the probability that the two
+root tuple sets differ is bounded by $2\lambda\sum_j s_j/w_j$.
+
+Use the \emph{existence of a guarded tuple} on the rounded input as the
+parity prediction. Its error is at most
+\[
+ 2\lambda\sum_j s_j/w_j+\tfrac12\E[H(H-1)]+\E(H-X).
+\]
+Indeed an unchanged tuple set with at most one tuple and $X=H$ gives
+the correct answer. Taking $s_j$ the largest power of two at most
+$w_j/(mL)$ gives $O(L^{-2})$ error and suppresses
+$\sum_j\log_2 s_j=b-m\log_2(mL)+O(m+\log L)=b-o(b)$ low offset bits
+at these arities. The cost of deciding existence is still charged. The
+available exact guarded count on these legal seeds retains the
+$O(mb/\sqrt L)$ log-cost. The circuit already treats the seeds as
+public constants. Of its $(36+o(1))mb$ leading Boolean word edges,
+$(34+o(1))mb$ are outside the hash component.
+Even assigning zero cost to the hash component, while retaining that
+construction and its other costs, would only change the optimized
+coefficient from $26.29338$ to $26.29338\sqrt{34/36}\simeq25.55257$.
+This is a hypothetical accounting comparison, not an achieved bound.
+
+\section{A parity distance for arbitrary shapes in one slot}
+Fix slot $i$, $w=w_i$. In inverse-hash coordinates its accepted
+residues are $C+a[0,w)$ in $\mathbb Z/M$, with $a$ uniform odd and
+$C$ uniform independently. The following bound concerns any shape
+given an independent uniform cyclic translation.
+
+\begin{proposition}
+Let $D\subset\mathbb Z/M$ have size $d$. Put $D+C$ in slot $i$,
+where $C$ is independent of the other original fresh hashes, and let
+$H_D$ be the target count. Write $\lambda_D=(d/w)\lambda$,
+$A_-=\prod_{j\ne i}(1+2/\nu_j)$ and $\kappa=|E(\mathbb F_p)[2]|$.
+Then $\E H_D=(d/w)\mu$ and
+\[
+ \E[H_D(H_D-1)]\le
+ \frac{2M}{N}A_-\lambda_D^2+
+ \bigl(8+2\kappa(2^{m-1}-2)\bigr)\frac{d\lambda_D}{N}.
+\]
+\end{proposition}
+\begin{proof}
+The first moment follows by translation. For canonical abscissas
+separated by $v\bmod M$, set $K(v)=|D\cap(D-v)|/M$.
+Joint retention in the special slot is $K(v)$, and $\sum_vK(v)=d^2/M$.
+For fixed $P$ there are at most two affine $Q$ per possible abscissa.
+Thus summing $K(x(Q)-x(P))$ over $Q$ costs at most $2d^2/M$.
+
+Classify distinct ordered target tuples $P,Q$ by the exact subset $S$
+of the other $m-1$ slots with equal abscissas. For $s=|S|\le m-2$,
+there are at most $N^{m-1}$ first tuples and $2^s$ choices of signs
+in $S$. Sum over $Q_i$ by the preceding bound. One unmatched other
+point is forced by the target and at most $N^{m-s-2}$ choices remain.
+The other slots give retention at most
+$\prod_{j\in S}\rho_j\prod_{j\notin S,\ j\ne i}\rho_j^2$.
+Summing the proper subsets gives the first displayed term.
+
+If all other abscissas match, take the indices at which the points
+actually differ as the flip set. It cannot be empty for distinct tuples.
+For a nonempty proper flip set, fix $P_i,Q_i$. Twice the sum of flipped
+points is $Q_i-P_i$, allowing at most $\kappa$ sums. Both blocks of
+other points now have prescribed sums, allowing $\kappa N^{m-3}$
+first tuples per such pair. Summing $K$ over $P_i,Q_i$ gives at most
+$2Nd^2/M$. For the full flip set, $Q_i=2T-P_i$. The function
+$P\mapsto x(2T-P)-x(P)$ has two distinct double poles, at $2T$ and
+$O$. A fixed field value therefore has at most four preimages.
+One residue of the canonical integer difference modulo $M$ gives
+at most two possible field values. Thus summing $K$ over these $P_i$
+costs at most $8d^2/M$, and the other points have at most $N^{m-2}$
+choices. All matched other slots contribute $\prod_{j\ne i}\rho_j$.
+These bounds give the stated second term, also for $m=2$.
+For the pole of the Weierstrass $x$ coordinate see
+\href{https://math.mit.edu/classes/18.783/2019/LectureNotes24.pdf}
+{Sutherland, 18.783, lecture 24}.
+\end{proof}
+
+For two $w$-point shapes $S,S'$ with the same uniform translation,
+$V(S)\mathbin{\rm xor}V(S')=H_{S\triangle S'}\bmod2$ exactly.
+The odd probability lies between $\E H_D-\E[H_D(H_D-1)]$ and
+$\E H_D$. As $d\le 2w$, Hasse gives $M/N=O(1)$, and $A_-=1+o(1)$,
+we obtain uniformly, also for random shapes independent of the center
+and the other hashes,
+\[
+ \Prb(V(S)\ne V(S'))=
+ \left(1+O(\lambda+m/N+2^m w/N)\right)
+ \lambda\,\frac{\E|S\triangle S'|}{w}.
+\]
+In particular the permissible mean residue discrepancy for an
+$O(\lambda^2)$-error direct replacement is $O(\lambda w)$.
+
+\section{How much multiplier compression survives?}
+Let an encoder retain a label $h(a)$ from a dictionary of size $K$
+and the full recentered value $C+f(a)$, with any fixed slope-dependent
+translation $f$. Give the decoder all other seeds and unlimited
+computation. If $2w^2<M$ and $w$ is even, directions $a'\ne\pm a$
+give at most $w/2$ common residues, whatever the two centers.
+Indeed an intersection point is encoded by a pair $(t,u)\in[0,w)^2$.
+Differences satisfy $a\,\Delta t=a'\,\Delta u\bmod M$. The lattice of
+differences has determinant $M$. Every two difference vectors form
+a determinant of magnitude below $2w^2$, so all points are collinear.
+Along that line adjacent pairs differ by at least two in the common
+dominant coordinate: a unit step in both coordinates would require
+$a'=\pm a$, and a nonzero axis step is impossible. Hence there are
+at most $\lfloor(w-1)/2\rfloor+1=w/2$ points.
+
+Draw two independent slopes conditional on the same code and use the
+same revealed center and the same other slots. These are conditionally
+independent replicas of the unobserved slope given the decoder's data.
+Their probability of matching up to sign is at most $4K/M$: in each
+code cell of size $s$ it is at most $2/s$, and that cell has mass $2s/M$.
+On different directions the shape discrepancy is at least $w$.
+For a Bernoulli bit of conditional mean $u$, the optimal error
+$\min(u,1-u)$ is at least half the disagreement of two independent
+replicas, $u(1-u)$. The preceding parity distance yields
+\[
+ \Prb(\text{decoding error})\ge
+ (1-o(1))\,\frac{\lambda}{2}\max(0,1-4K/M).
+\]
+Consequently $O(\lambda^2)$ error requires $K\ge(1-O(\lambda))M/4$.
+There is an exact $M/4$-code representation: choose the canonical
+sign of each odd multiplier and move the center to the other endpoint
+when reversing direction. This is a sharp capacity statement for one
+specified codec. The inverse center and the original forward offset
+are different side information. An arithmetic circuit can read all
+the multiplier bits cheaply; the result gives no general time bound.
+
+\section{Direct evaluation along the last forward offset}
+Alternatively fix all other hashes and the multiplier of slot $i$,
+leaving $\beta_i$ free. Every tuple in the other slots whose required
+last point is affine gives an arc of exactly $w$ consecutive offsets
+starting at $-\alpha_i x\bmod M$. Counting repetitions, call the number
+of starts $B$. Parity is the XOR of these arcs. Thus its exact positive
+set is a union of at most $B$ cyclic intervals, with
+$\E B=M\mu/w$. The interval endpoints can be generated directly by
+enumerating the other-slot tuples.
+
+Suppose a predictor for this offset uses $J$ positive cyclic intervals
+whose locations can depend arbitrarily on all the fixed seeds above.
+If $8w\le M$ and fresh error is $O(\lambda^2)$, then
+\[
+                 \E J\ge (1-O(\lambda))\,M\lambda/w .
+\]
+To see this, mark a start bad if another is within cyclic distance
+$3w$, counting distinct occurrences at the same start. In an enlarged
+slot of width $8w$, each such ordered pair overlaps for at least $5w$
+offsets. The enlarged factorial moment bounds the expected number of
+bad starts by $(M/(5w))(64A_0\lambda^2+8\lambda z)$, with $A_0,z$ as
+in \texttt{fresh\_windows.tex}. On a good start the true bit is zero
+for the preceding $w$ offsets and one for the next $w$. Without an
+upward transition inside these $2w$ positions a binary prediction
+makes at least $w$ errors there. These segments are disjoint for good
+starts. Average this charging argument, allowing a fixed independent
+random tape for the predictor, to get the displayed bound.
+The optimal expected explicit interval count is thus asymptotic to
+$M\lambda/w=2^{(1-1/m)b+O(\log b)}$. A succinct point-query computation
+can describe many runs. This bound prices expanding an offset table.
+
+\section{A structured matrix for batches of high seed bits}
+For a dyadic $q=2^k$, $D=M/q$ even and $w\le D$, freeze the low words
+$\alpha_0,\beta_0$ of a slot. Vary their high words $A,B\bmod q$.
+After checking $(\alpha_0x+\beta_0)\bmod D<w$, membership is the
+incidence equation $Au+B=v\bmod q$, with $u=x\bmod q$ and
+$v=-\lfloor(\alpha_0x+\beta_0)/D\rfloor\bmod q$. The universal
+$q^2$-by-$q^2$ binary incidence matrix has rank
+\[
+ R(q)=\sum_{j=0}^{q-1}(q-e_j)_+\sim q^2/\log_2 q,\qquad
+ e_j=\sum_{h=1}^j2^{v_2(h)}.
+\]
+Encode cyclic shifts of $v$ by multiplication by $z=1+t$ in
+$\mathbb F_2[t]/(t^q)$. The intercept shifts generate the module
+image of the Vandermonde matrix $(z^{uA})_{u,A}$. Over
+$\mathbb F_2[[t]]$ change the monomial columns to the monic Newton
+polynomials $\prod_{h<j}(Y-z^h)$. Entries above the diagonal vanish.
+At row $j$ the valuation is $e_j$, since $v_t(z^s-1)=2^{v_2(s)}$.
+At any later row the valuation is at least $e_j$: an interval of $j$
+integers contains at least $\lfloor j/2^\ell\rfloor$ multiples of
+$2^\ell$ for every $\ell$. Dividing each column by its diagonal
+power of $t$ leaves an invertible triangular matrix. Reduction modulo
+$t^q$ now gives the rank formula. Finally
+$e_j=j+\sum_{\ell\ge1}2^{\ell-1}\lfloor j/2^\ell\rfloor
+=(j/2)\log_2 j+O(j)$. The last positive summand has
+$j\sim 2q/\log_2q$, and summing the linear leading profile gives the
+stated equivalent.
+
+This saves a factor asymptotic to $k$ in the number of independent
+coordinates of a full batch. It gives no cheap evaluation rule for a
+single fresh joint instance. Reducing the remaining word size from $b$
+to $b/g$ in one split makes $k=(1-o(1))b$, where materializing even
+one such universal basis has logarithmic size $2k-\log_2k+o(1)$.
+
+\paragraph{End-to-end comparison.}
+The budget sought for the fresh evaluator is
+$\log_2 D_m=O(mb/(\sqrt L\,g))$, including setup. No construction above
+meets this budget. The best existing conditional project estimate remains
+$(26.2933775156+o(1))b/L^{1/4}$ for $\log_2\E T$ under the finite-packet
+assumption A.1 and inherited reduction and contraction estimates.
+Run \texttt{python -B research/joint\_parity/check\_seed\_arithmetic.py}
+for finite checks. They concern hash laws and algebraic identities,
+and do not measure an end-to-end speedup.
+\end{document}

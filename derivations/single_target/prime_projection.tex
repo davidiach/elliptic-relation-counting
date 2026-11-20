@@ -1,0 +1,228 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\title{Projecting the prime exponents onto one field product}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+Write $b=\lceil\log_2 p\rceil$ and $B=\lfloor\sqrt p\rfloor$.
+In the paired-slot setting of \texttt{exception\_product.tex}, the
+exceptional correction over all terminal and chord factors is determined
+by a single ordinary integer count once a primitive field element is
+available. The construction has no atom or prime table and does not
+query slot sizes. Its graph exceeds the budget of the optimized solver.
+A second algorithm uses small auxiliary moduli and a certified bound
+on rational height. Its cheap-query regime has a concrete limitation
+on admissible hash windows.
+
+\section{One count for the complete correction}
+Let $F>0$ be the public integer cover. For a nonzero local weight $w$
+use $h=\min(w,p-w)$ and $r=h/\gcd(h,F)$. On each component, the net
+prime exponents $e_q$ from the Farey construction and its negative
+sign count $C_-$ give
+\[
+ \prod r=(-1)^{C_-}\prod_{q\le B}q^{e_q}\pmod p .
+\]
+For a primitive $g$ the exponent of this product is the single
+linear functional $(p-1)C_-/2+\sum_q e_q\log_g(q)$ modulo $p-1$.
+Obtaining all coefficients $\log_g(q)$ in a public table would
+already cost at least one entry per prime. Instead evaluate the
+functional on an occurrence by certifying the unique $0\le e<p-1$
+with $g^e=r$. This also folds in the sign of its Farey ratio.
+The sign of the original centered weight belongs to the covered
+factor and stays outside the correction.
+
+Take a full row of $m$ points from the independently seeded symmetric
+slots and require the lower canonical ordinate in slot one. Use a
+single tag chosen from the terminal component and the chord
+components $j=2,\ldots,m$.
+\begin{itemize}
+\item On the terminal tag, use $w_T(S_m)$, including the target and
+infinity patches, for the running sum $S_m$.
+\item On tag $j$ require a lower ordinate at slot $j$ and use the
+nonzero chord scale $L(S_{j-1},P_j)$. Leave every later sign and slot
+choice free. Each oriented prefix occurrence then has exactly
+$\prod_{i>j}2n_i$ completions, its required continuation exponent.
+\end{itemize}
+For either tag add a canonical integer $0\le z<e$. The number of
+extensions for the tagged row is $e$, including zero extensions for
+$r=1$. All other auxiliaries are forced. If $Z$ is the total count,
+then the complete correction is $g^{Z\bmod(p-1)}\bmod p$. A vacant slot
+automatically gives $Z=0$. Counting all full rows with one tag also
+avoids separate contractions and external repetitions for the prefixes.
+To return the full field unit in one count, use $g^e=w$ in place of
+$g^e=r$ on the same tags. This includes the covered factors and the
+signs consumed by centering without a second query.
+
+The graph uses the ordinary oriented curve addition with canonical
+infinity coordinates and disjoint branches in \texttt{exception\_product.tex}.
+It checks one prefix chain, including the unused suffix on a chord
+tag. Canonical tag indicators and bitwise multiplexing across the
+chain add $O(mb)$ edges. For example one can form local indicators
+per tag, distribute them by bounded-degree equality trees, then
+select each field bit by a binary tree with forced internal values.
+The gcd check costs $O(b+\operatorname{bitlength}(F))$ as before.
+The rank comparison is an ordinary $O(b)$-edge comparator. There
+is no offset rounding with these deliberate witness multiplicities.
+The exact count itself has at most
+$O(b+\log m+\sum_i\log(2\tau_i))$ bits. A primitive $g$ can be
+supplied with a certificate, or one can test uniform candidates by
+counting $0<e<p-1$ with $g^e=1$. A zero count certifies primitivity.
+The expected number of candidates is $(p-1)/\varphi(p-1)=O(b)$,
+so this additional cost is polynomially many exponent graphs and
+can be shared for a fixed field.
+
+\paragraph{What the one query costs.}
+In the existing block certificate in \texttt{unit\_recovery.tex}, use
+$s$ exponent bits per block. Each block's $b$ output bits are split
+among slice vertices. A slice reads the block digit and checks its
+own bits of a fixed-base power by a polynomial-time local algorithm.
+The number of Boolean edges is $\Theta(b\lceil b/s\rceil)$ for this
+explicit-word layout, with additional $O(mb+\operatorname{bitlength}(F))$
+for the rest of the graph. The largest degrees are
+$O(s+b/s+\sqrt b\,\mathrm{polylog}\,b)$, including digit copies.
+No table of $2^s$ entries is needed. At tuned $m$ and
+$\operatorname{bitlength}(F)=O(b)$ the project's square-root-degree
+contractor admits $s\asymp b^{2/3}$ and $S=O(b^{4/3})$ total edges.
+
+The original external paper's Theorem 2 permits degree $O(S^{9/10})$,
+polynomial description length and uniform polynomial-time local
+predicates. Under that separate contraction statement we can take
+$s\asymp b^{18/19}$. This gives $S=\Theta(b^{20/19})$ and degree
+$O(b^{18/19})$. Equality subdivisions and the comparison with $z$
+preserve the bounds. This is the optimal edge power within this
+layout under that degree condition because $S=\Omega(b^2/s)$ and
+$s=O(S^{9/10})$ imply $S=\Omega(b^{20/19})$. Theorem 2 only gives
+$\log_2 T=O(b^{20/19}/\sqrt{\log b})$ for the resulting graph.
+Its estimate is eventually larger in scale even than $b$.
+Taking $s$ of order $b/m$ would keep $S=O(mb)$ but violate the
+degree condition. These are layout and upper-bound comparisons,
+not lower bounds for computing a field product.
+
+\section{An alternative using small auxiliary fields}
+In one component write its unsigned Farey atom product as the
+reduced positive rational $N/D=\prod A_i/D_i$. Its field image
+gets the separate Farey sign. Suppose $N,D\le 2^h$ with a certified
+integer $h$. There is a way to recover this ratio using arithmetic
+counts in small auxiliary characteristics. For an odd auxiliary
+prime $\ell\ne p$ strip all powers of $\ell$ from each $A_i,D_i$.
+Count the signed sum $v$ of the stripped valuations. If $v\ne0$,
+skip this modulus. If $v=0$, the stripped-unit ratio gives $N/D$
+modulo $\ell$, even when $\ell$ divided atoms on both sides.
+Use a public generator and logarithm table in the small field to
+sum the unit logs and exponentiate their difference.
+
+For each atom its valuation is uniquely checked by
+$A=\ell^j a$, $j\le\log_2 B$, $\ell\nmid a$. Select the public
+power by the short index $j$ and enforce the quotient, remainder
+and range checks. The low-width residue $a\bmod\ell$ determines
+its small-field log by a local predicate. A bounded rank witness
+counts each signed integer sum by subtracting two nonnegative
+counts or using a known common shift. This also works with no
+valuation factors present. For $\ell=\mathrm{poly}(b)$ the table
+takes polynomial construction time and space and the added wires
+are $O(b)$ per query. Complete oriented counts handle all path
+multiplicities.
+
+Accumulate good residues by CRT until their product exceeds
+$2(2^h)^2$. A standard extended Euclidean reconstruction then
+returns the unique positive reduced fraction of the promised
+height. Two different candidates would have nonzero cross
+difference of magnitude below the modulus, divisible by it.
+For recovery, the approximating fraction
+$(RD-N)/(MD)$ for a CRT representative $R$ and modulus $M$
+reduces to $a/D$, where $a=(RD-N)/M$. It differs from $R/M$
+by $N/(MD)<1/(2D^2)$, so it is a convergent, with the integral
+case included. The implementation checks the recovered signs,
+coprimality, congruence and both bounds.
+
+The product of primes with $v\ne0$ divides $ND$. Their lost
+logarithmic precision is at most $2h$. The Chebyshev lower bound
+$\sum_{\ell\le x}\log\ell=\Omega(x)$ therefore guarantees enough
+good moduli by $x=O(1+h)$, even after omitting 2 and $p$.
+Constructing these fields, tables, CRT values and the reduced
+fraction costs polynomial time in $b+h$. If $h=\mathrm{poly}(b)$
+this gives polynomially many small-field queries with no full-width
+field exponent certificate. In a general input $h$ can itself be
+exponential in $b$.
+
+\paragraph{How to certify the height.}
+For the integer atom imbalance $c_d$ of the previous note, use the
+exact three ordered-pair collision counts to compute
+$J=\sum_{d\le B}c_d^2$. The paired graph has two independent
+ordinary paths. Its arithmetic coefficient must be paid. Each of
+the $M_0$ occurrences supplies one numerator and one denominator.
+Thus $\sum c_d=0$ and its positive mass $P$ satisfies
+\[
+ P\le \min\{M_0,\lfloor J/2\rfloor,\lfloor\sqrt{BJ}/2\rfloor\}.
+\]
+Here $2P=\sum|c_d|\le J$ by integrality, and Cauchy--Schwarz
+gives the other bound. Cancelling identical labels first bounds
+both remaining integers by $B^P$. Reducing their gcd only decreases
+them. Hence the displayed upper bound on $P$ times
+$\lceil\log_2 B\rceil$ is a usable $h$. The population bound alone
+also works without a pair count. A small number of agreeing
+auxiliary residues does not certify height. For instance $1$ and
+$2^{60}$ agree modulo $3,5,7,11$ but are $1,123$ modulo 211.
+
+There are admissible one-slot seeds on which the true rational
+height is already $\Omega(\sqrt p\log p)$ bits. Take the populated
+interval of width $W\asymp\sqrt p$ with $W\le\sqrt p/2$ from
+\texttt{exception\_product.tex} and set $F=1$. Its positive
+unpatched distances give Farey ratios $d/1$. There are
+$\Omega(W)$ distinct distances, each realized at least once, so
+the integer product is at least $\lfloor cW\rfloor!$ for a fixed
+$c>0$ on the stated curve class. The denominator is one. This
+explains the limit of reconstructing the full rational before field
+reduction. It is a family of allowable windows and does not prove a
+lower bound for independent tuned multi-slot seeds or other algorithms.
+
+\section{Comparison with the external paper}
+Akshima, Bacho, Huang, Kiltz, Nishaburi, Nooripoor, Tittelbach and
+Wiedijk, \emph{A Subexponential Time Algorithm for Elliptic Curve
+Discrete Logarithm}, version 0.2, 29 October 2026, Theorems 1, 2
+and 4, is the external baseline.\footnote{\url{https://github.com/bochum-crypto/subexponential-ecdl/blob/main/subexponential-ecdl.pdf}}
+For prime-order curves over $b$-bit prime fields their expected
+time is $2^{O(b/(\log_2 b)^{1/4})}$ conditional on the cited
+Boolean tensor contraction theorem. They also discuss fixed cofactors.
+Their main ECDL theorem does not state a numerical leading time
+coefficient on this scale. A percentage improvement against that
+theorem cannot be inferred.
+
+For an explicit numerical comparison inside the project, the
+supplied compressed-relation package reports $27.0138774237$.
+The short inverse-hash circuit reduces the leading word budget
+from $38mb$ to $36mb$ and the time coefficient to $26.2933775156$,
+a $1-\sqrt{18/19}=2.6671\%$ reduction on the common input class.
+The supplied simplex manuscript at project intake reported
+$32.1569516597$ for the common supplied-order polynomial-cofactor
+class. The current time coefficient is $18.2342\%$ below that earlier
+project baseline. The conditional workspace coefficient is $13.1466887578$.
+These constants use the local finite-packet Assumption A.1 and
+the inherited arithmetic, contraction and relation-reduction
+results. Neither the old nor the new scalar projection changes
+the optimizing balance between $b/m$ and $mb/\sqrt{\log b}$.
+The intended $2^{\widetilde O(\sqrt b)}$ bound and an end-to-end
+speed demonstration on large inputs remain open.
+
+\section{Verification}
+Run \texttt{python -B research/single\_target/verify\_prime\_projection.py}.
+The two reductions agree with independently formed component products
+on 24 small seed/cover cases. For the 78-exception fixture the
+single count is 34,437 with $g=2$, yielding the complete correction
+$2^{34437}\bmod 211=132$, including the chord factor. The full-weight
+variant independently gives 93 and agrees with the literal normalized
+polynomial product on all twelve small seed cases.
+The verifier also checks 2,653 bounded rational reconstructions.
+On the twelve four-slot fixtures over $\mathbb F_{65521}$ all tagged
+counts give the expected complete correction. The exact terminal
+heights $\lceil\log_2\max(N,D)\rceil$ range from 2,205 to 14,349
+bits, and the computable collision bounds range from 13,256 to
+94,432 bits. These heights refer to the positive rational before
+field reduction. The finite oracles enumerate tuples. The larger
+scalar test uses a field-sized reference log table, which is not
+assumed by the graph construction or included as evidence of a
+contractor speedup.
+\end{document}

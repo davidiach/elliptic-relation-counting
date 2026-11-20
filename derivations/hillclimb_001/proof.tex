@@ -1,0 +1,349 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newcommand{\polylog}{\operatorname{polylog}}
+\title{Hillclimb 001: alternating arithmetic, simplex words, and adaptive joins}
+\author{Research derivation with executable finite certificates}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Status.}
+This note proves a composition conditional on the supplied finite-core,
+uniform packing, mode-entropy, arithmetic-encoding, and ECDLP-reduction
+theorems. It does not independently establish those inherited theorems.
+The new programs check finite interfaces and rational inequalities;
+they are not a formal verification of the asymptotic conclusion.
+The common comparison class is nonsingular short Weierstrass curves over
+prime fields $p>3$, with supplied order $hr$, odd prime $r$, coprime
+polynomially bounded $h$, a supplied order-$r$ point, and targets in its
+subgroup. Put $b=\lceil\log_2p\rceil$.
+
+\section{Named premises and the new composition}
+The following supplied components are used as premises:
+\begin{enumerate}
+\item The C38 alternating-anchor compiler in the profiled archive,
+including parsimony, canonical Fourier words, symmetric abscissa hashes,
+the original target law, degree bounds, and complete relation extraction.
+\item The orientation-sensitive packet allocation and adaptive
+nine-group pair-sector theorem in the sharper archive, including
+deterministic packing, entropy estimates, rational matrix lifting,
+and recursive resource bounds.
+\item The integral simplex selector and uniform compiler argument in
+the simplex archive. The uniform extension to the sharper schedule
+and its pair sectors is given below, rather than inferred from a
+fixed-alphabet theorem.
+\item The capped relation-collection and verified sparse-extraction
+reduction, with enumeration budget $B=2^{b/m+O(\log b)}$ and cost
+$\operatorname{poly}(b,m)(BC_m+mB^2)$.
+\end{enumerate}
+The new composition replaces the C44 signed encoding in the simplex
+application by C38 and replaces its contraction constant by the
+adaptive-pair constant. It retains the C38 point-label convention;
+no signed-column rank assumption is imported from the C44 branch.
+
+\section{Recoding the actual C38 word boundaries}
+Write $v=\lfloor(m-1)/2\rfloor$. The inherited compiler has
+$r_f=5m-5+2v$ forward arrays and $r_i=3m-2+v$ inverse arrays.
+There are exactly
+\[
+ (r_f+r_i)L=(8m-7+3v)L
+\]
+Fourier words. At index $(j_2,t_1)$ a forward word joins $F_{j_2}$
+to $M_{t_1}$, and an inverse word joins $M_{t_1}$ to
+$E_{\lfloor j_2/R\rfloor}$. Every digit of a word has the same
+two endpoints. Let $M_F$ be the Fourier modulus and
+$W=\lceil\log_2 M_F\rceil$; the inherited construction gives
+$LW=(4+o(1))b$ and $W=\Theta(\log^2b)$.
+
+Choose once at the root
+\[
+ t=\max(2,\lfloor\log_2\log_2(b+4)\rfloor),\quad
+ \mathcal A_t=\{x\in\mathbb Z_{\ge0}^t:|x|\le t\},\quad
+ Q=\binom{2t}{t}.
+\]
+Rank the joint symbols by stars and bars. Replace each Fourier word by
+$\lceil\log_Q M_F\rceil$ symbols. Each incident predicate decodes
+its own incident words, rejects values at least $M_F$, and performs
+the original integer arithmetic. Binary side states use two fixed
+symbols; all other letters are rejected at these ports.
+
+\begin{lemma}
+This recoding preserves accepted assignments bijectively, including
+recovered factor tuples and relation existence. If $S$ is the number
+of recoded edges, then
+\[
+ tS\le(19+o(1))mb.
+\]
+Maximum degree and parallel multiplicity remain within the inherited
+low-degree root class, up to polylogarithmic factors.
+\end{lemma}
+\begin{proof}
+Canonical integer representations at both endpoints give inverse
+encoding and decoding maps. They require no conversion tensor or
+additional witness. The exact number of word edges is
+$(8m-7+3v)L\lceil\log_QM_F\rceil$.
+
+In the general-prime compiler the side-edge count is at most
+\[
+ S_{\rm aux}\le
+ 2r_i\left\lfloor\frac{L-1}{R}\right\rfloor W_c
+ +2(r_f+m-1)(n-1),
+\]
+where $W_c$ is the signed carry width, $W_c=O(\log^2b)$,
+$n=O(L)$, and $R=\Theta(\log b)$. Hash carry chains only shorten
+the first term. Consequently $S_{\rm aux}=O(mb/\log b)$.
+This is a quantitative estimate: $tS_{\rm aux}=o(mb)$ even
+after the nonconstant alphabet cost is charged. Word rounding costs
+$O(mL)$ edges, and $tmL=o(mb)$.
+Finally,
+\[
+ \frac{t}{\log_2\binom{2t}{t}}
+ =\frac12+O\left(\frac{\log t}{t}\right).
+\]
+The leading Boolean word ledger is $(38+o(1))mb$, proving the
+claim. All recoded endpoints are unchanged; the new descriptions,
+degree conversion from $b$ to $S$, and multiplicities incur only
+polylogarithmic factors. Counts and witnesses therefore induce the
+same C38 relation distribution when the finder uses the same
+deterministic selection rule, or a correspondingly coupled rule.
+The coverage argument needs existence and is unaffected by recoding.
+\end{proof}
+
+\section{A uniform simplex lift of the sharper contractor}
+For $y\in\mathcal A_t$, append $y_0=t-|y|$ and define
+\[
+ L_y(z)=\frac{t!}{\prod_{j=0}^t y_j!}
+ (t-\textstyle\sum_{j=1}^tz_j)_{y_0}
+ \prod_{j=1}^t(z_j)_{y_j}.
+\]
+Here $(a)_k$ is a falling factorial. These integral polynomials
+have degree $t$ and satisfy $L_y(x)=t!\,1_{x=y}$ on the joint
+alphabet. Coordinates are not independent graph edges.
+
+The existing deformation is applied in each of $t$ coordinates.
+This produces $t$ copies of each crossing family and multiplies
+the leading Hermite mass by $t$. Every unordered group pair still
+has exactly $1/36$ of the padded families: all coordinates have
+identical group incidences. Pair-sector entropies and projected-child
+entropies thus acquire a factor $\sqrt{t\,t}=t$.
+
+\begin{proposition}[Uniform lift under the inherited core premises]
+For root-fixed $t=O(\log\log S)$, the sharper contractor extends to
+the joint simplex alphabet with
+\[
+ \log_2 T(S)\le(tK+o(t))\frac S{\sqrt{\log_2S}},\qquad
+ \log_2\operatorname{Space}(S)\le(tJ+o(t))\frac S{\sqrt{\log_2S}}.
+\]
+Here $K,J$ are its Boolean adaptive-pair coefficients, or the
+modified matrix coefficients certified in the next section.
+\end{proposition}
+\begin{proof}
+Use the sharper schedule with $\lambda=\lceil\log_2S\rceil$,
+$\Gamma=\lceil12\log_2\lambda\rceil$, and the largest $u$ satisfying
+\[
+ 2^{a_{\rm prev}+\Gamma}90^u\lambda^{48}\le S,
+ \qquad a=a_{\rm prev}+u+\Gamma.
+\]
+Its orientation-sensitive allocation depends only on graph endpoints
+and labels, so it is unchanged by coordinate replication. Its strict
+degree and multiplicity margins, active depth $O(\log\log S)$,
+and packet gap $\lambda-a=\Omega(\lambda^\eta)$ for fixed $\eta>0$
+remain available. Direct contraction handles failed finite guards.
+
+At a call with $M$ edges set
+$q_i=\lceil tM(u-i)/(u-2)\rceil$ for $0\le i<u$, zero otherwise.
+The exact Hermite count exceeds degree $tM(2L-1)$ for $u\ge4$.
+Let $\nu=v_2(t!)$. The sufficient working precision is
+\[
+ P_i=p+\nu M+\sum_{j=1}^{a-i}j2^{a-i-j}(q_i-q_{i+j})
+           +q_i(a+1-i)+1.
+\]
+The extra $\nu M$ is charged at every recursive call. Reconstruct
+$(t!)^M$ times the contraction, divide its canonical coefficients
+by $2^{\nu M}$, and multiply by the inverse of the odd remaining
+factor. No nonunit is inverted.
+
+The inherited precision induction extends to
+$p\le C tS\lambda^2 2^{a_{\rm prev}}$ for an absolute sufficiently
+large $C$: $q_i\le2tM$, the loss is at most $4tMD_i$, and
+$D_i\ge2^{a_{\rm prev}+\Gamma+1}$. Relative to $tMD_i/u$,
+the inherited precision, scalar loss, Taylor correction, and rounding
+are uniformly negligible. The leading precision remains
+$(6t+o(t))MD_i/u$.
+
+For pair $e$ with exact weight $p_e$, its entropy bound is now
+$(tH/6)\sqrt{p_e/P}+o(tH)$, with the original Boolean $H$.
+The partition-estimate error from $t$ replicated mode families is
+$O(t(M/D)\log^2S)=o(tM/\sqrt u)$ uniformly. There are only 36
+pair bundles. Fixing exact degree per pair as in the executable
+adapter adds at most $(tM+1)^{36}$ sectors; weight sectors add
+$(P+1)^{36}$. Across $O(\log\log S)$ levels their logarithmic
+overhead is $O(\log S\log\log S)$.
+
+The depth-first packet coefficient cost has logarithm
+$O(tL\log(tL))$. The native coefficient dimension is at most
+$(2tS)^{O(\log\log S)}$. Both are lower order by the quantitative
+packet gap. Direct leaves have $M\le S/\lambda$ and cost
+$Q^M=2^{O(tS/\lambda)}$. Original tensor evaluation remains
+polynomial. Root counting precision is $O(tS)$ since $\log_2Q\le2t$.
+Formula descriptions, denominator guards, and bit operations retain
+their charged polynomial or quasipolynomial bounds. In particular,
+the finite fixed-alphabet theorem is not being applied with an
+unstated alphabet-dependent constant.
+
+Every local join and child continuation is multiplied by $t$.
+Thus the inherited strict recurrence margin is preserved. Sequential
+processing of sectors and descendants gives the stated storage bound;
+the optional cache is not necessary for this space argument.
+\end{proof}
+
+\section{Improving the matrix parameters with exact checks}
+The published-source row uses the verified numerical consequences
+\[
+ \alpha=0.32133<0.321334,\qquad
+ \Omega=2.37134>2.371339.
+\]
+The dual exponent comes from \cite{wxxz}; the stronger square bound
+comes from \cite{alman}. Both inequalities have slack. The inherited
+verified-menu construction supplies rational formulas with vanishing
+accuracy loss and charges their search. Put
+\[
+ \beta=\frac{\Omega-2}{1-\alpha}=\frac{37134}{67867},\qquad
+ d=1-\alpha\beta.
+\]
+For sorted logarithmic dimensions $x\le y\le z$, the limiting
+rectangular bound is $\max(y+z,z+dy+\beta x)$.
+The inherited balanced-partition averaging matrix has diagonal,
+adjacent, and disjoint counts $210,60,40$ out of 280, and row
+sum $27/4$. Hence a selected triple has boundary at most
+$B=\sqrt{27/2}$ for unit pair-weight norm.
+
+For an internal join, the support problem has
+$x^2/2+y^2/12+z^2/6\le1$ and $y+z\le B$.
+For a coefficient permutation $(a,b,c)$ set
+$m=(2b+c)/3$ and $R^2=2a^2+4(b-c)^2$. Its upper bound is
+\[
+ \Psi(m,R^2)=
+ \begin{cases}
+ m\sqrt{27/2}+R/2,&m^2\ge R^2/6,\\
+ \sqrt{18m^2+R^2},&m^2<R^2/6.
+ \end{cases}
+\]
+This follows by maximizing $mS+R\sqrt{1-S^2/18}$ over $0\le S\le B$.
+The second case must be retained when changing matrix inputs.
+
+Four of the six coefficient permutations are below $\sqrt{14}$.
+The two remaining forms for each choice of isolated vertex are
+averaged over all eight selections of one form per vertex, as in
+the inherited proof. The new certificate derives their six-coordinate
+vectors directly and checks their support bounds with rational
+intervals. This gives
+\[
+ C_*=(2+d)\sqrt{3/2}+\beta/\sqrt3
+      =3.7748039717\ldots.
+\]
+The first merge is bounded by $\sqrt{14}$ using
+$\beta^2+7d^2+7<14$. The top join is bounded by $\sqrt{27/2}$
+using $\beta^2+d^2<1$. Thus the entire tree is controlled.
+Writing
+\[
+ B_9=\frac{2\pi}{\ln2}\sqrt{\tfrac49\log_2 90},
+ \quad K=\frac{C_*B_9}{6},\quad J=\frac{\sqrt{14}B_9}{6},
+\]
+the certificates give $K=9.6870299622\ldots$, $J=9.6019680719\ldots$,
+and projected continuation $9.5707909081\ldots<J<K$.
+
+The finite implementation uses rational square-root approximations
+for tree selection. If each $\sqrt{p_e}$ is rounded down with error
+at most $\varepsilon$, each nine-edge bundle sum loses at most
+$9\varepsilon$. When $\sum_ep_e\le P$, choosing the approximate
+minimizer increases the exact partition objective by at most
+$162\sqrt P\varepsilon+243\varepsilon^2$. Polynomially many bits
+make this lower order uniformly. Internal-join selection has a
+similar fixed Lipschitz bound. Correctness of the algebraic sum is
+independent of which tree is selected.
+
+\paragraph{Separate recent-preprint row.}
+Using the characteristic-zero matrix bounds of \cite{uznanski}
+gives limiting parameters $\alpha=1/2$, $\Omega=9/4$.
+The same certificate, including the interior support branch, bounds
+all joins by $\sqrt{14}$, so $K=J=9.6019680719\ldots$.
+Positive accuracy slack and the inherited verified-menu argument
+are still required; no finite identity at an unattained infimum is
+assumed. This row has an additional external-preprint dependency.
+
+\section{Complete conditional ECDLP transfer}
+Combining the first two propositions gives
+\[
+ \log_2 C_m\le(19K+o(1))\frac{mb}{\sqrt{\log_2b}}.
+\]
+The factor 19 is a normalized information coefficient, not a
+physical Boolean wire count. The complete inherited reduction gives
+\[
+ \log_2\mathbb ET\le
+ \max\left\{\frac bm+19K\frac{mb}{\sqrt{\log_2b}},\frac{2b}{m}\right\}
+ +o\left(\frac b{(\log_2b)^{1/4}}\right).
+\]
+Choose $m\sim(19K)^{-1/2}(\log_2b)^{1/4}$, rounded to an
+admissible integer. The complete time and space coefficients are
+$2\sqrt{19K}$ and $\sqrt{19K}$; workspace fits because $J\le K$.
+Counting and whole-symbol witness pinning use $O(SQ)$ calls, still
+polynomial, and preserve the root alphabet and graph bounds.
+
+\begin{center}
+\begin{tabular}{lrr}
+Construction / dependency level & Time coefficient & Space coefficient\\
+Supplied C44 simplex result &32.1569516597&16.0784758298\\
+C38 + simplex + original sharper matrix parameters &27.1540388397&13.5770194198\\
+C38 + simplex + improved published parameters &27.1332688251&13.5666344125\\
+Additional recent rectangular-preprint input &27.0138774237&13.5069387119
+\end{tabular}
+\end{center}
+The comparison with the supplied simplex coefficient is on the common
+curve class. The published-source composition lowers that leading
+coefficient by about $15.62\%$. The saving power remains $1/4$.
+No finite cryptographic-size speedup or square-root-in-$b$ algorithm
+has been established.
+
+\section{Executed evidence and remaining work}
+\texttt{verify\_c38\_simplex.py} tests 60 actual C38 instances,
+36,608 recoded Fourier words, every local predicate on the reconstructed
+witnesses, exact endpoint ledgers, independent tuple recovery, and
+285 rejected mutations. Small exhaustive word tests establish the
+implemented codec's bijection on the tested domains.
+\texttt{verify\_adaptive\_simplex.py} compares 48 finite mode sums
+against Cartesian enumeration, includes replicated coordinate families
+and a nontrivial Strassen product over a nilpotent ring, and runs
+70 complete active simplex contractions with every call checked.
+\texttt{certify\_bounds.py} checks 30 matrix-parameter candidates,
+the whole-domain support certificates, and 60 finite schedule cases,
+including values adjacent to powers of two.
+
+The adaptive code uses the explicit Strassen backend. It establishes
+finite algebraic compatibility, not execution of the large published
+matrix formulas. Its finite cache and table choices are diagnostic;
+the theorem uses the stated sequential implementation when necessary
+for the asymptotic space bound. A full unpinned C38 relation network
+has not been contracted by this engine. The original foundational
+proof chain still needs independent scrutiny.
+
+The next substantial objective is a complete arithmetic-network
+contractor or a structural change to the normalized mode/precision
+cost. Improving selectors within the present coordinate-degree model
+alone cannot reduce the limiting factor below $1/2$ and cannot change
+the quarter-power balance. A stronger-power claim must replace a
+specific premise of that model and pay for all newly introduced work.
+
+\begin{thebibliography}{9}
+\bibitem{wxxz} Vassilevska Williams, Xu, Xu, Zhou.
+New Bounds for Matrix Multiplication: from Alpha to Omega.
+\url{https://arxiv.org/html/2307.07970v2}.
+\bibitem{alman} Alman et al. More Asymmetry Yields Faster Matrix Multiplication.
+\url{https://arxiv.org/html/2404.16349v2}.
+\bibitem{uznanski} Uzna\'nski. Rectangular matrix multiplication from polynomial products.
+\url{https://arxiv.org/html/2610.10494v2}.
+\end{thebibliography}
+\end{document}

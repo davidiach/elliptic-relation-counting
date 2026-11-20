@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\F}{\mathbb F}
+\title{One weighted convolution for the normalized section product}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+The section product in \texttt{../implicit\_resultant/resultant.tex}
+admits a joint formula on the odd prime-order family. It gives the
+entire normalized polynomial in the target coordinate, including its
+leading scalar. Two additional integer moments in the convolution
+give the full additive gradient at every zero, even when distinct
+sign choices give the same zero tuple. A dense implementation costs
+$2^{b+o(b)}$ with preprocessing charged. It can share that cost across
+all targets of a seed. The previous single-target and end-to-end bounds
+remain better. We give a restricted lower bound for compressing the
+new unit product, using the actual dyadic masks.
+
+\section{Removing all intermediate section scales}
+Let $E:y^2=x^3+ax+c$ be smooth over $\F_p$, $p>3$. Work in a cyclic
+group $G$ of odd order $r$ with $\gcd(r,p-1)=1$. For the asymptotic
+statements take $G=E(\F_p)$ of odd prime order. Large prime-order
+curves satisfy the coprimality since $r>(p-1)/2$ by Hasse and $p-1$
+is even. Use $k(P)=(x(P),1)$ for $P\ne O$ and $k(O)=(1,0)$.
+Write $\ell_P(Z)=Z_0 k_1(P)-Z_1 k_0(P)$, so
+$\ell_O(Z)=-Z_1$. Keeping this sign is necessary.
+The homogeneous chord form $K$ of the preceding note factors as
+\[
+ K(k(P),k(Q),Z)=L(P,Q)\,\ell_{P+Q}(Z)\ell_{P-Q}(Z).
+\]
+The multiplier is $1$ if either input is $O$, $(x(P)-x(Q))^2$
+if the finite abscissas differ, and $4y(P)^2$ if they coincide.
+The coincident case follows by taking the linear coefficient of the
+affine section and accounting for $\ell_O=-1$.
+
+There is an even function $\gamma:G\to\F_p^\times$, $\gamma(O)=1$,
+for which
+\begin{equation}
+ L(P,Q)=\frac{\gamma(P)^2\gamma(Q)^2}{\gamma(P+Q)\gamma(P-Q)}.
+ \label{scale}
+\end{equation}
+Here is a way to obtain the absolute scale. Let $\Delta_r$ be a
+homogeneous lift of multiplication by $r$ on the abscissa line, of
+degree $r^2$, with $\Delta_r(1,0)=(1,0)$. These are the usual
+coprime projective multiplication polynomials, normalized at infinity.
+See the construction in
+\href{https://ocw.mit.edu/courses/18-783-elliptic-curves-fall-2025/mit18_783_f25_lec_full.pdf}
+{Sutherland's elliptic curve notes, Theorem 5.25}.
+For $P\in G$ write $\Delta_r(k(P))=d(P)k(O)$.
+Applying the chord map and then applying $\Delta_r$ to its two
+output roots gives the same homogeneous binary quadratic as applying
+$\Delta_r$ to both inputs and then the chord map. To see equality of
+scales, the induced map on an unordered root pair sends
+$\ell_U\ell_V$ to $\ell_{\Delta_r(U)}\ell_{\Delta_r(V)}$ in vector
+coordinates. It has degree $r^2$ in the quadratic coefficients
+(equivalently use the homogeneous resultant with
+$\det(Z,\Delta_r(W))$). Both composites are base-point-free forms
+of bidegree $(2r^2,2r^2)$. They agree projectively by
+$[r](P\pm Q)=[r]P\pm[r]Q$, hence differ by a global nonzero
+constant. Evaluation at $(O,O)$ fixes it to one. Therefore
+\[
+ L(P,Q)^{r^2}d(P+Q)d(P-Q)=d(P)^2d(Q)^2.
+\]
+Set $\gamma(P)=d(P)^{(r^2)^{-1}\bmod(p-1)}$.
+In particular $\gamma(2P)=\gamma(P)^4/(4y(P)^2)$ for finite $P$.
+Doubling permutes $G$, so every $\gamma(P)$ is a square.
+
+The finite implementation also computes these scales without expanding
+division polynomials. For a generator $B$ let $v_0=v_1=1$ and
+$v_{i+1}=v_i^2/(v_{i-1}L(iB,B))$ up to $i=r-1$.
+Equation~\eqref{scale} gives
+$\gamma(iB)=v_i\,\gamma(B)^{i^2}$ by induction. The endpoint
+$\gamma(rB)=1$ fixes $\gamma(B)=v_r^{-(r^2)^{-1}\bmod(p-1)}$.
+The table of group elements and scales costs $O(r\,\mathrm{poly}(b))$.
+
+\section{The actual joint product}
+For each nonempty paired slot $U_i$ choose one lift $P_u$ of each
+abscissa. Fix the first sign to $+$ and allow both signs in every
+other slot. Let $d(S)$ count these oriented tuples whose sum is
+$S$. This is one ordinary integer convolution of the first
+oriented mask and the remaining signed masks. Define
+\[
+ D=2^{m-1}\prod_i|U_i|,\qquad
+ A=\prod_i\left(\prod_{u\in U_i}\gamma(P_u)\right)^{D/|U_i|}.
+\]
+Then the exact normalized product of the project's summation forms is
+\begin{equation}
+ N(Z,\mathbf0)=A\prod_{S\in G}
+   \left(\frac{\ell_S(Z)}{\gamma(S)}\right)^{d(S)}.
+ \label{joint}
+\end{equation}
+For one input the $\gamma$ factors cancel. When a new abscissa
+is appended, the homogeneous resultant squares the existing
+leading scalar and replaces each $\ell_S$ by
+$L(S,P)\ell_{S+P}\ell_{S-P}$. Substitution of~\eqref{scale}
+cancels the old $\gamma(S)$ factors. This proves the single-tuple
+identity by induction. Multiplication over all abscissa tuples
+gives~\eqref{joint}. With an empty slot $N=1$. No intermediate
+section, half polynomial, or discrete-log oracle is needed.
+The implementation obtains $U_i$ directly from the dyadic
+inverse hash, intersecting canonical abscissas with its charged
+curve table.
+
+Collecting equal finite abscissas gives $h_x=d(S)+d(-S)$ at
+$x=x(S)$. In affine coordinates write
+\[
+ C=A(-1)^{d(O)}\prod_{S\in G}\gamma(S)^{-d(S)},\qquad
+ N(z,\mathbf0)=C\prod_x(z-x)^{h_x}.
+\]
+For an eligible target $t=x(T)$, set $h=h_t$, taking zero for a
+missing entry, and define its absolute unit
+\begin{equation}
+ U_t=C\prod_{x\ne t}(t-x)^{h_x}.
+ \label{unit}
+\end{equation}
+This is the coefficient of $(z-t)^h$ in the local expansion.
+It is the norm at order zero and $N_z(t)$ at order one.
+At higher order $N_z(t)=0$. There is no factorial in this
+formula, even if $h\ge p$.
+
+\section{First derivatives and many targets}
+Encode an abscissa tuple injectively by the ordinary integer
+$q=\sum_{i=1}^m u_i p^{i-1}$ using canonical $u_i\in[0,p)$.
+At each group element keep the count, the sum of $q$, and the sum
+of $q^2$. Under multiplication the update for the last component is
+$M_2*N'+2M_1*M'_1+N*M'_2$, where each star is cyclic convolution,
+and the first moment is $M_1*N'+N*M'_1$. This follows from adding
+the codes of disjoint sets of slots. Fold the three entries at
+$T,-T$ to get $(h,M_1,M_2)$.
+For $h>0$, $hM_2-M_1^2$ is the sum of squared differences over
+all unordered pairs of codes. Exact integer arithmetic therefore
+distinguishes multiple abscissa tuples from a single tuple of
+arbitrary sign multiplicity.
+
+If the variance is positive, at least two different factors of
+$N$ vanish and every first derivative is zero. Otherwise $M_1/h$
+decodes the unique tuple $\mathbf u^*$. For its single normalized
+form $S_*(z)$, compute $v_*=(S_*(z)/(z-t)^h)|_{z=t}$, which is
+nonzero. With the additive marker convention
+$S(\mathbf u;z)+s_0+\sum_i s_i u_i$ one obtains
+\[
+ N_{s_0}=U_t/v_*,\qquad N_{s_i}=u_i^*\,U_t/v_*.
+\]
+In particular all nonzero sections that set the cofactor scale
+are included. This recovers the full gradient at a zero in one
+joint convolution with two moment channels. At a nonzero norm,
+$N_z$ follows by logarithmic differentiation of~\eqref{joint}.
+Literal additive derivatives there still involve sums weighted by
+$1/S(\mathbf u;t)$. The two-slot algorithm in the preceding
+scalar note supplies them where requested. The relation query
+can exit on a nonzero norm.
+
+For many targets under one seed, put
+$g_j(X)=\prod_{x:\operatorname{bit}_j(h_x)=1}(X-x)$. At a query
+$t$, use $g_j(t)$ when nonzero and $g'_j(t)$ otherwise.
+Each $g_j$ is squarefree, including in positive characteristic.
+Raising these values to $2^j$, multiplying over $j$ and multiplying
+by $C$ gives $U_t$. At a nonzero, the logarithmic derivative is
+$\sum_j2^jg'_j(t)/g_j(t)$. A subproduct and remainder tree shares
+all these evaluations across the batch. With $r$ table entries,
+at most $r$ targets and integer convolution coefficients of
+$O(mb+\log D)$ bits, the work is
+$r\,2^{O(m)}\mathrm{poly}(b,m)$ including the single-tuple forms
+at zeros. Memory is $r\,2^{O(m)}\mathrm{poly}(b,m)$. The same
+bound covers every target of one seed. Already writing the group
+table costs $\Omega(r)$ for this construction.
+
+\section{A lower bound for shortcuts that separate the slots}
+Consider a single bit of~\eqref{unit}. Let $\chi$ be the quadratic
+character and write $(-1)^{k_T(S)}$ for the character of $t-x(S)$
+at ordinary points, with value $+1$ at $\pm T$ and $\chi(-1)$ at
+$O$. All $\gamma$ factors are squares, so
+\[
+ \chi(U_t)=(-1)^{\sum_{S\in G}d(S) k_T(S)} .
+\]
+This formula includes seeds with no zero and retains a bit of the
+absolute derivative when $h=1$. With two singleton abscissa slots
+the matrix of output bits, indexed by nonzero sign pairs, is
+\[
+ B_T(P,Q)=k_T(Q+P)+k_T(Q-P)\pmod2.
+\]
+Its rank over $\F_2$ is $\Omega(\sqrt p)$ at \emph{every} eligible
+target on the large prime-order family.
+
+For the proof consider a nonempty proper set $J$ of $s$ distinct
+shifts. The rational function
+$f_J(X)=\prod_{A\in J}(t-x(X+A))$ has an odd-order zero or pole
+somewhere. In fact its divisor modulo two has support given by
+the symmetric difference of $T-J$ and $-T-J$. Equality of these
+sets would make $J$ invariant under translation by $2T$, a
+generator. Thus the double cover $Y^2=f_J(X)$ is geometrically
+connected. It has at most $2s$ branch points, so its smooth
+projective model has genus at most $1+s$ by Riemann--Hurwitz.
+Away from at most $3s$ exceptional points the number of rational
+points in a fiber minus one equals the product of the shifted
+signs. At the exceptions the discrepancy is at most two per
+point. The Hasse--Weil bound for the cover and for $E$ gives
+\[
+ \left|\sum_{X\in G}(-1)^{\sum_{A\in J}k_T(X+A)}\right|
+ \le (2s+4)\sqrt p+6s .
+\]
+For the curve bound see Weil's \emph{Sur les courbes alg\'ebriques
+et les vari\'et\'es qui s'en d\'eduisent} (1948) and the statement in
+\href{https://arxiv.org/abs/1409.6090}{van der Geer's survey}.
+If the right side is less than $r$, such a parity of shifts cannot
+be constant. A sum of $j$ distinct rows of $B_T$ uses $2j$
+distinct shifts, is even as a function of $Q$, and is zero at $O$.
+Hence any $j$ with $(4j+4)\sqrt p+12j<r$ gives independent
+rows. This proves the rank bound.
+
+For actual masks with fixed odd multiplier and varying shift, let
+$n=(r-1)/2$ and let $\delta$ be the codimension of the span of
+the abscissa masks in $\F_2^n$. The shift-span calculation in
+\texttt{../slot\_arity/rate.tex} gives $\delta\le\tau$, and
+$\delta=0$ if the omitted canonical tail meets all but at most one
+residue class modulo $\tau$. For two slots the matrix over the
+independent seed shifts is $M_L B_T M_R^\top$, where each $M$
+has the actual masks as rows. Its rank is at least
+$\operatorname{rank}B_T-\delta_L-\delta_R$.
+
+The same bound holds for the full matrix across a nontrivial
+partition of the growing collection of slots, leaving one free
+slot on each side. Fix the first sign in the free slot on the
+left. For every other slot except the two free ones, take a
+nonzero difference of two adjacent shift masks. As a signed
+group function it has the form $e_P$ or $e_P+e_Q$ over $\F_2$,
+where $e_P=[P]+[-P]$ and the sign pairs in a sum are distinct.
+Such a difference exists whenever $0<\tau<M$ and some canonical
+abscissa occurs. On every nontrivial Fourier character of the
+odd prime-order group its value is nonzero. Indeed $z+z^{-1}$
+is nonzero for a nontrivial $r$th root, and equal values give
+equal or inverse roots. Thus these extra convolutions preserve the
+rank on the span of $e_P$, which in Fourier coordinates consists
+of the independent nontrivial inversion pairs. Restricting the
+two free masks costs at most their two codimensions as before.
+The contractions are row and column operations on the full
+seed matrix. Since the growing-arity widths are $p^{o(1)}$,
+the resulting lower bound is still $\Omega(\sqrt p)$.
+It prices exact sums of separated left/right products over
+$\F_2$ for the unit bit on all inputs. It leaves open joint or
+average-case computations and routines specialized to successful trials.
+
+\section{Checks and end-to-end accounting}
+Run \texttt{python -B research/section\_product/verify.py}.
+On the order-19 curve all 63 dyadic subboxes plus three additional
+inputs gave 594 exact comparisons of order, absolute unit and target
+derivative against the literal product. The 114 zeros gave matching
+full gradients, including six single tuples with repeated sign
+completions and 29 cases with several zero tuples. The 2,800-tuple
+fixture over $\F_{65521}$ gave $U_t=N_z=43446$ and
+$N_{s_0}=16953$, with coordinate derivatives
+$13292,47523,12119,9163$. The order, unit and target derivative
+also matched an independent local remainder of the literal
+2,800-factor polynomial at every one of the 32,709 target abscissas.
+At all 15,934 zeros the full gradients matched a product-rule
+reference carrying the five additive marker polynomials.
+At $t=0$ the sign matrices attained rank 509 of 509 and 32709 of
+32709 on the order-1019 and order-65419 curves. The smaller matrix
+was checked directly and by a cyclic-polynomial gcd, with the
+width-32 hash masks spanning all 509 abscissa coordinates. For
+the larger curve the gcd alone gives the rank. Indeed the binary
+circulant for $k_T$ has rank
+$r-\deg\gcd(\sum_i k_T(iB)X^i,X^r-1)$, and its nontrivial Fourier
+coordinates come in equal inversion pairs. Removing the trivial
+component and halving gives the rank of $B_T$.
+
+The construction aggregates the normalized section contributions
+and shares their absolute derivatives at zeros across targets.
+Its charged $2^{b+o(b)}$ preprocessing exceeds the
+$2^{(1/2+o(1))b}$ explicit-halves query and the
+$2^{(2/3+o(1))b}$ three-block query. The training budget at tuned
+arity is $2^{b/m+o(b)}$ rows, so batching these queries does not
+absorb the group-sized preprocessing. The best project estimate
+continues to be
+\[
+ \log_2\mathbb E T_{\rm solve}\le
+ (26.2933775156+o(1))\,b/(\log_2 b)^{1/4}
+\]
+under the project's finite-packet and contraction assumptions.
+The remaining issue for this formula is to evaluate the
+target-weighted product and the required target moments from the
+independent seeds within that budget, without materializing the
+group distribution.
+\end{document}

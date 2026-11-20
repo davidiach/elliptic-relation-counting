@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\title{Nonuniform dyadic coordinates: spectrum gains and readout losses}
+\author{Research checkpoint 006}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Scope.}
+The target remains general-prime-field ECDLP in expected bit time
+$2^{\widetilde O(\sqrt b)}$. We test geometric coordinates, repair their
+local integrality, and show that a particular odd-node reconstruction
+and unrestricted mode-enumeration route still has exponentially many
+feasible candidates. This is not a lower bound for all nonuniform grids,
+all support-aware contractors, or ECDLP. No improved complete bound is
+claimed. The ordinary geometric set also has unequal parity populations;
+this checkpoint does not assert a balanced packing theorem for it.
+
+\section{Definitions and a uniform-scaling invariant}
+Let $X$ be a finite integer coordinate set, $D=X-X$, and let a finite
+integer grid $\Gamma$ contain $D$. Set
+\[
+ C_\Gamma(T)=\prod_{s\in\Gamma}(T-s),\qquad
+ W_{xy}(T)=\frac{C_\Gamma(T)}{C_\Gamma'(0)(T+x-y)}.
+\]
+The apparent denominator cancels, and $W(0)=I$. Write
+\[
+ V_\Gamma(t)=v_2(C_\Gamma'(t))
+ =\sum_{s\in\Gamma\setminus\{t\}}v_2(t-s).
+\]
+At a node $\tau=y-x$, the nonzero constant entry has valuation
+$V_\Gamma(\tau)-V_\Gamma(0)$. Changing the scale in
+$T=\tau+2^\ell Z$ cannot alter this constant.
+
+For any nonzero integer $c$, simultaneously replacing $X,\Gamma,T$
+by $cX,c\Gamma,cT$ leaves every $W$ entry unchanged. Indeed the factors
+$c^{|\Gamma|}$, $c^{|\Gamma|-1}$ and $c$ cancel. Translating every
+coordinate also leaves all differences unchanged. Thus uniform affine
+spacing changes alone cannot improve the spectrum or precision tradeoff.
+
+\section{The geometric grid fails local integrality}
+For $n\ge3$ put $m=n-2$ and
+\[
+ X_n=\{0,1,2,4,\ldots,2^m\},\qquad D_n=X_n-X_n.
+\]
+All grids here are sets of \emph{distinct} differences, not multisets.
+The number of positive differences with valuation $i$ is
+\[
+ c_i=m-i\quad(0\le i<m),\qquad c_m=1.
+\]
+Consequently
+\begin{equation}
+ |D_n|=m^2+m+3,\qquad
+ V_{D_n}(0)=\frac{m^3+5m}{3}.
+ \label{eq:origin}
+\end{equation}
+The odd positive differences are $2^j-1$, $1\le j\le m$.
+Summing their differences from $1$, including their negatives, gives
+\begin{equation}
+ V_{D_n}(1)=\frac{n^2-n-4}{2}.
+ \label{eq:one}
+\end{equation}
+The difference between \eqref{eq:one} and \eqref{eq:origin} is negative
+for every $n\ge3$, with cubic magnitude. For instance $n=8$ gives
+$26-82=-56$. Thus the naive geometric deformation is not locally
+integral even at the constant term of $W_{0,1}(1+2^\ell Z)$.
+
+\section{A polynomial-size repair, charged rather than dismissed}
+For a shift exponent $E$ greater than every old pair-difference
+valuation, define
+\[
+ \Gamma_E=D_n\cup\{d+2^E:d\in D_n\setminus\{0\}\}.
+\]
+There is no added partner of zero. The grid has $2|D_n|-1=O(n^2)$ nodes.
+With $V=V_{D_n}$ and $U=V_{\Gamma_E}$, direct valuation identities give
+\begin{equation}
+ U(0)=2V(0),\qquad
+ U(d)=U(d+2^E)=E+2V(d)-v_2(d)\quad(d\ne0).
+ \label{eq:repair}
+\end{equation}
+Thus constant-term integrality is equivalent to
+$E\ge2V(0)-2V(d)+v_2(d)$ for every $d\ne0$.
+
+\begin{lemma}
+The smallest $E$ satisfying both strict old-point separation and
+the constant-term conditions in this paired construction is
+\[
+ E=\max\{n,\,2V(0)-6n+16\}.
+\]
+For $n\ge4$ the second term attains the maximum. In particular
+$E=\Theta(n^3)$.
+\end{lemma}
+\begin{proof}
+At valuation level zero the minimum of $V(d)$ is $3m-2$, attained
+at $d=\pm3$ if $m\ge2$, and at $d=\pm1$ if $m=1$.
+For $j\ge2$, the value on $2^j-1$ is
+$jm-j(j-1)/2+m-1$, which is minimized at $j=2$;
+the value on $1$ is $(m^2+3m-2)/2$ and is no smaller.
+
+For a nonzero node of valuation $i$, let
+\[
+ B_i=2\sum_{t=0}^m\min(i,t)c_t.
+\]
+The minimum derivative valuation on that level is
+$B_i+3c_i-2$. This follows by scaling the odd points in that
+valuation class; other levels contribute exactly $B_i$.
+These minima increase by at least one at each step $i\to i+1$,
+and the final step increases by two. Indeed
+$B_{i+1}-B_i=2\sum_{t\ge i+1}c_t$; until the last step the odd-class
+minimum decreases by three, and at the last step it is unchanged.
+The $m=1$ case gives an increase of two directly.
+Hence the minimum of $2V(d)-v_2(d)$ is $2(3m-2)=6n-16$.
+The largest old pair-difference valuation is $m+1=n-1$, attained
+between $2^m$ and $-2^m$. Strict separation requires $E\ge n$.
+Combining the two requirements proves the formula.
+\end{proof}
+
+Choose $\ell=E$. All differences of distinct repaired nodes have
+valuation at most $E$. For $\tau\ne\delta\in D_n$, the local entry
+$W_\delta(\tau+2^\ell Z)$ has a factorization with leading factor of
+valuation
+\[
+ \ell+U(\tau)-U(0)-v_2(\tau-\delta)
+\]
+times $Z$ and integral factors $1+2^\ell Z/(\tau-s)$.
+For $\tau=\delta$, its constant prefactor has valuation
+$U(\tau)-U(0)\ge0$ and the remaining factors are integral.
+Every local polynomial is therefore integral. The repair has polynomial
+node count and polynomial coordinate bit length; it is not rejected
+merely because some coordinates are numerically large.
+For $n\ge4$, this common local scale is minimal for the repaired grid:
+at $\tau=3$ one has $U(3)=U(0)$, while the unique paired root at distance
+$2^E$ makes the linear coefficient of $W_3(3+2^\ell Z)$ have valuation
+$\ell-E$. Every other root difference has smaller valuation, so it
+cannot cancel that leading denominator contribution.
+
+For odd nodes set
+\[
+ \delta_\tau=\ell+U(\tau)-U(0).
+\]
+The minimum is $E$ for $n\ge4$ (it is $4$ for $n=3$).
+The even coordinate block is
+$B=(0,2,4,\ldots,2^m)$ of size $n-1$.
+At any odd $\tau$, all Cauchy denominators $\tau+x-y$ in this block
+are units. Its normalized diagonal increments are exactly
+\begin{equation}
+ \Delta_k=2\sum_{j<k}v_2(B_k-B_j)=k(k+1),
+ \quad 0\le k\le n-2.
+ \label{eq:quadratic}
+\end{equation}
+The associated mode weights are $\delta_\tau+k(k+1)$.
+Both normalized triangular factors are integral and have unit diagonal.
+Their off-diagonal valuations are $i-k$ for $k>0$, rather than all zero;
+this distinction was caught by the independent elimination check.
+
+\section{A realizable readout witness defeats unrestricted enumeration}
+Use $M/n$ full packets, $M$ divisible by $4n$, with each old row and
+column variable pinned to one. The original contraction is one and its
+deformation is
+\begin{equation}
+ F(T)=\left(\prod_{x\in X_n}\sum_{y\in X_n}W_{xy}(T)\right)^{M/n}.
+ \label{eq:realizable}
+\end{equation}
+This is a valid finite tensor-network deformation, not just an arbitrary
+polynomial. It has degree at most $M(|\Gamma_E|-1)$.
+
+Every odd difference of two coordinates in $X_n$ involves its only odd
+coordinate, $1$. Hence at most two rows can contain an old difference
+equal to a given odd node $d\in D_n$. The same two rows are the only
+ones with a difference extremely close to the repaired node $d+2^E$.
+For each of the other at least $n-2$ rows and all its columns,
+$\tau\ne y-x$ and $v_2(\tau+x-y)\le n$.
+The local row form has zero constant term and is coefficientwise
+divisible by $2^{\delta_\tau-n}$. The remaining rows are integral.
+Thus at every odd repaired node,
+\begin{equation}
+ \operatorname{ord}_Z F(\tau+2^\ell Z)\ge r:=\frac{M(n-2)}n,
+ \qquad
+ v_2(\text{every coefficient})\ge
+ b_\tau:=\frac{M(n-2)}n(\delta_\tau-n).
+ \label{eq:witness}
+\end{equation}
+
+Consider reconstruction from \emph{only} odd-node jets, with jet length
+$q_\tau$ and precision $P_\tau$. If every node has either
+$q_\tau\le r$ or $P_\tau\le b_\tau$, every supplied residue is zero.
+Those data cannot distinguish \eqref{eq:realizable}, whose value at zero
+is one, from the zero deformation. Some required node therefore has
+both $q_\tau>r$ and $P_\tau>b_\tau$.
+
+For $n\ge7$ one has
+\[
+ \delta_\tau\ge E\ge\frac{n(n-1)(n-2)}3.
+\]
+For completeness, writing $m=n-2=5+t$, three times the difference
+between $E$ and the displayed fraction is
+$t^3+12t^2+35t+12>0$.
+It follows that
+\begin{equation}
+ b_\tau>
+ \frac M4\bigl(\delta_\tau+(n-1)(n-2)\bigr).
+ \label{eq:budget}
+\end{equation}
+Indeed, after cancelling $M/n$, the needed positivity is
+$(3n-8)\delta_\tau-n(n-2)(n+3)>0$, which follows from the preceding
+bound and $3n^2-14n-1>0$.
+
+There are $M(n-1)/n$ modes in these even blocks. Choose any fixed $M/4$
+of them. Every binary exponent vector supported on that chosen set has
+weight below $P_\tau$ by \eqref{eq:budget}, and total degree at most
+$M/4<q_\tau$. It also satisfies every per-packet degree cap.
+Therefore unrestricted feasible-mode enumeration at that required node
+includes at least $2^{M/4}$ candidates.
+
+\paragraph{What this excludes.}
+The geometric coordinates, this minimal paired-node repair, and a
+reconstruction/contractor using only odd-node residues with unrestricted
+candidate enumeration do not obtain a sublinear exponent in $M$ from
+the quadratic spectrum. The claim is about that concrete method and
+its feasible candidate universe. It does not assert that every candidate
+contributes, exclude support-aware pruning, forbid even-node schedules,
+or rule out direct evaluation using extra tensor structure. The all-one
+network is itself easy to contract; its role is a necessary readout
+precision and jet-length test, not a hard instance for every algorithm.
+
+\section{Evidence and next branch}
+The independent standard-library script checks sixteen coordinate sizes
+$n=3,\ldots,18$, 5024 derivative valuations, direct derivative products,
+sixteen exact Cauchy eliminations, twenty-two expanded realizable packet
+jets, and 54 uniform-dilation identities. Proofs above, rather than this
+finite sampling, establish the all-$n$ statements.
+
+A pilot also tests balanced low-bit cluster coordinates
+\[
+ X_{u,n}=\{2^u x+r:x\in X_n,\ 0\le r<2^u\}.
+\]
+These have equal occupancy of all $u$-bit orientations. In fifteen finite
+cases, central nodes can be integral even when other retained nodes fail;
+for $n=8$ and $u=1,2,3$, the worst retained constant valuation is $-16$.
+This does not settle that family. The next test should select admissible
+nodes explicitly and jointly charge the larger difference grid, Hermite
+multiplicities, local scale, mode weights and packet-entry cost. It must
+not inherit the old precision formula without a new derivation.
+\end{document}

@@ -1,0 +1,9 @@
+Literal indicator marginal comparisons: 234
+Endpoint rational identity checked at 61 even widths
+L=2: full dimension 7, 6 marginal rows examined
+L=4: full dimension 29, 28 marginal rows examined
+L=8: full dimension 121, 125 marginal rows examined
+L=16: full dimension 497, 581 marginal rows examined
+L=32: full dimension 2017, 3017 marginal rows examined
+L=64: full dimension 8129, 17553 marginal rows examined
+L=128: highest layer rank 255, 1154 marginal rows examined

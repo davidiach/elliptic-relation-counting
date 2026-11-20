@@ -1,0 +1,224 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\title{Actual packet polynomial spaces and integer-family parity recovery}
+\author{Research checkpoint 009}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Scope and outcome.}
+The complete binary-packet polynomial space is full in the certified
+cases $L=2,4,8$. More significantly, at $L=8$ it is already full for a
+fixed, explicitly pinned C38 source predicate with arbitrary source
+assignments. Thus a universal smaller polynomial space cannot be
+inferred just from the fact that the tensors arise from that predicate.
+We also solve the distinct problem of recovering only parity on the
+integer-generated family. At $L=8$ its optimal geometric precision
+scale is $102$, the same as the full-space exact readout from checkpoint
+008. The lower certificate applies to the specified observation model,
+not to algorithms that inspect or exploit the input tensors directly.
+No complete C38 graph contraction or ECDLP exponent improvement follows.
+
+\section{Literal polynomial families}
+For $L=2^a$, write
+\[
+ C(T)=\prod_{t=-L}^{L-1}(T-t),\qquad c_0=C'(0),\qquad
+ W_\delta(T)=\frac{C(T)}{c_0(T-\delta)},\quad -L<\delta<L.
+\]
+For a source assignment $X\in\{0,1\}^L$ put
+$s_x(T)=\sum_y W_{y-x}(T)X_y$. A target indicator assignment $Y$
+produces precisely
+\begin{equation}
+ F_{X,Y}(T)=\prod_{x=0}^{L-1}s_x(T)^{Y_x}
+                                      (1-s_x(T))^{1-Y_x}.
+ \label{eq:literal}
+\end{equation}
+This is the literal binary specialization of the simplex selectors in
+the native contractor, with arbitrary source and target indicator
+tensors. It has degree at most $D=L(2L-1)$ and
+$F_{X,Y}(0)=\mathbf1_{X=Y}$.
+Its numerator $G_{X,Y}=c_0^L F_{X,Y}$ is an integer polynomial.
+The sum over all $Y$ is one before clearing the denominator.
+In particular, $X=Y=0$ gives the constant one: there is no universal
+factor $T+L$ for the complete deformation, even though each $W$ has it.
+
+For the C38 family, the inherited construction pins the actual first
+source predicate at public parameters $p=13$, arithmetic length $8$,
+and four-bit limbs, leaving independent lower quotient bits. It gives
+the verified equality predicate
+\[
+ P(Y)=\prod_{(x,z)\in\mathcal P}\mathbf1_{Y_x=Y_z}.
+\]
+The source assignment $X$ then gives
+\begin{equation}
+ F_X(T)=\prod_{(x,z)\in\mathcal P}
+        (1-s_x(T)-s_z(T)+2s_x(T)s_z(T)).
+ \label{eq:copy}
+\end{equation}
+The factor two is retained. This is derived by summing the actual
+accepted target assignments in \eqref{eq:literal}, not by postulating a
+new predicate. The audit regenerates the pins, evaluates every Boolean
+assignment of the surviving ports, and compares the resulting jets
+against the native selector implementation.
+
+All vertices receive equal label words for this local test. The native
+packetizer makes one complete packet; its deterministic order gives
+\[
+ \begin{array}{c|l}
+ L&\mathcal P\\\hline
+ 2&(0,1)\\
+ 4&(0,2),(3,1)\\
+ 8&(0,2),(7,6),(4,1),(5,3).
+ \end{array}
+\]
+This is a legal complete local packing, not the asymptotic balanced
+packing schedule. Arbitrary weights on the source assignments are
+realized by a joint source tensor adjacent to this fixed predicate.
+They are not asserted to be the source tensors of an unrestricted
+full C38 relation instance.
+
+\section{Exact rank certificates}
+The rational span can be certified using integer numerators.
+The saved labels specify a square coefficient minor whose determinant
+is nonzero modulo $1000000007$. The audit verifies primality by trial
+division, rebuilds the polynomials, and computes the determinant with
+an independent elimination routine. A nonzero modular determinant is
+an exact rational-rank lower bound. The number of generators or the
+ambient polynomial degree gives the matching upper bound.
+\[
+ \begin{array}{c|r|r|r}
+ L&D+1&\operatorname{rank}\{F_{X,Y}\}&
+                    \operatorname{rank}\{F_X\}\\\hline
+ 2&7&7&4\\
+ 4&29&29&16\\
+ 8&121&121&121.
+ \end{array}
+\]
+For $L=2,4$ the generic family is also checked exhaustively by exact
+integer elimination. For $L=8$, the selected $121$ legal generators
+suffice to prove the full rank; exhaustive generation is unnecessary
+for verification. The C38 source family has $2^L$ generators, all of
+which are generated and checked in these cases.
+
+\begin{proposition}
+For every positive integer $k$, products of $k$ independent complete
+size-eight packets of the certified C38 predicate family span all
+rational polynomials of degree at most $120k$.
+\end{proposition}
+\begin{proof}
+One packet spans every monomial $T^j$ for $0\le j\le120$ by the full
+rank certificate. For $0\le d\le120k$, write $d=\sum_{i=1}^k d_i$
+with $0\le d_i\le120$. Expand each $T^{d_i}$ in its packet family and
+multiply. Products of the underlying legal source assignments occur
+among the independent packet inputs. Conversely all such products
+have degree at most $120k$.
+\end{proof}
+This is a fixed-packet-width extension, not a full-rank theorem for all
+growing $L$. It concerns disjoint products of predicate restrictions,
+not a newly solved full C38 network. A rational-span certificate also
+does not imply that every polynomial has an integral combination of
+the generators; those denominators matter for modular-only recovery.
+
+\section{The parity problem on an integer-generated family}
+Let $F_1,\ldots,F_N$ be the fixed rational generator polynomials, each
+with integral values at zero and integral dyadic jets at the chosen
+centers and local scales. Inputs are
+\[
+ F=\sum_{k=1}^N z_k F_k,\qquad z\in\mathbb Z^N.
+\]
+The goal is $F(0)\bmod2$, from jet row $r=(\tau,j)$ known modulo
+$2^{p_r}$, where $p_r=1+b_\tau$.
+The geometric profile is $b_\tau=\lfloor\lambda/2^{v_2(\tau)}\rfloor$.
+
+The implementation clears the common dyadic part of $c_0^L$ while
+retaining its odd part $o$. The integer jet matrix $E$ then equals
+$o$ times the actual integral jet matrix. Multiplication by $o$ is
+invertible at every precision, so this changes neither feasibility nor
+the available information. Write $c_k=F_k(0)\bmod2$.
+
+Set $B=\max b_\tau$, $K=B+1$, and
+\[
+ S_r=2^{B-b_\tau}E_r\pmod {2^K}.
+\]
+The desired certificate is
+\begin{equation}
+ \sum_r \lambda_r S_r\equiv2^B c\pmod {2^{B+1}}.
+ \label{eq:parity}
+\end{equation}
+It yields weights $\lambda_r/2^{b_\tau}$ on the odd-normalized jets,
+or $o\lambda_r/2^{b_\tau}$ on the original jets. Ambiguity in each
+observed jet changes the answer by an even integer. On a legal input,
+the combined numerator is divisible by $2^B$ and its quotient gives
+the desired parity. Individual weighted terms need not be integral.
+
+Capped Smith elimination over $\mathbb Z/2^K$ gives
+$USV=\operatorname{diag}(2^{\nu_1},\ldots,2^{\nu_r},0,\ldots)$,
+with $\nu_i<K$; rectangular and rank-deficient matrices are permitted.
+The transformed target $2^B cV$ has entries either zero or $2^B$.
+Every nonzero diagonal coordinate can therefore be solved. Feasibility
+is equivalent to $cV$ being even in each zero-diagonal column.
+
+If infeasible, choose such a column $z$ of an integer lift of $V$.
+It satisfies
+\begin{equation}
+ Ez\equiv0\pmod {2^{1+b_\tau}}\text{ on row }(\tau,j),
+ \qquad cz\equiv1\pmod2.
+ \label{eq:collision}
+\end{equation}
+Thus $z$ and the zero input have identical prescribed jet observations
+but different target parities. This excludes any readout, including a
+nonlinear one, \emph{from those observations on the integer-generated
+family}. It does not exclude using additional information about the
+input weights or restricting them to a smaller promised set.
+Upper certificates and collisions are checked directly without
+repeating the elimination. Binary search is valid because increasing
+$\lambda$ only supplies more bits.
+
+\section{Certified finite results}
+Use degree $L(2L-1)$ and local scale $2^{a+1}$. For $L=4,8$, the
+standard triangular profile is
+$q_\tau=\lceil L/(a-1)\rceil(a-v_2(\tau))$.
+For $L=2$, use four jets at each of $-1,1$.
+The following entries are denominator-loss/profile scales; actual jet
+precisions are $1+\lfloor\lambda/2^{v_2(\tau)}\rfloor$.
+\[
+ \begin{array}{c|l|r|r|r}
+ L&\text{family}&\text{full Hermite}&
+       \text{optimal exact full space}&\text{optimal family parity}\\\hline
+ 2&\text{generic}&10&9&9\\
+ 2&\text{C38 copy}&10&9&4\\
+ 4&\text{generic}&45&27&27\\
+ 4&\text{C38 copy}&45&27&8\\
+ 8&\text{C38 copy}&128&102&102.
+ \end{array}
+\]
+The smaller copy cases have proper rational spans, so their savings
+cannot be attributed to coefficient-lattice information alone. The
+size-eight case has both full span and a parity collision at the next
+smaller precision profile. It closes both finite loopholes there.
+For example, at scale $101$ the size-eight lower certificate has zero
+observations modulo $2^{102}$ at odd centers, $2^{51}$ at valuation-one
+centers, and $2^{26}$ at valuation-two centers, but an odd value at zero.
+Scale $102$ is feasible and certified.
+
+A separate positive control distinguishes the two mathematical models.
+For generators $1,2T$, the rational span is all linear polynomials, but
+one bit at $T=1$ recovers the constant modulo two. Replacing $2T$ by
+$T$, and supplying the first scaled derivative with scale $2$, requires
+two bits. The audit certifies both outcomes. It also tests random
+integer combinations with independent changes of jet representatives
+by multiples of their observation moduli.
+
+\paragraph{Costs and limits.}
+Generating the generic family costs $4^L$ polynomial entries; the copy
+family uses $2^L$. Explicit matrix construction, capped elimination,
+polynomial coefficient heights, odd-unit normalization, and storage are
+all real costs. This experiment has not provided a uniform efficient
+construction at the packet sizes needed for the ECDLP recurrence.
+The saved rank and parity certificates are finite, reproducible facts,
+not evidence of an asymptotic speedup. Other predicate structure,
+non-additive input promises, different observation sets and profiles,
+and representations avoiding the mode catalogue remain open.
+The square-root-in-$b$ general-prime-field ECDLP target remains unmet.
+\end{document}

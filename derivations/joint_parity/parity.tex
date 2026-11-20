@@ -1,0 +1,269 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Nm}{\operatorname{Norm}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\ord}{\operatorname{ord}}
+\title{A single algebraic norm for the target parity and its dyadic restrictions}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+For independently hashed slots on an odd-characteristic elliptic curve,
+the parity of the ordered target count is the parity of the order of
+vanishing of one scalar norm. At the project's isolation widths,
+the expected cost of handling the necessary Taylor precision is a
+constant factor per query for a uniform division-free norm circuit.
+On a draw with a unique tuple, first derivatives of the same norm
+give all its abscissas without bisection. We give a finite exact
+evaluator and price its dense algebra and an alternative balanced
+elimination. Neither gives a new end-to-end exponent.
+
+\section{Eliminate the signs without losing their multiplicities}
+Write the curve as $y^2=x^3+ax+c$ with $p>3$. Fix a target with
+$2T\ne O$, and put $t=x(T)$. First suppose all slot points come
+in pairs of distinct opposites. In slot $i$ let $U_i$ contain the
+accepted abscissas that actually lift to two rational points, and let
+$g_i(X)=\prod_{u\in U_i}(X-u)$. These sets can be built at the
+usual individual slot cost. An empty slot gives count zero. Use
+\[
+  A=\F_p[X_1,\ldots,X_m]/(g_1(X_1),\ldots,g_m(X_m)),\qquad
+  D=\dim A=\prod_i |U_i|.
+\]
+The Chinese remainder theorem identifies $A$ with one copy of $\F_p$
+per abscissa tuple. Monomial coordinates permit joint arithmetic before
+choosing any such tuple.
+
+Let $K(u,v,z)$ denote the third summation polynomial
+\[
+ (u-v)^2z^2-2\big((u+v)(uv+a)+2c\big)z
+             +(uv-a)^2-4c(u+v).
+\]
+Its roots on the projective line are $x(P+Q),x(P-Q)$ when
+$u=x(P),v=x(Q)$, with $x(O)=\infty$. For different finite
+abscissas this follows from the two chord slopes. The bihomogeneous
+continuation in the inputs gives $(Z_0-vZ_1)^2$ if one input is
+infinity and the other is $v$. For equal finite inputs $u=v$ the
+leading coefficient vanishes and the middle coefficient is
+$-4(u^3+au+c)$. This gives one infinity and the usual doubling
+root when $P$ is nonfixed. At rational two-torsion the constant
+coefficient is $(3u^2+a)^2\ne0$, giving two infinities.
+Both inputs at infinity also give two infinities. This is the
+summation-polynomial recurrence of
+\href{https://eprint.iacr.org/2004/031}{I. Semaev}, used here with
+projective degrees and multiplicities.
+
+Start with $S_1(Z)=Z-X_1$. For $j>1$ take the binary homogeneous
+resultant in $W$ of $S_{j-1}(W)$ and $K(W,X_j,Z)$, preserving the
+formal degrees $2^{j-2}$ and $2$ in $W$. Denote the result by
+$S_j(Z)$, of formal degree $2^{j-1}$ in $Z$. For every grid
+specialization, this form has a root, with multiplicity, for each
+choice of the first $j$ signs modulo simultaneous reversal.
+Indeed, a representative of each previous sign orbit extends in
+two ways and the two new abscissas are the roots of its $K$ factor.
+If the old sum is fixed under negation, the two new values coincide
+and their multiplicities add. The homogeneous resultant multiplies
+these factors, including those from infinite roots. Every specialized
+form is nonzero because each individual quadratic is nonzero.
+
+Set $S=S_m$ and let $S_{\mathbf u}$ be its specialization at a grid
+point. Each sign orbit with final abscissa $t$ contains exactly one
+tuple summing to the specified signed target $T$, since $2T\ne O$.
+The resulting integer identity also covers $H(T)\ge p$.
+\begin{equation}
+ H(T)=\ord_{\epsilon=0}\mathcal N(\epsilon),\qquad
+ \mathcal N(\epsilon)=\Nm_{A/\F_p}\big(S(t+\epsilon)\big)
+     =\prod_{\mathbf u}S_{\mathbf u}(t+\epsilon). \label{eq:norm}
+\end{equation}
+The norm is the determinant of multiplication on $A$. The product
+proves the identity. It need not be the chosen evaluation algorithm.
+For a subwindow replace the $g_i$ by the corresponding divisors.
+
+If slots contain rational two-torsion, expand each slot into its
+ordinary paired part and up to three individual fixed points. In
+each branch subtract the sum of the fixed choices from $T$. The
+result still satisfies $2T'\ne O$. Apply (\ref{eq:norm}) at
+$x(T')+\epsilon$ to its ordinary slots. The all-fixed branch
+contributes no tuple. Multiplying the nonempty branch norms adds
+their orders. There are at most $4^m$ branches, a lower-order
+logarithmic cost in the project regime.
+
+\section{Cost of precision and recovery of an isolated tuple}
+Use the tuned widths of \texttt{../mixed\_coefficient/mixed.tex}.
+Let $H_0$ count tuples at the original window. That note proves
+$\E H_0=O(1)$, $\E[H_0(H_0-1)]=O(1)$ and a probability at least
+$2/9-o(1)$ of exactly one tuple, passing the chord guards.
+Every nested restriction satisfies $H'\le H_0$ deterministically.
+Evaluate its norm modulo $\epsilon^k$, doubling $k$ from one until
+a nonzero coefficient is found. Its least index is the exact
+integer $H'$. In particular no large-characteristic lifting
+assumption is needed to read its parity.
+
+Suppose a division-free circuit of size at most $L$ computes the
+scalar norm with its input coefficients, uniformly over these
+widths, and is valid over truncated polynomial rings. A ring
+operation at precision $k$ costs $O(k^2)$ base-field operations by
+ordinary multiplication. The sum over doublings is $O((1+H_0)^2)$.
+Since $\E(1+H_0)^2=1+3\E H_0+\E[H_0(H_0-1)]=O(1)$, the expected
+cost of an adaptive sequence of at most $Q$ queries is $O(QL)$,
+apart from obtaining slot inputs and constructing circuits. This
+argument uses a uniform cost bound $L$ and the original seed law.
+It makes no independence assumption on the adaptive child queries.
+It does not give a bound of the desired size for $L$.
+
+There is a cheaper interface when only a relation is needed.
+Introduce scalar perturbations $s_0,\ldots,s_m$ in the norm
+\[
+  N(z,\mathbf s)=\Nm\big(S(z)+s_0+\textstyle\sum_i s_iX_i\big)
+\]
+and evaluate its value and first derivatives at $(t,\mathbf0)$.
+A nonzero value means $H=0$. A zero value with $\partial_z N\ne0$
+means $H=1$. In the latter case only one grid point $\mathbf u^*$
+is a zero. Differentiating the split product gives
+\[
+  \partial_{s_0}N=\prod_{\mathbf u\ne\mathbf u^*}S_{\mathbf u}(t)\ne0,
+       \qquad u_i^*=\frac{\partial_{s_i}N}{\partial_{s_0}N}.
+\]
+Check at most $2^m$ signs and the original guards after this readout.
+At $H\ge2$ the value and $z$ derivative both vanish and the relation
+finder may abstain. Thus root derivatives suffice at the previous
+isolation probability without adaptive queries. With fixed-point
+branches, use their product and perturb each factor with its own
+corresponding abscissas, including constants in the fixed slots.
+First-order forward differentiation costs $O(m)$ field operations
+per circuit gate. The finite verifier uses the cofactor formula
+for a determinant derivative, which works also at a singular matrix.
+
+\section{One projector answers every restriction}
+There is a second exact implementation which keeps the root algebra.
+Write $S(t+\epsilon)=\sum h_j\epsilon^j$ and $d=2^{m-1}$. Define
+\[
+  e_j=\prod_{k=0}^{j-1}(1-h_k^{p-1})\quad(1\le j\le d),\qquad
+  B=\sum_{j=1}^d(-1)^{j-1}e_j .
+\]
+On each grid point $e_j$ indicates root order at least $j$, so $B$
+is the zero-one indicator of odd local multiplicity. Since every
+specialization is a nonzero form of degree $d$, this includes every
+multiplicity. Equivalently, for multiplication operators $M_{h_k}$
+the integer count, before any reduction, is
+\[
+ H(T)=\sum_{j=1}^{d}\dim_{\F_p}\bigcap_{k<j,\ k\ge0}\ker M_{h_k}.
+\]
+Indeed the $j$th subspace is precisely the image of $e_j$. The first
+kernel has dimension at most $H(T)$, and dimension one on an isolated
+draw. Extracting this small kernel from a succinct description of
+the multiplication operator is itself a computational problem.
+For subwindow sets $V_i\subseteq U_i$ let $I_i$ be
+the univariate Lagrange indicator of $V_i$ on $U_i$. Then
+\begin{equation}
+   (-1)^{H_V(T)}
+   =\Nm_{A/\F_p}\left(1-2B\prod_i I_i(X_i)\right). \label{eq:bit}
+\end{equation}
+The right side is computed over the odd prime field and is exactly
+$+1$ or $-1$. The formula holds for arbitrary seed choices and
+simultaneously for all subwindows. On an isolated root $B$ consists
+of one tensor product of univariate Lagrange indicators. In this
+case $\Tr(X_iB)=u_i^*$.
+
+On independent root seeds, replacing $B$ by just $e_1$ gives the
+same answer for every restriction except on an event of probability
+at most $\lambda |G[2]|(2^m-2)/|G|$. Here $\lambda=\prod_i
+(|G|\tau_i/2^b)/|G|$. Indeed, a difference requires two distinct
+signed tuples with the same abscissas reaching $T$ at the original
+window. The all-abscissas-equal term in the previous factorial
+moment bound counts precisely such ordered pairs. Restricting
+windows cannot create a pair. Equation (\ref{eq:bit}) handles the
+exceptional seeds exactly.
+
+\section{Pricing the joint operation}
+Consider prime-order curves of order $r$ and tuned balanced widths.
+Put $\rho_i=\tau_i/2^b$, $\nu_i=r\rho_i$ and $n=(r-1)/2$.
+Independence and the nonpositive covariance for distinct abscissas
+in each slot give
+\[
+ \E D=\prod_i n\rho_i=\lambda r(1-1/r)^m/2^m,\qquad
+ \frac{\operatorname{Var} D}{(\E D)^2}
+     \le\prod_i(1+1/(n\rho_i))-1=o(1).
+\]
+The last estimate uses $m/\min_i\nu_i=o(1)$. Hence a dense root
+element costs $2^{b-m+O(1)}$ field entries with probability $1-o(1)$.
+The companion-matrix verifier spends additional space on matrices.
+Even using dense field elements alone costs $2^{(1-o(1))b}$ for
+the growing polylogarithmic arities here. The constant-probability
+isolation event intersects this typical size with the same
+asymptotic conditional probability. Small final projector rank
+alone gives no algorithm for obtaining its factors.
+
+A balanced elimination could instead build squarefree univariate
+polynomials for the two halves, dropping every even-multiplicity
+root. The following estimates price this explicit representation.
+For a fixed block of $s$ slots, put $A_s=\prod_{i\text{ in block}}\nu_i$
+and let $h(U)$ be its ordinary count at $U$. Summing over $U$ gives
+\[
+ \E\sum_U h(U)(h(U)-1)
+ \le \frac{A_s^2}{r}\prod_{i\text{ in block}}(1+2/\nu_i)
+       +\frac{A_s|G[2]|(2^s-1)}r .
+\]
+For a proper set of matching abscissas choose the first tuple in
+at most $r^s$ ways, allow two signs at matched positions and force
+the last unmatched point by equal sums. For all abscissas matched,
+a nonempty flip set must sum into $G[2]$, giving at most
+$|G[2]|r^{s-1}$ first tuples per flip set. This includes flipping
+the whole block, since the block target varies. Hash retention
+probabilities then give the displayed terms.
+The total number of tuples concentrates at $(1+o(1))A_s$ in relative
+probability by the same product-variance calculation as for $D$.
+The loss on reducing all counts modulo two is at most
+$\sum_U h(U)(h(U)-1)$. For a fixed balanced half with $A_s=o(r)$
+and $2^s=o(r)$ the expected loss is $o(A_s)$. Thus the number
+of distinct odd abscissas is $(1+o(1))A_s/2$ in probability.
+For $s=\lfloor m/2\rfloor$ and growing $m$ this is
+$2^{(1/2+o(1))b}$. It prices expanding the half polynomial into
+a dense array or root list. An implicit scalar norm could have a
+different cost.
+
+The existing conditional end-to-end estimate consequently remains
+\[
+ \log_2\E T_{\rm solve}\le
+ (26.2933775156+o(1))\,b/(\log_2 b)^{1/4}
+\]
+under the finite-packet assumption and inherited hypotheses in
+\texttt{../short\_hash\_count/count.tex}. A smaller uniform circuit
+for the scalar norm, in particular for its value and first derivatives
+at the target, would address the remaining joint computation.
+
+\paragraph{Finite verification.}
+Run \texttt{python -B research/joint\_parity/verify.py} with NumPy.
+The checker constructs the slot companion matrices in a monomial
+basis. For a binary form $P(W)=\sum p_iW^i$ of formal degree $h$,
+its resultant with $AW^2+BW+C$ can be computed without divisions as
+\[
+ \sum_{i=0}^{h}p_i A^{h-i}
+   \left(p_i C^i+\sum_{j<i}p_j C^j L_{i-j}\right),\qquad
+ L_0=2,\ L_1=-B,\ L_k=-B L_{k-1}-AC L_{k-2}.
+\]
+This follows by expanding $A^hP(w_1)P(w_2)$ at the two formal roots
+and continues polynomially to $A=0$. The checker interpolates the
+output in $Z$ on fixtures with $p>d$. It checks the exact integer
+orders via kernel dimensions and the norm signs against independent
+elliptic addition. Reuse of the root projectors passes
+567 child/target tests over all 63 dyadic boxes on the curve of order
+19. Both trace readout and differentiated norm recover all 76
+isolated cases in those boxes. Four repeated slots give counts as
+large as 28 in characteristic 13. Fixed-point branching passes all
+four eligible signed targets on the order-8 curve with full rational
+two-torsion.
+
+On the order-65419 fixture over $\F_{65521}$, four independent
+seed draws (one per slot) at widths $(8,16,16,16)$ gave a grid of
+dimensions $(4,7,10,10)$ at a verified singleton target $(0,1)$.
+Across the $28$-by-$100$ split the field rank of $S(t)$ was 15,
+the rank of its square was 28, and every sampled successive square
+through exponent $2^{15}$ also had rank 28. The final zero projector
+had rank one. These are exact field ranks for one disclosed fixture.
+They test the proposal to keep ranks small during powering and do
+not supply an asymptotic lower bound for other circuits.
+\end{document}

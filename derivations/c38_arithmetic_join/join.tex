@@ -1,0 +1,237 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\title{Arithmetic elimination and convolution in the C38 join}
+\author{Project research note}
+\date{17 November 2026}
+\begin{document}
+\maketitle
+
+We use the project's general-prime C38 chord equations, symmetric
+abscissa hashes and ordinary affine addition guards. The local elimination
+below also works with a weighted source. For a whole undeformed chain the
+guards admit an additive correction to convolution whose rank grows at
+most linearly in the total slot-set size. The remaining cost is access to
+coefficients of products in the curve group algebra.
+
+\section{An exact join of the two chord equations}
+Work over $\mathbb F_p$ for $p>3$, on a nonsingular curve
+$y^2=f(x)=x^3+ax+c$. Write $u=X_{j-1},v=x_j,w=X_j$ and let $s$ be
+the slope. Fix $u,w$ and the ordinate $y$ of the anchored point, at $w$
+for an even step and at $u$ for an odd step. Let $\epsilon=1$ for an
+even step and $-1$ for an odd step. The C38 equation $E_j=0$ sets
+$v=s^2-u-w$. Substitution in the corresponding $D_j=0$ gives exactly
+\[
+  (w-u)s^2+2ys+\epsilon(u^2+uw+w^2+a)=0 .
+\]
+With $g=w-u$ and $h=u^2+uw+w^2+a$ we have $gh=f(w)-f(u)$.
+Consequently $y^2-\epsilon gh$ equals $f$ at the other abscissa.
+When $g\ne0$ the slopes are
+\[
+ s=\big(-y\pm\sqrt{y^2-\epsilon gh}\big)/g .
+\]
+Use one root when the radicand is zero and none when it is a nonsquare.
+When $g=0$ and $y\ne0$, the unique candidate is
+$s=-\epsilon h/(2y)$. When $g=y=0$ the anchored point is a root of
+$f$ and nonsingularity gives $h=f'(u)\ne0$, so there is no solution.
+These cases require an on-curve anchor. A synthetic off-curve boundary
+with $g=y=h=0$ admits every slope in the two equations alone.
+
+For each candidate enforce $v\ne u$ and the actual slot hash on the
+canonical representative of $v$. Any additional link test or weight
+depending on $(v,s)$ can be evaluated at the surviving pairs.
+Thus two weight evaluations suffice, in addition to expected
+$\operatorname{poly}(\log p)$ bit work for the field arithmetic. This
+price assumes access to the specified boundary values and separately
+charges evaluation of the weight. It does not sum over the boundary.
+For completeness, a square-root table is unnecessary at large $p$.
+Test for a nonzero square $d$ by Euler's criterion, then choose $t$
+until $e^2=t^2-d$ defines a quadratic extension. There are $(p-1)/2$
+suitable $t$, by counting $(t-z)(t+z)=d$. Frobenius sends $e$ to
+$-e$, hence $(t+e)^{(p+1)/2}$ squares to $d$ and is one of its two
+roots in $\mathbb F_p$. Binary powering gives the stated cost.
+
+\paragraph{A deformed, source-weighted packet.}
+Contract each such fixed-boundary chord slice first and encode its two
+remaining field words in binary. If both the source and the target of
+a packet are such slices, their analytically computed supports $I,J$
+each have at most two elements. Let $W_{xy}(T)$ be the native packet
+matrix, and let $w_X,v_Y$ be the scalar source and target weights.
+For live positions the joined value is
+\[
+ \sum_{X\in I,Y\in J}w_Xv_Y
+ \prod_x
+ \begin{cases}
+ u_x(X),&Y_x=1,\\
+ 1-u_x(X),&Y_x=0,
+ \end{cases}
+ \qquad u_x(X)=\sum_{z} W_{xz}(T)X_z .
+\]
+This follows by substituting the actual binary selectors into the
+deformation. It evaluates at most four products, charges
+$O(L^2)$ ring operations at width $L$ once the jet kernel is built, and
+includes repeated powers introduced by the mixing. The native kernel
+can itself be constructed in polynomial time in explicit $L$, precision
+and jet length by its finite products. This test merges equations
+before forming the packet. The original nine-group recursion can split
+their Fourier ports across groups, so this identity alone supplies no
+closure result for its general child descriptors.
+
+\section{The whole guarded chain}
+Let $G=E(\mathbb F_p)$ with identity $O$, let $F_j$ be the actual signed
+slot set, let $s_j=|F_j|$, and write $h_j$ for its indicator.
+It satisfies $h_j(O)=0$ and $F_j=-F_j$. Write $d$ for the vector of
+incoming path counts supported on affine points. At step $j$ first form
+the ordinary group convolution $g=h_j*d$. Then the exact outgoing
+vector is
+\begin{equation}
+ T_j d=g-g(O)\delta_O-
+ \sum_{\substack{A\in F_j\\2A\ne O}}d(A)\delta_{2A},
+ \qquad g(O)=\sum_{A\in F_j} d(-A).
+ \label{guard}
+\end{equation}
+Indeed, an excluded step from $U$ with addend $A$ has equal abscissas,
+so $A=-U$ or $A=U$. The first case lands at $O$. The second lands at
+$2A$ and has precisely the incoming multiplicity $d(A)$. Excluding
+$2A=O$ from the last sum counts a two-torsion exception once.
+Repeated doubling images are added with their full multiplicity.
+The derivation uses the original C38 bijection from valid chains to
+canonical arithmetic assignments. It applies on the semantic point
+boundary before Fourier-word deformation.
+
+Extend the displayed linear operator to arbitrary vectors by the same
+formula. Genuine input vectors to a step have zero at $O$. The start
+of the full relation chain is $d_1=h_1$. Write $C_j$ for ordinary
+convolution by $h_j$. Since the image of $T_j-C_j$ lies in the span
+of the at most $1+s_j$ indicated point masses, telescoping gives
+\[
+ \operatorname{rank}(T_k\cdots T_i-C_k\cdots C_i)
+ \le \sum_{j=i}^k(1+s_j).
+\]
+This follows over every field. At each telescoping summand, multiplication
+on the left and right preserves the upper bound on its rank.
+The ordinary part is a single convolution by $h_i*\cdots*h_k$.
+
+\paragraph{Entry access and construction cost.}
+Call its coefficient at $P$ $H_{i:k}(P)$, with the empty interval
+equal to $\delta_O$. For each $i\ge2$ save the sparse correction $e_i$
+from (\ref{guard}) using the actual preceding counts. The exact count is
+\[
+ d_j(W)=H_{1:j}(W)+
+ \sum_{i=2}^j\ \sum_{P\in\operatorname{supp} e_i}
+       e_i(P)H_{i+1:j}(W-P).
+\]
+To construct $e_i$, use this formula for $d_{i-1}$ at the $s_i$
+members of $F_i$. Symmetry supplies all $d_{i-1}(-A)$ as well.
+Let $D=1+\sum_i(1+s_i)$. Building the correction lists takes $O(D^2)$
+interval-coefficient queries and arithmetic operations, then one final
+endpoint needs $O(D)$ such queries and operations. Apart from storage
+for slot sets, the coefficient procedure and answers, $O(D)$ locations
+and integer weights suffice. Counts in an interval are bounded by the
+product of its slot sizes. The bit lengths of intermediate sums here
+are polynomial in $m$ and $b$ because the corrections are counts of
+excluded transitions and there are at most $D$ terms.
+Constructing slot sets also costs time, as in the original budget.
+
+For two slots a coefficient can be obtained by scanning the smaller
+set and testing membership of the complementary point in the other
+hash. At longer intervals the formula still needs coefficients of an
+ordinary product of many independent slot indicators. The verifier
+builds their full finite tables and counts the group additions used.
+On the order-19 five-slot fixture this costs 724 additions before the
+607 coefficient lookups for correction setup and all target counts.
+Dense tables on a group of size comparable to $2^b$ have exponential
+size in $b$. The formulas supply no subexponential entry procedure for
+the long intervals. They compute counts, and the full application would
+also have to pay for witness selection, training, and extraction.
+
+\section{Why a small sum of separated boundary functions fails}
+Consider the prime-order case $|G|=r$ and a nonempty slot of size
+$s$. This is an admissible subclass, and the following bounds apply to
+each such finite group. On the whole group the unguarded convolution
+matrix $C$ is invertible over $\mathbb Q$. Indeed, identify the group
+abstractly with $\mathbb Z/r$ for the proof. The eigenvalues are the
+evaluations at $r$th roots of unity of the degree-at-most-$(r-1)$
+indicator polynomial. At one its value is $s$. At any other root,
+vanishing would imply divisibility by $1+X+\cdots+X^{r-1}$, irreducible
+by applying Eisenstein after translating $X$ by one. The indicator is
+nonconstant since $O$ is excluded. This proof uses no computed discrete
+logarithms. The character diagonalization of convolution is standard.
+See \href{https://www2.math.upenn.edu/~gressman/analysis/14-discrete.html}
+{P.\ Gressman, Fourier analysis on finite abelian groups}.
+
+Keep the $r-1-s$ rows $U$ with $U\ne O$ and $U\notin F_j$ in the
+matrix indexed by incoming and outgoing points. They are unchanged by
+the C38 guard and have zero in column $O$. They were independent in
+$C$ and remain so on the affine columns. Therefore
+\[
+ \operatorname{rank}_{\mathbb Q} K_j \ge r-1-s_j,\qquad
+ \operatorname{rank}_{\mathbb Q}(K_i\cdots K_k)
+ \ge r-1-\sum_{j=i}^k s_j ,
+\]
+where $K_j$ is the genuine affine-to-affine transition. The product
+bound follows by adding nullities on the common $(r-1)$-dimensional
+space. There is also a one-step bound in any characteristic. Each
+retained row has support $s$. Choosing a single fixed $A\in F_j$ shows
+that the union of these row supports contains at least $r-1-s$ distinct
+columns $U+A$. A basis of retained rows must cover that union.
+Consequently rank is at least $\lceil(r-1-s)/s\rceil$, including
+over $\mathbb F_2$.
+
+A representation $\sum_{\ell=1}^q a_\ell(U)b_\ell(W)$ must therefore
+use at least the indicated rank in separated terms. For sparse slot sets
+the rational bound can be nearly the full group order even after
+composing steps. Convolution itself is a short description of such a
+high-rank matrix. The result leaves open a nonlinear or implicit
+algorithm for selected interval coefficients.
+
+\paragraph{A cost bound for two explicit implementations of the remaining sum.}
+Use the original targetwise coverage lemma at its prescribed hash
+threshold on a prime-order curve with $r\ge30m$. Under its independent
+seed law every nonidentity target has a guarded tuple with probability
+greater than $2/5$. Let $Z$ be the number of such reachable targets.
+Linearity gives $\mathbb E Z>2(r-1)/5$. Since $0\le Z\le r-1$,
+\[
+ \Pr\{Z\ge(r-1)/5\}\ge 1/4.
+\]
+Every guarded tuple is also an unguarded tuple, with positive integral
+weight. On this event the support of $H_{1:m}$ contains at least
+$(r-1)/5$ points. For every split $1\le j<m$,
+\[
+ |\operatorname{supp}H_{1:j}|\,|\operatorname{supp}H_{j+1:m}|
+ \ \ge\ |\operatorname{supp}H_{1:m}|\ \ge\ (r-1)/5
+\]
+because full sums are sums of two partial sums. Constructing both
+explicit partial-support dictionaries therefore needs at least
+$\sqrt{(r-1)/5}$ distinct entries even if the split is chosen from the
+data. In the character basis the full convolution has all $r$ Fourier
+coefficients nonzero whenever all slots are nonempty, by the same
+prime-order argument applied to each factor. Hence sparse tables in
+either of these two bases cannot deliver a $2^{o(b)}$ expected build
+cost on this subclass, where $r$ is comparable to $2^b$. This
+consequence uses the project's stated coverage conditions. It concerns
+algorithms materializing these supports, leaving an on-demand algorithm
+for a single coefficient open.
+
+\paragraph{Validation and conclusion.}
+Run \texttt{python -B research/c38\_arithmetic\_join/verify\_join.py}.
+The audit compares 810 fixed-boundary slices to both vendor equation
+orientations across 116,442 raw pairs. It checks a mixed packet with eight
+live bits in sixteen slots, two analytic chord supports, nonuniform weights,
+and five jet coefficients modulo $2^{60}$. The four weighted support
+pairs match all 270 admissible normalized exponent vectors. Dropping
+repeated exponents changes the answer. Five finite chain fixtures include
+empty slots, two-torsion, and curves of orders 14, 18, 19 and 31. Their
+guarded counts agree at every target with literal ordered tuples. Every
+accepted tuple is also checked against the original integer equations
+including the shifted quotients. Separately, an order-223 example over
+$\mathbb F_{211}$ meets the project's actual coverage threshold for four
+slots. Both two-slot sumsets fill all 223 group elements and every one
+of the 222 affine targets has a guarded path. The probability bound
+above follows from the coverage lemma independently of this example.
+These diagnostics do not run the full Fourier graph.
+The conditioning cost and the missing fast general interval coefficient
+procedure prevent any improvement here to the project's conditional
+exponent or its leading constant.
+\end{document}

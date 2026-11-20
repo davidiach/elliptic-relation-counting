@@ -1,0 +1,348 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\wtO}{\widetilde O}
+\title{Implicit halves for the scalar resultant}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+The normalized norm and its first derivatives admit an exact evaluation
+in which neither of the two original half polynomials is constructed.
+Three smaller blocks suffice. At the tuned widths this gives a
+time--space tradeoff on the relation queries. The space exponent
+drops from $1/2$ to $1/3$ in units of $b$, and the time exponent
+increases from $1/2$ to $2/3$. A separate algorithm computes a
+small-degree gcd probe on a genuine hashed slot in sublinear work
+in its width. We examine what such probes and rational-series
+compression can reveal about the final scalar.
+
+\section{A symmetric three-block evaluation}
+Use the smooth curve $y^2=x^3+ax+c$, $p>3$, the fixed target
+$2T\ne O$, and the normalized sign-orbit form $S$ of
+\texttt{../scalar\_norm/norm.tex}. With $t=x(T)$ and paired
+abscissa slots $U_i$, the requested scalar and derivatives are
+those of
+\[
+ N(z,\mathbf s)=
+ \prod_{\mathbf u\in\prod U_i}\left(S(\mathbf u;z)
+                     +s_0+\sum_i s_i u_i\right)
+\]
+at $(t,\mathbf0)$. The sign-orbit construction uses the triquadratic
+\[
+ K(x,y,z)=(x-y)^2z^2-2((x+y)(xy+a)+2c)z+(xy-a)^2-4c(x+y),
+\]
+homogenized in each argument. It accounts for both completions
+$x(P+Q),x(P-Q)$ including infinity and multiplicities.
+
+Include $\{t\}$ as one additional singleton slot. Partition these
+$m+1$ sets into three nonempty groups. For each group of $s$ sets,
+multiply the individual forms $S(\mathbf u;X)$ for its tuples.
+The resulting form has formal degree $2^{s-1}\prod n_i$, where
+$n_i$ is the size of each set and the target has size one. Denote
+the three forms by $F,G,H$ with degrees $d_F,d_G,d_H$. In particular
+\begin{equation}
+    d_F d_G d_H=2^{m-2}\prod_i|U_i|=\tfrac14\prod_i|F_i|,
+    \label{eq:volume}
+\end{equation}
+where $F_i$ denotes the signed point slot. One may interleave the
+three groups across the original two halves. The new evaluator
+requires neither original half nor a list of its tuple roots.
+
+Factor a stationary block $F$ into normalized finite linear factors
+$X_0-xX_1$ and infinity factors $X_1$. Let $\alpha_F$ be their
+common scalar prefactor, the highest nonzero affine coefficient.
+List its projective roots as $\xi$ with multiplicities $m_\xi$.
+Use the same conventions for $G$. Holding these two blocks fixed, form
+one polynomial per distinct outer root,
+\[
+ P_\xi(Z)=\prod_{\eta:G(\eta)=0}K(\xi,\eta,Z)^{m_\eta},
+                  \qquad \deg_{\rm formal}P_\xi=2d_G ,
+\]
+where the product indexes distinct projective roots. The exact value is
+\begin{equation}
+ N(t,\mathbf0)=
+ \alpha_F^{\,2d_Gd_H}\alpha_G^{\,2d_Fd_H}
+       \prod_{\xi:F(\xi)=0}
+       \Res_{2d_G,d_H}(P_\xi,H)^{m_\xi}.             \label{eq:three}
+\end{equation}
+This is the Poisson product formula for three successive homogeneous
+eliminations against $K$. To verify the normalization, first use
+one tuple per block. Merging two forms gives one $K$ factor for
+every pair of sign orbits. Its roots represent the two possible
+relative signs. This is the homogeneous resultant recurrence in
+the preceding note, reparenthesized by multiplicativity. The
+remaining elimination pairs these relative signs with the third
+group. The full normalized summation form is symmetric in all
+$m+1$ arguments for $m\ge2$, as proved there. Taking products of
+the tuple identities gives (\ref{eq:three}). Each input to $K$
+has degree two, so the Poisson signs from infinity factors are
+positive, as is the sign for interchanging $H$ and $P_\xi$.
+In particular $K(\infty,\eta,Z)=(Z_0-\eta Z_1)^2$ for finite
+$\eta$, and $K(\infty,\infty,Z)=Z_1^2$.
+
+To differentiate an input belonging to $H$, differentiate only
+$H$ inside (\ref{eq:three}). The two prefactors are fixed.
+Each section uses the fixed-form resultant derivative in the
+preceding note, which handles a common root and a drop in affine
+degree. Apply the ordinary product and power rules, including at
+zero. Permute the three groups to cover all inputs. This avoids
+differentiating a factorization at a multiple root. The case of
+one original slot uses its defining product.
+
+In detail, this gives $N_z$ and the derivatives $P_i,Q_i$ of the
+norm under $u\mapsto u+\epsilon$ and $u\mapsto(1+\epsilon)u$ in
+slot $i$. At an isolated tuple the previous result gives
+$u_i^*=Q_i/P_i$, $N_{s_0}=N_z/S_z(\mathbf u^*;t)$ and
+$N_{s_i}=u_i^*N_{s_0}$. At a multiple zero, use three-block
+scalar calls on restricted boxes to locate one zero tuple and
+obtain its cofactor from the disjoint complement boxes. With
+several zero tuples that cofactor vanishes. At a nonzero norm the
+relation query can exit immediately. If all additive derivatives
+are requested there, the existing two-slot symbolic calculation
+computes them without either original half. These two types of
+derivatives have different costs. Empty slots and rational
+two-torsion use the earlier unit and fixed-point branches.
+
+\paragraph{Cost.}
+Build block polynomials by subproduct trees. The roots of each
+individual factor can be enumerated by sign sums on the curve or
+factored in its small degree $2^{O(m)}$. Build each $P_\xi$ from
+quadratic factors with fast polynomial products. With balanced
+groups, tuned independent widths and growing polylogarithmic $m$,
+all three degrees are at most $2^{b/3+O(b/m+m)}$. One varying-block
+pass takes $\wtO(d_F(d_G+d_H))$ field operations times
+$2^{O(m)}\operatorname{poly}(b,m)$ allowing for construction,
+directions and root enumeration. Peak working space is at most
+$2^{O(m)}(d_F+d_G+d_H)\operatorname{poly}(b,m)$. Neither bound
+uses an oracle for an uncharged polynomial evaluation.
+Thus on the tuned odd prime-order family the relation query, including the first derivatives at zeros,
+costs $2^{(2/3+o(1))b}$ time and $2^{(1/3+o(1))b}$ space.
+The complete additive gradient at nonzeros has the separate
+$2^{(1-1/m)b+O(m+\log b)}$ upper bound of the two-slot method.
+Its working polynomial degree is $O(2^m\max_i n_i)$.
+
+Equation (\ref{eq:volume}) prices the extra scan. In the method
+that scans all formal outer roots and processes the two remaining
+explicit polynomials for each section, work times space is at
+least of order $d_Fd_Gd_H$. With fixed balanced target-free blocks
+the previous collision estimate also shows that a $1-o(1)$ fraction
+of their formal roots are distinct in probability. During the pass
+varying the target block, merging repeated outer or middle roots
+therefore does not change the exponent. These estimates concern
+this evaluation schedule. They do not price a simultaneous
+implicit evaluation of all sections by a different identity.
+
+\section{An actual hash probe of sublinear cost}
+For modulus $M=2^b$ the canonical candidate abscissas are
+$x_j=(A j+C)\bmod M<p$, $0\le j<\tau$, where $A$ is the inverse
+of the odd hash multiplier. Write $g_{\rm raw}(X)=\prod_j(X-x_j)$
+over the canonical candidates and $g_{\rm curve}$ for the product
+over the ones with two rational lifts. Given a monic degree-$k$
+probe $Q$, one can compute
+\[
+   g_{\rm raw}\bmod Q,\qquad \gcd(g_{\rm curve},Q)
+\]
+in $\wtO(k+\sqrt{\tau k})$ field operations, with an additional
+$O(\log p)$ factor allowed for modular powering. This applies
+also on any dyadic subwindow, after updating the affine offset.
+
+Choose a dyadic baby block length $L$ within a constant factor of
+$\min(\tau,\sqrt{\tau k})$. Sort the $L$ residues
+$b_i=(Ai+C)\bmod M$ and make their binary subproduct tree. For a
+giant offset $d=ALj\bmod M$, the allowed outputs are $b_i+s$
+with $s=d$ or $s=d-M$ and $0\le b_i+s<p$. These give two disjoint
+intervals in the sorted list, each covered by $O(\log(2L))$ tree
+nodes. For a selected node polynomial $P(Y)$ and shift $s$ we need
+$P(X-s)\bmod Q(X)$. To batch all shifts for that node, compute
+remainders of $P(Y)$ modulo $Q(Y+s)$ by a remainder tree and shift
+each remainder back. The moduli need not be coprime. Multiply the
+results modulo $Q$. Fast Taylor shifts follow from recursively
+splitting polynomials at powers of two and precomputing the
+corresponding powers of $X+s$.
+
+The sum of the degrees of the baby polynomials over their tree is
+$O(L\log(2L))$. There are $O((\tau/L)\log(2L))$ attached shifts.
+This gives the bound $\wtO(L+k\tau/L+k)$. The baby/giant product
+principle is classical. The two canonical intervals and batching
+translated probe moduli handle the particular wrapping hashes here.
+See \href{https://velusqrt.isogeny.org/velusqrt-20200616.pdf}
+{Bernstein, De Feo, Leroux and Smith, Section 2}.
+Finally put $D=\gcd(Q,g_{\rm raw}\bmod Q)$. It is squarefree
+because the canonical abscissas are distinct. The second answer is
+\[
+  \gcd\big(D,(X^3+aX+c)^{(p-1)/2}-1\bmod D\big)
+\]
+with result one for $D=1$. This filters exactly the two-lift roots.
+The gcd records common roots. The values of the omitted nonzero
+factors would also be required to recover $g_{\rm curve}\bmod Q$.
+
+\paragraph{What the discarded factors do to the target.}
+On the odd prime-order subclass, there are no rational two-torsion
+abscissas. Raw roots with no rational lift have their two lifts on
+$E(\F_{p^2})$ exchanged by Frobenius, and those lifts satisfy
+$\mathrm{Fr}(P)=-P$. At a rational signed target, Frobenius pairs
+every nonrational signed solution without fixed points.
+Consequently the raw and genuine target counts have identical
+parity on every seed and on every restriction.
+
+In fact at the tuned widths the probability of any extra solution
+is $O(2^m\lambda/r)$ at each fixed eligible target.
+Let $r_+=r$ and $r_-=2p+2-r$ be the sizes of the rational and
+twist groups. For a nonempty set $J$ of twist slots the sum of its
+points must lie in the intersection of the two groups, of size
+$|E(\F_p)[2]|$. The complement then has a prescribed rational sum.
+The all-twist case cannot reach $2T\ne O$. A fixed proper $J$
+therefore contributes expected count at most
+$|E(\F_p)[2]|r_-^{|J|-1}r_+^{m-|J|-1}\prod_i\rho_i$, where
+$\rho_i=\tau_i/M$. Sum over $J$, use Hasse and
+$\lambda=r^{m-1}\prod_i\rho_i$. Removal of candidates cannot
+introduce a new tuple. On a clean isolated trial, the raw norm's
+gradient differs by the nonzero product of the extra factors, so
+coordinate ratios agree. The absolute scalar and first derivatives
+are supplied by the three-block method with genuine inputs.
+
+\section{Testing local recovery of the implicit resultant}
+Write $A,B$ for the original projective half forms of degrees $f,h$.
+All their roots are rational abscissas or infinity. Choose a fixed
+nonlift $w$ or an element of $\F_{p^2}\setminus\F_p$ so neither
+form vanishes there. The common change of coordinates
+$(X_0,X_1)=(wY_0-Y_1,Y_0)$ has determinant one. Both transformed
+affine polynomials have their full formal degrees and the leading
+coefficient of the first is $a_f=A(w)$.
+
+At $y=\infty$ write their quotient as a polynomial part plus
+$\sum_{i\ge0}c_i y^{-i-1}$. Equivalently, with $z=1/y$, expand
+$z^{f-h}B(w-z)/A(w-z)$. Let $H_f=(c_{i+j})_{0\le i,j<f}$. Then
+\[
+ \Res(A,B)=(-1)^{f(f-1)/2}a_f^{f+h}\det H_f,\qquad
+ \operatorname{rank} H_f=f-\deg\gcd_{\rm proj}(A,B).
+\]
+For distinct finite roots $\alpha$ of the transformed first form,
+the moments sum $\alpha^i B(\alpha)/A'(\alpha)$ in that chart.
+The determinant of the resulting two Vandermonde matrices gives
+the formula, which extends to repeated roots by polynomial identity
+after clearing the unit leading coefficient. For rank, reduce the
+proper part of the fraction to $P/D$ with $D$ monic. The form which
+sends $(U,V)$ to the coefficient of $y^{-1}$ in $UVP/D$ is
+nondegenerate on the quotient by $D$. Indeed, for a nonzero class $U$,
+multiply the nonzero remainder of $UP$ by the power of $y$ that makes its degree $\deg D-1$.
+The first $f$ monomials span this quotient. Its dimension is the
+rank asserted above and the minimal order of a linear recurrence
+for the negative-power moments.
+
+On the actual independently hashed slots, the common degree is
+at most the target count. Indeed the Sylvester matrix at the base
+target has that corank, so its determinant after target deformation
+vanishes to order at least that corank. This last fact follows by
+constant row reduction and taking one local-parameter factor out
+of each zero row. The determinant's order is exactly the ordinary
+target count by the preceding norm identity. At an isolated target
+the common degree is therefore exactly one. The series has exact
+recurrence order $f-1$ there. At a fixed eligible target the mean
+count is bounded, so at balanced widths the loss of rank is bounded
+in probability. Local rational reconstruction from a short linear
+recurrence does not bypass the half degree on these inputs.
+This statement concerns the recurrence, not the minimum size of
+arbitrary circuits computing its determinant.
+
+A separate estimate concerns a test which picks candidate join
+abscissas using the left slots and then checks for a right root.
+Conditional on the left seeds, each specified signed point is the
+required right sum with probability at most
+$\prod_{i\in R}(r\rho_i)/r$ by the first moment bound. All but one
+right coordinate can be chosen freely, and every eligible tuple survives
+with probability $\prod_{i\in R}\rho_i$. A prescribed finite
+abscissa allows two signs. Therefore $s$ candidates hit with
+probability at most $2s\prod_{i\in R}(r\rho_i)/r$. The same holds
+for a test that receives only failure until the first hit, or uses
+moduli of total degree $s$ just to locate a common root in them.
+A balanced split requires $s\ge 2^{b/2-o(b)}$ for constant success
+in this interface. Arbitrary residue values can carry more
+information than the hit predicate.
+
+\section{A limit for arbitrary residue-value probes in a comparison model}
+The following comparison grants the algorithm the entire second
+polynomial for free and allows arbitrary computations on all
+residues of the first. It clarifies which additional structure a
+general local-probe reduction would need. Its inputs are fully
+split random polynomials, distinct from the actual hash-seed law.
+
+Put $d=\lfloor\sqrt p\rfloor$. Fix $Y\subset\F_p$ of size $d$
+and $B=\prod_{y\in Y}(X-y)$. In the first distribution, $A$ has
+$d$ independent uniform roots outside $Y$ (with replacement).
+In the second, replace one such root by a uniform $y\in Y$.
+Both forms are monic. The first resultant is nonzero and the
+second has one simple common root. Even adaptive queries for
+$A\bmod Q$ of total degree at most
+$L=\lfloor\sqrt p/\log p\rfloor$ distinguish these distributions
+with advantage $o(1)$. Repeated factors of $Q$ and probes in
+extensions via irreducible moduli are allowed.
+
+For a fixed transcript let $Q$ now denote the least common multiple
+of all queried moduli and $\ell=\deg Q\le L$. Compare to a
+reference oracle supplying consistent uniform unit residues. Each
+such transcript has probability $1/|U_Q|$, where
+$U_Q=(\F_p[X]/Q)^\times$, by successive uniform lifts. Conditional
+on the free roots avoiding the roots of $Q$, a single root $a$ is
+uniform on at least $p-d-\ell$ values. For a nontrivial character
+$\chi$ of $U_Q$, extended by zero off the units,
+\[
+ \left|\E\chi(X-a\bmod Q)\right|
+   \le\frac{\ell\sqrt p+d}{p-d-\ell}\le\frac2{\log p}
+\]
+for large $p$. Indeed the complete sum over $a$ is the linear
+coefficient of the polynomial Dirichlet $L$-function for $\chi$.
+It has degree at most $\ell-1$ and inverse roots of magnitude at
+most $\sqrt p$ by the function-field Riemann hypothesis. The extra
+Euler factors for an imprimitive character have inverse roots of
+modulus one. Removing $Y$ costs at most $d$.
+See \href{https://www.math.tau.ac.il/~rudnick/papers/KeatingRudnickIMRNfinal.pdf}
+{Keating and Rudnick on Dirichlet $L$-functions}.
+
+Multiplicative character orthogonality now gives pointwise relative
+error at most $p^L(2/\log p)^{d-1}=o(1)$ from a uniform unit
+residue after multiplying at least $d-1$ free factors. Multiplying
+by a fixed unit from a planted root preserves this estimate.
+The free roots avoid $Q$ with probability at least
+$1-dL/(p-d)$, and the planted root avoids $Q$ with probability at
+least $1-L/d$. Thus in either distribution each unit transcript
+has probability at least $(1-o(1))/|U_Q|$, uniformly over the
+choice of transcript. Summing the common mass with the reference
+distribution proves the claim, including adaptive probes and
+randomized algorithms. The argument only uses residues of a hidden
+form. An algorithm that exploits the actual public seeds directly
+is outside this comparison theorem.
+
+\section{End-to-end result and finite evidence}
+The project's conditional end-to-end bound is still
+\[
+  \log_2\E T_{\rm solve}\le (26.2933775156+o(1))
+                 \frac{b}{(\log_2 b)^{1/4}}
+\]
+under its inherited contraction hypotheses and finite-packet
+assumption. Making both half polynomials implicit reduced working
+space. The section evaluations still cost an exponential in $b$,
+and the faster genuine-slot gcd probe does not compute the
+normalized resultant of two aggregated halves. A faster simultaneous
+evaluation using the internal slot descriptions remains open.
+
+Run \texttt{python -B research/implicit\_resultant/verify.py}.
+The comparison uses multiplication-matrix cofactors for 567
+full-gradient checks over all 63 dyadic boxes. It also checks
+multiple zeros, two-torsion, and 45 independent Hankel determinants
+and ranks. On the order-65419 fixture the old degrees were 56 and
+400. The three-block evaluator used degrees 80, 14 and 10, and no
+temporary chord section exceeded degree 28. It reproduced the zero
+norm, target derivative 43446, and additive derivatives
+16953, 13292, 47523, 12119 and 9163 in $\F_{65521}$. The explicit
+half forms are used only in separate verification comparisons.
+The degree-56 denominator had moment rank 55 at this isolated root.
+There were 2052 raw-remainder and genuine-gcd comparisons up to
+width 16384, including repeated-root probes of degree 16. All 27 raw/curve parity comparisons agreed, with six
+strict differences in integer multiplicity. The time bounds above come from counting operations.
+\end{document}

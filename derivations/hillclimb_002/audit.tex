@@ -1,0 +1,243 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\title{Hillclimb 002: the actual exponent target and an executable C38 graph}
+\author{Research audit; no new ECDLP complexity bound claimed}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Status and sources.}
+The preceding iteration's coefficient $27.13327$ remains conditional.
+The inherited uniform contraction theorem, arithmetic proof, and complete
+ECDLP transfer have not been independently certified. This iteration
+establishes a barrier for a specified enumeration strategy, supplies
+independent finite Smith checks, and implements the previously missing
+explicit C38 graph interface. The source hashes are recorded in the run
+records and \texttt{spectrum\_results.json}. Original archives are unchanged.
+
+\section{What reaching the stated target actually requires}
+The goal is classical expected time $2^{\widetilde O(\sqrt b)}$ for
+general prime-field ECDLP in the stated supplied-order and cofactor class.
+The complete paid relation reduction currently has the form
+\[
+ T\le\operatorname{poly}(b,m)(BC_m+mB^2),\qquad
+ \log_2B=b/m+O(\log b).
+\]
+The arithmetic network uses $S=\widetilde O(mb)$ edges. Replacing its
+contraction algorithm changes $C_m$; it does not automatically remove
+the factor-base construction or the $B^2$ term.
+
+\begin{proposition}[Polynomial-exponent transfer within this reduction]
+Suppose a contractor with $\log_2 C_m=\widetilde O(S^\theta)$,
+$0<\theta\le1$, is valid uniformly on the arithmetic graphs at the
+chosen arities, and suppose the entire relation-reduction proof also
+extends to those arities. Setting $m=b^\gamma$ gives the certified
+power of $b$ in the complete exponent
+\[
+ \max\{1-\gamma,\ \theta(1+\gamma)\}.
+\]
+Its minimum for $0\le\gamma\le1$ is
+\[
+ \frac{2\theta}{1+\theta},\qquad
+ \gamma=\frac{1-\theta}{1+\theta}.
+\]
+Thus a square-root-in-$S$ contractor would yield power $2/3$ here,
+whereas power $1/2$ via this particular accounting requires
+$\theta\le1/3$, with $m=b^{1/2}$ at equality, up to logarithmic factors.
+\end{proposition}
+\begin{proof}
+The factor-base exponents are $b^{1-\gamma}$; the relation exponent is
+$b^{\theta(1+\gamma)}$, up to logarithmic factors. Multiplication adds
+exponents but does not change the larger polynomial power. The first
+displayed function decreases and the second increases with $\gamma$.
+Solving their equality proves the formula.
+\end{proof}
+
+This optimizes a proposed upper-bound formula; it is not a lower bound
+on ECDLP or on every implementation of the reduction. In particular,
+an algorithm that avoids explicit factor-base enumeration may have a
+different balance. The uniform arity hypotheses in the proposition
+are essential. The existing composition was stated for polylogarithmic
+$m$. At $m=b^{1/2}$ its leading degree ledger becomes roughly
+$\Delta=\widetilde O(m\sqrt b)=\widetilde O(b)$ and
+$S=\widetilde O(b^{3/2})$, outside the low-degree condition
+$\Delta\le S^{1/2}\operatorname{polylog}S$. A proposed new contractor
+and the coverage proof must be audited in this different regime.
+
+For a more specialized hypothetical relation exponent
+$\widetilde O(m^a b^c)$ with $a\ge0$, $0\le c\le1$, the same
+balance gives power $(a+c)/(1+a)$ at
+$\gamma=(1-c)/(1+a)$. Reaching power at most $1/2$ requires
+$a+2c\le1$ within this model. A route may instead change the reduction.
+
+\section{A constructive barrier for unrestricted mode enumeration}
+The inherited crossing block has normalized Smith exponents
+\[
+ 2q+2v_2(q!)=4q-2s_2(q),\quad 0\le q<D/2,
+\]
+with repeated residue families. Restoring the common deformation factor
+adds a shift $\delta$. In the uniform schedule one can take
+$\delta=\log_2D+1$, or the weaker shift one for upper bounds.
+The precision cost is $P=(6+o(1))MD/u$, and the number of families
+is of order $M/D$. These are the three linked quantities that produce
+the square-root partition estimate.
+
+\begin{lemma}[Many admissible tuples even with a degree cap]
+Consider $Q=M/D$ families, with integer $Q,D$, $u\ge4$, and weights
+\[
+ w_q=\delta+4q-2s_2(q),\qquad 0\le q<D/2.
+\]
+Put $r=\lceil\sqrt u\rceil$, $k=\lfloor D/r\rfloor$.
+Assume $D\ge2r$, $D\ge\delta\sqrt u$, and $P>3MD/u$.
+There are at least $2^{M/(4\sqrt u)}$ tuples with weight less
+than $P$ and total degree at most $M$.
+\end{lemma}
+\begin{proof}
+Use only ranks $0,\ldots,k-1$ in every family, and allow each of
+their exponents independently to be zero or one. There are $2^{Qk}$
+choices. Their maximum degree is $Qk\le M$, and their maximum weight is
+\[
+ Q\sum_{q<k}w_q
+ \le Q(\delta k+2k(k-1))
+ \le \frac{M\delta}{\sqrt u}+\frac{2MD}{u}
+ \le\frac{3MD}{u}<P.
+\]
+Also $k\ge D/(2r)$ and $r\le2\sqrt u$, so
+$Qk\ge M/(4\sqrt u)$. Finally $k\le D/2$ since $u\ge4$.
+\end{proof}
+
+The schedule's polynomially large $D$ satisfies these guards
+asymptotically. Constant fractions of the family universe give the
+same power with changed constants. Hence explicit enumeration of the
+unrestricted global or fixed-fraction projected candidate universe
+cannot improve its $M/\sqrt u$ power. The padding/label schedule has
+$u=O(\log S)$, retaining the existing logarithmic scale.
+
+\emph{Scope of this barrier:} the tuples just constructed are feasible
+indices, not proved nonzero tensor coefficients. Empty support, arithmetic
+identities, cancellations, batched evaluation or symbolic summation may
+eliminate or avoid them. This is not a lower bound on actual C38 support,
+tensor contraction, or ECDLP. It specifically rejects claims that a new
+enumeration order or constant-factor matrix improvement changes this
+power while still visiting that universe.
+
+\paragraph{Finite certificates.}
+The checker independently constructs the rational Cauchy matrices
+$2^i/(T+x-y)$ on equal-bit slots. It obtains their Smith exponents by
+minimum-valuation pivots and integral elementary operations over
+$\mathbb Z_{(2)}$, without importing the source's explicit mode formula.
+All 60 scalar cases through $L=32$ agree. These checks do not establish
+the extension-ring or nilpotent assertions at arbitrary sizes.
+Six explicit large index-universe certificates use
+$D=2^{2u}$, $M=2^{10u}$ for $u=4,8,16,32,64,128$.
+The exact sum of digit counts evaluates the weight of all selected modes
+without enumerating exponentially many indices. The count is certified
+by the independent binary choices above, not by a floating-point fit.
+
+\section{An additional consequence that the foundation must support}
+The inherited theorem is stated for all succinct Boolean networks with
+$\Delta\le S^{1/2}\operatorname{polylog}S$ and polylogarithmic parallel
+multiplicity, not just for elliptic-curve predicates.
+
+Here is a direct consequence of that claimed scope. Given a CNF formula
+with clauses of width at most three and $N$ literal occurrences, create
+one vertex per occurrence and one per clause. Connect each occurrence
+to its clause. For every variable, connect its occurrence vertices by
+a path. Each occurrence tensor requires all its incident bits to be
+equal; its degree is at most three. Each clause tensor evaluates the
+OR of its incident literals with their specified signs; its degree is
+at most three. There are at most $2N$ edges, no loops, and no parallel
+edges. Every satisfying assignment to the variables occurring in the
+formula corresponds to exactly one accepting edge assignment. Variables
+with no occurrences contribute a known power of two.
+
+Therefore the inherited theorem, if valid as stated, also gives exact
+counting for these formulas in $2^{O(N/\sqrt{\log N})}$ time. This is
+a consequence derived from the stated input model, not an additional
+assumption and not a proof that the theorem is false. It makes clear
+that auditing the foundation is a substantive research obligation;
+arithmetic fixtures alone cannot certify a theorem of this scope.
+
+\section{The missing C38 graph interface is now executable}
+\texttt{c38\_network.py} builds the general-prime graph from public
+parameters and constants only. It creates one descriptor for every first,
+middle and closure tensor, plus every binary equality relay. Fourier
+words are jointly recoded in the root-fixed simplex alphabet, with
+separate edge identifiers for every symbol. Each side-state relay has
+two distinct edges. The source and sink vertices independently read
+their own copy, and the relay enforces equality. Initialized and terminal
+range states are constants, not free edges.
+
+Tensor entry programs receive only incident symbols. A checked local
+reader raises \texttt{NonincidentRead} on an undeclared read; this error
+is not treated as a rejected assignment. Thus a hidden dependency would
+fail the diagnostic rather than silently impose an invalid predicate.
+Predicates decode their own words, reject noncanonical Fourier values
+and nonbinary auxiliary symbols, and evaluate the inherited arithmetic.
+They never capture a planted witness or receive a complete assignment.
+
+The explicit ledger agrees with the inherited ledger on the tested
+inputs. The compiler implements the general-prime branch only; it does
+not silently claim the separate sparse-modulus fanout construction.
+Witness serialization is a separate testing helper. Pinning creates
+local restricted descriptors and removes only fixed edges and evaluated
+scalar-one tensors. An inconsistent fixed tensor leaves an explicit
+scalar-zero factor. Conditional counting recovers each remaining symbol
+and then decodes and verifies the resulting curve tuple.
+
+\paragraph{What the executed contractions establish.}
+There are 18 compiled networks, 89,892 edges across fixtures,
+and 10,518 explicit equality relays. Split-relay
+faults and coherent Fourier mutations are rejected. Twelve recursive
+contractions and witness recoveries cover real Fourier ports, carry
+states, range states, distinctness states, and both sides of a relay.
+These runs explicitly pin all but one or two edges. Their integer counts
+agree with full enumeration of those free symbols; all active calls in
+the initial contractions also agree with direct modular summation.
+
+This is a graph-to-contraction interface check. It does not perform an
+unpinned relation search. The recursive engine still uses measured small
+labels, a fixed diagnostic depth, and an explicit Strassen backend,
+rather than the asymptotic packing schedule and formula catalog.
+
+\paragraph{A separate complete small source search.}
+\texttt{verify\_source\_enumeration.py} exhausts all source triples
+$(x_1,x_2,\lambda_2)\in\mathbb F_{13}^3$ for each of 12 two-slot
+instances whose hashes were chosen without planting a decomposition.
+It compares the resulting complete graph witnesses with an independently
+implemented exhaustive curve-point-pair search. Both covered and uncovered
+targets occur. This checks the finite arithmetic reduction in a way that
+planted witnesses alone do not. It uses enumeration, not an unpinned
+network contraction, and remains a finite check.
+
+\section{Research decisions and next falsifiable hypotheses}
+\begin{enumerate}
+\item Reject a power-improvement claim based solely on rearranging the
+same unrestricted mode tuples. The explicit subset lemma supplies the
+countercriterion. Keep only methods that avoid enumeration or prove
+additional support restrictions on the actual arithmetic descriptors.
+\item Test whether the C38 projected-child tables admit an exact compact
+representation closed under the recursion. Acceptance requires a proved
+representation-size bound, algorithms for entry access and composition,
+and an exponent calculation including construction cost. Small numerical
+rank or a planted/pinned fixture is insufficient. A growing family with
+forced large representation size rejects the proposed representation,
+not every possible compression method.
+\item A new kernel/spectrum or precision profile must be evaluated jointly:
+deformation degree, reconstruction multiplicities, scalar precision loss,
+mode multiplicities, packet geometry and input costs must all be charged.
+A larger Smith weight alone is insufficient if the precision rises too.
+\item Independently audit the full theorem on succinct bounded-degree
+networks, using the CNF consequence as a scope check. The small Smith and
+arithmetic checks above certify only their stated finite cases.
+\item Before promoting any polynomial-exponent contractor to the ECDLP
+goal, apply the transfer proposition and recheck its required arity and
+degree regime. Reaching $2^{\widetilde O(\sqrt S)}$ alone is insufficient
+for the present factor-base route.
+\end{enumerate}
+The active goal remains unachieved. No new time coefficient or saving
+power is claimed in this iteration.
+\end{document}

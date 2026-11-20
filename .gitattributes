@@ -1,0 +1,7 @@
+* text=auto
+*.pdf binary
+*.txt text eol=lf
+*.tex text eol=lf
+*.typ text eol=lf
+*.py text eol=lf
+*.md text eol=lf

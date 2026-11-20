@@ -1,0 +1,313 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\F}{\mathbb F}
+\newcommand{\ord}{\operatorname{ord}}
+\title{The absolute unit and two exact moments at one target}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+On the project's odd prime-order family one can compute the local
+unit $U_t$ and both integer moments from the dyadic seeds at any
+nonidentity target. A balanced split uses $2^{(1/2+o(1))b}$ work
+and space, including seed expansion. This covers arbitrary target
+multiplicity. A second construction reduces the same data to counts
+of individual bits with a fixed endpoint and no table of either
+half. Its inexpensive specialization recovers low-order
+multiplicative characters of the unit and the exact integer moments.
+The full-field specialization has a more expensive arithmetic
+circuit. Neither construction improves the project's conditional
+end-to-end exponent.
+
+\section{Local elimination with multiplicities}
+Take $E:y^2=x^3+ax+c$ over $\F_p$, $p>3$,
+$T=(t,y_T)$ with $y_T\ne0$, and paired affine abscissa sets
+$U_i$ of sizes $n_i$. Put $b=\lceil\log_2 p\rceil$.
+For window $(\alpha_i,\beta_i,\tau_i)$ modulo $M=2^b$, enumerate
+$x=\alpha_i^{-1}(j-\beta_i)\bmod M$ for $0\le j<\tau_i$,
+require $x<p$, and take one square root of the nonzero curve
+right-hand side if one exists. This costs
+$\sum_i\tau_i\,\mathrm{poly}(b)$ expected bit operations with
+ordinary finite-field square roots. There is no group-index table.
+An empty slot has order zero, unit one and zero moments.
+
+Write $N(z)$ for the normalized product of summation forms in
+\texttt{../scalar\_norm/norm.tex}. The requested unit is the
+coefficient of $(z-t)^h$, for $h=\ord_t N$. The moments are sums of
+$q$ and $q^2$ over signed tuples summing to $T$, with the canonical
+integer $q=\sum_{i=1}^m u_i p^{i-1}$. This agrees with folding
+the two target signs in the oriented convention of the section note.
+
+Split the slots into a nonempty left block and a right block.
+The left records run over abscissas and signs modulo simultaneous
+negation, with first sign fixed. Store $(P,q_L)$ for each left
+sum. The right records are $(Q,q_R)$ with $Q=T+\sum_R\epsilon_iP_i$
+and all right signs free. The two codes use the original digit
+positions. Their respective list lengths are
+\[
+ f=2^{|L|-1}\prod_{i\in L}n_i,\qquad
+ g=2^{|R|}\prod_{i\in R}n_i .
+\]
+Use the chord scale $L(P,V)$ of \texttt{../section\_product/sections.tex}.
+For each appended slot of size $n$, update the common scalar of
+a half by $\beta\gets\beta^{2n}\prod_{P,V}L(P,V)$ while extending
+each root to $P+V,P-V$. A finite root contributes $W_0-x(P)W_1$,
+and an infinite root contributes $-W_1$.
+Let $k_u,l_u,s_u$ be the count and two code sums
+$(\sum q_L,\sum q_L^2)$ in each left abscissa bucket, including
+one for infinity. The affine monic polynomial and leading scalar are
+\[
+ F(W)=\prod_{u\text{ finite}}(W-u)^{k_u},\qquad
+ a_L=(-1)^{k_\infty}\beta_L.
+\]
+
+At a distinct finite right abscissa $u$ compute
+$F\bmod(W-u)^{\max(2,k_u+1)}$ by a product and remainder tree.
+If $k_u>0$, its coefficient of $W^{k_u}$ is
+$v_u=(F/(W-u)^{k_u})(u)$. Otherwise it gives both
+$v_u=F(u)$ and $F'(u)$. This step performs no division by a
+factor that vanishes at $t$. The total modulus degree is at most
+$2g+f$, irrespective of the target order.
+
+For every finite right record use $e_Q=k_{x(Q)}$ and
+$u_Q=v_{x(Q)}(y(Q)/y_T)^{e_Q}$. For an infinite right record
+use $e_Q=2k_\infty$ and $u_Q=(4y_T^2)^{-k_\infty}$. Then
+\[
+ h=\sum_Q e_Q,\qquad
+ U_t=\beta_R^f a_L^g\prod_Q u_Q .
+\]
+To prove the formula, deform the target abscissa $z$ at $t$.
+The normalized split resultant is the product of the left binary
+form evaluated on the moving right homogeneous root vectors, times
+$\beta_R(z)^f$. The interchange sign is positive because $g$ is
+even for a nonempty right block. With one original slot use
+$N(z)=\prod(z-u)$ directly, which gives the same displayed formula
+with the sole right root $T$. At a finite specialized right root
+use coordinates $(x(Q(z)),1)$. The invariant differential
+$dx/(2y)$ gives $dx(Q(z))/dz=y(Q)/y_T$. At a right root
+specializing to infinity use $(1,1/x(Q(z)))$. In the parameter
+$s=-x/y$ at infinity, $1/x=s^2+O(s^3)$ and
+$dx/(2y)=(1+O(s))ds$. Consequently the reciprocal coordinate
+starts with $(z-t)^2/(4y_T^2)$. These are exactly the leading
+coefficients in the formula. The differential and formal parameter
+are described in III.5 and IV.1 of
+\href{https://www.math.brown.edu/johsilve/AECHome.html}
+{Silverman's \emph{The Arithmetic of Elliptic Curves}}.
+
+For the integer moments, for each right record of code $q_R$
+look up its left bucket $(k,l,s)$. Its contributions are
+\[
+ \mu(k,\ l+kq_R,\ s+2q_Rl+kq_R^2),
+ \qquad \mu=1\ \text{at a finite root},\quad \mu=2\ \text{at infinity}.
+\]
+Indeed a signed solution of total $T$ uses the right signs negated
+and precisely one of the two left orientations for a finite match.
+Both left orientations work at infinity. Thus the same join gives
+$h,M_1,M_2$ even if many records have identical abscissas. At a
+zero use $hM_2-M_1^2$ over the integers as in the preceding note.
+Positive variance makes all first derivatives zero. Zero variance
+decodes the single abscissa tuple from $M_1/h$, and dividing
+$U_t$ by that tuple's leading local coefficient gives its full
+additive cofactor.
+
+At order one $N_z=U_t$, and at higher order $N_z=0$. At order zero
+differentiate the nonvanishing product. The logarithmic derivative
+is $f\beta_R'/\beta_R+\sum_{Q\ne O}(y(Q)/y_T)F'(x(Q))/F(x(Q))$.
+The moving half propagates its scale derivative through each chord.
+The logarithmic increment for appending $V$ to a finite moving
+root $P$ with distinct abscissa is
+$2y(P)/(y_T(x(P)-x(V)))$. At $P=\pm V$ it is
+$(3x(P)^2+a)/(2y(P)y_T)$.
+Indeed switching the infinite outgoing root to its reciprocal chart
+replaces $(x(P)-x(V))^2$ by
+$(y(P)+y(\pm V))^2-(x(P)+x(V))(x(P)-x(V))^2$, taking
+$y(\pm V)=y(P)$ at specialization. An incoming infinity gives
+zero increment in its reciprocal chart. These formulas account
+for chart changes even on a nonvanishing target. The literal
+additive marker derivatives at a nonzero still have the separate
+two-slot algorithm of the scalar note.
+
+Record generation and the single remainder tree cost
+$(f+g)\,\mathrm{poly}(b,m,\log(f+g))$ expected bit operations up
+to logarithmic factors, in addition to slot extraction and the
+optional $2^{O(m)}\mathrm{poly}(b,m)$ isolated-tuple form.
+For the tuned widths and a balanced split this is
+$2^{(1/2+o(1))b}$ including storage up to polynomial factors.
+This extends the previous half-split calculation to the actual
+higher-order unit and integer moments. Its explicit lists have
+$fg=2^{m-1}\prod n_i$. On the tuned family this is of order $r$ in
+probability by the earlier slot-size estimate, where $r=\#E(\F_p)$.
+
+\section{A joint counting reduction with no half lists}
+Define $w_T(S)=t-x(S)$ at finite points away from $\pm T$,
+$w_T(\pm T)=1$ and $w_T(O)=-1$. In the forward traversal fix
+the first sign, write $\mathcal P_j$ for the multiset of oriented
+prefix sums, and take one lift $V$ per abscissa in a new slot.
+The same normalized chord recurrence proves
+\[
+ U_t=\prod_{S\in\mathcal P_m}w_T(S)
+       \prod_{j=2}^m
+       \left(\prod_{P\in\mathcal P_{j-1},\,V\in U_j}
+              L(P,V)\right)^{\prod_{k>j}2n_k}.
+\]
+Here $V\in U_j$ denotes the chosen lift. The last finite linear
+factors give the first product after removing exactly the target
+zeros. Each earlier scale is raised to $2n_k$ on continuing to
+slot $k$. This expression avoids evaluating the function
+$\gamma$ on any point. The products index mathematical
+contributions. The following counting reduction does not generate
+the prefix lists.
+
+For $d\mid p-1$ choose $g$ whose image generates the quotient by
+$d$th powers, and set $\zeta=g^{(p-1)/d}$. Every nonzero local
+weight $w$ has one class $0\le e<d$ for which
+\[
+                     g^e v^d=w,\qquad v\in\F_p^\times .
+\]
+There are exactly $d$ witnesses $v$. Pin each bit of the canonical
+$e$ to one in turn and count its occurrences. Dividing the
+counts by $d$ and combining them with binary place values gives
+the sum of the class labels. Work with all signs. Divide the
+terminal sums by two and the prefix sums by four in the integers
+before reducing modulo $d$. The global flip and the independent
+sign of the new slot preserve the respective weights. Include the
+prefix exponents from the displayed product. If the resulting sum
+is $s$ modulo $d$, the answer is $U_t^{(p-1)/d}=\zeta^s$.
+For $d=2$ every chord scale is a square, so only the terminal
+predicate is needed. For $d=p-1$, omit $v$ and its multiplicity.
+The certificate becomes $g^e=w$ and yields the entire $U_t$.
+The bits require only $O(m\log d)$ kinds of count. Enumerating all
+$d$ classes gives another option for tiny $d$.
+
+The moments use only the ordinary count at $T$ and bit pins on the
+existing canonical abscissas. Write $q=\sum_\ell a_\ell b_\ell$
+where $a_\ell=p^{i-1}2^k$ and $b_\ell$ is bit $k$ of $u_i$.
+Then $M_1=\sum a_\ell H_\ell$ and
+$M_2=\sum a_\ell^2H_\ell+
+2\sum_{\ell<s}a_\ell a_s H_{\ell s}$. Single and double pins
+give these counts in $O((mb)^2)$ calls. No rounding is applied
+to the large integer moments themselves.
+
+\paragraph{Implementing the predicates in the fixed-endpoint graph.}
+Use the offset construction in \texttt{../short\_hash\_count/count.tex}.
+For a prefix (or all slots) of signed sum $S\ne O$, extend to
+the guarded path
+\[
+                D,A_1,\ldots,A_j,B,H,-D\quad\hbox{ending at }H
+\]
+for a public nonidentity $H$. Cancellation forces the unique
+affine $B=-S$. The terminal predicate sees $x(B)$, including
+the patched target value. The analogous prefix predicate also
+checks the next independent signed point $V$ with its ordinary
+curve equation and hash. Its weight is $(x(B)-x(V))^2$ for
+distinct abscissas and $4y(V)^2$ on equality. The identity
+contribution is handled by the existing fixed-identity count. Its
+terminal weight is $-1$ and its prefix weight is one. Fixed
+endpoint membership keeps the entire guarded path on the supplied
+curve. Comparisons, the independent point and the constant extra
+slots cost $O(b)$ long-word edges in the existing compiler.
+
+For each unguarded assignment at most $c_m=2m+11$ choices of the
+offset are inadmissible. The initial identity costs one, the
+interior guards exclude at most two offsets per step, and the
+last guard excludes at most four because $H\ne O$. The auxiliary
+root $v$ is independent of the guards. If $Z$ is a raw count for
+a bit pin, divide out its fixed root multiplicity first. The
+quotient $Z'$ satisfies $0\le rC-Z'\le c_m C$ for the desired
+signed count $C$. A class predicate can cover a positive fraction
+of all endpoints, so rounding on the original box need not work.
+Split dyadic windows until $c_m\prod_i(2\tau_i)<r$ on each box.
+Then $C=\lceil Z'/r\rceil$ separately on every box. At the tuned
+and paid widths $\sum_i\log_2(2\tau_i)\le b+O(m\log b)$.
+Binary splitting therefore uses at most $2^{O(m\log b)}$ boxes.
+There are enough free index bits since $c_m2^m<r$ eventually.
+All split offsets and bit pins are public, and every surviving
+tuple is counted in exactly one box. The finite guard test is
+part of the reduction.
+
+\paragraph{Cost of obtaining the full residue.}
+Binary powering with a bounded exponent witness and a fixed
+exponent on $v$ uses $O(\log d)$ modular product equations, each
+with $O(b)$ word edges. For the public base, the constants
+$g^{2^i}$ can be prepared ahead of time. Each selection and
+intermediate residue is forced by the exponent bits. For a small
+$d$, trial division of $d$ and a random base suffice to check that
+$\zeta$ has order $d$, with no factorization of $p-1$. For the
+full bit reduction a primitive base can be supplied with a
+verified order certificate, or selected by the same full-width
+counting mechanism. Exactly one $0\le e<p-1$ solves $g^e=1$
+precisely for a primitive base. Uniform sampling takes $O(b)$
+trials in expectation, since $\varphi(n)/n\ge1/(1+\log_2 n)$
+by ordering the distinct prime divisors.
+
+For $\log_2 d=o(m)$ the additions cost $o(mb)$ word edges, with
+at most polylogarithmically many new arrays in the tuned regime.
+Use canonical range, quotient, carry and local bit checks of the
+original compiler. For a variable exponent bit, a canonical
+auxiliary field input is either one or the appropriate public
+power of $g$. Copy the bit to the existing source-row owners and
+check their owned limbs locally. This costs only
+$\sqrt b\,\mathrm{polylog}(b)$ auxiliary binary edges per bit.
+The long arithmetic words still share endpoints for alphabet
+recoding, and the short carries retain the earlier lower-order cost.
+The original degree and parallel-multiplicity bounds are preserved
+by the same row grouping and relays. The polynomially many pins
+and the logarithm of the number of boxes are lower order.
+Consequently the conditional leading query estimate is still
+$(18K+o(1))mb/\sqrt{\log_2 b}$ in log time, with the $K$ and
+finite-packet assumptions of the short-hash note. This establishes
+an inexpensive joint reduction for the moments and those
+characters. The character-bit rank obstruction of the section note
+applies to separated formulas and permits this joint count.
+
+For $d=p-1$ the displayed binary certificate has $\Theta(b)$
+stages and the added long-word edge budget is $\Theta(b^2)$ in
+this implementation. The earlier leading query estimate does not
+apply. Using several cheap orders gives the projection of order
+their least common multiple. If all orders are at most $D$, their
+least common multiple is at most $D!$. Covering $p-1$ therefore
+requires $D\log_2 D\ge b-O(1)$ and $\log_2 D=\Omega(\log b)$.
+At tuned $m=\Theta((\log b)^{1/4})$ this is outside the
+no-leading-overhead regime of this binary circuit. This accounting
+does not give a lower bound for arbitrary arithmetic circuits,
+adaptive queries, or algorithms operating directly on the seeds.
+The best end-to-end estimate in the project remains conditional on
+the original finite-packet and contraction assumptions,
+\[
+ \log_2\mathbb E T_{\rm solve}\le(26.2933775156+o(1))
+                       \frac{b}{(\log_2 b)^{1/4}} .
+\]
+
+\section{Reproducible checks}
+Run \texttt{python -B research/single\_target/verify.py} and
+\texttt{python -B research/single\_target/covers\_check.py} with
+python-flint. The finite verifier uses word-size prime fields with
+\texttt{nmod\_poly}. The complexity estimates use general finite-field
+polynomial arithmetic. The first check compares 603 small inputs and targets with
+literal tuple products and signed integer moments, including
+maximum order 35 in characteristic 13. All 117 zero gradients
+also matched. On the 2,800-tuple fixture the two lists have 56
+and 400 entries. At $(0,1)$ the order is one, the unit is 43446,
+and the first moment is 9199523451172809648. The second is its
+integer square. The second checker exhausts guarded offsets on
+the order-223 curve over $\F_{211}$. With $210=2\cdot3\cdot5
+\cdot7$, the four projections and the direct exponent-bit counts
+independently reconstruct the unit, including a target of order
+21. The finite checker exercises the count identities, while
+the asymptotic count cost uses the project's contractor assumption.
+
+At $T=(72,189)$ the boxes $((1,0,2),(1,205,8))$ and
+$((1,0,2),(11,185,8))$ give the same slot sizes $(1,5)$, order
+one, $M_1=11183$ and $M_2=125059489$. Both order-30 projections
+are 156. Their full units are 104 and 200. Even on an isolated hit
+the missing component changes the absolute derivative.
+
+\paragraph{Follow-up on full-unit recovery.}
+The companion note \texttt{unit\_recovery.tex} gives a direct divisor-count
+method and a uniform block certificate with $O(b^{4/3})$ additional
+Boolean edges. It also bounds the number of exceptional values the
+divisor method must visit on large occupied slots. The conditional
+end-to-end coefficient remains $26.2933775156$.
+\end{document}

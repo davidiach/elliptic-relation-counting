@@ -1,0 +1,282 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\title{Hillclimb 003: exact rank, factored joins, and bounded-source C38 tensors}
+\author{Structural research iteration; no new ECDLP runtime bound}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Status.}
+The goal remains a correct classical ECDLP algorithm with expected bit
+time $2^{\widetilde O(\sqrt b)}$ on the stated general prime-field class.
+The inherited contraction and reduction theorems remain under audit.
+This iteration supplies exact representation counterexamples, a positive
+factored-join example, and an executable whole-graph refactoring that
+removes the arity factor from the root degree bound. It does not prove
+closure of compact representations through the full recursion or an
+improved ECDLP runtime. Finite checks and algebraic arguments are identified
+separately below.
+
+\section{Large Fourier-cut rank in the actual first predicate}
+Write $B=2^k$ for the arithmetic limb base, $L=L_1L_2$ for the
+transform grid, and $M_F$ for its Fourier modulus. At first vertex $F_0$,
+a source word with raw coefficients $v_0,\ldots,v_{d-1}$ at positions
+$0,L_2,\ldots,(d-1)L_2$, and zero elsewhere, has Fourier row
+\[
+ h_j=\sum_{s=0}^{d-1}v_s\omega_1^{sj}\pmod{M_F},\qquad
+ \omega_1=\omega^{L_2}.
+\]
+Choose $d\le L_1/2$ and use quotient sources $q_i$. Their local range
+tests do not interact with the distinctness tests on point coordinates.
+
+\begin{lemma}[A unit identity minor]
+Suppose every chosen digit $v_s$ ranges independently over a set $A_s$
+while all range-state ports remain fixed, and all other source ports are
+fixed to a valid local assignment. For $h$ independently varied quotient
+sources, the first predicate's matrix across the cut after the first $d$
+Fourier words has an identity minor of dimension
+\[
+ N=\left(\prod_{s=0}^{d-1}|A_s|\right)^h.
+\]
+The statement remains true after canonical recoding of the complete words
+into Boolean or simplex symbols; the cut groups complete words.
+\end{lemma}
+\begin{proof}
+Any $d$ consecutive Fourier evaluations determine the $d$ raw coefficients:
+the associated Vandermonde determinant is a product of root differences
+and units. All these differences are units in the supplied transform
+ring. Select a row index from the first $d$ evaluations of one coefficient
+vector and a column index from the remaining evaluations of another.
+The latter include another $d$ consecutive evaluations. If the assembled
+row is valid, invertibility forces both coefficient vectors to be equal.
+When they are equal, all pinned range states and other factors accept.
+This is precisely an identity submatrix. Different quotient sources have
+disjoint ports, so the dimensions multiply.
+\end{proof}
+
+For completeness, common range pins can be chosen constructively. Scan
+the base-$B$ digits of the bound $16p$, keeping the borrow bit fixed at
+each step. At a free digit the two possible borrow outcomes split
+$\{0,\ldots,B-1\}$ into two intervals; the larger has at least $B/2$
+elements. Use that interval and its common outgoing state. Fix all other
+digits to zero, and place the free digits strictly below the highest
+nonzero bound digit. The highest digit then forces the final borrow to
+one, so the upper-bound test accepts. This gives $|A_s|\ge B/2$.
+
+In the intended grid regime $k=\Theta(\log^2 b)$ and
+$L=\Theta(b/\log^2b)$, one can use
+$d=\Theta(\sqrt b/\log b)$ consecutive local coefficients, and there
+are $h=\Theta(m)$ independent quotient sources. Hence
+\[
+ \log_2N\ge hd(k-1)=\Omega(m\sqrt b\log b).
+\]
+This rules out small exact rank across this \emph{specified Fourier cut}.
+It is not a lower bound for every tensor-train ordering, change of basis,
+arithmetic circuit, or contraction algorithm. An ordering interleaving
+independent components can have far smaller ranks.
+
+The checker evaluates six actual minors using two choices per digit,
+through dimension 64, and verifies the transform determinants are units.
+The larger dimensions from all allowed digits are consequences of the
+lemma, not matrices that the program enumerated.
+
+\section{Actual projected entries: high rank and a short formula coexist}
+Use the finite general-prime fixture $p=13,L=8$, with $L_1=2$ and
+$k=4$, in the Boolean alphabet. For each selected quotient source, its
+two Fourier words at $F_0$ are equal to its single nonzero raw limb.
+Pin the high limb bit to one, the higher Fourier bits to zero, and range
+states to their common values. Each lower free bit becomes an equality
+pair. Selecting $r$ such pairs gives the actual restricted C38 tensor
+\[
+ T(y,z)=\prod_{j=1}^{r}\mathbf1_{y_j=z_j}.
+\]
+This is a restriction of one local tensor, not of the complete relation
+system. The other endpoints in this probe are explicitly all-one tensors.
+
+Give the C38 tensor label $(0,0)$ and its two sets of endpoints labels
+$(1,1)$ and $(2,2)$. With packet parameters $a=u=2$, the executable
+packetizer puts each real edge at position zero in its own packet. At
+node $\tau=1$, there is one surviving mode per packet, its source form
+is the bit itself, and its row coefficient is the same polynomial $c(Z)$.
+It has $c(0)=0$ and $v_2([Z]c)=3$.
+
+\begin{proposition}[Factored projected table]
+For binary mode-exponent vectors $\alpha,\beta\in\{0,1\}^r$, the
+target group's exact projected table is
+\[
+ G(\alpha,\beta)=\prod_{j=1}^{r}K_{\alpha_j,\beta_j},\qquad
+ K=\begin{pmatrix}1&-c\\-c&2c^2\end{pmatrix}.
+\]
+All entries with any exponent greater than one vanish. With the actual
+all-one source tensors included, the complete join equals
+\[
+ (4-4c+2c^2)^r.
+\]
+\end{proposition}
+\begin{proof}
+Sum the two allowed assignments of one equality pair. Its generating
+polynomial is
+$(1-cz)(1-cw)+c^2zw=1-cz-cw+2c^2zw$, giving $K$.
+Different pairs multiply. A source bit has moment two at exponent zero
+and one at exponent one. Thus the joined factor is
+$4K_{00}+2K_{01}+2K_{10}+K_{11}=4-4c+2c^2$.
+\end{proof}
+
+The two exterior source tables must be charged and included. Summing
+only $G$ would give $(1-2c+2c^2)^r$, whose constant term is one;
+the full join's constant term is $4^r$. This erroneous shortcut was
+detected and corrected before the final run.
+
+\begin{proposition}[A finite-precision obstruction to block low rank]
+Let $r$ be even. Work in
+$A=(\mathbb Z/2^P\mathbb Z)[Z]/(Z^q)$ with $P>3r$, $q>r$.
+Restrict both exponent vectors to Hamming weight $r/2$.
+Any exact separated representation of that block as
+$\sum_{i=1}^{\chi} a_i(\alpha)b_i(\beta)$ over $A$ satisfies
+\[
+ \chi\ge\frac{\binom r{r/2}}{r+1}.
+\]
+\end{proposition}
+\begin{proof}
+Write $c_1=[Z]c=2^3v$ with $v$ odd. The coefficient of $Z^r$ in
+the block is
+\[
+ C_{U,V}=c_1^r2^{|U\cap V|},\qquad |U|=|V|=r/2.
+\]
+After removing the common factor $2^{3r}$, reduction modulo two is
+the permutation matrix for complementation: the intersection is empty
+exactly when $V$ is the complement of $U$. Hence over
+$R=\mathbb Z/2^P\mathbb Z$ the matrix $C$ has
+$\binom r{r/2}$ nonzero Smith factors, all of valuation $3r$.
+Its inner rank is that number. One way to see this is to diagonalize
+the left factor of a putative product $AB$: with inner dimension $s$,
+invertible row operations make at most $s$ rows of $AB$ nonzero, whereas
+the row module of $C$ needs one generator per nonzero Smith factor.
+The latter follows by reducing that row module modulo its double.
+
+Extracting the coefficient of $Z^r$ from each product
+$a_i(\alpha)b_i(\beta)$ gives at most $r+1$ outer products over $R$.
+Thus the inner rank of $C$ is at most $\chi(r+1)$, proving the bound.
+The chosen indices have total degree $r$ and mode weight $3r$, so they
+survive the specified jet and precision cutoffs.
+\end{proof}
+
+Despite this rank, the formula for $G$ has $O(r)$ factors, and its
+complete join above is computable with polynomial coefficient overhead.
+This is a positive example of avoiding projected-table enumeration.
+It does not establish that the full C38 computation has this form.
+These singleton packets are a valid finite geometry but do not obey the
+asymptotic balanced packing schedule. No claim about every scheduled
+C38 projected table follows from this example.
+
+The program checks 340 target projected entries for $r=1,2,3,4$,
+680 actual exterior child contractions, protected rank slices, and
+independent full-deformation sums for $r\le2$. Larger $r$ values in
+the record are algebraic family certificates, not executed full tables.
+
+\section{A whole-network refactoring with paid copy wires}
+The factored example suggests preserving arithmetic factors instead of
+merging them prematurely. The actual general-prime C38 network admits
+the following exact refactoring.
+
+\begin{proposition}[Bounded-source C38 compiler]
+Let $S_F$ be the old number of forward Fourier-symbol edges and $S$
+the total edge count. There is a parsimonious graph refactoring with
+\[
+ S'=S+LW\sum_{s:d_s>1}d_s\le S+6S_F\le7S,
+\]
+where $W$ is the canonical Fourier word width in the chosen alphabet
+and $d_s$ is the number of output equations consuming source $s$.
+Every new first-stage arithmetic factor uses at most two source arrays;
+every middle equation uses at most eight source arrays; every closure
+factor uses one output array. Copy tensors have degree at most seven.
+\end{proposition}
+\begin{proof}
+The first predicate splits into disjoint port sets. For each $j\ge2$,
+pair $x_j$ with $x_1$ if $j=2$, otherwise with $X_{j-1}$; include
+both range tests and the one distinctness state chain. These pairs use
+each point/partial-abscissa source exactly once. All remaining ordinate,
+slope and quotient sources have independent range tests and form singleton
+factors. No first-stage port is copied. The closure predicate is a product
+over equations with disjoint Fourier and carry ports, so it also splits
+without new wires.
+
+For the middle stage, the square/chord equations use at most six sources,
+and the alternating ordinate-link equation uses at most eight. A source
+$x_j$ occurs in at most its two chord equations and its hash; a slope
+occurs in its two chord equations and at most one link; a partial abscissa
+occurs in four neighboring chord equations and at most two links; an
+even ordinate occurs in at most two chord and two link equations; a
+quotient occurs only in its own equation. Thus $d_s\le6$.
+
+For a source used by one equation, redirect its existing Fourier edge
+to that equation tensor. Otherwise retain the old edge to an equality
+tensor and add $d_s$ edges, one to each consuming equation tensor.
+Do this for every symbol in every forward word. The equation tensor
+performs the same transform, arithmetic operation, and inverse-transform
+check for its one output. All its omitted input sources are outside
+that equation's syntactic dependency set.
+
+Each original accepting assignment extends uniquely: every copy branch
+must equal its old source edge. Conversely, every accepted refactored
+assignment restricts to an original one. This proves both parsimony and
+the exact added-wire ledger. Input programs, fixed templates, transforms
+and graph construction all have polynomial cost in $S$ and $m$.
+\end{proof}
+
+The current implementation uses the original first predicate with valid
+fixed templates for the omitted disjoint factors. The templates are
+constructed from public bounds; they do not contain a planted relation.
+This can duplicate polynomial description work, which is explicitly
+allowed and charged. Middle and closure equation descriptors read only
+their incident ports. Noncanonical words and nonbinary side states are
+still rejected.
+
+\paragraph{Degree accounting.}
+First-factor degree is at most
+$2L_1W+6\lceil n/L_2\rceil$ up to endpoint constants.
+Middle-equation degree is at most $9L_2W$.
+Closure-equation degree is at most
+$RL_1W+2\lceil L/L_2\rceil W_c$, with carry width $W_c$.
+Other tensors have constant degree. Parallel multiplicity is at most
+$\max\{RW,W,1\}$. These bounds have no multiplicative $m$ factor.
+In the intended Fourier regime they give
+\[
+ \Delta'=\widetilde O(\sqrt b),\quad
+ \mu'=\operatorname{polylog}b,\quad
+ S'=\widetilde O(mb).
+\]
+Thus the specific root-degree obstruction identified in iteration 002
+is removed even for polynomially growing $m$. This does not certify
+the entire relation/reduction proof at such arities, nor change the
+current contractor's $S/\sqrt{\log S}$ cost scale. Added wires can
+worsen its leading constant. No coefficient improvement is claimed.
+
+Four full finite refactorings pass 324 local-product comparisons, 48
+whole-graph mutation comparisons and 32 inconsistent-copy controls.
+The dependency program is also scanned for all arities $2$ through 100;
+the all-arity bounds come from the source-occurrence argument above.
+In the $m=8$ fixture the maximum degree changes from 4,013 to 288,
+while the edge count changes from 13,754 to 24,890. No full unpinned
+recursive contraction of this refactored graph has been performed.
+
+\section{The remaining closure problem}
+A small arithmetic circuit is not by itself a fast contraction algorithm.
+For example, the product of the multilinear Boolean clause predicates
+of a width-three CNF has a small factored description; summing that
+product on Boolean inputs counts satisfying assignments. This observation
+is a reduction, not a lower-bound theorem, but prevents treating circuit
+description size as a paid summation bound.
+
+The next hypothesis must therefore specify a structural invariant:
+which source/mode scopes occur, how they change through projection and
+coefficient extraction, and how much state is required for an exact join.
+Acceptance requires a construction/access/composition bound for the actual
+refactored C38 family through all recursion levels and a complete ECDLP
+arity balance. Counterexamples should target that proposed invariant.
+The positive copy-factor family above establishes only one solvable case.
+The active goal remains unachieved.
+\end{document}

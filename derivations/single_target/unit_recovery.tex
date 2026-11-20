@@ -1,0 +1,216 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\Fp}{\mathbb F_p}
+\newcommand{\polylog}{\operatorname{polylog}}
+\title{Two exact reductions for the absolute field unit}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+For the independently hashed slots of \texttt{target.tex}, the absolute unit
+can be recovered from integer divisibility counts, with work depending on
+the number of distinct exceptional magnitudes. A second reduction works
+uniformly with an additional $O(b^{4/3})$ Boolean edges in the project's
+local-tensor model, where $b=\lceil\log_2 p\rceil$.
+Both reductions avoid the elliptic half-lists. The project's conditional
+end-to-end exponent still has leading coefficient $26.2933775156$ at scale
+$b/(\log_2 b)^{1/4}$.
+
+\section{The quantity counted}
+Use the odd prime-order, paired-slot setting, a finite non-two-torsion
+target $T$, and the tuned dyadic window and finite offset guards in
+\texttt{target.tex}. An empty slot gives unit one. Write $n_i$ for the
+number of accepted abscissas in slot $i$. The terminal multiset consists
+of the weights $w_T(S)=x(T)-x(S)$ away from $\pm T,O$, with the patched
+values $1$ at $\pm T$ and $-1$ at $O$. Each prefix component $j$ uses the
+nonzero chord scale $L(S,V)$ of that note, including the tangent and
+identity branches. For each component take the product of its weights
+with their oriented multiplicities. Multiply the terminal product by
+the prefix products raised to $\prod_{i>j}2n_i$.
+
+Every predicate below depends only on the component weight. Count on all
+signs with the earlier affine and identity paths. On a subbox satisfying
+$(2j+11)\prod_i(2\tau_i)<r$, the raw guarded tally $Z$ for a predicate
+gives $\lceil Z/r\rceil$ signed occurrences. The new auxiliary assignments
+are unique. Sum over boxes, then divide in the integers by two for the
+terminal component and by four for a prefix component. This works for
+range predicates, including ones covering almost every weight. Paid
+widths use $2^{O(m\log b)}$ subboxes. Slot sizes can be counted directly
+over the inverse windows in $O(\sum_i\tau_i\,\mathrm{poly}(b))$ time.
+The order and the two integer moments use the existing ordinary counts.
+
+\section{Extract the integer prime contributions directly}
+Represent $w$ by an integer $1\le w<p$. Put $h=\min(w,p-w)$ and count a
+minus sign when $w>p/2$. Choose a public factored positive integer $F$,
+independent of the private tuple. For every $q^i$ with $1\le i\le v_q(F)$
+count occurrences with $q^i\mid h$. Terms with $q^i>p/2$ may be dropped
+and the corresponding exponents truncated in $F$. For each component let
+$A_-$ be its negative count, $A_{q^i}$ its divisibility counts, and $N_h$
+its occurrence count at magnitude $h$. The exact product is
+\[
+ (-1)^{A_-}\prod_{q^i}q^{A_{q^i}}
+ \prod_{\substack{h:\,N_h>0\\ h\nmid F}}
+       \left(\frac{h}{\gcd(h,F)}\right)^{N_h}\pmod p .
+\]
+Indeed the first prime product contributes precisely $\gcd(h,F)$ per
+occurrence. The correction also applies when $h$ contains a higher
+power of a covered prime.
+
+Count the exceptions in $[1,\lfloor p/2\rfloor]$ by testing $F\bmod h\ne0$.
+At an occupied interval query its left child and subtract from the known
+parent count to obtain its right child. Traverse nonempty children depth
+first and multiply each singleton correction immediately. If there are
+$D$ distinct exceptional magnitudes in the component, the root and
+at most $O(bD)$ further queries suffice. The interval stack has depth
+$O(b)$, and counts fit in polynomially many bits. A zero root count
+certifies that the displayed prime product and sign already give the
+full unit. Even a dense instance can be processed without storing a
+histogram, though the traversal then recovers many individual counts.
+
+The divisibility certificates have canonical quotients. To test the
+exception predicate with $F$ of bit length $L$, read its public radix
+$2^b$ limbs $f_i$ from most significant to least significant. Starting
+with $R_0=0$, check ordinary integer equalities
+\[
+ 2^bR_{i-1}+f_i=Q_i h+R_i,\qquad 0\le R_i<h,\quad 0\le Q_i<2^b .
+\]
+All words are forced by Euclidean division. One stage uses one
+$b$-by-$b$ product, carries and range checks with $O(b)$ Boolean edges
+in the arithmetic compiler. Fresh copies joined on the residue limbs
+keep the degree and parallel multiplicity bounds. The full predicate
+adds $O(b+L)$ edges. A single $q^i\mid h$ predicate costs $O(b)$.
+One can supply verified public prime powers and form $F$ using
+$\mathrm{poly}(L,b)$ work. There are at most $L$ prime-power queries.
+A sufficient condition to preserve the leading log-time estimate
+per query is $(b+L)\log\log b=o(mb)$. This pays even for unbundled
+binary links at the original simplex dimension $O(\log\log b)$.
+In particular a cover with $O(b)$ bits is admissible at tuned $m$.
+The exceptional searches across the components are charged separately.
+
+\paragraph{An obstruction on the actual slots.}
+There is a deterministic lower bound on the work of this particular
+singleton traversal. Fix all but the largest nonempty slot, assuming
+all slots are nonempty, and allow both signs in the remaining slot.
+Translation gives $2n_{\max}$ distinct terminal sums. Drop the at most
+three sums $\pm T,O$. Each remaining centered magnitude has at most
+four preimages, two abscissas and two signs per abscissa. Consequently
+\[
+ D_{\rm terminal}\ \ge\
+ \max\{0,\,\lceil(2n_{\max}-3)/4\rceil-\tau(F)\},
+\]
+where $\tau(F)$ counts positive divisors. For $F$ of $L$ bits,
+$\log_2\tau(F)=O(L/\log L)$ as $L\to\infty$. To see this directly,
+primes up to $\sqrt L$ contribute at most
+$\sqrt L\log_2(L+1)$ to the logarithm. For larger primes the sum of
+their exponents is at most $2L/\log_2 L$, and $v+1\le 2^v$.
+At tuned $m=\Theta((\log b)^{1/4})$, even $L=O(mb)$ gives
+$\tau(F)=2^{o(b/m)}$. Thus whenever $n_{\max}=2^{(1+o(1))b/m}$,
+the number of exceptional leaves satisfies
+$\log_2(1+D_{\rm terminal})\ge(1-o(1))b/m$. This last premise is on realized
+slot occupancy. A width alone does not imply it. The argument concerns
+enumeration of exceptions for this cover and permits other joint formulas.
+
+\section{A uniform block certificate}
+Let $g$ generate $\Fp^\times$. Write $e\in[0,p-2]$ in radix $2^s$,
+with digits $u_i$ and a truncated last digit. Put
+$g_i=g^{2^{is}}\bmod p$ and $k=\lceil\operatorname{bitlength}(p-2)/s\rceil$.
+Certify $w=\prod_{i=0}^{k-1}h_i$ in the field, where
+$h_i=g_i^{u_i}\bmod p$. There are $k-1$ modular products for $k\ge1$.
+A comparison of $e$ with $p-2$ across digit blocks has forced
+prefix comparison states. One can compare a block with the public
+digits of $p-2$ and propagate a three-valued comparison. The range
+check also applies when all blocks except the last are maximal.
+Every nonzero $w$ then has exactly one exponent, with exactly one
+extension to the wire variables for that exponent. Count each exponent
+bit in turn. If $C_\ell$ is its oriented component count, the component
+product is $g^{\sum_\ell 2^\ell C_\ell}\bmod p$.
+There are $O(mb)$ kinds of pin before box splitting.
+Public bases cost polynomial time by repeated squaring. A primitive
+base can be supplied with an order certificate or tested by the same
+canonical block count for $g^e=1$, before using it on any slots.
+The latter needs only polynomially many candidates in expectation as
+in \texttt{target.tex}.
+
+\paragraph{Charging the digit copies and the field output.}
+Divide each $b$-bit canonical $h_i$ into slices of at most $s$ bits.
+Each slice predicate receives the $s$ or fewer digit bits and its own
+output slice. It computes the indicated bits of $g_i^{u_i}\bmod p$
+by ordinary powering on a local tensor entry. Recomputing the same
+power at different vertices costs polynomial time per entry. No table
+of size $2^s$ is assumed. Alternatively, tabulating all local powers
+once costs $O(k2^s\,\mathrm{poly}(b))$ time and bits of storage. This
+classical fixed-base decomposition is discussed by Brickell, Gordon,
+McCurley and Wilson.\footnote{\url{https://www.microsoft.com/en-us/research/publication/fast-exponentiation-with-precomputation-algorithms-and-lower-bounds/}}
+
+Use an equality vertex per digit bit to supply its copies to the slice
+checks, range check and optional pin. Their total input wiring per
+block is $O(s\lceil b/s\rceil)=O(b)$ for $1\le s\le b$.
+The output slices have $b$ bits in total and can be connected bitwise
+to the canonical input limbs of one fresh product module. Products
+can be chained with fresh source-row owners per module and $O(b)$
+bitwise links per intermediate value. A single-factor product can
+link directly to the weight. Copy and subdivision relays of constant
+length enforce bipartiteness and bounded parallel multiplicity, at
+constant edge overhead. For example, replacing each new wire by a path
+with private internal vertices permits length two between vertices of
+the same color and length three between opposite colors. Equality on
+the new ports has one extension. Existing arithmetic double-width
+products, canonical quotient checks and row ownership are as in
+\texttt{../short\_hash\_count/count.tex} and its cited compiler.
+
+The added Boolean edge count is $O(b\lceil b/s\rceil)$.
+The added degrees are bounded by
+$O(s+\lceil b/s\rceil+\sqrt b\,\polylog b)$. This includes the
+digit fan-out, the output-slice predicates, and the interfaces to the
+arithmetic copies. Taking $s=\lceil b^{2/3}\rceil$ gives
+$O(b^{4/3})$ edges and $O(b^{2/3}\polylog b)$ maximum degree.
+The explicit output words themselves give $\Theta(b\lceil b/s\rceil)$
+edges for this layout. Its degree therefore meets the square-root
+bound for the enlarged root, up to polylogarithms. If the original
+$\sqrt b\,\polylog b$ degree is imposed, $s=\lceil\sqrt b\rceil$
+instead gives $O(b^{3/2})$ edges. These counts are for Boolean
+edges between polynomial-time local tensor predicates. Expanding those
+predicates into ordinary fan-in-two gates is a different cost model.
+
+\paragraph{Why the smaller certificate has not improved the exponent.}
+At tuned $m$ the original relation graph has $(36+o(1))mb$ leading
+word bits. The $b^{4/3}$ term exceeds $mb$ by an unbounded polynomial
+factor up to logarithms. It cannot be inserted into the earlier
+$(18K+o(1))mb/\sqrt{\log_2 b}$ log-time estimate with its original
+coefficient. Taking $s$ of order $b/m$ gives $O(mb)$ wires, but a
+single unpinned digit-check vertex then sees $\Omega(b/m)$ bits.
+This violates the available square-root-degree hypothesis for that
+root. Enumerating the local exponent choices jointly would likewise
+require charging the combinations. A new contraction bound exploiting
+the block structure or a representation that combines many exceptional
+magnitudes per count would change this accounting. Either route still
+needs a faster full relation finder or a change in the training balance
+to improve the solver bound.
+
+\section{Checks and scope}
+Run \texttt{python -B research/single\_target/verify\_block\_unit.py}
+from the project root. The verifier checks bounded exponents across
+five small fields, tests corrupted slice bits and also exercises a 64-bit
+field and multi-limb public dividends. It compares the two
+counting reductions with literal polynomial products after removing
+all target zeros. Both methods are checked at two block widths or two
+divisor covers respectively. Cases include empty and one-slot
+inputs, infinity, tangencies, repeated target zeros, and $p=167$ with
+$p-1=2\cdot83$. Both reductions return 104 and 200 for the two
+$\mathbb F_{211}$ boxes with identical moments and order-30 projection.
+With a full last slot on the same curve and $F=12$, the fixed-prefix
+test finds 78 exceptional magnitudes against the lower bound of 49.
+Exhaustive signed tuples, guarded offsets and exponent
+witnesses implement the finite test oracle. The production reductions
+take a guarded count callback. The checks validate the arithmetic and
+rounding. The asymptotic contractor has not been benchmarked here.
+
+\paragraph{Joint exceptional factors.}
+The follow-up \texttt{exception\_product.tex} computes the correction
+without visiting exceptional magnitudes. It uses one oriented count
+per prime up to $\lfloor\sqrt p\rfloor$ and one sign count per component,
+and gives a separate exact cancellation test. The dense 78-exception
+fixture takes seven weighted counts for its terminal contribution.
+\end{document}

@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\Fp}{\mathbb F_p}
+\title{Joint recovery of the exceptional multiplicative contribution}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+In the paired-slot model the exceptional product can be computed exactly
+from the seeds in $1+\pi(\lfloor\sqrt p\rfloor)$ ordinary count queries per
+component, independent of the number of distinct exceptional weights.
+Each query has an arithmetic graph with $O(mb+b+L)$ Boolean edges,
+where $b=\lceil\log_2p\rceil$ and $L$ is the bit length of the public
+integer cover. For $L=O(b)$ it meets the project's square-root degree
+and polylogarithmic parallel-edge bounds at tuned arity. There is also an adaptive alternative that
+can certify simultaneous cancellation. Neither gives a better general
+end-to-end exponent.
+
+\section{Which product is recovered}
+For a nonzero local field weight $w$ write $h=\min(w,p-w)$ using its
+canonical representative. For a public factored integer $F>0$ set
+$r=h/\gcd(h,F)$. The desired component correction is
+\[
+                         E_F=\prod_{\text{oriented occurrences}} r \pmod p .
+\]
+Covered weights have $r=1$. The sign of $w$ and the prime powers in
+$\gcd(h,F)$ belong to the previously computed covered factor. Use
+the terminal weights and prefix chord-scale weights of
+\texttt{target.tex}, including their identity, tangent and target
+patches. The final correction multiplies the terminal result by the
+prefix result for $j$ raised to $\prod_{i>j}2n_i$. An empty slot gives
+correction one. Inverse dyadic windows give the slot sizes $n_i$ in
+$O(\sum_i\tau_i\,\mathrm{poly}(b))$ time. No half-list is needed.
+
+\section{Two short integers for every cofactor}
+Set $B=\lfloor\sqrt p\rfloor$, $x=\min(r,r^{-1}\bmod p)$.
+Let $u/v<x/p<u'/v'$ be the consecutive fractions surrounding $x/p$
+in the Farey sequence of order $B$. They exist since $x/p$ is reduced
+with denominator $p>B$. Their certificate consists of the two strict
+inequalities and
+\[
+ 0\le u\le v,\quad 0\le u'\le v',\quad 1\le v,v'\le B,\quad
+ u'v-uv'=1,\quad v+v'>B .
+\]
+The determinant forces reduced fractions, and a fraction between
+them must have denominator at least $v+v'$. Indeed, write its
+numerator--denominator vector in the unimodular basis of the two
+endpoints. Both coefficients are positive integers. The standard
+Farey neighbour property gives existence, and disjoint interiors give
+uniqueness.\footnote{See the primary paper
+\href{https://math.colgate.edu/~integers/d7/d7.pdf}{The relative size of consecutive odd denominators in Farey series}.}
+The scalar verifier finds the endpoints by batched mediant steps. A
+count checks the certificate directly and has no mediant loop.
+
+Write $a=xv-pu>0$ and $a'=pu'-xv'>0$. Then
+$av'+a'v=p$. Consequently
+\[
+    \min(a,a')\le\left\lfloor p/(B+1)\right\rfloor\le B .
+\]
+On $a\le a'$ choose the positive ratio $a/v$. Otherwise choose the
+negative ratio $-a'/v'$. It equals $x$ modulo $p$. Swap numerator and
+denominator if $r\ne x$. This gives a canonical triple
+\[
+        r=(-1)^\epsilon A/D\pmod p,\qquad 1\le A,D\le B .
+\]
+Inverting a residue that is not self-inverse swaps its two labels and
+preserves the sign. The convention $r=1$ gives $+1/1$.
+
+\paragraph{Unique arithmetic witnesses.}
+First obtain $t=F\bmod h$ by the public-limb recurrence in
+\texttt{unit\_recovery.tex}. Check $h=gr,\ t=gu$ with $g,r>0$ and
+$0\le u<r$. For $r>1$, require $uz=1+kr$ with $0<z<r$ and
+$0\le k<r$. This certifies $\gcd(u,r)=1$ and fixes $z,k$.
+For $r=1$ force $u=z=k=0$. These conditions force $g=\gcd(h,F)$.
+The canonical field inverse, Farey inequalities, determinant,
+errors, sign and swap each use a constant number of integer or
+modular products and comparisons on $O(b)$-bit words. Together with
+the remainder computation they add $O(b+L)$ edges. Each product uses
+the existing row-distributed multiplication check. Complete words
+can use the original owners and constant-length equality relays.
+The fixed number of copies per stage preserves the required degree
+and parallel multiplicity bounds.
+
+\section{Count each prime's contribution across all exceptional weights}
+For every prime $q\le B$, let $J_q=\lfloor\log_q B\rfloor$. For one
+component define
+\[
+  e_q=\sum_{j=1}^{J_q}\bigl(\#\{q^j\mid A\}-\#\{q^j\mid D\}\bigr).
+\]
+The answer is $E_F=(-1)^{C_-}\prod_{q\le B}q^{e_q}\bmod p$, where
+$C_-=\sum\epsilon$. Negative exponents use modular inverses.
+Every query depends on the fixed prime or prime power and the seeds.
+There is no search for individual exceptional magnitudes.
+
+The version using the original guarded path requests one nonnegative
+pin per divisibility test and one for the sign. Each has unique
+auxiliaries, so the earlier box rounding and sign-symmetry division
+apply verbatim. Its number of predicate types per component is
+$1+2\sum_{q\le B}J_q$, before dyadic box splitting.
+
+For the version using one query per prime, let $M$ be the exact
+oriented population. With $j$ slots, $M=\prod_{i\le j}(2n_i)/2$ in
+the terminal component and $\prod_{i\le j}(2n_i)/4$ in a prefix
+component, where $j\ge2$. A witness chooses a public-power index
+$s\in[1,J_q]$ and one of two branches. Accept $q^s\mid A$ on the
+first branch and $q^s\nmid D$ on the second. The nonnegative count
+is exactly $J_q M+e_q$. Subtract the known offset in ordinary
+integer arithmetic. The $O(\log b)$ index bits select among at most
+$b$ public powers of $q$ computed in $\mathrm{poly}(b)$ time per
+prime. The existing row owners check their own bits of the selected
+word locally from the copied index. This costs
+$O(b+\sqrt b\,\mathrm{polylog}(b))$ edges, and canonical division
+supplies the quotient and remainder.
+
+Use ordinary oriented counts for these deliberate witness
+multiplicities. In particular one must not send their weighted raw
+total through the old single-witness rounding formula on the old
+boxes. An explicit ordinary graph uses canonical affine coordinates
+plus an infinity flag with fixed dummy coordinates. For each
+addition, disjoint branches handle infinity, inverse pairs, doubling
+and distinct-abscissa addition. Active slopes and modular quotients
+are unique. Set unused auxiliary ports to zero on every branch.
+Constrain every input to the curve and its hash window. Select the
+canonical lower ordinate in the first slot and additionally in the
+last slot of a prefix component. This realizes the oriented count
+without an offset. Each addition has a fixed number of field
+equations, so compiler copies cost $O(mb)$ edges. This argument
+does not transfer the optimized coefficient 36 to this graph.
+
+Primes can be streamed by scanning to $B$ with deterministic
+polynomial-bit primality tests. Preprocessing costs
+$O(B\,\mathrm{poly}(b))$ time and polynomial working storage.
+The number of primes has $\log_2(1+\pi(B))=\tfrac12 b+O(\log b)$.
+An elementary lower estimate suffices here. For $n=\lfloor B/2\rfloor$,
+$\binom{2n}{n}\ge 2^{2n}/(2n+1)$ divides $\mathrm{lcm}(1,\dots,B)$
+because each prime valuation of that binomial is at most
+$\lfloor\log_q(2n)\rfloor$. The lcm has log size at most
+$\pi(B)\log_2 B$. Thus the fixed sweep alone has a linear exponent
+in $b$. For $L=O(b)$ the guarded implementation has conditional
+one-unit time $2^{b/2+o(b)}$ at the tuned widths, including the
+subboxes, polynomially many components and preprocessing. This is a
+bound for computing the correction without half-lists.
+
+\section{When numerator and denominator counts cancel}
+For a label $d\le B$ put $c_d=N_A(d)-N_D(d)$. For an interval $I$
+compute its imbalance by exact ordered-pair counts
+\[
+  H_I=\#AA_I-2\#AD_I+\#DD_I=\sum_{d\in I}c_d^2 .
+\]
+For example $AD_I$ counts independent oriented occurrences whose
+first numerator equals the second denominator and lies in $I$.
+Include the diagonal pairs. Each of the three counts uses two
+independent copies of the ordinary graph above with a single equality
+and interval predicate. Two single-copy counts give
+$S_I=\sum_{d\in I}c_d$. All counts are integers. A zero $H_I$ proves
+the entire interval contributes one. Bisect the other intervals.
+At a singleton multiply by $d^{S_I}$. With $K$ nonzero labels this
+takes $O(1+K\log B)$ interval tests, capped by $2B-1$ for the binary
+tree. A single root test suffices when all labels cancel. The sign
+is still counted separately. The two-copy graph has a larger
+arithmetic constant than a one-copy count.
+
+\paragraph{A seed family with many surviving labels.}
+Choose a dyadic $W$ of order $B/4$ with $W\le B/2$. Partition the
+hash modulus $2^b$ into intervals of width $W$. Since the group has
+$\Theta(p)$ rational points in paired signs, some interval contains
+$\Omega(W)$ distinct admissible abscissas. Take that interval as a
+one-slot affine hash window with multiplier one and choose a target
+in the same interval. For $F=1$, all unpatched magnitudes are positive
+distances $h<W$, and at most two abscissas give any one distance.
+For $1<h\le B/2$ the inverse representative exceeds $h$ and the
+bracket for $h/p$ is $(0/1,1/B)$. Its chosen numerator is $h$.
+Thus every one of $\Omega(W)$ distinct such labels is $h/1$, with
+no denominator to cancel it. The imbalance search has $\Omega(B)$
+occupied leaves in this allowable family. This example concerns a
+one-slot seed and does not assert a lower bound for the tuned
+independently sampled multi-slot distribution.
+
+There is also a limit on uniform two-label representations themselves.
+There are at most $2Y^2$ signed ratios with both labels at most $Y$.
+With one full slot and $F=1$, the at-most-four-preimage argument of
+\texttt{unit\_recovery.tex} realizes $\Omega(p)$ distinct rough values.
+Any scheme of this two-label form covering that entire input family
+requires $Y=\Omega(\sqrt p)$. This counts available representations.
+It permits methods that combine a large label domain without visiting it.
+
+\section{Finite evidence and end-to-end accounting}
+Run \texttt{python -B research/single\_target/verify\_exception\_product.py}.
+The verifier compares 2,864 brackets with independently sorted
+fractions and checks the ratio invariant on fields through 127 bits.
+Across 22 seed/cover cases, the prime-power, weighted-prime and
+collision reductions recover the literal correction, including
+the suffix exponents. Multiplication by the independently computed
+covered factor gives the literal normalized polynomial unit.
+On the earlier $\mathbb F_{211}$ fixture with $F=12$, 78 distinct
+terminal exceptions give correction 100. This takes seven ordinary
+weighted count types, or 19 guarded pin types before box splitting.
+The correction including the prefix is 132 and the full unit is 93.
+On the two equal-moment fixtures the corrections are 144 and 202,
+giving the respective full units 104 and 200.
+
+On twelve independently drawn four-slot hash fixtures over
+$\mathbb F_{65521}$ (widths $8,16,16,16$, target $(0,1)$ and $F=12$)
+the terminal components had 5,975 to 21,572 distinct exceptional
+magnitudes. All products matched the 55 prime/sign coordinates.
+Between 239 and 254 of the 255 integer labels had nonzero imbalance.
+The finite probe streams signed tuples and records reference
+histograms to measure these statistics. As a separate control,
+56 reciprocal-paired rough values cancelled in one root test.
+These are arithmetic checks. They do not time the conditional
+large-instance contractor.
+
+The fixed prime sweep already costs $2^{b/2+O(\log b)}$ count types
+before applying the contractor. The imbalance variant would need
+quantitative control of cancellations for the tuned seed family,
+as well as a bound for the paired queries. Neither route reduces the
+training term or establishes faster relation extraction. The best
+project solver estimate under its finite-packet and contraction
+assumptions remains
+\[
+ \log_2\mathbb E T_{\rm solve}\le (26.2933775156+o(1))\,
+                                   b/(\log_2 b)^{1/4}.
+\]
+The follow-up \texttt{prime\_projection.tex} combines the prime
+columns, terminal component and prefix components into one integer
+count, and prices its exponent certificate against both contraction
+theorems. It also tests reconstruction from small auxiliary fields.
+\end{document}

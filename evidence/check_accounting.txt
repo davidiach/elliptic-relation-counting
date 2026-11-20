@@ -1,0 +1,4 @@
+Conditional leading coefficients: 27.0138774237 -> 26.2933775156, space 13.1466887578.
+Short preimages: 8,192 exhaustive tests, 160 larger products.
+Offset multiplicity bounds: all 103 targets, 103 strict rounding checks.
+Quadrature: both raw moments agreed on all 24 independent three-slot masks.

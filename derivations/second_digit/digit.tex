@@ -1,0 +1,308 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{theorem}{Theorem}
+\newcommand{\Ph}{\Phi_\ell}
+\newcommand{\supp}{\operatorname{supp}}
+\title{Computing the second digit from endpoints and testing the cost on the actual hashes}
+\author{Project research note}
+\date{17 November 2026}
+\begin{document}
+\maketitle
+
+Let $G$ be a finite abelian group. In its integral group algebra let
+$[P][Q]=[P+Q]$, and write $h(T)$ for a coefficient. The operation of
+interest at a prime $\ell$ is
+\[
+   D_\ell(h)=\frac{h^\ell-\Ph(h)}{\ell}\pmod\ell,\qquad
+   \Ph\Big(\sum_P h(P)[P]\Big)=\sum_P h(P)[\ell P].
+\]
+This digit can be computed from endpoints if $h$ is supplied as a
+sum of runs along one group step. We give a direct algorithm and a
+probability bound showing why applying it to the project's independent
+abscissa hashes fails to improve the exponent. We also simplify the
+previous prime-square reconstruction before any expensive digit is
+computed. Its padding differences eliminate $D_\ell(h)$ itself.
+
+\section{An endpoint formula in characteristic \(\ell\)}
+Suppose
+\[
+ h=\sum_{i=1}^k w_i\sum_{j=0}^{L_i-1}[A_i+jQ],\qquad
+ L=\max_i L_i .
+\]
+Weights are integers, overlaps count with multiplicity, and a length-one
+run includes scalar padding at the identity. Empty runs can be dropped.
+This representation makes sense for any $Q$, including points of small
+order. Use a formal variable $z$ over the group ring and form
+\[
+ H(z)=\sum_i w_i[A_i]\sum_{j=0}^{L_i-1}z^j,\qquad
+ N(z)=(1-z)H(z)=\sum_i w_i[A_i](1-z^{L_i}).
+\]
+Substituting $z=[Q]$ recovers $h$. Extend $\Ph$ by $\Ph(z)=z^\ell$.
+The digit commutes with substitution, by taking the quotient in the
+torsion-free integral group algebra before reduction.
+
+The product rule follows by writing $F^\ell=\Ph(F)+\ell D_\ell(F)$
+with integer lifts and multiplying two such identities. It gives
+\[
+ D_\ell(H)=
+ \frac{D_\ell(N)-\Ph(H)D_\ell(1-z)}{1-z^\ell}
+                  \quad\text{over }\mathbb F_\ell[G][[z]] .
+\]
+This is the Frobenius-lift product rule with the sign convention in
+the definition above. See
+\href{https://maths-people.anu.edu.au/~borger/papers/07/forms.pdf}
+{Borger and Buium, Differential forms on arithmetic jet spaces}.
+The denominator has constant term one in the formal variable. We
+perform the division before the substitution which could make the
+denominator a zero divisor. The answer is a polynomial of degree at
+most $M=\ell(L-1)$.
+
+Combine coinciding terms of $N$ as $c_u[B_u]z^{e_u}$.
+For a population $(n_u)$ summing to $\ell$, a pure population (one
+$n_u=\ell$) contributes $(c_u^\ell-c_u)/\ell$ times
+$[\ell B_u]z^{\ell e_u}$. Every other population contributes
+\[
+    (\ell-1)!\prod_u\frac{c_u^{n_u}}{n_u!}\,
+    \Big[\sum_u n_uB_u\Big]z^{\sum_u n_u e_u} \pmod\ell .
+\]
+All these factorial denominators are units. There are at most $2k$
+endpoint types. The population sum involves endpoints of the runs,
+independently of their lengths. For a term $c[B]z^e$, dividing by
+$1-z^\ell$ contributes $c$ at $T$ once for each integer $a\ge0$
+such that $e+\ell a\le M$ and $B+(e+\ell a)Q=T$. Scanning this
+single progression costs $O(L)$ group operations and constant many
+working points. It correctly includes every wrap around a short group
+cycle. No group index for $T$ is required.
+
+For the correction, the coefficient of $z^j$ in $D_\ell(1-z)$ is
+$(-1)^j\binom{\ell}{j}/\ell$ for $1\le j<\ell$, and the coefficient
+at $j=\ell$ is $(({-1})^\ell+1)/\ell$. The latter matters at $\ell=2$.
+The $i$th run of $\Ph(H)$ then contributes with weight
+$w_i\min(L_i,a+1)$ at degree $j+\ell a$, based at $\ell A_i$,
+before applying the overall minus sign. This follows by counting the
+pairs $v+w=a$ with $0\le v<L_i$, $w\ge0$. Thus this correction uses
+only single progressions as well.
+
+\begin{theorem}
+Given the run description, the digit at one target costs at most
+\[
+    (1+L)\left\{\binom{2k+\ell-1}{\ell}+k\ell\right\}
+             \operatorname{poly}(\ell,k,\log(2+L),b,\log(2+\max_i|w_i|))
+\]
+bit operations when group operations on $b$-bit points take polynomial
+time. The evaluation can stream the populations and needs no table of
+partial group sums. For singleton runs it applies to arbitrary explicit
+masks. For $k=O(m)$, $\ell=O(m)$ and $L=O(\tau)$ the logarithm of
+the cost is $b/m+O(m+\log b)$ at the paid width and polynomial-size
+weights of the project. This bound assumes the run descriptions are given.
+\end{theorem}
+
+\section{How much of the digit survives padding?}
+In the detection reduction the primes satisfy $\ell>m\ge2$. Write
+$d=\ell-m$ and $\Delta^d g=\sum_{t=0}^d(-1)^{d-t}\binom dt g(t)$.
+For any group-algebra element $h$, applying the digit separately
+at each of the $d+1$ paddings duplicates work. In fact
+\[
+\Delta^d D_\ell(h+t[O])
+ = \Delta^d\!\left(\frac{t^\ell-t}{\ell}\right)[O]
+   +\sum_{j=1}^m \frac{\binom{\ell}{j}}{\ell}
+                    (\Delta^d t^{\ell-j})h^j \pmod\ell .
+\]
+Here the differences are in $t$ and are evaluated at zero. The formula
+follows by binomial expansion. The constant $D_\ell(h)$ cancels since
+$d\ge1$. If $j>m$ then $\ell-j<d$ and its coefficient also vanishes.
+The coefficient of $h^m$ is $d!\binom{\ell}{m}/\ell$, nonzero
+modulo $\ell$. Finally let $h=\sum_{i\in S}f_i$ and take the signed
+subset sum over $S\subseteq[m]$. Every term of degree below $m$
+cancels. The survivor is
+\[
+   m!d!\,\frac{\binom{\ell}{m}}{\ell}\prod_i f_i
+                       =(\ell-1)!\prod_i f_i .
+\]
+Thus the padded part of the previous reconstruction can be evaluated using
+arithmetic modulo $\ell$ and degree at most $m$. This removes an
+unnecessary $\ell$th-power calculation for that combined query. The
+full mixed coefficient is still present. This calculation alone gives
+the original arity cost.
+
+\section{A common group step on independent abscissa masks}
+Consider the project's prime-order subclass $r=|G|>2$. Write
+$\rho=\tau/2^b$, $\mu=(r-1)\rho$ and let $F_1,\dots,F_m$ be
+independently drawn signed hash masks. One affine point is retained
+with probability $\rho$. For distinct abscissas joint retention in
+one mask has probability at most $\rho^2$, under both the random
+odd multiplier and random shift. We use the pair-hash lemma of the
+supplied compressed relation-search paper. The following argument
+accounts for the identical hash values of $P$ and $-P$.
+
+For nonzero $Q$ define $a_i(Q)=|\{P:P,P+Q\in F_i\}|$. Among
+the pairs tested, equal abscissas require $2P=-Q$, which has only
+one solution. Therefore $\mathbb E a_i(Q)\le r\rho^2+\rho$.
+Independence between slots and the union bound give
+\[
+ \Pr\big(\exists\,i<j,\ Q\ne O:\ a_i(Q)a_j(Q)>0\big)
+       \le \binom{m}{2}(r-1)(r\rho^2+\rho)^2 .                 \tag{1}
+\]
+At the paid width, for growing polylogarithmic $m$,
+$\log_2 r=b+O(1)$ and $\log_2\mu=b/m+O(1)$, since the $2r^{1/m}$
+threshold dominates $20m$. The failure bound in (1) is
+$2^{-b+4b/m+O(\log m+1)}$.
+
+Outside this event, different masks share no nonzero internal
+difference. Consequently for \emph{every} shift $V$ and every
+$i\ne j$, $|F_i\cap(F_j+V)|\le1$. Two distinct points in the
+intersection would realize a common nonzero difference. For any
+step $Q\ne O$ there is also at most one exceptional index $i_*$ with
+$a_{i_*}(Q)>0$. These statements hold simultaneously, including for
+a step chosen after the seeds are known.
+
+Set $U=\bigcup_i F_i$. Its number of starts of occupied runs along
+$Q$ is $R_Q(U)=|U|-|U\cap(U+Q)|$. This counts the boundaries
+from empty to occupied in the cyclic ordering generated by $Q$.
+Inclusion-exclusion gives $|U|\ge\sum_i|F_i|-\binom m2$.
+In the intersection, the exceptional self-pair term is bounded by
+$|F_{i_*}|$ and the ordered cross terms by $m(m-1)$. Hence
+\[
+     R_Q(U)\ge\sum_{i\ne i_*}|F_i|-\tfrac32m(m-1).            \tag{2}
+\]
+Choose an arbitrary $i_*$ if all self terms vanish. For two masks the
+right side is at least $\min(|F_1|,|F_2|)-3$. Adding the padding
+point can reduce the number of starts by at most one. The digit
+queries have $\ell>m$, so positive weights $1,\ldots,m$ on $U$
+are nonzero modulo $\ell$. Even signed run representations require
+at least $R_Q$ runs because their group difference has at least $2R_Q$
+nonzero jumps, while one run supplies at most two.
+
+\paragraph{A sparse combination of translations.}
+The same event limits denominators more general than $1-[Q]$.
+With additional probability loss $O(m/\mu)$, all sizes lie in
+$[\mu/2,2\mu]$. Indeed, view a slot size as twice a sum over
+distinct abscissas. The pair bound gives variance at most $2\mu$,
+so Chebyshev and a union bound suffice. Now for every $V\ne O$
+the overlap of $U$ with its translate is at most $2\mu+m(m-1)$.
+Also $|U|\ge m\mu/2-\binom m2$. Let
+$c=\sum_{j=1}^s c_j[V_j]$ have distinct shifts and nonzero
+coefficients modulo $\ell$, with $1\le s\le m/16$.
+In each translated copy of $U$ there are at least
+\[
+ m\mu/2-\tbinom m2-(s-1)(2\mu+m(m-1))
+\]
+positions outside all the other copies. For growing polylogarithmic
+$m$ this is at least $m\mu/4$ eventually. At such a position the product
+$c\,h$ has exactly one contributing translate, for
+$h=\sum_i 1_{F_i}$. Its coefficient is nonzero. Thus
+$|\supp(c\,h)|\ge sm\mu/4$, even for data-dependent shifts and
+coefficients. Fixed padding changes the union size by at most one
+and the overlap estimate by at most two, giving the same asymptotic
+bound. This excludes sparse numerators obtained by multiplying the
+mixture by a short sum of translations. It does not bound arbitrary
+arithmetic circuits for the digit.
+
+\section{Rank of the digit itself at a fixed target}
+Here is a separate test of proposals that separate two groups of input
+seeds before taking a scalar product. Fix all odd multipliers and $T$.
+Let $\ell>m$ be an odd prime distinct from $r$, and split the $m$ slots
+into two nonempty groups. For each padding $0\le t\le\ell-m$ let $M_t$ be
+the matrix of $D_\ell(t[O]+\sum_i f_i)(T)$, indexed by the left
+and right tuples of actual hash shifts. Write $n=(r-1)/2$.
+Some allowed $t$ satisfies
+\[
+ \operatorname{rank}_{\mathbb F_\ell} M_t
+   \ \ge\ \frac{n-2\delta-4}{\ell-m+1},\qquad 0\le\delta\le\tau .
+\]
+In particular the lower bound is $2^{b-O(\log\ell+1)}$ on growing
+prime-order inputs at the paid width with $\ell=O(m)$. It is a bound
+for an exact separated sum on all shifts. It does not establish
+an average runtime lower bound.
+
+For details, $\delta$ is the codimension of the span of shifted slot
+masks in the $n$-dimensional space of even functions vanishing at
+$O$. The shift-span proof in \texttt{../slot\_arity/rate.tex} applies
+in characteristic $\ell$: a vector on abscissas annihilating the
+windows, extended by zero to all $2^b$ positions, is $\tau$-periodic
+and has sum zero over a period. Its dimension is at most $\tau$.
+Differences to one reference shift consequently span at least
+$n-\delta-1$ dimensions. Intersecting with the zero-augmentation
+space (sum of coefficients zero) leaves at least $n-\delta-2$.
+
+In the space $V$ of all even functions with zero augmentation, of
+dimension $n$, the pairing $(f,g)\mapsto(fg)(T)$ is nondegenerate.
+After extending scalars the nontrivial Fourier coordinates pair by
+inversion, with nonzero target weight $z+z^{-1}$ for an $r$th root
+$z$. Vanishing would require $z^2=-1$, impossible as $r$ is odd
+and $\ell\ne2$. The Fourier transform is invertible as $\ell\ne r$.
+An adjacent nonzero window difference is, up to sign, $e_P$ or
+$e_P-e_R$ for $P\ne\pm R$, where $e_P=[P]+[-P]$.
+Both act invertibly on $V$. For the difference use
+$z+z^{-1}=w+w^{-1}$ only if $z=w$ or $z=w^{-1}$, and faithfulness
+of each nontrivial character of the prime-order group.
+
+Keep a free shift on each side and center it by subtracting its
+reference. For every extra shift axis take a nonzero adjacent
+difference. These are linear row and column operations on $M_t$.
+Apply them to the previous signed-subset and padding identity.
+Every proper subset omits an axis and hence contributes zero.
+Only the full mixture $M_t$ appears for each $t$. On the product
+side the centered free slots pair through the extra window
+differences, which are invertible on $V$. Restriction to two
+subspaces of codimension at most $\delta+2$ gives rank at least
+$n-2\delta-4$. The alternating sum over the $\ell-m+1$ compressed
+matrices has that rank, proving the bound by subadditivity.
+
+\section{Cost at the target distribution}
+Typically (2) forces order $m\mu$ starts for the full mixture. The
+class-free formula explicitly visits endpoint populations. A positive
+run representation must begin a run at each start, yielding distinct
+degree-zero formal atoms, of weights between one and $m$ in the
+unpadded full mixture. In particular populations choosing $\ell$
+different such atoms have a nonzero scalar weight and pass the degree
+cutoff. With $\ell>m$, $\ell=O(m)$, listing these candidate populations
+has log cost at least $b-O(m\log m+\log b)$ at these sizes. This is
+a cost of listing candidates, not a rank or time lower bound for
+methods that sum them implicitly.
+
+Screening seeds for exceptional short descriptions also costs target
+coverage. On the event where (1) has no collision, any full mixture
+whose support consists of at most $K$ runs for some step satisfies
+$\sum_{i\ne i_*}|F_i|\le K+\tfrac32m(m-1)+1$. The extra one allows
+padding. Since $|F_{i_*}|\le2\tau$, the total number of targets
+reachable by ordinary tuples from this seed is at most
+\[
+     2\tau\left(\frac{K+\tfrac32m(m-1)+1}{m-1}\right)^{m-1} .
+\]
+This follows from the product of the slot sizes and the
+arithmetic-geometric mean inequality. Divide by $r-1$ for a uniform
+nonidentity target independent of the initial seeds, and add (1)
+to cover all exceptional seeds. If $m\log_2(K+m^2)=o(b)$, the joint
+probability of finding a short description and a reachable target
+is at most $2^{-b+o(b)}$. This includes $K=\operatorname{poly}(m)$
+and cutoffs with $\log_2 K=O(w/\ell+\log\ell)$ for $w=o(b)$.
+In particular selecting only easy seeds in this family would lose
+the uniform constant-coverage guarantee. The estimate is for the
+specified independent seed distribution and one initial trial.
+
+The best end-to-end bound supplied by the project thus remains
+conditional, with log time $O(b/(\log_2 b)^{1/4})$. The missing
+saving is a way to evaluate the joint degree-$m$ coefficient on
+the actual curve inputs for less than the present arity charge.
+The obstruction above is specific to ways of obtaining and
+enumerating sparse endpoints. It does not exclude every joint evaluation.
+
+\paragraph{Verification.}
+Run \texttt{python -B research/second\_digit/verify.py}.
+The evaluator is checked against ordinary integer convolution at
+953 targets/parameter choices, including repeated wraps, cancellation,
+signed weights, the prime two, and actual elliptic-curve points.
+For a length-64 run on the cyclic group of order 1019, prime 11 and
+target 346, the digit is 9. Independent integer interval counting
+gives 43,077,043,809,387,520 nonconstant orbits. The digit evaluator
+does not list them. The hash moment check exhausts 16,384 seed pairs
+on the order-19 curve. There are 216 padding checks and 48 direct
+digit queries in a reconstruction using three actual masks. At the
+actual four-slot paid width 128 on
+$y^2=x^3+44x+1$ over $\mathbb F_{65521}$ (order 65,419), two fixed
+masks occupy 246 points, with at least 236 runs over every nonzero
+step. For four masks the figures are 470 points and 452 runs.
+The probability estimate comes from (1), independently of the examples.
+\end{document}

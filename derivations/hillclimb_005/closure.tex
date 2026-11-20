@@ -1,0 +1,222 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\title{Balanced packet mixing and normalized Cauchy coefficients}
+\author{Research checkpoint 005}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Objective and evidence level.}
+The target remains a correct classical general-prime-field ECDLP algorithm
+with expected bit time $2^{\widetilde O(\sqrt b)}$. This checkpoint tests
+two proposed compression shortcuts and records an exact generating
+polynomial that survives a finite balanced packet construction. It proves
+neither the asymptotic packet foundation nor a stronger runtime bound.
+The conditional baseline from checkpoint 004 is unchanged.
+
+\section{An actual C38 restriction with full, balanced packets}
+Checkpoint 003 constructs, from public C38 parameters $p=13,L_F=8$,
+a restriction of a genuine first predicate equal to
+\[
+ f(Y)=\prod_{j=1}^r [Y_{a_j}=Y_{b_j}].
+\]
+The finite instance $r=2$ has four accepted assignments. The construction
+and exhaustive predicate checks are reused unchanged here.
+
+Choose label words in $[g]^2$, $g=3$, and exactly $H=8$ edges in each
+ordered label-word class. The four edges of this C38 restriction are the
+first four edges from label $(0,0)$ to label $(1,0)$. Their opposite
+endpoints are one-valued tensors. Every other edge has a separate
+zero-pinning tensor at each endpoint. Thus this is an explicit loop-free
+Boolean network, with $648$ edges, $1293$ vertices, maximum degree four,
+parallel multiplicity one, and original contraction four.
+
+Packetization at $a=3,u=2$ produces $81$ fully occupied packets of size
+eight. The four live rows occur at positions $0,6,4,2$ of one packet;
+their opposite-orientation slots are filled by pinned edges. All ordered
+label-pair loads are equal. This is a finite balanced construction, not
+an assertion that these parameters follow the asymptotic guarded schedule.
+The same padding construction is defined for $g=9$ with $8g^4$ edges;
+its additional zero-pinned packets contribute one. The executable global
+fixture uses $g=3$.
+
+At the local node $T=1+16Z$, write the four incoming normalized modes as
+$z_0,z_1,z_2,z_3$, and let
+\[
+ u_e=\sum_{k=0}^3 A_{e,k}(Z)z_k
+\]
+be the actual crossing form at live row $e$. The retained same-group
+source variables are zero. Summing a copy pair over its two possible
+values yields the exact generating polynomial
+\[
+ (1-u_a)(1-u_b)+u_a u_b
+ =1-u_a-u_b+2u_a u_b.
+\]
+Consequently the target projected table is the coefficient table of
+\begin{equation}
+ G(z)=\prod_{j=1}^2 (1-u_{a_j}-u_{b_j}+2u_{a_j}u_{b_j}).
+ \label{eq:copy}
+\end{equation}
+It retains a short circuit, but its factors no longer depend on disjoint
+mode variables. All other source modes have every source port pinned to
+zero, so positive exponents on them vanish identically. The four live
+mode weights are $4,6,10,12$.
+
+\begin{proposition}
+In this exactly balanced finite fixture, truncating each live mode
+exponent to $\{0,1\}$ changes both the target table and the full node join.
+\end{proposition}
+\begin{proof}
+Set $z_1=z_2=z_3=0$. If $c(Z)$ is the common unnormalized crossing factor,
+its linear coefficient at this node is $c_1=-144/7$, of valuation four.
+The four leading row factors, in paired order, are
+\[
+ 1,\quad 1/7,\quad 1/5,\quad 1/3.
+\]
+Thus the coefficients of $Z^2z_0^2$ and $Z^4z_0^4$ in \eqref{eq:copy} are
+\[
+ c_1^2\frac{36}{35},\qquad c_1^4\frac4{105},
+\]
+with valuations ten and eighteen. Both survive modulo $2^{96}$.
+The executable proof evaluates all $\binom{8}{4}=70$ target entries
+of total mode degree at most four and their actual exterior source
+moments. Their sum equals an independently evaluated 64-term direct
+deformation sum over the original four valid $Y$ assignments and sixteen
+live $X$ assignments. Dropping repeated mode exponents changes the
+$Z^2$ coefficient of this full join by a quantity of valuation ten.
+The code retains the exact modular difference and checks every asserted
+identity, including unit contributions of the padding packets.
+\end{proof}
+
+This rejects a binary-mode/disjoint-pair shortcut. It does not reject
+the compact circuit \eqref{eq:copy}, nor prove that all its coefficients
+or its contraction are expensive for every possible representation.
+
+\paragraph{A fully unequal packet word.}
+A second fixture uses $a=4,u=2,H=4$, with the four live edges from
+$(0,0)$ to $(1,1)$. Its $324$ edges have equal loads in all $81$ ordered
+label-word classes. There are $36$ packets, nine fully occupied; the
+selected packet has key $((0,1),(0,1))$ and all sixteen slots occupied.
+The live rows are $0,12,8,4$. Four other target rows are zero-pinned,
+so the generating polynomial is \eqref{eq:copy} multiplied by
+$\prod_{x\in\{2,6,10,14\}}(1-u_x)$. Exactly seven incoming modes have
+nonzero source support, of weights $5,7,11,13,19,21,25$.
+In $(\mathbb Z/2^{128})[Z]/(Z^5)$, total mode degree above four vanishes.
+All $\binom{11}{4}=330$ remaining target entries are checked against
+actual packet entries and source moments. The full join again equals
+the independent 64-term direct deformation. Binary-mode truncation
+changes its $Z^2$ coefficient with valuation eleven. Thus the phenomenon
+is not limited to packet words with an equal coordinate. This fixture
+also does not claim to instantiate the asymptotic guarded schedule.
+
+\section{Dense scopes survive the actual precision cutoff}
+Let $L=2^a$, $N=L/2$, $X_k=2k$, and $\tau=1$. For an even row $x$ define
+the normalized left factor
+\[
+ L_k(x;T)=\frac{T}{T+x-X_k}
+  \prod_{\ell<k}
+   \frac{(x-X_\ell)(T+X_k-X_\ell)}
+        {(X_k-X_\ell)(T+x-X_\ell)}.
+\]
+At $x=L-2=2(N-1)$ and $T=1$, every $T+$even factor is odd and
+\[
+ v_2(L_k(L-2;1))=v_2\binom{N-1}{k}=0,
+ \quad 0\le k<N.
+\]
+The binomial coefficients are odd because $N-1$ has every low binary
+digit set. The normalized diagonal gives
+\begin{equation}
+ v_2([Z]A_{L-2,k}(Z))=a+1+4k-2s_2(k).
+ \label{eq:dense}
+\end{equation}
+These values increase strictly; the maximum is $2L-a-1$.
+Hence with $P=2L+1$ and jet length two, all $N=L/2$ modes are nonzero
+in a single row form. The mode implementation verifies \eqref{eq:dense}
+for $L=8,16,32,64,128$.
+
+A copy factor involving rows $0,L-2$ therefore has an unbounded number
+of mode variables in its linear terms. The coefficient of $z_0$ has
+valuation $2a+1$, and the others have the values in \eqref{eq:dense};
+none is removed by this precision. A proposed invariant requiring each
+factor to involve only a bounded number of modes fails already here.
+This is not a universal treewidth or circuit lower bound: the row form
+has a linear-size circuit, and a single quadratic factor still has only
+quadratically many monomials. Auxiliary variables and sparse arithmetic
+must be charged separately before inferring any algorithmic obstruction.
+
+\section{A determinant identity does not pass through normalization}
+Borchardt's identity for a Cauchy matrix $C$ is
+\[
+ \det(C)\operatorname{per}(C)=\det(C\circ C),
+\]
+where $\circ$ denotes entrywise product; see
+\href{https://arxiv.org/abs/2309.05886}{Chavez et al., 2023}.
+This suggests a possible coefficient-extraction shortcut. Its hypothesis
+must be checked after normalized mode decomposition.
+
+For $X=(0,2,\ldots,14)$, rows $x=(6,10,14)$, and modes $k=0,1,2$,
+the normalized left-factor matrix at $T=1$ is
+\[
+ A=\begin{pmatrix}
+ 1/7&9/35&3/7\\
+ 1/11&5/33&50/231\\
+ 1/15&7/65&21/143
+ \end{pmatrix}.
+\]
+Exact rational arithmetic gives
+\begin{equation}
+ \det(A)\operatorname{per}(A)-\det(A\circ A)
+ =-\frac8{495990495}\ne0.
+ \label{eq:defect}
+\end{equation}
+The determinant of the matrix of entrywise reciprocals is $-22/135$,
+also excluding an unscaled Cauchy form, whose reciprocal matrix has
+rank at most two. Nonzero diagonal row and column rescalings multiply
+\eqref{eq:defect} by the square of the product of their scaling factors,
+so they cannot repair this identity over $\mathbb Q$.
+
+This is not merely a specialization outside the finite algorithm.
+For a fully occupied $L=16$ packet at $T=1+32Z$, select these three rows
+and the first three incoming modes, whose weights are $5,7,11$.
+Set these three $Y$ values to one, the other retained $Y$ values to zero,
+and all local $X$ values to zero. The actual packet entry at mode
+exponents $(1,1,1)$ is the permanent of the resulting three-by-three
+row-coefficient matrix. The code checks this equality independently.
+Its Borchardt defect has first nonzero coefficient at $Z^6$ with
+valuation $49$, so it survives in
+$(\mathbb Z/2^{64})[Z]/(Z^7)$.
+A raw Cauchy matrix on the same row/pivot positions is a positive control
+and satisfies the identity exactly. Other structured-permanent methods
+are not ruled out by this counterexample.
+
+\section{Why simply retaining raw Cauchy columns loses the known saving}
+In a fully occupied balanced packing, the number of crossing column
+modes at a fixed coordinate is $n=(g-1)M/g$. In the raw Cauchy column
+factorization at valuation level zero, every mode has only the common
+guaranteed weight $\delta=a+1$. The Hermite budget has
+\[
+ P\ge 6\lceil M/(u-1)\rceil L,
+ \qquad \text{total mode degree cap }M.
+\]
+For large $u$ and $a\ge u$, one has $\delta n<P$ and $n\le M$.
+Every binary vector on these $n$ raw modes therefore lies in the
+unrestricted feasible candidate set. Explicitly enumerating that set
+requires $2^{\Omega(M)}$ candidates, even if each packet coefficient
+could be extracted efficiently. Normalization was buying a mode-weight
+spectrum, not just a different coefficient formula.
+
+This is a candidate-universe statement. It does not assert that all
+candidates contribute for a specific C38 graph, or exclude an implicit
+join that avoids their enumeration. Such an implicit join is exactly
+the additional result a raw-basis route would need.
+
+\paragraph{Next gate.}
+The surviving short formula is a circuit in densely mixed linear forms.
+The needed invariant must control coefficient extraction and the complete
+source-weighted coefficient pairing, through repeated balanced recursion.
+A bounded-scope factor claim, a determinant substitution valid only before
+normalization, or a raw-basis entry improvement alone does not provide
+that invariant. No improvement to the complete ECDLP exponent is claimed.
+\end{document}

@@ -1,0 +1,466 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,hyperref}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Prb}{\mathbb P}
+\title{Decoding the full field values of elliptic determinant moments}
+\author{Project research note}
+\date{20 November 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Result.}
+The unit-weight moment values can distinguish hits on small curves even
+when the number of tuples exceeds the number of available moments.
+Six field moments recover the exact witness count for one signed
+abscissa pair in each of three slots by a fixed formula.
+Planting gives an efficient way to train or validate a target-specific
+decoder using fresh inputs with unknown labels. We give a sufficient
+condition in terms of a computable partition of the moment values.
+We have no partition or other readout proved to meet that condition at
+the tuned growing arity. The end-to-end exponent has not improved.
+
+\section{Which distribution must be decoded?}
+Let $G=E(\F_p)$, $N=hr=|G|$ on the project's supplied coprime-cofactor
+class, and fix a target $T$ in the odd-prime-order subgroup with $2T\ne O$.
+Let $b=\lceil\log_2 p\rceil$, $L=\log_2 b$, $g=\log_2 L$ and $M=2^b$.
+In slot $i$ a canonical affine abscissa $x$ is retained when
+$(\alpha_i x+\beta_i\bmod M)<\tau_i$, with $\alpha_i$ uniform odd,
+$\beta_i$ uniform and slots independent. Both signed points are kept.
+Write $P$ for the distribution of the full seeds,
+$F_i$ for slot $i$, $D=\prod_i|F_i|$, $\rho_i=\tau_i/M$,
+$\nu_i=N\rho_i$ and $\lambda=N^{-1}\prod_i\nu_i$.
+Use balanced dyadic widths with $1/(2L)<\lambda\le1/L$ and proposed arity
+$m\asymp L^{1/4}\sqrt g$. Let $H$ be the ordinary ordered hit count
+and $Y=1_{\{H>0\}}$. Uniformly at each prescribed target,
+$\E_P H=\lambda(1+o(1))$, $\E_P[H(H-1)]=O(\lambda^2)$ and
+$P(Y=1)=\lambda+O(\lambda^2)$ as in
+\texttt{../mixed\_coefficient/mixed.tex}.
+
+With $d=m+1$, let $\Delta_{\mathbf a}(T)$ be the $L(dO)$ evaluation
+determinant at the tuple and $-T$, in the basis starting with $1,x,\ldots$
+from \texttt{target\_incidence.tex}. For regular seeds, the slot
+abscissas are disjoint and avoid $x(T)$. Then $\Delta=0$ exactly at a
+hit. Irregular seeds have probability $o(\lambda^2)$ asymptotically.
+The unit-weight field values in question are
+\[
+ Z_j(T)=\sum_{\mathbf a\in\prod F_i}\Delta_{\mathbf a}(T)^j\in\F_p.
+\]
+The previous interpolation gives all orders through $k=\lfloor
+2^{b/m^2}\rfloor$ at expected bit cost $2^{(1+o(1))b/m}$.
+Include the known integer $D$ as side information when specified.
+The results on training below hold for any fixed feature $F$ of these
+data. They also hold with independent feature randomness sampled with
+the same law on both distributions.
+
+\section{Training at a prescribed target without a fresh label oracle}
+
+Sample $m-1$ independent uniform affine curve points and complete their
+sum to $T$ by the unique last point. Retry when it is $O$. The rejected
+fraction is at most $1/(N-1)$, by fixing all but one of the sampled
+points. Each valid ordered affine tuple of sum $T$ has the same sampling
+probability. Uniform affine points can be sampled by rejection on a
+uniform abscissa and one of two possible root indices. For each chosen
+point, draw the slot multiplier $\alpha_i$ as usual and a uniform
+$u_i\in[0,\tau_i)$. Set $\beta_i=u_i-\alpha_i x_i\bmod M$. This gives the
+exact seed law conditional on retaining that coordinate.
+
+\begin{proposition}
+The resulting marginal seed law $Q$ satisfies $Q(s)=H(s)P(s)/\mu$,
+where
+\[
+ \mu=\E_P H=\frac{(N-1)^m-(-1)^m}{N}\prod_i\rho_i .
+\]
+For any event $A$ on the observed field values and allowed side information,
+the score
+\[
+ S(A)=\mu+P(A)-2\mu Q(A)
+\]
+differs from the error of predicting $Y$ by at most $\E_P(H-1)_+$.
+For predicting $H\bmod2$ the discrepancy is at most $\E_P[H(H-1)]$.
+Both discrepancies are $O(\lambda^2)$.
+\end{proposition}
+
+\begin{proof}
+Every specified affine tuple survives the independent seeds with the
+same probability $\prod_i\rho_i$. Counting its occurrences in the
+planting law gives the marginal identity. The number of affine tuples is
+the coefficient at nonidentity $T$ in $(\sum_{u\in G}[u]-[O])^m$,
+which gives the formula for $\mu$. For either binary truth $B$,
+subtract its actual risk from $S(A)$. The difference is
+$\E_P[(H-B)(1-2\,1_A)]$. For existence $H-B=(H-1)_+\le H(H-1)/2$.
+For parity $0\le H-B\le H(H-1)$.
+\end{proof}
+
+For a finite partition of the values into observed bins $v$, population
+score minimization selects a bin exactly when $2\mu Q(v)>P(v)$, with
+arbitrary ties. In particular $\mu Q(v)/P(v)=\E_P[H\mid v]$ for positive
+mass bins. An input with several hits is more likely to be planted.
+The score accounts for this bias, including on small examples where
+several hits have appreciable probability.
+
+There is an exact asymptotic criterion on the full values themselves.
+Write $P_F,Q_F$ for their two laws. Then
+\[
+ \E_P\operatorname{Var}(H\mid F)
+   =\operatorname{Var}_P(H)-\mu^2\chi^2(Q_F\Vert P_F).
+\]
+This follows by substituting the conditional mean above into the total
+variance identity. The least attainable classification error given $F$
+is $O(\lambda^2)$ if and only if this conditional variance is
+$O(\lambda^2)$. Indeed $\E(H-Y)^2\le\E[H(H-1)]$, and the squared
+distance of a binary label to its optimal real regression lies between
+half the optimal classification error and that error. Conditional
+expectation is an orthogonal projection, so the residual $L^2$
+norms for $H$ and $Y$ differ by $O(\lambda)$. Since
+$\operatorname{Var}(H)=\mu+O(\lambda^2)$, the equivalent requirement is
+$\chi^2(Q_F\Vert P_F)=1/\mu+O(1)$. This measures whether the full
+moment information suffices, independently of the cost to decode it.
+
+\paragraph{A sufficient condition within the time budget.}
+Suppose a computable compression of the full field values has $s$
+possible bins, with $\log_2 s=O(b/m)$, and its optimal existence-bit
+error for every prescribed target is $O(\lambda^2)$. Suppose evaluating
+the compression and moments together costs $2^{O(b/m)}$ in mean bit
+operations under \emph{both} $P$ and $Q$. The previous interpolation
+construction has a bound uniform in the particular masks, since scanning
+the public widths bounds its slot work. Then one can learn the decision
+for every bin at the prescribed target and retain this order of query
+cost and error, including training.
+
+In detail, with failure probability at most $\delta$, Hoeffding's
+inequality and a union bound over the $2^s$ subsets give uniform
+additive $O(\lambda^2)$ accuracy for the score from
+\[
+ n_P=O\bigl(\lambda^{-4}(s+\log(1/\delta))\bigr),\qquad
+ n_Q=O\bigl(\lambda^{-2}(s+\log(1/\delta))\bigr)
+\]
+independent samples. Use the empirical bin masses, selecting the bins
+with negative empirical $P(v)-2\mu Q(v)$. This requires counts and one
+pass over the occupied bins. The best empirical score is within
+$O(\lambda^2)$ true risk of the best bin decision. Taking
+$\delta=O(\lambda^2)$ preserves the averaged guarantee. A prespecified
+family of $J$ trial readouts instead costs $\log J$ in the sample counts,
+with the time to compare their decisions charged separately. Training
+can be repeated per target using private randomness independent of the
+test seeds. The sufficient condition demands a bound on approximation
+error for the actual hashes. Finding such a compression remains open.
+
+For selection when a good candidate exists, the sample counts can be
+reduced. For $J$ fixed candidates put $u=\log(2J/\delta)$ and let
+$R(A)$ denote true existence risk. Always $P(A)\le R(A)+O(\lambda)$
+and $\mu Q(A^c)\le R(A)+O(\lambda^2)$. Estimate the score as
+$\widehat P(A)-\mu+2\mu\widehat Q(A^c)$. Bernstein's inequality for
+a Bernoulli frequency $v$ bounds its deviation by
+$O(\sqrt{vu/n}+u/n)$ simultaneously over the family. With sufficiently
+large constants, $n_P=O(u/\lambda^3)$ and $n_Q=O(u/\lambda)$ therefore
+yield $|\widehat S(A)-R(A)|\le R(A)/3+O(\lambda^2)$: use
+$2\sqrt{xy}\le c x+y/c$ on the terms involving $R(A)$.
+Empirical minimization then has risk at most $2\min_A R(A)+O(\lambda^2)$.
+For a prescribed $s$-bin compression one can take $J=2^s$ and still
+minimize by bin counts. The earlier larger sample bounds apply when
+uniform additive accuracy is desired for every candidate.
+
+\section{An algebraic decoder using six moments}
+
+Take $m=3$ and one abscissa with two signed points in each slot, avoiding
+each other's abscissas and $x(T)$. The $L(4O)$ basis is $1,x,x^2,y$.
+Expansion along its only ordinate coordinate gives
+$\Delta=C+a_1\epsilon_1+a_2\epsilon_2+a_3\epsilon_3$, where the
+eight tuples use every sign pattern once. The first six unit-weight
+field moments alone determine the product of all eight determinants
+and the number that vanish. All the following operations have fixed
+cost in field arithmetic for $p>3$.
+
+Set $C=Z_1/8$. From the raw moments divided by $8$, compute the central
+moments $u_2,u_4,u_6$ about $C$ by binomial expansion. Put
+\[
+ s_1=u_2,\qquad s_2=(3s_1^2-u_4)/2,\qquad
+ s_3=(u_6-15u_4u_2+30u_2^3)/16 .
+\]
+Expanding the even powers and cancelling odd sign monomials gives
+$s_j=\sum_i a_i^{2j}$. The elementary symmetric functions of the three
+squares are $e_1=s_1$, $e_2=(s_1^2-s_2)/2$ and
+$e_3=(s_1^3-3s_1s_2+2s_3)/6$. The octic
+\[
+ K(z)=\big((z^2-e_1)^2-4e_2\big)^2-64z^2e_3
+      =\prod_{\epsilon\in\{\pm1\}^3}\left(z+\sum_i a_i\epsilon_i\right)
+\]
+follows by pairing the even and odd sign patterns. Their quartics have
+the two terms $\pm8a_1a_2a_3 z$ and the same even part.
+Thus $K(C)$ is the desired product. Repeated division by $z-C$ gives
+the exact number of zero determinants even in small odd characteristic.
+This readout works across curves and targets without training.
+
+The verifier checks both assertions on all 146,784 eligible such seed
+triples of its order-19 experiment, including 75,840 with a hit. Plugging
+pooled moments into the formula on its other nonempty regular inputs
+gives 171,888 errors in 220,320 cases. Multiple abscissa choices in
+one slot mix different affine sign sums; their pooled central moments
+do not recover the three squares above. At the tuned large widths the
+chance even one slot has at most two points is $o(\lambda^2)$ by the
+slot variance bound. The single-orbit formula supplies no running-time
+improvement at the required arity.
+
+\section{What the exact finite distributions show}
+
+We enumerate fresh seeds with their original multiplicities.
+For a fixed target and prescribed observation, group the regular seeds
+by observed values. The exact minimum number of mistakes is the sum,
+over cells, of the smaller of the positive and negative seed masses.
+This is an information measurement with a fully labeled table.
+The following rows give it the individual slot sizes as side information.
+The baseline column uses those sizes alone. The last two columns use
+the first six moments. All rows concern existence.
+
+\begin{center}
+\begin{tabular}{rrrrrrr}
+\toprule
+$p$ & $m$ & width & Regular seeds & Baseline & Zero flags & Full values\\
+\midrule
+13&2&2&10,736&2,208&1,728&0\\
+23&2&4&157,572&38,760&37,808&0\\
+13&3&2&884,864&108,816&84,192&0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A larger experiment uses $E:y^2=x^3+4x+1$ over $\F_{61}$, order 67,
+$m=2$, width 2 and target $T$ at cycle index 1 in the verifier. The test
+population consists of all regular seeds with $D>6$. Of the 1,180,368
+qualifying seed pairs, 171,272 admit a relation. The observation
+$(D,Z_1,\ldots,Z_6)$ has 70,788 distinct values, each with a single
+existence label. The always-zero error is 14.51 percent here.
+
+A dictionary learned on every other nonzero target except $\pm T$,
+including both signs in the raw training set, errs on 171,168 test
+seeds when an unseen key defaults to zero. Normalizing $Z_j$ by $y_T^j$
+gives 171,064 errors. Training on other targets therefore recovers very
+little on this test. A target-specific dictionary can instead be trained
+by direct planting. Keep the observed positive signatures from eligible
+plants and predict zero on unseen signatures. Its expected error on the
+test population, over 1,000, 10,000 and 100,000 independent
+\emph{unconditioned} plants at $T$, is 12.2666, 4.7812 and 0.9555
+percent respectively. These numbers use the exact occupancy formula
+$\sum_{v:\,Y(v)=1}P(v\mid{\rm test})(1-Q(v,{\rm test}))^{n_Q}$.
+Purity was verified by enumeration for this fixture. A deployed lookup
+only needs the planted signatures and its membership tests.
+A reproducible 100,000-plant trial trained this way stored 12,377
+positive signatures. It missed 11,172 of the 171,272 positive test
+seeds and made zero false-positive predictions, an overall error of
+0.9465 percent on the specified 1,180,368 seeds. The verifier caches
+feature evaluations on the toy mask family. Its training loop receives
+the moment signatures, the eligibility bit and the planted draws.
+
+We also measured a cheaper readout by making fixed random affine
+projections of the six field values, retaining $D$. On the same test
+population the exact counts below compare the best decision on each bin
+with the decision learned from the \emph{population} planted score.
+Projection coefficients are fixed before observing labels.
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Observation & Occupied bins & Optimal mistakes & Planted-score mistakes\\
+\midrule
+One field residue & 122 & 171,272 & 171,272\\
+Two field residues & 7,369 & 165,028 & 165,760\\
+Three field residues & 63,923 & 14,816 & 14,844\\
+Ten quadratic-residue bits & 2,048 & 171,128 & 171,180\\
+\bottomrule
+\end{tabular}
+\end{center}
+Only this set of projections was tested. Three retain substantial
+information but already distinguish nearly as many cells as the full
+six-moment observation. These finite rates concern the stipulated subset
+of the seed law and do not establish the growing-arity guarantee.
+
+\paragraph{A test on larger fields at balanced widths.}
+With three slots, take the order-103 curve $y^2=x^3+17x+1$ over $\F_{101}$
+and the order-1019 curve $y^2=x^3+9x+1$ over $\F_{1031}$.
+Widths $(4,4,4)$ and $(8,16,16)$ give $\lambda=0.3238$ and $0.2476$,
+respectively, both in the specified dyadic range. At cycle target 1 on
+each curve, draw 100,000 plants, 25,000 independent unlabeled training
+seeds and 20,000 further fresh test seeds. Train the six-moment plus $D$
+dictionary from eligible plants. For compressed features, fit the
+empirical planted score; all methods predict no hit on irregular inputs.
+The table gives mistakes on the 20,000 test seeds (including the irregular
+ones). Counts here are samples, unlike the exhaustive results above.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Readout & $\F_{101}$ & $\F_{1031}$\\
+\midrule
+Always absent & 4,668 & 4,068\\
+Six-moment dictionary and $D$ & 4,653 & 4,068\\
+Tuple count $D$ alone & 4,063 & 4,013\\
+One field projection and $D$ & 4,246 & 6,593\\
+Two field projections and $D$ & 5,648 & 4,081\\
+\bottomrule
+\end{tabular}
+\end{center}
+The two dictionaries stored 67,004 and 89,137 distinct planted
+signatures. The regular-only dictionary errors were 3,211 of 15,618
+and 3,640 of 18,465, against 3,226 and 3,640 true positives,
+respectively. At this training budget, the larger test shows no gain
+over predicting absence. The probe also checks each regular test label
+against direct group addition. These are fixed-target experiments. Six
+moments were chosen for all the finite comparisons. The asymptotic
+interpolation bound uses the growing prefix specified in the first section.
+
+\section{The true unweighted spectrum on fresh seeds}
+
+Fix $T$, let $n_v$ be the number of tuple determinants with value $v$,
+and set $C=N\lambda=\prod_i\nu_i$, $A_0=\prod_i(1+2/\nu_i)$.
+Let $R_T$ denote regularity.
+\begin{proposition}
+The expected number of ordered, unequal tuple pairs with the same field
+value, restricted to regular seeds, satisfies
+\[
+ \E\left[1_{R_T}\sum_v n_v(n_v-1)\right]
+ \le d A_0 C^2/N+md(2^m-1)C/N .
+\]
+For two fixed eligible targets $S\ne\pm T$ on the same masks, their
+histograms satisfy
+\[
+ \E\left[1_{R_T\cap R_S}\sum_v n_v(T)n_v(S)\right]
+ \le d A_0 C^2/N+md\,2^m C/N .
+\]
+\end{proposition}
+\begin{proof}
+Classify tuple pairs by the exact set $J$ of slots with matching
+abscissas. If $J$ is proper, choose the first tuple, the signs on $J$,
+and every remaining point of the second tuple except one. Regularity
+ensures the $m-1$ fixed points of that tuple and its fixed target column
+are distinct. They impose $m$ independent conditions on $L(dO)$ since
+the remaining divisor degree is one. As a function of the last point,
+the determinant is therefore a nonzero section of $L(dO)$. It vanishes
+at the fixed points, hence is nonconstant. Any specified field value has
+at most $d$ preimages. There are at most
+$d\,2^{|J|}N^{2m-|J|-1}$ such pairs. The two-abscissa hash law
+bounds joint acceptance by $\prod_{i\in J}\rho_i\prod_{i\notin J}\rho_i^2$.
+Summing gives the first term in each inequality.
+
+If all abscissas match, the points of the second tuple are fixed sign
+flips of the first. In the same-target inequality omit the identical
+tuple. For any other sign pattern the section
+$\Delta_{\epsilon\mathbf a}(T)-\Delta_{\mathbf a}(T)$, of degree at
+most $d$ separately in each curve coordinate, is nonzero. Set one
+flipped $a_i=-T$. One determinant vanishes and the other contains
+distinct columns $T,-T$. They may be completed to a nonsingular
+evaluation matrix by varying the remaining points, since $d\ge3$ and
+the affine evaluations span (already on the rational curve for $N-1>d$).
+For two different targets $S\ne\pm T$, set any $a_i=-T$. Its signed
+image is distinct from $-S$ for every sign pattern, giving the same
+argument even for the identity pattern.
+
+Such a nonzero multisection has at most $md N^{m-1}$ affine rational
+zeros. To see this, fix a rational tuple where it is nonzero. Specialize
+one coordinate to its value there. By induction at most
+$(m-1)d N^{m-2}$ choices of the other coordinates kill the specialized
+section. At each other choice the remaining one-variable function has
+at most $d$ zeros. This proves the stated bound, also allowing constant
+slices. All-matched tuples are kept with probability $\prod_i\rho_i$.
+Summing over sign patterns finishes the proof.
+\end{proof}
+
+Distinct slot abscissas have nonpositive indicator covariance, so
+$\operatorname{Var}|F_i|\le2\E|F_i|$. The slots are independent and
+$\E|F_i|=(1-1/N)\nu_i$. Thus $D/C$ tends to one in probability, with
+failure probability smaller than any fixed power of $\lambda$ for any
+fixed relative tolerance. In particular $D<p$ with that probability.
+Since $d\lambda=o(1)$, the proposition gives $o(C)$ expected repeated
+occurrences on regular roots. The number of distinct nonzero values is
+$(1-o_{\Prb}(1))C$ on fresh seeds. Likewise the two spectra at $S\ne\pm T$
+have $o_{\Prb}(C)$ values in common. Consequently subtracting the
+moments of one fixed reference target generally leaves a long sequence
+to reconstruct.
+
+On true-positive seeds the following weaker bound suffices. Write
+$J_*= \sum_v n_v(n_v-1)$. The unconditional collision estimate
+restricted to regular seeds is $O(dC\lambda)$. Dividing by
+$P(Y=1)=\Theta(\lambda)$ gives conditional expectation $O(d C)$ there.
+Apart from conditional probability at most $\eta+o(1)$, the seeds are
+regular, $D\asymp C$, $D<p$, and $J_*=O(dC/\eta)$.
+Cauchy--Schwarz then gives at least $\Omega(\eta C/d)-1$ distinct
+nonzero values. For instance $\eta=1/L$ gives $2^{b-O(\log L)}$ values
+on a $1-o(1)$ fraction of the positives. The stronger unconditional
+near-injectivity estimate has not been asserted after this conditioning.
+
+\paragraph{The cost of extrapolation.}
+When $D<p$, every represented frequency survives in the field.
+The infinite sequence $Z_j$ for $j\ge1$ has minimal linear recurrence
+order precisely the number of distinct nonzero values. Indeed a
+recurrence with characteristic polynomial $q$ gives
+$\sum_{v\ne0} n_v v^j q(v)=0$ for every $j\ge1$. The first as many
+equations as distinct nonzero values form an invertible Vandermonde
+system after nonzero column scaling. Thus $q(v)=0$ at every represented
+nonzero $v$, and their product of linear factors attains the degree.
+Extrapolating via an explicit minimal recurrence or reconstructing the
+whole spectrum by Prony interpolation therefore exceeds the proposed
+budget even on positive roots. A decoder of the single zero count need
+not construct such a recurrence.
+
+\section{Scope of the distributional obstructions}
+
+\paragraph{Random weights.}
+One proposed alternative draws independent uniform field weights for
+each signed point, slot by slot, and reuses them for all $k$ moments.
+Use a product of the chosen weights in each tuple term. Fix typical
+regular masks and one point in every slot except the last. The
+determinant of the resulting slice is a nonconstant function of degree
+at most $d$, so it takes at least $k+1$ distinct values if
+$|F_m|>dk$. This size condition fails with probability $o(\lambda^2)$.
+Conditional on all other weights, the vector of weighted moments
+of orders $0,\ldots,k$ is a linear map of the last slot's random
+weights. A $(k+1)$-rowed minor of this map is a nonzero polynomial in
+the other slots' weights. In fact specializing those weights to the
+chosen points produces a Vandermonde minor on $k+1$ distinct values.
+The minor has total degree at most $(k+1)(m-1)$. Hence, except with
+probability at most $(k+1)(m-1)/p$, the linear map is onto and the full
+field vector is exactly uniform. The conclusion concerns the statistic
+when the final weights are hidden. It gives no lower bound for unit
+weights or for algorithms making joint use of all realized weights.
+
+\paragraph{What near-injectivity alone implies.}
+As a control suppose the spectrum were a uniform $t$-subset of $\F_p$,
+$t/p=\pi\asymp1/L$. Its first $k$ field moments carry at most $k\log_2 p$
+bits. Translating the underlying set by $-x$ transforms its moments by
+the binomial theorem. Any decoder of membership at zero with error
+$\varepsilon$ therefore predicts membership at each $x$ with that same
+error under this control distribution. The entropy chain rule and
+concavity give
+\[
+ \log_2 {p\choose t} \le k\log_2p+p h_2(\varepsilon).
+\]
+Using $\log_2{p\choose t}\ge ph_2(\pi)-\log_2(p+1)$ and concavity of
+binary entropy, for $\varepsilon\le\pi$ we obtain
+\[
+ \varepsilon\ge \pi-
+ \frac{k\log_2p+\log_2(p+1)}
+      {p\log_2((1-\pi)/\pi)} .
+\]
+This applies even to arbitrary nonlinear moment readouts of a random
+subset. The actual masks contain only $O(mb)$ seed bits and do not have
+this translation law. The finite decoding results illustrate why that
+distinction matters.
+
+\paragraph{End-to-end comparison.}
+The desired fresh evaluator has error $O(L^{-2})$ and logarithmic
+cost $O(mb/(\sqrt L\,g))=O(b/m)$ at the proposed arity.
+The planted score makes learning and testing short observations compatible
+with that cost. The finite lookup rates and the recurrence lower bounds
+do not prove an evaluator meeting it. The best complete project estimate
+therefore remains
+\[
+ \log_2\E T_{\rm solve}\le
+ (26.2933775156+o(1))\,b/L^{1/4}
+\]
+under packet assumption A.1 and the inherited contraction and reduction
+estimates in \texttt{../short\_hash\_count/count.tex}.
+Run \texttt{python -B research/joint\_parity/check\_moment\_decoding.py}
+from the project root for the exact tests and dictionary trial, and run
+\texttt{python -B research/joint\_parity/probe\_planted\_moments.py}
+for the independent larger-field training and test draws.
+\end{document}

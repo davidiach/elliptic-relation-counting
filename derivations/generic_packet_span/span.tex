@@ -1,0 +1,205 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{theorem}{Theorem}
+\newcommand{\QQ}{\mathbb Q}
+\title{Sparse sources span every polynomial of a complete generic binary packet}
+\author{Project research note}
+\date{17 November 2026}
+\begin{document}
+\maketitle
+
+Let $L=2^a\ge2$, $d=2L-1$, and index rows and source bits by
+$0,\ldots,L-1$. In the notation of checkpoint 009 put
+\[
+ C(T)=\prod_{h=-L}^{L-1}(T-h),\quad c=C'(0),\qquad
+ s_x(T)=\frac{C(T)}c\sum_{y\in X}\frac1{T-(y-x)} .
+\]
+Here $X$ is the set of bits equal to one. A literal target assignment $Y$
+gives the polynomial
+\[
+ F_{X,Y}=\prod_{x\in Y}s_x\prod_{x\notin Y}(1-s_x).
+\]
+
+\begin{theorem}
+At every such width, the rational span of $F_{X,Y}$ with
+$1\le |X|\le 2$ and unrestricted $Y$ is exactly $\QQ[T]_{\le Ld}$.
+There is a polynomial-size, explicitly constructible spanning list of
+target marginals with these sparse sources.
+\end{theorem}
+
+\paragraph{Reduction to $d$ coefficients at each order.}
+For any row set $A$, the marginal $\prod_{x\in A}s_x$ is the sum of
+$F_{X,Y}$ over $Y\supseteq A$. This includes the constant one for empty
+$A$. For $|A|=k$ let
+\[
+ R_{A,X}(T)=\prod_{x\in A}\sum_{y\in X}\frac1{T-(y-x)} .
+\]
+The product $C^k R_{A,X}/c^k$ has degree at most $kd$. Modulo polynomials
+of degree at most $(k-1)d$, its top $d$ coefficients are an invertible
+triangular transform of the first $d$ coefficients of $T^kR_{A,X}$ at
+infinity. Indeed $C$ is monic and $c\ne0$. It suffices by induction on
+$k$ to show that these $d$ coefficient vectors span $\QQ^d$ at each order.
+
+A functional on the $d$ coefficients takes the form
+$R\mapsto[T^{-1}](P R)$, where $\deg P\le d+k-2$. Terms of $P$ of
+degree at most $k-2$ give the zero functional. Assume the functional
+vanishes on the marginals below. We show that it is zero.
+
+\paragraph{Singletons fix the values at the grid.}
+Let $G(T)=\prod_{j=1-L}^{L-1}(T-j)$, of degree $d$.
+A singleton source and an interval of $k$ rows realize
+$R=1/\prod_{j=h}^{h+k-1}(T-j)$ for every consecutive $k$-point
+window in the grid of $G$. By partial fractions, $[T^{-1}]PR$ is the
+divided difference of $P$ on this window. For $k=1$ its vanishing forces
+$P=0$. For $k\ge2$ the vanishing $(k-1)$st forward differences imply
+that on the grid the values agree with one polynomial of degree at most
+$k-2$. Interpolate the first $k-1$ points and propagate the equality
+one point at a time. Subtract that polynomial without changing the
+functional. We can thus take $P=GQ$ with $\deg Q\le k-2$.
+The partial-fraction formula for divided differences is also recorded
+in \href{https://dlmf.nist.gov/3.3.E35}{NIST DLMF, equation 3.3.35}.
+
+\paragraph{Double poles give equations on $Q$.}
+Use $X=\{y,y+g\}$ with $g$ odd. The numerator of each row factor before
+cancellation is $2(T+x-y)-g$, which is nonzero at every integer.
+The poles of $R$ have order at most two since each source location
+contributes at most one row at a given pole. In $GQR$, simple poles of
+$R$ disappear. A double pole $t$ contributes the residue
+$G'(t)Q(t)\,[ (T-t)^2R ]_{T=t}$ with nonzero multiplier of $Q(t)$.
+The coefficient $[T^{-1}]GQR$ is the sum of these finite residues by
+partial fraction expansion, including when $GQR$ has a polynomial part.
+Consequently a window of double poles with all but one value of $Q$
+already zero forces the remaining value to vanish.
+
+For $A=\{s,\ldots,s+k-1\}$ and $g<k$, write $n=k-g$.
+The double poles form the entire $n$-point interval ending at $y-s$.
+When an interval of consecutive known zeros has length at least $n-1$
+and lies in the union of a contiguous sliding family of $n$-point windows,
+one can extend it to either end of that union using a window with a
+single new point. We use this only for nonempty intervals and $n\ge2$.
+
+\paragraph{Orders below the width.}
+For $2\le k<L$ use just positions $0,\ldots,k$ for the pair tests.
+Choose $s=0,1$ and $0\le y\le k-g=n$. Thus the windows have endpoints
+$-1,\ldots,n$ and their union is $[-n,n]$ on the integer grid.
+For even $k$, start at $g=k-1$. The single-point windows force
+$Q(-1)=Q(0)=Q(1)=0$. For odd $k\ge3$, first take $g=k$, $y=0$ and
+$A=\{0,\ldots,k\}\setminus\{1\}$. There is exactly one double pole,
+at zero, with nonzero multiplier. Now take the consecutive rows and
+$g=k-2$. Their two-point windows extend this zero through $[-2,2]$.
+In both cases decrease the odd gap by two until $g=1$.
+At each step the preceding interval is $[-(n-2),n-2]$, long enough
+to propagate the new $n$-point windows. At the final step there are
+at least $k-1$ distinct zeros. Hence $Q=0$.
+
+\paragraph{The top order.}
+Now $k=L$ is even, $A$ is fixed, and $s=0$. For $g=L-n$ odd, the
+available windows end at $0,\ldots,n-1$ and cover $[-(n-1),n-1]$.
+Set $v_r=|G'(r)|Q(r)$. Up to a common nonzero scalar, the residue
+equations for each overlap $n$ are
+\[
+ \sum_{j=0}^{n-1} h_{n,j} v_{y-j}=0,\qquad 0\le y<n ,
+ \quad h_{n,0}=1 ,
+\]
+\[
+ \frac{h_{n,j+1}}{h_{n,j}}
+ =\frac{(L-n+2j+2)(L-1-j)(n-1-j)}
+ {(L+n-2j-2)(j+1)(L-n+1+j)} .
+\]
+Indeed the double-pole coefficient at $y-j$ before multiplication
+by $G'$ is
+\[
+ \frac{\prod_{x=0}^{L-1}(2x-2j-g)}
+ {(-1)^g j!(L-1-j)!(j+g)!(L-1-j-g)!}.
+\]
+Successive coefficients alternate in sign, as do the values of $G'$.
+Their absolute-value ratios give the formula above. The weights are
+positive and symmetric by reflection.
+
+Overlap one gives $v_0=0$. This suffices at $L=2$. Write the weights
+at overlap three as $(1,A,1)$. Its equations give $v_{-1}=-v_1$,
+$v_2=-Av_1$ and $v_{-2}=-v_2$. For $L=4$ we have $\deg Q\le2$.
+Because $|G'|$ is symmetric, $Q(0)=0$ and $Q(-1)=-Q(1)$ force $Q$
+to be odd and linear. A nonzero such $Q$ gives $v_2$ and $v_1$ the
+same sign, contradicting the equation.
+
+For $L\ge8$ name the first halves of the overlap-five and overlap-seven
+weight vectors $(1,B,C_5)$ and $(1,D,E,F)$. At overlap five the equations
+ending at $3,4$ give
+\[
+ v_3=(AB-C_5+1)v_1,\qquad v_4=-Bv_3-C_5v_2-Bv_1 .
+\]
+Substitute into the overlap-seven equation ending at $4$. Its left-hand
+side is $v_1$ times
+\[
+ (D-B)(AB-C_5+1)-(E-C_5-1)A+F-D-B
+ =\frac{384L(L-5)(L-1)}{(L-4)(L-2)(L+1)^2(L+3)^2(L+5)}>0 .
+\]
+For direct verification the six weights from the ratio formula are
+\begin{align*}
+ A&=\frac{2(L-1)^2}{(L-2)(L+1)},&
+ B&=\frac{4(L-3)(L-1)}{(L-4)(L+3)},\\
+ C_5&=\frac{6(L-2)(L-1)^2}{(L-4)(L+1)(L+3)},&
+ D&=\frac{6(L-5)(L-1)}{(L-6)(L+5)},\\
+ E&=\frac{15(L-3)(L-2)(L-1)}{(L-6)(L+3)(L+5)},&
+ F&=\frac{20(L-3)^2(L-2)(L-1)^2}{(L-6)(L-4)(L+1)(L+3)(L+5)} .
+\end{align*}
+It follows that $v_1=0$ and the entire interval $[-2,2]$ is zero.
+The sliding windows for overlaps $5,7,\ldots,L-1$ extend this through
+$[-(L-2),L-2]$. Each preceding interval has length at least $n-1$.
+This forces $Q=0$ at the top order as well and completes the proof.
+
+\paragraph{Constructive size and cost.}
+There are $O(L)$ singleton windows at each order and $O(k^2)$ two-source
+windows at order $k$, for $O(L^3)$ marginal descriptions over all orders.
+Each description has a product of at most $L$ explicit polynomials of
+degree $d$. After clearing $c^k$ their coefficients have
+$O(L^2\log(L+1))$ bits by multiplying bounds on coefficient one-norms.
+Generating the top coefficients and selecting a basis by exact rational
+linear algebra therefore takes polynomially many bit operations in $L$.
+A modular minor of full rank also certifies a layer over the rationals.
+The executable uses this latter test at its listed finite widths.
+
+A basis of literal assignments can likewise be found in polynomial time
+if required. Maintain a span of chosen literals. For any marginal outside
+it, split a free target bit into zero and one. The two new partial marginals
+sum to their parent, so at least one lies outside the span. Choose that
+child and repeat until a single literal remains, then add it. Rescan the
+marginal list until it lies in the span. There are at most $Ld+1$
+additions. Partial marginals remain explicit products of selected $s_x$
+and $1-s_x$, with polynomial coefficient lengths. This refinement is an
+algorithmic corollary. The supplied verifier works directly with marginals.
+
+\paragraph{Consequence for precision.}
+Products of $p$ independent complete generic packets span
+$\QQ[T]_{\le pL(2L-1)}$ by multiplying monomial expansions. Let $M=pL$.
+Any fixed exact rational linear jet readout valid on every such product
+is valid on every polynomial of the degree used in checkpoint 008.
+Its consecutive-grid theorem now applies to this actual generic family.
+For $1\le u\le\log_2L$, $M\ge4u$, and per-node loss budgets
+$\lfloor\lambda/2^{v_2(\tau)}\rfloor$, it requires
+\[
+ \lambda\ \ge\ \frac{ML}{8u}.
+\]
+For $u\ge2$ the matching order upper bound was already proved there.
+This closes the smaller-rational-space route for this readout model
+at growing widths. Coefficients in the span can have even denominators.
+Parity recovery on the integral family, fixed C38 predicates at growing
+width, and source-dependent joins are separate questions. The construction
+changes the cost of certifying generic rank. The project has no improved
+end-to-end ECDLP exponent from this result.
+
+\paragraph{Reproduction.}
+Run \texttt{python -B research/generic\_packet\_span/verify\_span.py}.
+The checks compare literal polynomials from checkpoint 009 to marginal
+coefficients, compute finite-field ranks layer by layer, and independently
+evaluate the endpoint identity at integer widths. The all-width conclusion
+uses the proof above.
+
+The verified full dimensions at widths $2,4,8,16,32,64$ were
+$7,29,121,497,2017,8129$, respectively. The width-64 computation
+examined $17{,}553$ marginal descriptions. At width $128$ the verifier
+checked only the highest layer, obtaining rank $255$ from $1{,}154$
+descriptions. The literal cross-check covered $234$ small marginals.
+\end{document}

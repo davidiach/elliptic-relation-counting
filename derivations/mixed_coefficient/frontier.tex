@@ -1,0 +1,206 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\title{Square-root arity and approximation across a split of the hash seeds}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+Let $b=\lceil\log_2p\rceil$ and $N=\#E(\mathbb F_p)$, supplied as $hr$
+with $r$ an odd prime and $\gcd(h,r)=1$. The best complete bound in the
+project remains the conditional
+\[
+ \log_2\E T\le (26.2933775156+o(1))\,b/(\log_2 b)^{1/4}.
+\]
+It uses the packet assumption A.1 and the arithmetic, contraction and
+relation-reduction results specified in \texttt{../short\_hash\_count/count.tex}.
+The original paper gives the same asymptotic scale on the common
+prime-order class without a numerical leading constant
+(\href{https://github.com/bochum-crypto/subexponential-ecdl/blob/main/subexponential-ecdl.pdf}
+{Akshima et al., version 0.2, Theorems 1, 2 and 4}).
+
+\section{The outer cost at square-root arity}
+Put $m=\lceil\sqrt b\rceil$, $M=2^b$. For independently hashed slots let
+$w_i$ be their dyadic widths, $\rho_i=w_i/M$, $\nu_i=N\rho_i$, and
+$\lambda=N^{-1}\prod_i\nu_i$. For a fixed target let $H$ be the
+ordinary integer tuple count and $X$ the count obeying the chord guards.
+Take the balanced isolation widths from \texttt{mixed.tex}, so
+$1/3<\lambda\le2/3$. The sum of the integer width exponents is
+$\lfloor\log_2((2/3)M^m/N^{m-1})\rfloor$, and they differ by at most one.
+Consequently $\log_2\nu_i=(\log_2 N)/m+O(1)$ uniformly.
+Hasse's bound gives $\log_2 N=b+O(1)$.
+
+For $2T\ne O$, the finite factorial-moment inequality of \texttt{mixed.tex} gives
+\[
+ \E[H(H-1)]\le\lambda^2\prod_i(1+2/\nu_i)
+       +\lambda |E(\mathbb F_p)[2]|(2^m-2)/N,\qquad
+ \E X\ge(1-3m/N)\lambda .
+\]
+Here $m/\min_i\nu_i=o(1)$ and $2^m/N=o(1)$ also at $m=\lceil\sqrt b\rceil$.
+Thus $\Prob(X=H=1)\ge\lambda(1-\lambda)-o(1)\ge2/9-o(1)$.
+All masked nonidentity targets for cofactor projection are in the
+odd-prime-order subgroup, where $2T\ne O$. The probability is over
+fresh independent seeds for each prescribed target.
+
+\begin{proposition}
+Suppose ordinary integer-count parity on every such independently
+seeded input and every legal dyadic restriction has an exact evaluator
+with expected bit cost $2^{\widetilde O(\sqrt b)}$ per call,
+including preprocessing and uniformly conditional on the input and
+the preceding transcript. The project outer reduction then gives
+$\log_2\E T=\widetilde O(\sqrt b)$.
+\end{proposition}
+\begin{proof}
+On odd parity, the restriction argument in \texttt{mixed.tex}
+uses at most $1+\sum_i\log_2 w_i=O(b+m)$ calls including the root,
+and at most $2^m$ terminal sign choices. Deterministic selection and a
+guard check give the same relation-selection law in training and online
+use. An isolated guarded witness always succeeds. The enumeration
+budget is $B=2\sum_i w_i$, with $\log_2 B=b/m+O(\log m+1)$.
+The pilot and sparse-solve bounds charge polynomial factors in $b,m$
+times $B C_m+mB^2$, where $C_m$ includes the full selection procedure.
+Their proofs use a dimension bound $d\le B$, $O(m)$ row weight, and a
+constant average success probability. The small-subgroup fallback costs
+$B\operatorname{poly}(b,m)$. Each term fits the proposed bound. This
+extends the outer estimates individually without extrapolating the
+contraction theorem.
+\end{proof}
+At polylogarithmic arity the current estimate is
+$\log_2 C_m\le(A+o(1))mb/\sqrt{\log_2b}$, $A=18K$ in the short-hash
+note. Reoptimizing the two full-cost terms gives
+$m\sim(\log_2 b)^{1/4}/\sqrt A$. Even a uniform extension of this
+estimate to square-root arity would give a term of order
+$b^{3/2}/\sqrt{\log_2 b}$. For a smaller strict gain it would suffice,
+for example, to save a factor $g(b)=\log_2\log_2 b$ in the relation
+exponent uniformly at $m\sim(\log_2 b)^{1/4}\sqrt{g(b)/A}$. The two
+full-cost terms then give $(2\sqrt A+o(1))b/((\log_2 b)^{1/4}\sqrt{g(b)})$.
+Neither evaluator bound follows from the results below.
+
+\section{Optimal separated approximation at a fixed target}
+Here $h=1$, $r=N$, $T\ne O$, and each slot has an independent uniform
+odd multiplier and uniform offset modulo $M$. A predetermined dyadic
+subinterval of a slot has this same law by translation of its offset.
+Split the slots into any two nonempty parts. A rank-$q$ real
+approximation has the form $\sum_{j=1}^q a_j(\text{left seeds})
+b_j(\text{right seeds})$. Its squared error is averaged over the full
+fresh seed law. Write $\|Y\|_2^2=\E Y^2$.
+
+\begin{proposition}
+Let $r\to\infty$, $m/r+\sum_i\rho_i=o(1)$, and $n=(r-1)/2$.
+For $P=\prod_i|F_i|/r$, $R=H-P$, and $q/n\to x\in[0,1]$,
+\[
+ \inf_{\operatorname{rank} Z\le q}\frac{\|R-Z\|_2^2}{\lambda}
+ \ \longrightarrow\ 1-x-\frac{\sin(\pi x)}{\pi}.
+\]
+At sparse balanced widths with $\lambda=o(1)$, $m/\min_i\nu_i=o(1)$
+and $2^m/r=o(1)$, the same limit holds with $R$ replaced by either
+$V=H\bmod 2$ or $V=1_{\{X>0\}}$ and denominator $\E V^2$.
+For example, at $m=\lceil\sqrt b\rceil$ choose balanced dyadic widths
+whose product belongs to $(\sqrt r/2,\sqrt r]$. All the sparse-width
+conditions hold.
+\end{proposition}
+\begin{proof}
+Use the independent-seed Fourier representation in \texttt{mixed.tex}.
+In probability-weighted row and column spaces the residual is
+$\sqrt{\lambda/r}\,U D V_0^*$, where $U,V_0$ have operator norm at
+most one and $D$ has diagonal entries $2\cos(2\pi jT/r)$ for one
+representative of each nontrivial opposite pair. Here $T$ in the
+cosine denotes its cyclic coordinate, used only in the proof.
+The same Gram-matrix identity puts the squared Frobenius norm of
+$U D V_0^*$ between $\|D\|_F^2-\Delta$ and $\|D\|_F^2$, with
+$\Delta=4\sum_i(1+n\rho_i)=o(r)$.
+
+Let $s_1\ge\cdots\ge s_n$ be the sorted absolute diagonal entries.
+The $j$th singular value of $U D V_0^*$ is at most $s_j$.
+After subtracting its top $q$ squared singular values the squared
+norm remaining is at least $\sum_{j>q}s_j^2-\Delta$.
+Keeping the $q$ largest entries of $D$ inside the product gives a
+rank-$q$ approximation of squared error at most $\sum_{j>q}s_j^2$
+in the same normalization. Thus the bounds differ by $o(r)$,
+uniformly in $q$. Multiplication by the target permutes opposite
+pairs. The squared diagonal entries sample $4\cos^2\theta$ at
+angles asymptotically uniform on $[0,\pi]$. Integrating the fraction
+$x$ nearest the endpoints gives captured fraction
+$x+\sin(\pi x)/\pi$. The total squared norm is $r-2$.
+
+The factorial bound implies $\E H(H-1)=o(\lambda)$ at the sparse
+widths. Also $\E(H-X)\le3m\lambda/r$. Pointwise, for either bit,
+\[
+ (H-V)^2\le2H(H-1)+1_{\{H=1,X=0\}} .
+\]
+The isolation bound and $\E H\le\lambda$ give
+$\E V^2=(1+o(1))\lambda$. The two-abscissa hash bound gives
+$\operatorname{Var}|F_i|\le2\E|F_i|$ on a prime-order curve.
+Independence yields
+$\E P^2\le\lambda^2\prod_i(1+2/((r-1)\rho_i))=o(\lambda)$.
+Thus $\|V-R\|_2=o(\sqrt{\lambda})$. Distance to any fixed rank class
+is 1-Lipschitz in this norm, proving the assertion also at $x=0,1$.
+\end{proof}
+Half of the opposite pairs leave normalized squared error $1/2-1/\pi$.
+Any $o(r)$ separated terms leave asymptotically all the squared error
+of the zero predictor in the sparse decision problem. An attaining
+mathematical expansion can be expensive to evaluate. These limits
+concern the real approximation itself under fresh seeds. Thresholding
+a score, conditioning on a selected dyadic path, and computing jointly
+across seeds have different hypotheses. Rare positives dominate this
+relative error.
+
+\section{Two finite bounds}
+\paragraph{Fixed multipliers.}
+The preceding spectral formula averages over the multipliers. A weaker
+bound applies for \emph{every} fixed vector of odd multipliers. Let
+$W=\prod_iw_i$. Write the guarded count at $T\ne O$ as a matrix $A$ over
+the offsets in a split with $l,u\ge1$ slots, $l+u=m$, on a prime-order
+curve. Each generic tuple occurs for exactly $W$ offset vectors.
+Consequently $\|A\|_F^2\ge\sum A\ge(1-3m/r)r^{m-1}W$.
+At fixed left offsets there are at most $\prod_{i\in L}(2w_i)$
+left tuples. Each has at most $r^{u-1}$ right completions per tuple
+when the points are unrestricted, each appearing at most
+$\prod_{i\in R}w_i$ times across the right offsets.
+The largest row sum is at most $2^lWr^{u-1}$ and the largest column
+sum at most $2^uWr^{l-1}$. Their product bounds $\|A\|_{\rm op}^2$.
+A rank-$q$ approximation of relative Frobenius error $\varepsilon<1$
+therefore requires
+\[
+ q\ \ge\ (1-\varepsilon^2)(1-3m/r)\frac{r}{2^mW}.
+\]
+The same proof applies to the ordinary count. At $W\asymp\sqrt r$,
+$m=\lceil\sqrt b\rceil$, this is $2^{b/2-O(\sqrt b)}$ terms.
+The claim is about relative mean-square error at fixed multipliers
+and fresh offsets, including predetermined subwindows.
+
+\paragraph{A smaller sufficient width for constant coverage.}
+Return to general $N$ and a fixed target with $2T\ne O$. Let $F=N\rho$
+for equal widths, $d_2=|E(\mathbb F_p)[2]|\le4$, $\gamma=1-3m/N$,
+and $\mu=\E X$. The original outer coverage lemma prices all equal-abscissa
+tuples together. Using the mixed-note sign analysis separately yields
+\[
+ \frac{\E X^2}{\mu^2}\le
+ \frac{(1+2/F)^m-(2/F)^m+N/F^m}{\gamma}
+ +\frac{d_2(2^m-2)}{\gamma^2 F^m}.
+\]
+For a proper set of $k$ matching abscissas, use the actual number of
+generic first tuples, at most $2^kN^{m-k-1}$ second tuples per first
+tuple, and the two-abscissa hash bound. Summing and dividing by
+$\mu^2$ gives the first two binomial terms. For a complete match,
+the identical tuple contributes $\mu$ before normalization. Every
+other tuple flips a nonempty proper set of signs since $2T\ne O$.
+The sum on the flipped coordinates is in $E[2]$, giving at most
+$d_2N^{m-2}$ choices per flip set and joint acceptance $\rho^m$.
+Substitution of $\mu\ge\gamma F^m/N$ proves the formula.
+
+For $N\ge30m$, $m\ge2$ and $F\ge\max(N^{1/m},20m)$, the right side
+is at most $(e^{1/10}+1)/0.9+4/(20^2\cdot0.9^2)<2.5$.
+Thus $\Prob(X>0)>2/5$. Relative to the previous sufficient threshold
+$\max(2N^{1/m},20m)$ this can save at most one dyadic width bit.
+It does not change the leading coefficient or the asymptotic scale.
+
+\paragraph{Finite checks.}
+Run \texttt{python -B research/mixed\_coefficient/check\_frontier.py}.
+It checks singular-value tail bounds on two small prime-order curves,
+both decision-bit comparisons, and the limiting cosine integral.
+\end{document}

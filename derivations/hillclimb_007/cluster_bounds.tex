@@ -1,0 +1,310 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\title{Balanced geometric clusters: exact spectrum and Hermite cost}
+\author{Research checkpoint 007}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Scope.}
+We analyze a particular replacement of consecutive packet coordinates:
+unions of complete low-bit clusters at geometric offsets. We charge the
+standard full Hermite readout with triangular multiplicities and its
+uniform per-node precision, followed by unrestricted feasible-mode
+enumeration. The resulting candidate bounds exclude an exponent gain
+from these replacements within that method. They are not complexity
+lower bounds for all interpolation functionals, support-aware algorithms,
+or ECDLP. No full C38 contraction or improved complete ECDLP bound is
+claimed. The ultimate square-root-in-$b$ goal remains unchanged.
+
+\section{Exact derivative structure}
+For $n\ge4$, let
+\[
+ X_n=\{0,1,2,4,\ldots,2^{n-2}\},\quad D_n=X_n-X_n,
+ \quad E_n=D_n\cup(D_n-1).
+\]
+Write $m=n-2$ and define
+\[
+ d=|D_n|=m^2+m+3,\quad
+ c=(n-3)(n-4)+1,\quad
+ e=|E_n|=2(n^2-5n+9)=d+c.
+\]
+Every odd point of $D_n$ has both adjacent even points in $D_n$.
+Its even part is $2D_{n-1}$. Hence
+\begin{equation}
+ E_n=2D_{n-1}\ \cup\ (2D_{n-1}-1).
+ \label{eq:coarse}
+\end{equation}
+In particular, the $c$ points added to $D_n$ are all odd.
+
+Put $B=2^u$ and use packet coordinates
+\[
+ X=B X_n+\{0,\ldots,B-1\},\qquad N=|X|=nB.
+\]
+Every residue modulo $2^v$, $v\le u$, occurs $nB/2^v$ times.
+The distinct difference grid is
+\begin{equation}
+ \Gamma=BD_n\ \cup\ \bigcup_{r=1}^{B-1}(BE_n+r),
+ \qquad |\Gamma|=Be-c.
+ \label{eq:grid}
+\end{equation}
+All quantities here refer to distinct roots, with no multiplicity
+silently imported from representations of a difference.
+
+For a finite integer set $H$, let
+$V_H(t)=\sum_{s\in H\setminus\{t\}}v_2(t-s)$.
+Writing $V_0=V_{D_n}(0)=((n-2)^3+5(n-2))/3$, one has
+\[
+ V_{E_n}(0)=V_0,\qquad
+ \min_{t\in E_n}V_{E_n}(t)=n^2-2n-3.
+\]
+The first identity follows because the added roots are odd. For the
+second, \eqref{eq:coarse} gives
+$V_{E_n}(2s)=V_{E_n}(2s-1)=|D_{n-1}|-1+V_{D_{n-1}}(s)$;
+checkpoint 006 proved $\min V_{D_{n-1}}=3n-11$.
+
+\begin{lemma}
+For $\tau=Bt+r\in\Gamma$, $1\le r<B$, and $i=v_2(r)$,
+\begin{equation}
+ V_\Gamma(\tau)-V_\Gamma(0)
+ =c(u-i)+V_{E_n}(t)-V_0.
+ \label{eq:derivative}
+\end{equation}
+For $r=0$ the difference is $V_{D_n}(t)-V_0$.
+\end{lemma}
+\begin{proof}
+At zero, the same-residue contribution is $u(d-1)+V_0$.
+Other residues contribute $e(B-1-u)$, since
+$\sum_{r=1}^{B-1}v_2(r)=B-1-u$.
+At a nonzero residue $r$, the same-residue contribution is
+$u(e-1)+V_{E_n}(t)$. If every residue had $e$ roots, the other-residue
+contribution would again be $e(B-1-u)$: a full residue system modulo
+$2^u$ has constant derivative valuation. Residue zero has $c$ fewer
+roots, subtracting $ci$. Subtract the zero-node expression.
+\end{proof}
+
+Let $v\le u$ low-bit levels be retained, so all nodes with
+$v_2(\tau)<v$ are used. Set
+\[
+ A_n=V_0-(n^2-2n-3).
+\]
+Every retained constant coefficient is integral exactly when
+\begin{equation}
+ c(u-v+1)\ge A_n.
+ \label{eq:admissible}
+\end{equation}
+This is necessary because $W_{xy}(\tau)$ is nonzero when $y-x=\tau$;
+its valuation is \eqref{eq:derivative}. Every grid node is an actual
+coordinate difference. It is sufficient for constant terms by the same
+formula. The local scale exponent $\ell=u+n-1$ is sufficient for all
+coefficients: it bounds every pair-difference valuation in $\Gamma$.
+
+For $m=n-2$,
+\[
+ \frac{A_n}{c}=\frac m3-\frac{4m-9}{3c}
+ \ge\frac{m-1}{3}.
+\]
+The inequality uses $(m-3)(m-4)\ge0$ for integer $m\ge2$.
+Thus \eqref{eq:admissible} implies
+\begin{equation}
+ n\le3(u-v+1)+3\le3u+3.
+ \label{eq:cluster-size}
+\end{equation}
+For example, $n=8,u=2$ allows $v=1$, but not $v=2$.
+An actual retained node at the latter level has constant valuation $-16$,
+even though the central node has positive constant valuation.
+
+\section{The normalized mode spectrum}
+Consider the central odd node $\tau=1$ and the even coordinate block
+\[
+ 2\bigl(b X_n+\{0,\ldots,b-1\}\bigr),\qquad b=B/2.
+\]
+Enumerate it by increasing cluster and then increasing low coordinate.
+For rank $j=ab+t$, $0\le a<n$, $0\le t<b$, the normalized Cauchy
+diagonal increment is
+\begin{equation}
+ \Delta_j=4j-2s_2(t)+a(a-3).
+ \label{eq:mode}
+\end{equation}
+Indeed the valuation sum over each earlier full cluster is
+$b-1+v_2(x_a-x_{a'})$, and the partial current cluster contributes
+$v_2(t!)=t-s_2(t)$. The geometric cluster prefix contributes
+$a(a-1)/2$. Doubling the total valuation sum after accounting for the
+outer factor two gives \eqref{eq:mode}.
+
+This order also gives integral normalized triangular factors. The
+geometric cluster order minimizes the prefix valuation sum among
+remaining clusters. Within a cluster, divisibility of a product of
+$t$ consecutive integers by $t!$ proves the corresponding minimum
+property. Thus every remaining row's numerator valuation is at least
+the pivot's; all odd-node Cauchy denominators are units. Each normalized
+triangular factor has unit diagonal. Direct elimination and an
+independent greedy-minimum certificate check these facts in the code.
+
+The common crossing weight is
+\[
+ \delta=\ell+cu,
+\]
+by \eqref{eq:derivative} at $t=0$. Hence
+\begin{equation}
+ w_j=\ell+cu+\Delta_j
+ \le\ell+cu+4j+n^2.
+ \label{eq:weight-upper}
+\end{equation}
+Compared with consecutive coordinates, the extra diagonal valuation is
+$a(a-3)+2s_2(a)$. Under \eqref{eq:cluster-size}, this is only polynomial
+in $u$, while each cluster contains $2^{u-1}$ points. The readout
+calculation below makes the resulting enumeration limitation precise.
+
+\section{The full Hermite readout cost}
+Use multiplicities $q_\tau=h_0(v-v_2(\tau))$ at retained nodes and
+let the local substitution be $T=\tau+2^\ell Z$.
+For any retained-node set $\mathcal N$, define
+\[
+ E_\tau(0)=\prod_{s\in\mathcal N\setminus\{\tau\}}
+       \left(\frac{-s}{\tau-s}\right)^{q_s}.
+\]
+The coefficient of the highest local jet in the standard full Hermite
+evaluation functional at zero is exactly
+\begin{equation}
+ E_\tau(0)\left(\frac{-\tau}{2^\ell}\right)^{q_\tau-1}.
+ \label{eq:highest}
+\end{equation}
+There is no sum in this particular coefficient that could cancel its
+denominator. Uniform per-node precision for this functional must charge
+its negative valuation, unless additional coefficient relations or
+structure are used. Such additional methods are outside this result.
+The code independently verifies the complete functional on every
+monomial through its interpolation degree in small cases.
+
+For $h=u-i$, $z=v-i$, put
+\[
+ \mathcal A(h,z)=3\cdot2^h-2^{h-z}(z+3)-z(h+1).
+\]
+On the positive central residue set $1,\ldots,B-1$, restricted to the
+retained levels, the negative valuation of $E_\tau(0)$ is
+$h_0\mathcal A(h,z)$.
+To see this, sum separately over nodes with valuation less than, equal
+to, and greater than $i$. The lower valuations cancel. The remaining
+sum is
+\[
+ h_0\left[z\sum_{j=1}^{h-1}j2^{h-j-1}
+       -\sum_{j=1}^{z-1}j(z-j)2^{h-j-1}\right],
+\]
+which equals the displayed expression.
+
+\subsection{All coarse nodes retained at each active level}
+For $\tau=Bt+r$, the full-grid negative valuation is
+\begin{equation}
+ -v_2(E_\tau(0))
+ =h_0\left[e\mathcal A(h,z)
+       +z\bigl((e-1)h+V_{E_n}(t)\bigr)\right].
+ \label{eq:full-loss}
+\end{equation}
+Different residues contribute $e$ copies of the central-residue sum;
+the other $e-1$ roots of the same residue contribute the second term.
+At $\tau=1$ call this loss $L_0$. The highest-jet loss is
+\[
+ L_0+(h_0v-1)\ell.
+\]
+The number of retained jets is
+\[
+ h_0 eB(v-1+2^{-v}).
+\]
+To interpolate a deformation of degree $M(|\Gamma|-1)$ it must exceed
+that degree. Therefore $h_0\ge M/(2v)$, using $c+1\le e$ and $B\ge2$.
+For $u\ge32$, \eqref{eq:full-loss} gives
+\begin{equation}
+ L_0\ge\tfrac12 h_0eB\ge\frac{Mn^2B}{8v}.
+ \label{eq:precision-lower}
+\end{equation}
+Here $(v+3)/2^v\le2$, $v\le u$, $2^u$ dominates the discarded
+quadratic terms, and $e\ge n^2/2$.
+
+Assume for clarity $M/(nB)$ full crossing packets. Choose the first
+\[
+ k=\left\lfloor\frac{nB}{16}
+                 \min\{1,\sqrt{n/v}\}\right\rfloor
+\]
+modes from one orientation in each packet. For $u\ge32$ and
+\eqref{eq:cluster-size}, $cu+n^2\le k$.
+One elementary uniform certificate is
+$2^u\ge144u(u+1)^3+16u$, true at $u=32$ and preserved by induction.
+Thus the total non-$\ell$ part of all selected weights is at most
+\[
+ 3\frac{M}{nB}k^2
+ \le\frac{3}{256}\frac{Mn^2B}{v}<L_0.
+\]
+Their number $K=Mk/(nB)$ is at most $M/16$, whereas
+$q_1=h_0v\ge M/2$. The additional $K\ell$ cost is covered by the
+$(q_1-1)\ell$ part of \eqref{eq:highest}, for any nonnegative local
+scale exponent. Every binary vector on these $K$ modes is therefore
+feasible in both degree and precision. Moreover
+\begin{equation}
+ K\ge\frac M{32}\min\{1,\sqrt{n/v}\}.
+ \label{eq:candidates}
+\end{equation}
+With a fixed positive fraction of crossing packets, as in balanced
+group packing, only this absolute constant changes.
+
+Consequently unrestricted enumeration contains
+$2^{\Omega(M\min\{1,\sqrt{n/v}\})}$ candidates. Since
+$v\le u\le\log_2 M$, this does not improve the old
+$M/\sqrt{\log M}$ enumeration scale; growing $n$ makes this bound
+larger. This is a candidate-universe result, not a claim that all
+candidates contribute to a particular tensor network.
+
+\subsection{Only positive central nodes retained}
+Now use only $\tau\in\{1,\ldots,B-1\}$ with $v_2(\tau)<v$.
+Every such node has nonnegative constant valuation, for arbitrary $n$.
+The coarse factor $e$ disappears from the jet count but the deformation
+degree is unchanged. Hence
+\[
+ h_0\ge\frac{Me}{2v},\qquad q_1\ge Me/2,
+ \qquad L_0=h_0\mathcal A(u,v).
+\]
+For $u\ge2$, $\mathcal A(u,v)\ge B/4$: it increases with $v$, with
+minimum $B-u-1$, and $u=2$ is the endpoint case.
+Therefore $L_0\ge Mn^2B/(16v)$.
+
+If $n<v$ and $u\ge32$, the same prefix argument as above applies,
+since $n\le u$ and $3/256<1/16$.
+If $n\ge v$, choose any fixed $M/128$ modes, taking $M$ divisible
+by $128nB$ to avoid rounding. Their non-$\ell$ weights are at most
+\[
+ \frac M{128}\bigl(n^2(u+1)+2nB\bigr)<L_0,
+\]
+using $v(u+1)\le4B$ and $n\ge v$. Their degree and $\ell$ costs
+are covered by $q_1$. Thus this regime already has $2^{M/128}$
+feasible candidates.
+
+For $u=v=1$ the only retained node is $1$, so the full Taylor readout
+has $q_1-1=M(|\Gamma|-1)$ and highest loss $(q_1-1)\ell$.
+The scale $\ell=0$ is nonintegral: the leading coefficient of each
+$W$ polynomial is $1/C_\Gamma'(0)$. At the required jet length this
+coefficient is present. Hence $\ell\ge1$. Now
+$|\Gamma|-1\ge n^2$ and the maximum mode weight is at most
+$\ell+3n^2$, again admitting $M/128$ freely chosen binary modes.
+The finitely bounded cases $u<32,n<v$ have bounded packet parameters
+and do not create a new asymptotic saving as $M\to\infty$.
+
+\paragraph{What remains open.}
+Both conclusions use the standard full Hermite functional and the
+unrestricted catalogue of feasible modes. When the number of jets
+exceeds the deformation degree, another interpolation functional can
+use the extra linear relations; coefficient-dependent precision or
+support-aware contraction may also behave differently. No lower bound
+against those alternatives is asserted. Arbitrary selective coarse
+node sets and nontriangular profiles are not covered either.
+
+\paragraph{Validation.}
+Thirty finite fixtures verify exact derivative formulas, integral
+normalized factors and their mode weights. Independent elimination,
+full monomial interpolation identities, a negative constant-term
+control, and large-parameter rational/integer certificates are retained
+by the reproducibility launcher. The large certificates evaluate closed
+formulas and inequalities; they do not construct enormous packets or
+claim experimental speedups on those inputs.
+\end{document}

@@ -1,0 +1,16 @@
+F_17 equally weighted abscissa patterns:
+  total 420, positives 330
+  prefix 8: certified counts 315, bits 315, positive certificates 239, errors defaulting undecided to absent 91.
+  prefix 9: certified counts 375, bits 376, positive certificates 296, errors defaulting undecided to absent 34.
+  prefix 10: certified counts 385, bits 385, positive certificates 304, errors defaulting undecided to absent 26.
+  prefix 12: certified counts 385, bits 385, positive certificates 304, errors defaulting undecided to absent 26.
+F_13 regular two-orbit inputs, exact fresh-seed multiplicities:
+  total 168,480, positives 133,008
+  prefix 8: certified counts 123,312, bits 123,792, positive certificates 96,912, errors defaulting undecided to absent 36,096.
+  prefix 9: certified counts 145,776, bits 146,256, positive certificates 119,376, errors defaulting undecided to absent 13,632.
+  prefix 10: certified counts 151,008, bits 151,008, positive certificates 122,736, errors defaulting undecided to absent 10,272.
+  prefix 12: certified counts 151,008, bits 151,008, positive certificates 122,736, errors defaulting undecided to absent 10,272.
+  Nine moments, 60,000 independent plants and 60,000 unlabeled fresh seeds: 2 bins predicted positive, exact errors 7,680 (7,200 false positives, 480 false negatives) of 168,480.
+  Defaulting unresolved cases to absent makes 13,632 errors.
+  Plant-calibrated integer count: 10,320 exact-population mistakes; smallest candidate default: 14,112.
+  Planted-to-matched marginal likelihood verified on 756 one- and two-slot patterns.

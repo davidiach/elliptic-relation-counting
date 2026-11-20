@@ -1,0 +1,333 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,hyperref}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\title{Counting pooled determinant zeros from planted relations and field moments}
+\author{Project research note}
+\date{20 November 2026}
+\begin{document}
+\maketitle
+
+Nine pooled field moments give an exact zero-count certificate on a
+testable subset of three-slot inputs with two abscissa triples. A learner
+trained on planted relations resolves some of the remaining ambiguities.
+At the growing arity of the proposed reduction, the requisite fresh error
+and end-to-end exponent saving remain open.
+
+\section{A zero-count certificate using two hidden centers}
+Use the independent dyadic hash windows and the unweighted determinant
+$\Delta$ of \texttt{target\_incidence.tex}. Write $F_i$ for the retained
+affine points, $D=\prod|F_i|$, $H$ for the number of ordered tuples with
+sum the prescribed target $T$, and $Z_j=\sum_{\mathbf P}\Delta_{\mathbf P}^j$.
+Regularity means disjoint abscissas between slots and avoidance of $x(T)$.
+It guarantees that the multiplicity of zero among the determinants is $H$.
+Here $m=3$, $p>7$, and the three regular slots have respectively one, one,
+and two distinct signed pairs in any order. This shape can be tested while
+constructing the slots. The decoder subsequently uses only $Z_1,\ldots,Z_k$.
+Fixing an abscissa in each slot leaves eight choices of signs. The determinant
+in the basis $1,x,x^2,y$ is affine in the three signs because the determinant
+expansion uses the $y$ row once. Thus there are two equally weighted blocks
+of the form $c_\sigma+\sum_{i=1}^3 a_{\sigma i}\epsilon_i$, $\epsilon_i=\pm1$.
+
+Set $c=Z_1/16$ and denote the block centers by $c\pm h$. Let $M_j$ be the
+mean of $(\Delta-c)^j$, computed by the binomial formula from the raw
+moments, with $M_0=1$. Write $t=h^2$, $A_0=1$, $B_0=0$. For $q=1,2,3$ put
+\[
+ A_q=M_{2q}-\sum_{r<q}{2q\choose 2r}t^{q-r}A_r,\qquad
+ B_q=\frac{M_{2q+1}-\sum_{r<q}{2q+1\choose 2r}t^{q-r}B_r}{2q+1}.
+\]
+Expanding around each center and using the vanishing of odd centered
+moments gives block means $A_q\pm B_q/h$ for the local centered $2q$th
+powers whenever $h\ne0$. In particular, seven moments determine these
+means if the distinct centers are supplied. For hidden centers, do
+arithmetic over $\F_p[h]$ and scale the determinant by $h$. Then the
+local means for the scaled centered values are polynomial:
+\[
+ u_{0,\sigma}=1,\qquad u_{2q,\sigma}=h^{2q}A_q+\sigma h^{2q-1}B_q .
+\]
+Within a block omit the index $\sigma$. The first six local moments give
+\[
+ s_1=u_2,\quad s_2=(3s_1^2-u_4)/2,\quad
+ s_3=(u_6-15u_4s_1+30s_1^3)/16,\quad
+ e_2=(s_1^2-s_2)/2,\quad e_3=(s_1^3-3s_1s_2+2s_3)/6 .
+\]
+Writing $a_i$ for the scaled sign coefficients, $s_j=\sum a_i^{2j}$
+and $e_j$ are elementary symmetric functions of the $a_i^2$.
+The block octic from \texttt{full\_moment\_decoding.tex} is
+\[
+ K_\sigma(z)=((z^2-s_1)^2-4e_2)^2-64z^2e_3 .
+\]
+Its roots with multiplicity are the eight centered scaled sign values.
+Use its recurrence to predict $u_{8,\sigma},u_{10,\sigma},\ldots$ and take
+the gcd of the nonzero residuals for $8\le j\le k$,
+\[
+ R_j(h)=h^jM_j-\tfrac12\sum_{\sigma=\pm1}
+  \sum_{r=0}^{\lfloor j/2\rfloor}{j\choose 2r}
+  (\sigma h^2)^{j-2r}u_{2r,\sigma}.
+\]
+Every genuine nonzero separation is a root of each residual. If all
+available odd $M_j$ vanish, an equal-center case remains possible and the
+implemented certificate abstains. It also abstains if every residual
+vanishes identically. Otherwise intersect the gcd with $h^{p-1}-1$ using
+modular powering. The resulting polynomial $G$ has simple roots exactly
+at the surviving nonzero field candidates.
+
+Only the first five coefficients at $z=0$ of
+\[
+ K_+(z-hc-h^2)\,K_-(z-hc+h^2)
+\]
+are needed. The two smaller slots have four ordered pairs and each pair
+has at most one completing point, so $H\le4$. For $r=0,\ldots,4$ intersect
+the remaining $G$ with its gcd with coefficient $[z^r]$. A degree drop
+records a candidate of multiplicity $r$, and the gcd retains exactly the
+candidates that still vanish to higher order. This gives a superset of
+the possible counts containing the true count. Return the count if all
+agree, or the existence bit if they agree on positivity. Spurious candidates
+can lead to abstention. The constant coefficient alone tests vanishing
+at a given separation. We never recover the field roots of a block, the
+individual centers, or the degree-16 polynomial of the observed spectrum.
+For a fixed prefix, e.g. $k=9$, this readout uses bounded-degree gcds
+and $O(\log p)$ field operations including modular powering. Indeed
+$\deg_h u_{2r,\sigma}\le4r$ by the stated construction and octic
+recurrence, hence $\deg_hR_j\le2j$. Computing the moment prefix from the
+seeds is a separate charge as in \texttt{target\_incidence.tex}.
+
+\section{Planted learning and exact finite checks}
+Write $P$ for fresh seeds and $Q$ for seeds conditioned to retain a
+uniformly selected affine tuple of sum $T$. Sample all but one point
+uniformly, force the remaining point by the sum, retry if it is the
+identity, and sample each slot hash conditionally on its own point.
+Then $dQ/dP=H/\mu$, where $\mu=\E_P H$. On an ambiguous bin $v$,
+the score $2\mu Q(v)>P(v)$ predicts presence. It compares the
+conditional mean hit count with $1/2$. Its difference from optimal
+existence scoring is controlled in fresh risk by the mass of extra
+witnesses, $O(\lambda^2)$ at the asymptotic tuning. On the small
+fixtures we report the actual error.
+
+For $y^2=x^3+4x+1$ over $\F_{13}$ (group order 19), all odd multipliers
+modulo 16, all offsets, and widths $(2,2,2)$ give 168,480 eligible seed
+triples counting multiplicities. Of these 133,008 contain a relation.
+The following numbers are exact on that conditional population. The
+independent reference checks the zero count against the elliptic sum.
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule Moments & Count certified & Existence certified & Misses if abstentions mean absent\\
+\midrule
+8 & 123312 & 123792 & 36096\\
+9 & 145776 & 146256 & 13632\\
+10 & 151008 & 151008 & 10272\\
+12 & 151008 & 151008 & 10272\\
+\bottomrule
+\end{tabular}
+\end{center}
+Next, keep all nine-moment certificates and group unresolved inputs by
+the candidate-count set, including a bin for abstention. Use independent
+draws of 60,000 plants and 60,000 unlabeled fresh seeds at the fixed
+target to fit the score. No ground-truth fresh label is used to train the
+decisions. Two bins were called positive. Exact evaluation on the whole
+eligible fresh population gave 7,680 errors, of which 7,200 were false
+positives and 480 were false negatives. This improves conditional existence
+error from 8.09\% to 4.56\% relative to rejecting every ambiguous input.
+Positive decisions in ambiguous bins do not certify multiplicity.
+
+We also trained a rule for the \emph{integer} count. On ambiguous training
+plants only, count the completions of the four small-slot pairs by group
+addition and membership in the remaining mask. For $j=1,\ldots,4$ the
+population identity is
+\[
+ P(H=j,F=v)=\frac{\mu}{j} Q(H=j,F=v).
+\]
+Subtract their sum from the unlabeled bin mass $P(F=v)$ to estimate the
+mass at zero. Predict the most frequent admissible count from these
+estimated masses, retaining all certified counts. The same train draws
+give 10,320 incorrect integer counts, compared with 14,112 using the
+smallest admissible count (zero on abstention). Thus 158,160 of 168,480
+counts are correct, including 145,776 certified ones. Inference uses
+only the pooled moments and shape. The cheap count annotation of a
+training plant uses the four-pair bound specific to this case.
+
+Separately, on $y^2=x^3+2x+2$ over $\F_{17}$, $T=(0,6)$, the first nine
+moments certified 375 exact counts and 376 bits on all 420 distinct
+regular abscissa arrangements up to swap symmetries. These arrangements
+have equal weight in this particular check.
+
+\section{Larger pools and independent fresh seeds}
+At fixed $T$, we fitted two families of field equations to genuine
+positive examples. The first uses every monomial of weighted degree at
+most eight in the second, fourth and sixth centered moments after
+division of every determinant by its nonzero pooled mean. There are
+11 such monomials. The second uses all 55 monomials of ordinary degree
+at most two in the nine \emph{raw field values} $Z_1,\ldots,Z_9$,
+including odd moments and inputs with vanishing mean. Each family fits
+all equations in the planted nullspace. Sampling 12,000 independent
+plants per curve restored the known one-orbit identity in the normalized
+family over $\F_{101}$. On regular masks with at least three orbits the
+planted feature matrices had full ranks 11 and 55 on both curves. Thus
+every nonzero equation in either family fails on at least one genuine
+plant in its tested stratum, an exact finite statement. Independent
+samples conditioned on retaining independent affine marks in all slots
+provided a control for the bias toward larger slots.
+
+The same trials also bound \emph{approximate} vanishing on the planted
+population. Partition the eligible plant samples into disjoint blocks of
+$d$ rows, where $d$ is the number of features. If a hyperplane contains
+mass $a$, each block is singular with probability at least $a^d$. This
+holds for the hyperplane of largest mass and thus covers coefficients
+chosen after seeing the samples. Conditional on the number of eligible
+draws, the accepted rows have the independent conditional law. Invert
+the one-sided binomial test at level $0.005$ on the block singularity
+probability, then take the $d$th root. Under independent draws the
+result is a 99.5\% upper confidence bound for the maximum fraction of
+eligible plants captured by one nonzero equality in that family.
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule Field & Features & Eligible plants & Singular blocks & Recall upper bound\\
+\midrule
+101 & 11 & 7254 & 4/659 & 0.6974\\
+1031 & 11 & 10710 & 0/973 & 0.6224\\
+101 & 55 & 7328 & 1/133 & 0.9485\\
+1031 & 55 & 10716 & 0/194 & 0.9364\\
+\bottomrule
+\end{tabular}
+\end{center}
+The confidence levels apply separately to the four rows. The rates
+describe specific finite input laws and the indicated families of
+single equalities. They give no lower bound on unrestricted decoding.
+
+We then tested 16,000 independently drawn fresh seeds per curve with
+widths $(4,4,4)$ at $p=101$ and $(8,16,16)$ at $p=1031$. Both use
+$y^2=x^3+ax+1$, respectively $a=17,9$, with group orders 103 and 1019,
+and the first affine generator in the deterministic fixture as target.
+We used the planted equations available for each stratum and the
+nine-moment certificate on the two-orbit stratum. The rule returns
+absent if it has no applicable test, including on irregular inputs.
+Unconditionally this gave the following integer error counts.
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule Field & Fresh positives & Two-orbit exact counts & Large-pool positives missed & All errors\\
+\midrule
+101 & 3669 & 1715/1732 & 2299/2299 & 3363\\
+1031 & 3274 & 44/44 & 2929/2929 & 3272\\
+\bottomrule
+\end{tabular}
+\end{center}
+There were no false positives in these two trials. The calibrated
+$\F_{13}$ ambiguity rule was trained for its own field and target.
+Truth and the input moments were obtained by enumeration on small
+fixtures. None of the claimed algorithmic costs use the enumerator.
+
+\section{Why planting needs a genuinely joint observation}
+There is a fixed-target obstruction for any rule that leaves even one
+slot unread. It applies to arbitrary arithmetic on the observed seeds.
+Let $R$ generate $m$ independent uniformly marked affine points, then
+condition each hash on retaining its mark, as in the matched experiment.
+Writing $P$ for fresh inputs gives $dR/dP=D/\E_P D$. Given the hashes
+under $R$, the marks are independent uniform members of their slots.
+Conditioning the marks' sum to $T$ gives exactly $Q$.
+
+For a nonempty proper subset $I$ of $s$ slots, let $t=m-s$,
+$D_I=\prod_{i\in I}|F_i|$, and let $H_I$ count partial tuples of sum $T$.
+Under $R$, $D_I>0$ almost surely. If $a_j$ is the probability that $j$
+independent uniform affine points sum to the nonidentity $T$, then
+$a_j=(1-(-1)^j/(N-1)^j)/N$. More generally the probability of sum $u$
+is $[1+(-1)^j(N1_{u=O}-1)/(N-1)^j]/N$, by expanding the $j$th
+convolution power of the uniform nonidentity measure. Conditioning
+on the observed hashes and averaging over their marks gives
+\[
+ \frac{dQ_I}{dR_I}=
+ \frac{1+(-1)^t(NH_I/D_I-1)/(N-1)^t}{1-(-1)^m/(N-1)^m}.
+\]
+Since $X=H_I/D_I$ lies in $[0,1]$ and $\E_R X=a_s$,
+$\E_R|X-a_s|\le 2a_s(1-a_s)$ by convexity. Consequently
+\[
+ \|Q_I-R_I\|_{\rm TV}\le
+ \frac{Na_s(1-a_s)}{(N-1)^t(1-(-1)^m/(N-1)^m)}
+ =O((N-1)^{-t}).
+\]
+A randomized rule may adaptively select its next slot from its previous
+observations. If it reads at most $m-1$ slots on every path, partition
+an acceptance event by the first omitted index in numerical order.
+The part for index $i$ is measurable on all slots except $i$: simulate
+until the decision or the first query to $i$, which excludes that part.
+Summing the bounds and averaging over the rule's independent random tape
+gives $|Q(A)-R(A)|=O(m/N)$. The product-variance bound in the final
+section also gives $\|R-P\|_{\rm TV}\le
+\tfrac12\sqrt{\operatorname{Var}_P D}/\E_P D=o(\lambda)$.
+Thus $Q(A)\le P(A)+o(\lambda)$. Its fresh existence error obeys
+\[
+ P(Y=1)+P(A)-2P(Y=1,A)
+ \ \ge\ P(Y=1)+(1-2\mu)P(A)-o(\lambda^2)
+ \ \ge\ \lambda-O(\lambda^2),
+ \qquad Y=1_{\{H>0\}}.
+\]
+The first inequality uses $P(Y=1,A)\le\mu Q(A)$. The same lower bound
+holds for the exact count by turning any count output into an existence
+bit. A single pooled $Z_j$ already depends on all
+slots and falls outside the lower bound. Providing any additional
+information from omitted slots would also change the model.
+On the $\F_{13}$ fixture, direct summation over actual hash
+multiplicities verified the marginal likelihood identity on all 756
+nonempty one- and two-slot mask patterns in the tested positions.
+
+\section{What a planted dictionary would have to learn}
+For any feature $F$ of the full moments, including the entire moment
+vector, let $\tau_s=\min_{|K|\le s}Q(F\notin K)$. A dictionary that
+predicts presence on at most $s$ feature values can achieve fresh error
+$O(\lambda^2)$ only if $\tau_s=O(\lambda)$, since
+\[
+ \mu Q(F\notin K)\le P(H>0,F\notin K)+\E_P(H-1)_+ .
+\]
+Conversely, suppose this concentration holds and the optimal classifier
+given $F$ has fresh error $O(\lambda^2)$. Draw $n=\lceil s/\lambda\rceil$
+plants and retain their feature keys. The expected unseen planted mass is
+at most $\tau_s+s/(en)$ since $q(1-q)^n\le1/(en)$. Restricting the optimal
+positive decisions to the discovered keys increases expected fresh error
+by at most $\mu$ times this missing mass. Use independent planted and
+fresh draws to fit the bin decisions as above. Conditional on discovery,
+the class consists of at most $2^n$ subsets. Hoeffding and a union bound
+give uniform additive score error $O(\lambda^2)$ with failure probability
+$O(\lambda^2)$ using $O((n+\log(1/\lambda))/\lambda^4)$ draws of each
+kind. Per-bin counters implement the empirical minimum in time linear
+in the sample count up to feature evaluation and lookup costs.
+Thus a positive dictionary of size $2^{O(b/m)}$ would suffice on this
+exponential scale if the remaining conditions held, even with an
+enormous negative alphabet. Concentration alone says nothing about
+collisions between negative and positive seeds.
+
+\section{End-to-end accounting}
+Set $b=\lceil\log_2p\rceil$, $L=\log_2b$, $g=\log_2 L$, with
+$1/(2L)<\lambda\le1/L$ and $m\asymp L^{1/4}\sqrt g$. The inherited
+estimates give $\mu\sim\lambda$ and $\E_P H(H-1)=O(\lambda^2)$ at
+each prescribed target. Hence a decoder meeting the requested error
+must accept a $1-O(\lambda)$ fraction of plants while assigning
+$O(\lambda^2)$ fresh mass to false positives. It has a budget of
+$2^{O(b/m)}$ bit operations inclusive of sampling, seed-dependent
+setup, moment evaluation, and decoding. A cheap moment prefix alone
+does not satisfy that requirement.
+
+Typically the number of signed abscissa blocks is $D/2^m$. Indeed the
+probability of retaining any affine point of order two is at most
+$3\sum_i\rho_i=o(\lambda^2)$, where $\rho_i$ is the slot retention rate.
+Slot independence and $\operatorname{Var}|F_i|\le2\E|F_i|$ yield
+$\operatorname{Var}D/(\E D)^2\le\prod_i(1+2/\E|F_i|)-1$.
+This is $o(\lambda^2)$ at balanced widths, and $\E D=(1+o(1))N\lambda$
+for $N=|E(\F_p)|$. With probability $1-o(\lambda^2)$ the number of
+blocks thus lies within constant factors of $N\lambda/2^m=2^{b-o(b)}$.
+Explicitly visiting them in pairs already exceeds the budget. Also,
+the higher-arity determinant can contain products of sign variables.
+A fixed-target decoder operating directly on the pooled information
+for these inputs remains open. Under packet assumption A.1 and the
+inherited contraction and reduction estimates the best complete bound
+in the project remains
+\[
+ \log_2 \E T_{\rm solve}
+ \le (26.2933775156+o(1))\,b/(\log_2 b)^{1/4}.
+\]
+
+The implementation is \texttt{pooled\_zero.py}. From the project root run
+\texttt{python -B research/joint\_parity/check\_pooled\_zero.py} for
+the exact checks and planted calibration, and
+\texttt{python -B research/joint\_parity/probe\_pooled\_zero.py}
+for the independent trials. The scripts fix their pseudorandom seeds.
+\end{document}

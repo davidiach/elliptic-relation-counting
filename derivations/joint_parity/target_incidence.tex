@@ -1,0 +1,389 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Prob}{\mathbb P}
+\title{Joint target existence in independently hashed elliptic-curve slots}
+\author{Project research note}
+\date{20 November 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Result.}
+A single determinant represents a target hit on regular inputs without any intermediate curve additions.
+Elliptic-curve interpolation computes all determinant moments through order
+$\lfloor 2^{b/m^2}\rfloor$ over the whole Cartesian product from the full
+hash seeds within the desired time budget. On prime-order curves, even
+the combined zero tests of all these moments have fresh error of order
+at least $1/\log b$ averaged over eligible targets. The reduction requires
+$O(1/(\log b)^2)$ for every
+prescribed target. The end-to-end exponent and its leading constant stay at
+the previous conditional bound.
+
+\section{The determinant and the fresh-input error}
+
+Write $G=E(\F_p)$, $N=hr=|G|$, $p>3$, with the project's supplied coprime
+cofactor and odd prime subgroup of order $r$. Let $O$ be the identity and
+$T$ a nonzero target in that subgroup. Put $b=\lceil\log_2 p\rceil$,
+$M=2^b$, $L=\log_2 b$, $g=\log_2 L$. The slot $F_i$ contains all affine
+points whose canonical abscissa $x$ satisfies
+$(\alpha_i x+\beta_i\bmod M)<\tau_i$. The multipliers are uniform odd,
+the offsets are uniform, and all slots are independent.
+Use the balanced dyadic widths of \texttt{fresh\_windows.tex},
+$\rho_i=\tau_i/M$, $\nu_i=N\rho_i$, and
+$1/(2L)<\lambda=N^{-1}\prod_i\nu_i\le1/L$.
+The proposed arity is $m\asymp L^{1/4}\sqrt g$.
+Write $H_T$ for the ordinary signed, ordered count of tuples of sum $T$.
+The targetwise moments in \texttt{../mixed\_coefficient/mixed.tex} give
+$\Prob(H_T=1)=\lambda+O(\lambda^2)$ and
+$\Prob(H_T\ge2)=O(\lambda^2)$ uniformly at these widths.
+
+Let $d=m+1$ and use the monomial basis of $L(dO)$ consisting of $x^j$
+with $0\le 2j\le d$ and $yx^j$ with $0\le 2j+3\le d$, the constant
+first. Let $v(P)$ be its evaluation column at $P$ and set
+\[
+ \Delta_{\mathbf P}(T)=\det[v(P_1),\ldots,v(P_m),v(-T)] .
+\]
+For distinct affine points in these $d$ positions, $\Delta=0$ if and only if
+$\sum_iP_i=T$. In fact a kernel of the evaluation map is a nonzero section
+vanishing at those $d$ points. Its divisor must be their sum minus $dO$,
+and on an elliptic curve a degree-zero divisor is principal exactly when
+its group sum is $O$. Conversely, a principal divisor gives the required
+section, unique up to a scalar. This is the usual elliptic-code evaluation
+criterion. See \href{https://arxiv.org/html/cs/0507026}{Cheng,
+\emph{Hard problems of algebraic geometry codes}, Sections 2 and 3}.
+
+Call the seeds regular for $T$ if slots have pairwise disjoint abscissa sets
+and avoid $x(T)$. Each abscissa is kept with probability $\rho_i$.
+Consequently failure has probability at most
+\[
+ N\sum_{i<j}\rho_i\rho_j+\sum_i\rho_i=o(\lambda^2)
+\]
+at the stated widths. Here $\log_2\nu_i=b/m+O(1+(\log L)/m)$ and $m$ grows.
+One may explicitly test regularity during slot construction and return zero
+on failure. Thus existence of a singular choice gives a fresh parity
+predictor of error $O(\lambda^2)$ \emph{if one can compute it}.
+Testing a determinant for a prescribed tuple costs polynomial time, but
+the expected number of candidate tuples is
+$\prod_i\E|F_i|=(1-1/N)^m N\lambda$.
+
+\section{A joint statistic that fits the time budget}
+
+Assign optional field weights $w_{i,P}$ to points of each slot. For $j\ge1$
+define
+\[
+ Z_j(T)=\sum_{\mathbf P\in\prod_i F_i}
+       \Delta_{\mathbf P}(T)^j\prod_i w_{i,P_i}.
+\]
+With $v(-T)$ as fixed column, subtract it from each other column and omit
+the constant coordinate to obtain $m$-vectors $q_T(P)$. This changes at
+most the sign of the determinant. Put
+$G_i(T)=\sum_{P\in F_i}w_{i,P}q_T(P)q_T(P)^{\mathsf t}$.
+Then Cauchy--Binet gives
+\[
+ Z_2(T)=[z_1\cdots z_m]\det\left(\sum_i z_i G_i(T)\right)
+ =\sum_{S\subseteq[m]}(-1)^{m-|S|}\det\left(\sum_{i\in S}G_i(T)\right).
+\]
+Indeed the squarefree term selects precisely one column from each slot.
+The subset formula follows by inclusion-exclusion since the determinant is
+homogeneous of degree $m$. Empty slots give zero. The computation takes
+$O(m^2\sum_i |F_i|+2^m m^3)$ field operations using subset sums or Gray
+order, in addition to the cost of constructing the slots and their weights.
+Enumerating $\tau_i$ inverse-hash residues, discarding those outside the
+field and lifting the remainder uses expected $\operatorname{poly}(b,m)
+\sum_i\tau_i$ bit operations. Unit or independent uniform point weights
+fit this accounting. Thus the base-two logarithm of the expected bit cost
+is at most $b/m+O(m+\log b)$, including setup. At the proposed arity
+this meets the scale required for the \emph{evaluation} subroutine.
+
+One can also preprocess all seeds independent of $T$. Set
+$A_i=\sum_{P\in F_i} w_{i,P}v(P)v(P)^{\mathsf t}$, of size $d$.
+The rank-one determinant identity gives the formula valid even for singular
+matrices
+\[
+ Z_2(T)=v(-T)^{\mathsf t} C v(-T),\quad
+ C=\sum_{S\subseteq[m]}(-1)^{m-|S|}
+             \operatorname{adj}\left(\sum_{i\in S}A_i\right).
+\]
+To verify it, extract $z_0 z_1\cdots z_m$ from
+$\det(z_0 v(-T)v(-T)^{\mathsf t}+\sum_i z_i A_i)$.
+This describes the entire target dependence of the second moment with
+$d^2$ field entries. With unit weights, summing over $P$ and $-P$
+cancels every mixed even/odd coordinate in $A_i$. The adjugates are also
+block diagonal (by the cofactor formula). On $y^2=f(x)=x^3+ax+c$,
+$Z_2$ therefore becomes a polynomial in $x(T)$ of degree at most $d$.
+A point of order two contributes zero to each mixed coordinate as well.
+
+\section{Computing many higher moments jointly}
+
+\begin{proposition}
+Let $k\ge1$, $n=kd$, with $n+1$ at most half the affine curve population.
+Given unit weights, or field weights supplied at unit field-operation cost
+per slot point, all $Z_1(T),\ldots,Z_k(T)$ can be evaluated from the
+seeds in expected bit cost at most
+\[
+ \operatorname{poly}(b,m,\log(k+1))
+ \left(n\sum_i\tau_i+n^3+mn^2+kn^m\right).
+\]
+In particular $k=\lfloor 2^{b/m^2}\rfloor$ gives log-cost at most
+$(1+O(1/m))b/m+O(m\log(m+1)+\log b)$.
+\end{proposition}
+\begin{proof}
+Construct $n+1$ distinct affine curve points $B$ by sampling field
+abscissas and lifting. Hasse's estimate, at most two points per abscissa,
+and the stated occupancy bound give expected $\operatorname{poly}(b)$
+bit operations per new point (one may sample uniformly from signed affine
+points by rejection on an abscissa and a sign). Their evaluation matrix
+for the $n$ monomials of $L(nO)$ has full column rank: a nonzero section
+cannot vanish on $n+1$ distinct points. Select $n$ independent rows by
+elimination and denote their points $B_1,\ldots,B_n$.
+
+For each slot compute its weighted sums of all $n$ monomials by tabulating
+powers of $x$ and multiplying by $y$ where required. Using the common
+evaluation matrix, solve for weights $h_{i,a}$ such that
+\[
+ \sum_{P\in F_i}w_{i,P}\,\phi(P)=\sum_{a=1}^n h_{i,a}\phi(B_a)
+ \qquad\text{for every }\phi\in L(nO).
+\]
+For any $j\le k$, holding the other arguments fixed,
+$\Delta_{\mathbf P}(T)^j$ belongs to $L(jdO)\subseteq L(nO)$ in the
+remaining slot. Apply the identity one slot at a time. This proves
+\[
+ Z_j(T)=\sum_{a_1,\ldots,a_m=1}^n
+  \left(\prod_i h_{i,a_i}\right)
+  \Delta_{B_{a_1},\ldots,B_{a_m}}(T)^j .
+\]
+Compute the determinant once per node tuple and accumulate its first
+$k$ powers by successive multiplications. Slot enumeration, monomial
+sums, the common factorization with $m$ right-hand sides, and this final
+sum give the claimed costs. With the displayed choice of $k$,
+$\log_2 n\le b/m^2+\log_2 d$ and
+$\log_2(\sum_i\tau_i)\le b/m+O(\log b)$.
+\end{proof}
+
+This is a joint computation on a smaller, public grid. It uses field
+weights on its nodes, so testing those nodes individually for singularity
+does not decide whether any original tuple is singular. The final sum
+preserves each specified power moment.
+
+\section{How accurately can zeros of these moments predict a hit?}
+
+The following statement allows the coefficients of the tests to be computed
+from \emph{all} the hash seeds, at arbitrary cost, before the target is chosen.
+
+\begin{proposition}
+For fixed seeds and optional random tape, suppose the prediction is a Boolean
+combination of zero tests of functions on $E$ with their only pole at $O$
+and total pole-order bounds summing to $D$. The functions and Boolean rule
+are fixed before varying $T$. In particular one can use $Z_j-c$
+at a pole-order charge $jd$, with weights and comparison values depending
+arbitrarily on the seeds, independently of $T$. For uniform nonzero $T$
+in the subgroup of order $r$, independent of the seeds, error against
+existence or parity is at least
+\[
+ \lambda-O(\lambda^2)-\frac{D+2\lambda}{r-1}
+\]
+in the tuned regime. The displayed bound applies for a uniform upper bound
+on $D$, or with $\E D$ in its place.
+\end{proposition}
+
+\begin{proof}
+An identically zero function has a constant zero-test bit. Any other
+function of pole order at most $k$ has at most $k$ zeros. For the fixed
+seeds, the prediction agrees with a constant off at most $D$ subgroup
+points. The bound on $Z_j$ follows by expanding the determinant along the
+target column. The map $T\mapsto -T$ preserves $O$, and products of $j$
+sections of $L(dO)$ belong to $L(jdO)$.
+
+For completeness let $u$ be the fraction of eligible targets positive
+for the true bit at these seeds. The targetwise moments give
+$\E u=\lambda+O(\lambda^2)$ for either truth definition.
+Write $A_0=\prod_i(1+2/\nu_i)$ and $z=|G[2]|(2^m-2)/N$.
+We claim
+\[
+ \E u^2\le A_0\lambda^2+z\lambda+2\lambda/(r-1).
+\]
+Bound both positivity bits by their ordinary counts and take two independent
+uniform targets $T,S$. For a pair of tuples, classify the indices where
+their abscissas coincide. If this set $J$ is proper, there are at most
+$N^{m-1}2^{|J|}N^{m-|J|-1}$ pairs for the two prescribed sums. The
+two-abscissa hash law bounds the retention probability by
+$\prod_{i\in J}\rho_i\prod_{i\notin J}\rho_i^2$. Summing gives the first
+term. When all abscissas agree, a nonempty proper sign-flip set $I$
+forces $2\sum_{i\in I}P_i=T-S$. This permits at most $|G[2]|N^{m-2}$
+first tuples, giving the second term. Empty and full flips require
+$S=T$ and $S=-T$, respectively. Each contributes at most $\lambda$
+when it occurs. Averaging gives the claim. The risk of any constant bit
+is at least $\min(u,1-u)\ge u-u^2$. Changing its predictions on $D$
+targets can reduce risk by at most $D/(r-1)$. Now $A_0=1+o(1)$ and
+$z=o(\lambda)$, proving the result.
+\end{proof}
+
+For $Z_2=0$, $D=2d$. On the prime-order class, and more generally for
+$d/r=o(\lambda)$, the error is at least $(1-o(1))\lambda$. Thus there
+is a prescribed target at which the required fresh performance fails.
+For a family of moment zero tests to work uniformly, a necessary condition
+in this model is $\E D\ge (r-1)(\lambda-O(\lambda^2))-2\lambda$.
+A large degree can have a small circuit. The argument does not imply a
+corresponding runtime lower bound and does not cover arbitrary ways of
+combining a particular target and the full seeds.
+
+In particular, testing each of the computed $k=\lfloor 2^{b/m^2}\rfloor$
+moments for zero gives $D\le d k(k+1)/2$. On prime-order curves this is
+$o(r\lambda^2)$. Even an arbitrary Boolean decision based on all these
+zero bits, with the rule chosen from the seeds before varying $T$, has
+target-averaged error at least $(1-o(1))\lambda$. Decoding the entire
+vector of field values is a different question and remains open.
+The bound also reaches nonlinear tests on those values. For example,
+take the determinant of the $s$-by-$s$ matrix $(Z_{i+j})_{0\le i,j<s}$,
+with $Z_0$ the total weight and $2s-2\le k$. Its pole-order bound is
+$d\,s(s-1)$ since every term of the determinant has the same sum of
+moment indices. Testing all such leading minors costs $O(dk^3)$ in the
+degree bound. This too is $o(r\lambda^2)$ on the prime-order class.
+
+There is a separate per-target test for independent uniform weights.
+On any fixed input admitting a nonsingular tuple, regard $Z_2$ as a
+linear form in the weights of one slot, after conditioning on all other
+weights. At least one coefficient is a nonzero polynomial of degree
+$m-1$ in those other weights: the nonsingular tuple supplies a distinct
+nonzero monomial. The Schwartz--Zippel bound shows that the form is
+nonzero except with probability at most $(m-1)/p$. Thus the scalar alone
+is within $(m-1)/p$ in total variation of the uniform field element.
+Typically this holds on both positive and negative fresh inputs.
+Indeed, distinct abscissas have nonpositive indicator covariance;
+with at most two points per abscissa,
+$\operatorname{Var}|F_i|\le 2\E|F_i|$. All slots have more than $2d$
+points except with probability $O(\sum_i1/\nu_i)=o(\lambda^2)$.
+Together with regularity this allows any choice in the first $m-1$ slots
+and multiple choices in the last, at most one of which can sum to $T$.
+Consequently a decoder seeing only the randomized scalar has error at least
+$\lambda-O(\lambda^2)$ at \emph{each} fixed target. This last bound does
+not include additional information about the realized weights or seeds.
+
+\section{The high moment that would suffice}
+
+On regular inputs, take all weights equal to one. Fermat's identity gives
+\[
+ H_T\bmod p=\left(\prod_i |F_i|-Z_{p-1}(T)\right)\bmod p .
+\]
+Outputting whether this residue is nonzero gives error $O(\lambda^2)$
+for ordinary parity, since it is exact when $H_T\le1$. The same error
+bound holds for predicting ordinary existence. The low cost of the
+Cauchy--Binet calculation for $Z_2$ has not been established for this
+moment. Raising an already summed statistic to a power introduces cross
+terms and does not compute the sum of powers. Raising \emph{each}
+determinant to $p-1$ is inexpensive on a single tuple, but enumerating
+all tuples costs order $N\lambda$ in expectation before field arithmetic.
+
+There is a specific reason the interpolation algorithm cannot simply
+use a short list of nodes at this order. Suppose a slot sum with nonzero
+weights on $F$ is to be represented by weighted point evaluations on
+an affine node set $B$, exactly on all of $L(nO)$. If
+$n>|F\cup B|$, then the evaluations at $F\cup B$ are surjective:
+Riemann--Roch gives kernel dimension $n-|F\cup B|$ for that evaluation
+map. Hence any point of $F$ omitted by $B$ is distinguished by a section
+equal to one there and zero at every other point of the union. Exactness
+forces $F\subseteq B$. At $n=d(p-1)$ the inequality holds even for the
+entire affine population at the tuned arities. Thus preserving this
+whole function space recovers the original slot points. An evaluator
+tailored just to the determinant power might use less information.
+
+\paragraph{Sampling a proposed divisor.}
+Another encoding chooses the section with the target among its zeros.
+For distinct abscissas $x_i$ avoiding $x_T=x(T)$, write the section as
+$U(x)+yV(x)$. Having chosen one sign above each $x_i$, the group sum
+can equal $T$ exactly when there is a normalized section with
+\[
+ U(x_T)=y_TV(x_T),\quad V(x_T)\ne0,\qquad
+ U(X)^2-f(X)V(X)^2=c_d(X-x_T)\prod_i(X-x_i).
+\]
+For $d=2n$ take $U$ monic of degree $n$, $\deg V\le n-2$, $c_d=1$.
+For $d=2n+1$ take $V$ monic of degree $n-1$, $\deg U\le n$, $c_d=-1$.
+The squarefree right-hand side precludes any common root of $U,V$ at
+these abscissas. The section selects the signed ordinates $-U/V$ and has
+exactly the required zero divisor. Conversely the divisor supplies such a
+section by normalization. This equivalence includes an abscissa of a
+point of order two when the roots on the right are simple.
+
+Testing only $s\le\lfloor d/2\rfloor-2$ distinct field nodes in addition
+to the signed target is always satisfiable if the polynomials may be
+chosen after seeing the nodes. Take nodes different from $x_T$ with
+$f(z)\ne0$. At each node, $u^2-f(z)v^2$ represents every field element
+by a split product or the surjective quadratic extension norm. Prescribe
+one such local pair, then prescribe $V(x_T)=1$, $U(x_T)=y_T$.
+Each polynomial has at least $n-1$ free coefficients after fixing its
+leading term where necessary. Interpolation at $s+1\le n-1$ nodes fits
+these data. This rejects the proposed sampled existential equations even
+on negative inputs. A challenge sampled after committing to a whole
+section is a different computation; the cost of choosing that section
+would still need to be included.
+
+\paragraph{Batching the existing chord arithmetic.}
+Consider directly replacing the $e=2m-2+t$ alternating-chord equations
+by $s$ uniform independent field-linear combinations, keeping the
+canonical word ranges, the hash tests and the unequal-abscissa guards.
+Here $t=\lfloor(m-1)/2\rfloor$ is the number of free internal even
+ordinates. Set every slope to one. Pick legal abscissas, using disjoint
+nonempty slots, and canonical internal abscissas satisfying the guards.
+These choices exist on the typical regular seeds above. In the retained
+ordinate vector $Y=(Y_2,Y_4,\ldots)$ the remaining residuals are
+$R(Y)=R_0+JY$. In the even step $j<m$, the row $D_j$ contains $2Y_j$
+and none of the other retained ordinates. This follows directly from the
+alternating chord equations in the project's compressed-relation manuscript.
+Thus $J$ contains a $2I_t$ minor and has column rank $t$.
+
+For a uniform $s$-by-$e$ field matrix $C$, $CJ$ is a uniform
+$s$-by-$t$ matrix. With probability $\prod_{k=0}^{s-1}(1-p^{k-t})$ it
+has full row rank for $s\le t$. Then $CJY=-CR_0$ has a solution for
+every $R_0$, even on negative seeds. The proposed $s=O(m/g)$ eventually
+satisfies $s\le t$, so the compressed equations accept almost all fresh
+negative inputs. This applies to batching the residuals in the original
+encoding, which derives intermediate curve membership from the complete
+equations. It does not cover additional independent constraints or
+tests performed after a complete witness is fixed.
+
+\paragraph{Enumerating completions.}
+Suppose a procedure sees all seeds but the last offset (it may also see
+that slot's multiplier), prepares an explicit list of $K$ possible
+completion points, and returns a positive only on a verified listed hit.
+Each listed affine point has conditional acceptance probability $\rho_i$.
+At $O(\lambda^2)$ error one must detect positives of mass at least
+$\lambda-O(\lambda^2)$, so
+$\E K\ge(1-O(\lambda))\lambda/\rho_i$. This is sharp to relative
+$O(\lambda)$: enumerating the other-slot tuples and listing their
+nonidentity required completions has expected length $\E H_T/\rho_i$.
+At the proposed widths the list has logarithmic size
+$(1-1/m)b+O(\log b)$. The statement concerns explicit completion lists
+constructed without the last offset. A computation with all offsets jointly
+is still possible in principle.
+
+\paragraph{End-to-end accounting.}
+The outer reduction charges polynomial factors times $B_0 C_m+mB_0^2$,
+where $B_0=2\sum_i\tau_i$ and $C_m$ includes verified row selection.
+Under the fresh-error reduction in \texttt{fresh\_windows.tex}, an evaluator
+with $\log_2 D_m=O(mb/(\sqrt L\,g))$, including preprocessing, would give
+$\log_2\E T_{\rm solve}=O(b/(L^{1/4}\sqrt g))$ at the proposed arity.
+The fast moment misses the error budget. The exact high-moment predicate
+meets the error budget but has no evaluation at that cost.
+The complete bound remains
+$\log_2\E T_{\rm solve}\le(26.2933775156+o(1))b/L^{1/4}$
+under the finite-packet assumption A.1 and the inherited contraction and
+reduction estimates of \texttt{../short\_hash\_count/count.tex}.
+
+\paragraph{Reproducibility.}
+Run \texttt{python -B research/joint\_parity/check\_target\_incidence.py}
+from the project root. The script checks all 12,096 signed distinct-abscissa
+configurations of degrees three through six on an order-19 curve (630 singular).
+It also enumerates 294,912 seed-pair/target cases, checks both weighted
+and unweighted Gram formulas, checks the Fermat residue on regular inputs,
+and exhibits regular inputs with the same target, slot sizes and second
+moment but opposite existence bits. A separate order-103 example passes a
+sampled norm equality although all 32 sign choices miss the stated target.
+On that same curve, the weighted interpolation calculation through power
+five agrees between 8,000 public node tuples and 16,896 original tuples.
+The same negative example also tests random batches of the project's
+actual chord equations. The error bounds above follow from the
+asymptotic arguments.
+\end{document}

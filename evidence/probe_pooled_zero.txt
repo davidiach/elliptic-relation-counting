@@ -1,0 +1,31 @@
+F_101, order 103, widths (4, 4, 4), lambda=0.3238
+  plant, one: 126 samples, feature rank 10/11.
+  plant, two: 618 samples, feature rank 11/11.
+  plant, many: 7,254 samples, feature rank 11/11.
+  Singular plant blocks 4/659, simultaneous upper bound on one-equation recall 0.6974 (99.5%).
+  plant, many raw: 7,328 samples, feature rank 55/55.
+  Singular plant blocks 1/133, simultaneous upper bound on one-equation recall 0.9485 (99.5%).
+  matched, one: 119 samples, feature rank 11/11.
+  matched, two: 577 samples, feature rank 11/11.
+  matched, many: 7,159 samples, feature rank 11/11.
+  matched, many raw: 7,239 samples, feature rank 55/55.
+  16,000 independent fresh seeds, 3,669 positives, 7,790 regular nonempty.
+  one: 549 seeds, 45 hits, 0 errors.
+  two: 1,732 seeds, 261 hits, 0 errors.
+  many: 5,509 seeds, 2,299 hits, 2,299 errors.
+  Nine-moment exact counts on 1,715/1,732 two-orbit seeds.
+  Total readout errors 3,363/16,000, including 0 false positives. Always absent makes 3,669 errors.
+F_1031, order 1019, widths (8, 16, 16), lambda=0.2476
+  plant, many: 10,710 samples, feature rank 11/11.
+  Singular plant blocks 0/973, simultaneous upper bound on one-equation recall 0.6224 (99.5%).
+  plant, many raw: 10,716 samples, feature rank 55/55.
+  Singular plant blocks 0/194, simultaneous upper bound on one-equation recall 0.9364 (99.5%).
+  matched, two: 4 samples, feature rank 4/11.
+  matched, many: 10,655 samples, feature rank 11/11.
+  matched, many raw: 10,662 samples, feature rank 55/55.
+  16,000 independent fresh seeds, 3,274 positives, 12,440 regular nonempty.
+  one: 8 seeds, 0 hits, 0 errors.
+  two: 44 seeds, 2 hits, 0 errors.
+  many: 12,388 seeds, 2,929 hits, 2,929 errors.
+  Nine-moment exact counts on 44/44 two-orbit seeds.
+  Total readout errors 3,272/16,000, including 0 false positives. Always absent makes 3,274 errors.

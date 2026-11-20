@@ -1,0 +1,328 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\wtO}{\widetilde O}
+\title{Direct evaluation and differentiation of the scalar target norm}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+One homogeneous univariate resultant evaluates the normalized scalar
+target norm without expanding the product of all the slots.
+On an isolated tuple the same split gives every requested first
+derivative. A separate two-slot calculation gives the full additive
+gradient even at a nonzero norm. At the tuned widths the work needed
+by the relation finder drops from a dense root algebra of dimension
+$2^{(1-o(1))b}$ to an explicit resultant with work
+$2^{(1/2+o(1))b}$. The existing conditional end-to-end exponent
+is smaller asymptotically. We also test whether the arithmetic indices
+of the actual dyadic masks supply reusable elliptic translations.
+
+\section{The exact scalar split}
+Use $E:y^2=x^3+ax+c$ over $\F_p$, $p>3$, and $t=x(T)$ with
+$2T\ne O$. Initially each slot contains both rational lifts of
+each abscissa in $U_i$, with no fixed points of negation. Let
+$n_i=|U_i|$. An empty slot gives norm one and zero derivatives.
+For one abscissa tuple $\mathbf u$ write $S(\mathbf u;Z)$ for
+the normalized homogeneous sign-orbit form constructed in
+\texttt{../joint\_parity/parity.tex}. Its formal degree in $Z$ is
+$2^{m-1}$. Specifically, start with $Z-u_1$ and append each
+abscissa $v$ using the homogeneous resultant with
+\[
+ K(W,v,Z)=(W-v)^2 Z^2-2((W+v)(Wv+a)+2c)Z+(Wv-a)^2-4c(W+v).
+\]
+Homogenize separately in each argument. The convention for a finite
+input is $(u:1)$, and for infinity it is $(1:0)$. The scalar and
+additive derivatives requested here refer to the particular product
+\[
+ N(z,\mathbf s)=\prod_{\mathbf u}
+  \big(S(\mathbf u;z)+s_0+\textstyle\sum_i s_i u_i\big)
+\]
+at $(z,\mathbf s)=(t,\mathbf0)$. The normalization matters for
+these absolute derivatives.
+
+For $m\ge2$ split the slots into nonempty blocks $L,R$, initially
+a prefix and its complement. For each left tuple build its forward
+form, with output coordinate $W$. For each right tuple start with
+$t$ and append its slots in reverse order, again with output $W$.
+Multiply within each block to obtain
+\[
+ A(W)=\prod_{\mathbf l} S(\mathbf l;W),\qquad
+ B(W)=\prod_{\mathbf r} S(t,\operatorname{rev}\mathbf r;W).
+\]
+Writing $D_I=\prod_{i\in I} n_i$, their formal degrees are
+\[
+ f=2^{|L|-1}D_L,\qquad h=2^{|R|}D_R .
+\]
+Then $N(t,\mathbf0)=\Res_{f,h}(A,B)$ exactly.
+
+To see the scalar identity, factor the forward form over an algebraic
+closure into homogeneous linear factors, retaining its leading
+scalar. One more chord step sends each root $U$ to the quadratic
+$K(U,v,V)$ and squares the leading scalar. If $G(V)$ is the form
+coming from the remaining backwards steps, the contribution of this
+quadratic is $\Res_V(K(U,v,V),G(V))$. Multiplicativity of the
+homogeneous resultant gives the same expression as eliminating $U$
+first. In the reverse recurrence one interchanges these two resultant
+arguments. A quadratic times any integer degree is even, so the
+interchange has positive sign. The last backwards step is
+$K(U,v,t)=K(t,v,U)$. This proves the identity for a pair of tuples,
+including all scalars. It is a polynomial identity and includes
+infinite roots. Multiplicativity over all tuples gives the stated
+single resultant. The two block products can be built by subproduct
+trees. Elliptic biquadratic product evaluations by resultants also
+appear in \href{https://velusqrt.isogeny.org/velusqrt-20200616.pdf}
+{Bernstein, De Feo, Leroux and Smith, Sections 2 and 4}.
+
+For later use the normalized form is symmetric in its $m+1$
+arguments when $m\ge2$. One verification uses the irreducible
+hypersurface which is the image of $E^m$ under the coordinate maps
+and the abscissa of the sum. Its set of points is invariant under
+permutations, because the signed equation is a zero sum. The
+projective biquadratic has no identically zero specialization on
+a pair of inputs, including infinity and rational two-torsion.
+Thus there are no extra components. Generic sign orbits have
+distinct final abscissas, so the hypersurface occurs with
+multiplicity one. The same multidegree $2^{m-1}$ is obtained in
+each argument by the recurrence. The scalar under permutation is
+one by evaluating with one finite argument and all others at
+infinity. The normalized multihomogeneous form takes value one at
+each of these specializations by the same recurrence. This also
+permits any choice of split. See the original
+\href{https://eprint.iacr.org/2004/031}{summation-polynomial construction}.
+
+\section{Differentiate the resultant at a common root}
+First hold $A$ fixed and vary $B$ in direction $V$, preserving
+formal degree $h$. Let the ordinary affine degree of $A$ be $n$,
+its leading coefficient be $a_0$, $e=f-n$ and $F=A/a_0$ in
+the affine chart. Put $b_h=[W^h]B$. The homogeneous formula is
+\[
+ \Res_{f,h}(A,B)=(-1)^{eh}a_0^h b_h^e\,R,\qquad
+ R=\Res(F,B)=\prod_{F(u)=0}B(u),
+\]
+with multiplicity in the product and $R=1$ for $n=0$.
+The sign comes from $\Res(W_1,B)=(-1)^h B(1,0)$.
+Differentiate $b_h^e$ by the ordinary power rule, including when
+$b_h=0$. The finite product has the following derivative.
+
+\begin{itemize}
+\item If $F=1$ its derivative is zero. If $\gcd(F,B)=1$ and
+$n>0$, compute $J=B^{-1}F'\bmod F$. Then
+$\delta R=R[W^{n-1}](VJ\bmod F)$.
+Indeed the coefficient is the trace of multiplication by $V/B$
+in $\F_p[W]/F$. This follows from the coefficient of $W^{-1}$
+in $(V/B\bmod F)\,F'/F$ at infinity. Each root contributes its
+multiplicity, also in positive characteristic.
+\item If the monic gcd is $W-u$ and $F=(W-u)F_1$ with
+$F_1(u)\ne0$, then $\delta R=\Res(F_1,B)V(u)$. If more than
+one factor in the root product vanishes, $\delta R=0$. This
+includes a repeated root of $F$ even when the gcd has degree one.
+\end{itemize}
+
+For a simultaneous change of $A$ and $B$ add the contribution with
+the roles swapped and the sign $(-1)^{fh}$. Consequently products,
+extended gcds and remainders on two univariate polynomials suffice
+even when the resultant vanishes. The verifier uses the corresponding
+\href{https://flintlib.org/doc/algorithms/polynomials/gcd.html}{FLINT polynomial operations}.
+
+Differentiate the half forms by the product rule. In addition to the
+$z$ derivative, compute two public polynomial deformations for slot
+$i$, moving every one of its abscissas by $u\mapsto u+\epsilon$ or
+$u\mapsto(1+\epsilon)u$. Write the resulting scalar derivatives as
+$P_i,Q_i$. These are formal variations of already selected roots.
+They require no resampling of the actual masks.
+
+Suppose the target count $H$ equals one, with abscissa tuple
+$\mathbf u^*$. Put $C=\prod_{\mathbf u\ne\mathbf u^*}S(\mathbf u;t)$.
+The product rule at this simple zero gives
+\[
+  N_z=C S_z(\mathbf u^*;t),\qquad
+  P_i=C S_{u_i}(\mathbf u^*;t),\qquad Q_i=u_i^*P_i .
+\]
+Each $P_i$ is nonzero. Fix the other signed points in the unique
+completion. Locally the output is translation on the curve followed
+by $x$, using $x$ as a local parameter at the signed input.
+Translation is an isomorphism and $x$ is unramified at both this
+input and $T$ because neither is fixed by negation. The derivative
+of the local output with respect to $u_i$ is nonzero. Differentiating
+its simple root in $S$ gives the assertion. Thus the original
+additive derivatives, with their actual normalization, are
+\[
+ u_i^*=Q_i/P_i,\qquad N_{s_0}=N_z/S_z(\mathbf u^*;t),
+       \qquad N_{s_i}=u_i^* N_{s_0}.
+\]
+Only one single-tuple form is needed after the split calculation.
+The test for this case is $N=0$ and $N_z\ne0$. Upon verifying the
+signs and guards it retains the previous $2/9-o(1)$ success bound.
+
+\section{Complete gradient outside the isolated case}
+If $N=N_z=0$, the target may have multiple completions at one
+abscissa tuple. Its additive gradient can be nonzero. Halve the
+choices of each slot, retaining a side with zero scalar norm until
+one zero tuple $\mathbf u$ has been located. This uses
+$O(m+\sum_i\log n_i)$ scalar calls. Partition the remaining grid
+into $m$ boxes by the first coordinate unequal to $u_i$. Multiplying
+their scalar norms gives exactly $C=\prod_{\mathbf v\ne\mathbf u}
+S(\mathbf v;t)$. Hence $N_{s_0}=C$ and $N_{s_i}=u_i C$, including
+when another zero makes $C=0$. The split is valid for the subsets
+used internally and for every dyadic subwindow.
+
+A nonzero scalar already answers the relation finder's query. To
+evaluate the literal additive derivatives there as well, use the
+following two-slot calculation. Fix a prefix $\mathbf w$ of $m-2$
+abscissas. Keep the next coordinate $X$ symbolic. For each root
+$v$ of the last slot form $F_v(X)=S(\mathbf w,v,t;X)$ and its
+derivative with respect to its input $t$. Symmetry identifies it
+with the original summation polynomial. Take the subproduct tree of
+the polynomials
+\[
+   F_v(X)+s_0+\sum_{j\le m-2}w_j s_j + Xs_{m-1}+vs_m
+\]
+with all perturbations, including the target variation, to first
+order. Use the fixed-form resultant with
+$g(X)=\prod_{u\in U_{m-1}}(X-u)$ and then multiply the scalar
+first-order outputs over prefixes. This computes $N$ and every
+requested derivative on any input. No pair of choices from the last
+two slots is enumerated. The method also handles singular factors.
+The $m=1$ case uses the product of linear factors directly.
+
+For rational two-torsion use the paired and individual fixed-point
+branches of the preceding note. Each fixed point shifts the target
+and contributes its own fixed abscissa times the constant-marker
+derivative. The product rule combines all branches. As before the
+common local parameter adds $\epsilon$ to each branch's translated
+target abscissa. There are at most $4^m$ branches. Alternatively
+the asymptotic relation finder may discard seeds containing any
+fixed slot point with probability loss at most $3\sum_i\rho_i=o(1)$.
+
+\section{What the hash indices can share}
+For a slot of width $\tau=2\Delta$, enumerate the hash preimages
+$x_j=(A j+C)\bmod M$ with $M=2^b$. Compare the siblings indexed
+by $j$ and $j+\Delta$ for $0\le j<\Delta$. For accepted siblings
+the field difference of the abscissas is one of the two constants
+$h$, $h-M$ reduced modulo $p$, where $h=A\Delta\bmod M$.
+Fix a nonzero curve translation by $Q$. If it realizes a pair for
+some choice of signs with a particular difference $s$, then
+\[
+            K(x_j,x(Q),x_j+s)=0 .
+\]
+The first term of $K$ supplies $x_j^4$ with coefficient one, and
+all other terms have degree at most three.
+Each index has a distinct abscissa. Thus one translation can
+realize at most eight valid sibling pairs, even with freely chosen
+signs and $Q$ selected after seeing the seed. The identity cannot
+realize distinct canonical abscissas. Covering $J$ valid pairs this
+way takes at least $\lceil J/8\rceil$ translations.
+
+This is relevant to the independent seed law. Let $n_a$ count
+two-lift abscissas in $[0,p)$ congruent to $a$ modulo $\tau$. For
+uniform odd $A$ and uniform $C$, the first preimage is uniform
+modulo $M$. Conditional on it, its sibling is uniform in the
+residue class displaced by $\Delta$ modulo $\tau$. Therefore
+\[
+  \frac{\E J}{\Delta}=\frac{\tau}{M^2}
+       \sum_{a\bmod\tau} n_a n_{a+\Delta}.
+\]
+Uniformly in $a$, $n_a=p/(2\tau)+O(\sqrt p\log p)$. To verify
+this, write the class as $a+\tau k$ for a consecutive interval of
+$k$. The quadratic character of the squarefree cubic on that
+progression has nonzero-frequency complete Fourier sums bounded by
+$3\sqrt p$ by the mixed character sum bound. Hasse's bound gives
+$2\sqrt p$ at frequency zero. Completing the interval costs
+$O(\log p)$ since the sum of the absolute values of its normalized
+Fourier coefficients is $O(\log p)$ by the geometric series
+formula. The at most three roots of the cubic contribute $O(1)$.
+The mixed bound used here is Theorem 5 of
+\href{https://pmc.ncbi.nlm.nih.gov/articles/PMC10941333/}
+{\emph{Moment subset sums over finite fields}}, with a squarefree
+cubic and a nonconstant linear additive phase.
+For $\tau\log p=o(\sqrt p)$, including the tuned growing arities,
+$\E J/\Delta=(p/(2M))^2(1+o(1))$. Since $p/M\ge1/2$ and
+$0\le J\le\Delta$, there is a probability bounded below by an
+absolute constant of $J=\Omega(\tau)$. The translation test
+concerns reusing the two dyadic halves through fixed elliptic
+translations. Other ways of representing the resultant remain open.
+
+\section{End-to-end accounting}
+Using fast polynomial products, gcds and extended gcds gives
+$\wtO(f+h)$ field operations per resultant and direction once its
+two forms are available. Building each individual half form and
+its derivatives takes $2^{O(m)}\operatorname{poly}(b,m)$ bit
+operations by the quadratic recurrence. Subproduct trees preserve
+quasilinear dependence on the sum of formal degrees. Thus the
+scalar, its $z$ derivative and all geometric directions take
+\[
+  2^{O(m)}(D_L+D_R)\operatorname{poly}(b,m)
+\]
+bit operations. The same bound up to polynomial factors applies
+to the full additive gradient at every zero. The two-slot evaluation
+on nonzeros has upper bound
+\[
+  2^{O(m)}\operatorname{poly}(b,m)
+    \Big(\prod_{i<m-1}n_i\Big)(n_{m-1}+n_m).
+\]
+The latter follows because the batched product has degree at most
+$2^{m-1}n_m$ in $X$. The two largest slots can be placed last.
+Only the former, cheaper bound is needed in the relation finder.
+
+For balanced widths and a balanced split the log of the cheaper
+bound is at most $b/2+O(b/m+m+\log b)$, uniformly also on
+subwindows. A split chosen after seeing the seeds cannot make
+both explicit degrees small. In fact, exactly
+\[
+       fh=2^{m-1}\prod_i n_i=\tfrac12\prod_i |F_i|
+\]
+on the paired branch. On prime-order curves of order $r$ the
+last product is $(1+o(1))\lambda r$ in probability at the tuned
+widths, by the independent slot-size moment estimate in the
+previous note. Here $\lambda\in(1/3,2/3]$ and $\log_2 r=b+O(1)$.
+Writing the two full coefficient arrays already requires at least
+$\sqrt{(1-o(1))\lambda r/2}$ entries with probability tending to
+one. The earlier odd-support estimate also prices expanding a
+squarefree half polynomial at a fixed balanced split.
+
+There is a retry version for a fresh explicit split per trial. Given
+the seed, put $V=\prod_i |F_i|$. At a uniform nonidentity target
+the probability of a reachable tuple is at most
+$\min(1,V/(r-1))$. Since
+$\sqrt V\ge\sqrt{r-1}\min(1,V/(r-1))$, forming the two dense
+inputs on each nonempty trial costs $\Omega(\sqrt r)$ per success
+after averaging, even with seed-only screening. This argument
+assumes that the explicit inputs are formed on admitted trials.
+It does not price arbitrary target-dependent screening, implicit
+polynomial operations or reuse of an already built table.
+
+The best end-to-end project estimate remains
+\[
+ \log_2\E T_{\rm solve}\le(26.2933775156+o(1))
+              \frac{b}{(\log_2 b)^{1/4}}
+\]
+under the finite-packet assumption and inherited contraction
+hypotheses. The missing saving on this route is a way to evaluate
+the final scalar resultant on implicitly represented halves, with
+its first-order information or an equivalent isolated-tuple readout,
+below the current joint-query cost.
+
+\paragraph{Verification.}
+Run \texttt{python -B research/scalar\_norm/verify.py} with
+python-flint and NumPy. There are 100 projective resultant tests
+with tangents and 567 comparisons of the exact scalar and all
+additive derivatives against the previous multiplication matrices.
+They include 76 simple targets, four with one repeated zero tuple,
+20 with several zero tuples, and 467 nonzero norms (including
+empty boxes). Separate checks cover a full rational two-torsion
+curve and formal degrees exceeding the characteristic.
+On the order-65419 fixture at $(0,1)$, the 2800 abscissa tuples
+become 28 left and 100 right tuples, with formal degrees 56 and 400.
+The scalar is zero, $N_z=43446$ and $N_{s_0}=16953$ in $\F_{65521}$.
+The four coordinate-marker derivatives are 13292, 47523, 12119 and
+9163. An independent full-grid product in the verifier checks these
+values. On a width-256 hash on the same curve, 29 index siblings
+both lift and no curve translation covers more than one of them.
+These are finite arithmetic checks. The time comparison above is
+asymptotic and uses operation counts.
+\end{document}

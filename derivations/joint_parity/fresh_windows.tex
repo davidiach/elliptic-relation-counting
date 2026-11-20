@@ -1,0 +1,301 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prb}{\mathbb P}
+\title{Fresh fixed-width parity queries and the cost of a logarithmic saving}
+\author{Project research note}
+\date{20 November 2026}
+\begin{document}
+\maketitle
+
+\paragraph{Result.}
+Write $b=\lceil\log_2p\rceil$, $L=\log_2 b$, $g=\log_2 L$, and
+$N=\#E(\mathbb F_p)$. All bit costs are classical. The project's
+conditional upper bound on $\log_2\E T$ remains
+$(26.2933775156+o(1))b/L^{1/4}$. Under its existing outer reduction
+it would suffice to save $g$ in the joint relation-evaluation exponent
+on \emph{fresh} hashed inputs at one width profile. Two-sided error of
+order $1/L^2$ on those fresh inputs is allowed. We give the reduction
+and test two proposed evaluators. Neither establishes the required cost.
+
+\section{Recovering an isolated relation from a fresh-input predictor}
+Fix $T$ with $2T\ne O$. As in \texttt{../mixed\_coefficient/mixed.tex},
+$M=2^b$, each independent slot has hash $h_i(x)=\alpha_ix+\beta_i\bmod M$
+with uniform odd multiplier and uniform offset. Its interval is
+$[0,\tau_i)$ of dyadic width. Put $\rho_i=\tau_i/M$, $\nu_i=N\rho_i$
+and $\lambda=\prod_i\nu_i/N$. Let $H$ be the ordinary ordered count
+at $T$ and $X$ its guarded subcount. Set
+\[
+ A_0=\prod_i(1+2/\nu_i),\quad z=|E(\mathbb F_p)[2]|(2^m-2)/N,\quad
+ \gamma=1-3m/N .
+\]
+We use the finite bounds $\E H\le\lambda$, $\E X\ge\gamma\lambda$,
+and $\E[H(H-1)]\le A_0\lambda^2+\lambda z$ proved in that note.
+The probability of $H=X=1$ is at least $\gamma\lambda-A_0\lambda^2-\lambda z$.
+Balance the integer $\log_2\tau_i$ so that $1/(2L)<\lambda\le1/L$,
+by rounding down their total required for $\lambda=1/L$. At the
+proposed arity $m\asymp L^{1/4}\sqrt g$ they give $A_0=1+o(1)$,
+$Lz=o(1)$, $2\tau_i\le M$, and $Q=\sum_i\log_2\tau_i=b+O(m+\log L)$.
+
+\begin{proposition}
+Suppose the same evaluator returns an ordinary parity prediction
+at this one width profile. For each prescribed target assume absolute
+error probability $O(L^{-2})$ and mean bit cost at most $D_m$, averaged
+over independent fresh hashes and its private randomness. All setup
+used by the evaluator is charged. Then a complete attempt can return
+a verified guarded relation with probability $\Omega(1/L)$, with
+worst-case cost at most
+\[
+ \operatorname{poly}(b,m)(D_m+2^m)\,2^{O(b\log_2 L/L)} .
+\]
+This proves a distributional sufficient condition for the outer
+reduction. The evaluator itself remains a hypothesis.
+\end{proposition}
+\begin{proof}
+Cap each call at $O(L^2)D_m$ bit operations, forcing a bit on timeout.
+Markov's inequality preserves fresh-input error $\varepsilon=O(L^{-2})$.
+For each coordinate of the putative isolated tuple, the ideal search
+path is the dyadic path to $u=h_i(x)$ inside its original width $\tau$.
+During each query all \emph{other} slots use their original hashes.
+Suppose the present interval on this path is $[j,j+s)$ at depth $d$,
+where $s=\tau/2^d$ and $s\ge2$. Set $t=s/2$, $q=2^{d+1}-1$ and draw
+uniform $\eta\in\{0,\ldots,q-1\}$. Replace this one slot by the hash
+\[
+                  h'(x)=q(h_i(x)-j)+t+\eta\bmod M ,
+\]
+at the original width $\tau$. The multiplier is odd. At the marked
+point $y=u-j\in[0,s)$, and $h'=t+qy+\eta$. Because $(q+1)t=\tau$,
+$h'<\tau$ is exactly the predicate $y<t$. The full range is
+$[t,2\tau-t)$, with no wraparound.
+
+For the probability argument fix any concrete ordinary tuple of sum $T$
+and condition on it being retained in the root. Its $u$ is uniform on
+$[0,\tau)$ independently of $\alpha_i$; $u-j$ is uniform on $[0,s)$.
+Thus its transformed value is uniform on $[t,2\tau-t)$ independently
+of $q\alpha_i$. These variables completely specify the transformed
+seed for this fixed mark. Relative to a fresh seed conditional on the
+same mark being in $[0,2\tau)$ its density is at most $2$. Root
+retention has half the probability of retention in the doubled slot.
+The other marked slots retain their original independent laws.
+After summing over marks the two factors cancel. This argument conditions
+only on retention of the mark, never on isolation or earlier answers.
+
+Write $H_+$ for the count on a fresh transformed seed using doubled
+width in this slot. If $H_+=1$, the true ordinary parity at the
+queried width gives the correct marked branch, including when the mark
+lies in the upper half. The expected number of retained marks for
+which an ideal step is wrong is bounded by
+\[
+ \varepsilon+\E[H_+(H_+-1)]
+       \le \varepsilon+4A_0\lambda^2+2\lambda z .
+\]
+Indeed, when $H_+=1$ the marked contribution is at most the indicator
+of an oracle error at the original width; when $H_+\ge2$ the factorial
+moment pays for all its marks. This charges wrong answers even if
+they depend arbitrarily on the fresh seeds.
+
+Try all subsets of at most $J=\lceil C b/L\rceil$ of the $Q$ decisions,
+reversing those answers. Fix the random draws and evaluator tapes by
+step before exploring the list and reuse them across its paths.
+For any given mark its ideal steps depend only on that mark's true
+prefixes. The list entry consisting of the ideal wrong steps reproduces
+those prefixes by induction. A recovered abscissa vector has at most
+$2^m$ sign choices, all checked against the ordinary equation, original
+windows and guards. Return only a verified row or failure.
+The complete success probability is at least
+\[
+ \gamma\lambda-A_0\lambda^2-\lambda z-
+ \frac{Q}{J+1}\bigl(\varepsilon+4A_0\lambda^2+2\lambda z\bigr).
+\]
+This follows by Markov's inequality on the number of ideal errors,
+charging only unique guarded roots in the success estimate. A sufficiently
+large fixed $C$ gives $\Omega(1/L)$. There are at most
+$\sum_{k\le J}\binom Qk=2^{O(b\log_2 L/L)}$ patterns.
+Generating and retaining bounded tapes fits the stated time budget.
+No improved workspace bound is claimed.
+\end{proof}
+
+Use the same randomized row-selection rule in training and online
+queries, drawing fresh attempt randomness and verifying candidates.
+The project pilot argument has inverse mean success polynomial in $L$.
+The adjusted nonzero targets lie in the odd prime-order subgroup on the
+supplied coprime-cofactor input class, so $2T\ne O$. With
+$B_0=2\sum_i\tau_i$ we have $\log_2 B_0=b/m+O(\log b+\log m)$.
+For one target the outer estimate charges, up to polynomial factors,
+$B_0 C_m+mB_0^2$, including failed pilots, verification and retries.
+If $\log_2 D_m\le(A+o(1))mb/(\sqrt L\,g)$ at
+$m\sim L^{1/4}\sqrt{g/A}$, both terms consequently give
+\[
+ \log_2\E T\le (2\sqrt A+o(1))\,\frac{b}{L^{1/4}\sqrt g}.
+\]
+Here $A$ is the constant in the hypothetical predictor bound.
+The list charge $b\log_2 L/L$ is little-o of this scale.
+The current contraction theorem gives an exponent of order
+$mb/\sqrt L$; asking for parity alone supplies no extra $g$ in that
+theorem. The reduction above need not answer parity on every realized
+adaptive window. It finds a usable relation with sufficient probability.
+
+\section{A nonadaptive alternative at smaller density}
+There is a second sufficient condition with polynomially many calls
+and no search over error patterns. Choose $K=2b$, $D$ the least power
+of two at least $K$, and balanced dyadic widths with
+$1/(2CmD)<\lambda\le1/(CmD)$ for a sufficiently large fixed $C$.
+At the arities in this note $D\tau_i\le M$, $m/\min\nu_i=o(1)$
+and $mz=o(1)$. For each slot $i$ let $H_i^+$ count tuples after
+enlarging just its width by $D$ with the original hash. Then
+\[
+ \E[H(H_i^+-1)]\le D\lambda^2 A_0+\lambda z .
+\]
+For clarity, $H(H_i^+-1)$ counts ordered \emph{distinct} pairs, the
+first in the root and the second in the enlarged box. In the changed
+slot, for distinct abscissas the joint retention probability is at
+most $\rho_i D\rho_i$. Given the first hash value in $[0,\tau_i)$,
+their difference is uniform among residues of its dyadic valuation.
+If that valuation is at least $\log_2(D\tau_i)$ both cannot be in the
+enlargement. Otherwise exactly a fraction $D\rho_i$ hit it. For a
+proper set of equal abscissas, the pair count from the original
+factorial bound gives the first term above, since every enlarged
+$\nu_i$ is at least its root value. With all abscissas equal and
+different tuples the same flip-set argument gives $\lambda z$.
+Thus the probability that an isolated guarded root tuple is the
+only tuple in every one-slot enlargement is at least
+$\gamma\lambda-m(D\lambda^2 A_0+\lambda z)=\Omega(\lambda)$.
+Indeed the indicator of that event dominates
+$X-\sum_i H(H_i^+-1)$ pointwise.
+
+For each odd modulus $3\le q\le K$ and each residue $0\le a<q$,
+replace just slot $i$ by $q^{-1}(h_i-a)\bmod M$ at its original width.
+The accepted original hash values are exactly $a+qj$ for
+$0\le j<\tau_i$, all in $[0,D\tau_i)$. Inside $[0,\tau_i)$ this tests
+the residue modulo $q$. On the isolated-enlargement event the bits
+identify each marked coordinate uniquely, since the least common
+multiple of these odd moduli exceeds $2^b$ eventually. Indeed the
+central binomial coefficient $\binom K{\lfloor K/2\rfloor}\ge2^K/(K+1)$
+divides $\operatorname{lcm}(1,\ldots,K)$: its valuation at each prime
+is at most $\lfloor\log_p K\rfloor$ by the factorial valuation formula.
+The power of two removed costs a factor at most $K$.
+The transform of $(\alpha_i,\beta_i)$ is a bijection on its seed
+space. All $O(mK^2)$ calls are predetermined and individually fresh.
+A union bound permits per-call absolute error $o(\lambda/(mK^2))$.
+Fresh mean costs add by linearity. A polynomial timeout on the whole
+attempt can retain $\Omega(\lambda)$ success at uniformly bounded
+cost. This version trades smaller tolerated fresh error for a simpler
+decoding and cost argument.
+
+\section{Testing joint evaluators}
+\paragraph{Parity in randomly merged buckets.}
+On the prime-order subclass, take an even balanced arity. Let the odd
+supports of the two half-sums be $U,V$, translating and reflecting the
+second by $T$ so the target parity is $|U\cap V|\bmod2$. Grant the
+two supports for free to this test. The half-population and collision
+estimates in \texttt{parity.tex} give $a=|U|$, $c=|V|$ tending to
+infinity in probability and $ac=(1+o_{\Prb}(1))N\lambda$ at the
+widths above. The sets are disjoint with probability $1-O(\lambda)$
+by $\E H\le\lambda$. Hash each distinct group element independently
+into one of $k$ bins and take the dot product modulo two of the two
+vectors of bin parities.
+
+Conditional on disjoint supports, if exactly $Z$ bins on the left
+are odd, the chance of an erroneous odd answer on the right is
+$[1-(1-2Z/k)^c]/2$. For $k\ge4$,
+\[
+ \E Z=\frac{k}{2}\bigl(1-(1-2/k)^a\bigr),\qquad
+ \operatorname{Var}Z\le\E Z .
+\]
+The covariance of two distinct odd-bin indicators equals
+$((1-4/k)^a-(1-2/k)^{2a})/4\le0$.
+When $k\to\infty$ and $k=o(ac)$, $\E Z\asymp\min(a,k)\to\infty$,
+so $Z/\E Z\to1$ in probability. Then $cZ/k\to\infty$ and
+$Z/k\le1/2+o_{\Prb}(1)$. The error tends to $1/2$. Even with
+$k/(ac)\to d\in(0,\infty)$, $Z/a\to1$ and the limiting error is
+$(1-e^{-2/d})/2$. In the high-bucket regime $k\gg N\lambda$, the
+error is $(1+o(1))N\lambda/k$. On disjoint supports the $ac$ cross-pair
+collision indicators are pairwise independent, including pairs of tests
+with one shared endpoint. For their sum $J$,
+$1_{\{J\ {\rm odd}\}}\ge J-J(J-1)$ gives conditional error at least
+$ac/k-ac(ac-1)/k^2$. Restrict to typical disjoint supports for the
+averaged lower bound. For the upper bound on any two supports, only
+off-diagonal collisions can change the answer, and
+$\E[ac]\le N\lambda$ by independence of the half populations.
+Thus a growing bucket universe of order $N/\lambda$ is necessary
+and sufficient up to constants for $O(\lambda^2)$ error in this
+single iid-hash sketch. This prices its statistical compression.
+Sparse storage and injective labels have different costs.
+
+\paragraph{Can nonlinear processing of repeated small sketches help?}
+Consider an evaluator whose entire information from these sets consists
+of the two bin-parity vectors from each of $R$ fresh independent
+random hashes. The decoder may use those vectors jointly in any way.
+At $k,R\le 2^{o(b)}$ its fresh-input error is at least $(1-o(1))\lambda$.
+In this observation model the decoder receives neither the random
+hash descriptions nor auxiliary information about the slot seeds.
+
+Here are the quantitative details. Write $a_*=\prod_{i\in L}\nu_i$
+for one balanced half, so $a_*=N^{1/2+o(1)}$. The relative variance
+of its population is $O(m/\min\nu_i)$, and its mean is
+$(1-1/N)^{m/2}a_*$. The expected relative loss from reducing counts
+modulo two is at most
+$(a_*/N)A_0+|E[2]|2^{m/2}/N$ by the half-collision bound of
+\texttt{parity.tex}. Chebyshev and Markov therefore give
+$a,c\ge2N^{1/3}$ except with probability $o(\lambda)$ at the stated
+widths and arity. Also $\E|U\cap V|\le\E H\le\lambda$. Thus each
+side has at least $N^{1/3}$ distinct unmatched elements except on
+an event of probability $o(\lambda)$. The two supports have even
+sizes, since each nonempty half contains a symmetric slot on an
+odd prime-order curve and each such slot has even size.
+
+For $u$ unmatched elements the vector of their bin parities is the
+sum of $u$ independent uniform coordinate vectors in $\mathbb F_2^k$.
+Its character at a subset of $j$ bins has value $(1-2j/k)^u$.
+The characters for $j=0,k$ are precisely those of the uniform law on
+the parity class of $u$. Parseval and Cauchy--Schwarz bound total
+variation from that law, for $k\ge2$, by
+\[
+ \frac12\left(\sum_{j=1}^{k-1}\binom kj|1-2j/k|^{2u}\right)^{1/2}
+ \le 2^{k/2}(1-2/k)^u .
+\]
+Given the hash values of the shared elements, the unmatched walks are
+independent, and adding the shared vector puts each reference walk in
+the even class. The resulting reference consists of two independent
+uniform even vectors regardless of the actual supports. For $k=1$
+both vectors are zero. On the typical event the error bound for $k\ge2$
+is at most $\exp(O(k)-2N^{1/3}/k)$, hence still $o(\lambda)$ after
+summing it over $R$ rounds. Coupling with the reference proves that
+the sketch transcript and the true bit are within $o(\lambda)$ total
+variation of a joint law in which the transcript is independent of
+the bit. The factorial bound gives
+$\Prb(H\bmod2=1)=(1+o(1))\lambda$. The best independent guess therefore
+has error $(1+o(1))\lambda$. This result includes repetition and voting
+of the compressed dot product. It gives no lower bound on an evaluator
+reading the actual hash seeds or using additional features.
+
+\paragraph{A local determinant construction.}
+The factored Boolean compiler in \texttt{../hillclimb\_003/compression.tex}
+uses ternary equality to copy bits. We tested replacing local tensors
+by signatures of perfect-matching gadgets over a characteristic-two
+field after independent invertible basis changes. Any such signature
+is supported on one parity of boundary patterns by counting the
+remaining vertices. For slices $A_0,A_1$ of a ternary signature
+consider the $XY$ coefficient in $\det(XA_0+YA_1)$. Changes on the
+two matrix axes scale the binary quadratic by nonzero determinants.
+Changing the slice axis substitutes independent linear forms for
+$X,Y$; in characteristic two the mixed coefficient scales by their
+determinant. Thus its vanishing is invariant. For a single-parity
+signature it vanishes since opposite patterns have opposite parities.
+For equality the determinant is $XY$. This rules out the proposed
+local conversion over any extension of $\mathbb F_2$. It leaves open
+constructions operating on blocks of tensors.
+
+\paragraph{Prior sources and finite checks.}
+The hash, moment and pilot inputs are in \texttt{../mixed\_coefficient/mixed.tex},
+\texttt{../mixed\_coefficient/frontier.tex}, and the supplied
+\texttt{compressed\_relation\_search.tex}. See the authors'
+\href{https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf}
+{Boolean contraction theorem, Appendix D}, and
+\href{https://theoryofcomputing.org/articles/v010a007/}{Cai and Gorenstein
+on matchgate signatures}. Run
+\texttt{python -B research/joint\_parity/check\_fresh\_windows.py} for
+finite checks of the mathematical claims.
+\end{document}

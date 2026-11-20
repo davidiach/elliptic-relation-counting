@@ -1,0 +1,306 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prb}{\mathbb P}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\title{Isolation and mean-square approximation of the mixed target coefficient}
+\author{Project research note}
+\date{18 November 2026}
+\begin{document}
+\maketitle
+
+Let $G=E(\mathbb F_p)$ have size $N$, with the odd prime field and
+supplied group size of the project. Fix $T\in G$ with $2T\ne O$ before
+drawing the seeds. In slot $i$ retain both affine points above each
+abscissa satisfying $(\alpha_i x+\beta_i\bmod M)<\tau_i$, with
+$M=2^b$, uniform odd $\alpha_i$, uniform $\beta_i$, independent choices
+within and across slots, and dyadic $1\le\tau_i<M$. Write $f_i$ for the
+point indicator, $F_i$ for its support, and
+\[
+ H=[T]\prod_{i=1}^m f_i,\qquad \rho_i=\tau_i/M,\qquad
+ \nu_i=N\rho_i,\qquad \lambda=\frac{\prod_i\nu_i}{N}.
+\]
+The product is group convolution, so $H$ counts ordered tuples. This
+is the coefficient that survives polarization in the second-digit note.
+Let $X$ count its tuples satisfying the original generic chord guards.
+We obtain constant-probability isolation at narrower widths, an
+estimate computable from the individual slot sizes, and a limitation
+on approximating the target-specific part on average over actual seeds.
+The joint parity evaluation cost remains open.
+
+\section{Isolation at each prescribed target}
+
+For one hash, two different abscissas are both accepted with probability
+zero when they agree modulo $\tau$, and exactly $\rho^2$ otherwise.
+Indeed, condition on the first hashed value. The difference of hashed
+values is uniform on the residues of the same 2-adic valuation $v$ as
+the original difference. If the first value is accepted and
+$2^v<\tau$, exactly $\tau/2^{v+1}$ of the $M/2^{v+1}$ possible
+second values lie in the window. If $2^v\ge\tau$ there are none.
+A single abscissa is accepted with probability $\rho$.
+
+\begin{proposition}
+For $m\ge2$ put $\kappa=|G[2]|\le4$. Then
+\begin{equation}
+ \E[H(H-1)]\ \le\ D :=
+ \lambda^2\prod_i(1+2/\nu_i)
+ +\lambda\,\kappa(2^m-2)/N . \label{eq:factorial}
+\end{equation}
+For $N\ge30m$ the probability of a unique tuple which also passes
+the guards is at least $\lambda(1-3m/N)-D$.
+\end{proposition}
+\begin{proof}
+Pair distinct tuples with sum $T$ and classify them by the set $S$
+of slots in which their abscissas agree. If $S$ is proper, there are
+at most $N^{m-1}$ choices for the first tuple. There are at most
+$2^{|S|}$ sign choices on $S$ and $N^{m-|S|-1}$ choices elsewhere,
+since the last unspecified point is forced. The joint retention
+probability is at most $\prod_{i\in S}\rho_i\prod_{i\notin S}\rho_i^2$.
+Summing over proper sets gives at most the first term of
+(\ref{eq:factorial}).
+
+If all abscissas agree, the second tuple is obtained by sign changes.
+Use as the flip set $J$ the coordinates where the points actually
+differ. It is nonempty, and flipping all entries would give $-T=T$.
+The sum on $J$ lies in $G[2]$. For a fixed $J$ and a fixed such sum
+$U$, the blocks $J$ and $J^c$ have prescribed sums $U$ and $T-U$.
+Together they allow at most $N^{m-2}$ first tuples. The second tuple
+is then fixed and retention costs only $\prod_i\rho_i$. Summing gives
+the second term. Finally, the targetwise generic-fiber bound in the
+source manuscript (its coverage lemma) gives
+$\E X\ge(1-3m/N)\lambda$, since every generic tuple is retained with
+probability $\prod_i\rho_i$. Pointwise
+$1_{\{X=H=1\}}\ge X-H(H-1)$, proving the claim.
+\end{proof}
+
+Widths can be chosen publicly before drawing any hashes. Take
+\[
+ s=\left\lfloor\log_2\big((2/3)M^m/N^{m-1}\big)\right\rfloor
+\]
+and distribute $s$ as evenly as possible among the $m$ integer
+exponents $\log_2\tau_i$. This is admissible in the project's
+asymptotic regime, since each exponent is $b/m+O(1)$ and $m\ge2$.
+It gives $1/3<\lambda\le2/3$. If $m/\min_i\nu_i=o(1)$ and
+$2^m/N=o(1)$, the bound becomes
+\[
+     \Prb(X=H=1)\ \ge\ \lambda(1-\lambda)-o(1)
+                       \ \ge\ 2/9-o(1).
+\]
+Both conditions hold for the growing polylogarithmic arities in the
+project. Thus a single parity bit is odd on a constant mass of
+instances carrying a unique guarded tuple. At $T=O$ on an odd
+prime-order curve all affine tuples occur in opposite pairs, so this
+extension to the identity would be false.
+
+There is also a consequence at the original equal paid widths.
+Cauchy--Schwarz and $X^2\le H^2$ give
+\[
+ \Prb(X>0)\ge
+ \frac{(1-3m/N)^2}
+ {\lambda^{-1}+\prod_i(1+2/\nu_i)+\kappa(2^m-2)/(N\lambda)} ,
+\]
+using $\E H\le\lambda$. At $\nu_i\ge2N^{1/m}$,
+$m/\min_i\nu_i=o(1)$ and growing $m$ in this regime, this tends to
+one. This pointwise average over seeds does not assert simultaneous
+coverage of every target by one seed.
+
+\paragraph{What a parity evaluator would buy.}
+Suppose exact parity were available on each dyadic subwindow of the
+chosen slots. Starting at an odd count, bisect one window in its
+hashed coordinate and query the parity of its lower half. Exactly one
+half has odd count. The upper half is another legal mask after shifting
+$\beta_i$ by minus the half width. Repeat until each width is one.
+Each retained abscissa then has at most two points. Check the at most
+$2^m$ sign choices against the target and guards. An isolated guarded
+tuple always survives. The number of parity calls including the first
+is at most $1+\sum_i\log_2\tau_i$. The adaptive queries need correct
+answers on the restrictions encountered. An average success guarantee
+on freshly drawn full-size masks alone does not justify this reduction.
+An odd count alone certifies an ordinary tuple. The guard check is
+necessary before accepting a witness.
+
+\section{How much of the mixed coefficient can individual slots explain?}
+
+For this section assume $G$ itself has odd prime order $r=N$, and $T\ne O$.
+The trivial Fourier character gives the estimate
+$P=\prod_i|F_i|/r$, which costs the individual slot enumerations only.
+Put $R=H-P$ and $n=(r-1)/2$. All expectations below are at a fixed
+target under the original independent seed law, including both
+multipliers and shifts. No distribution on curve encodings is used.
+
+\begin{proposition}
+Split the slots into any two nonempty fixed sets $L,K$. For arbitrary
+real functions of their respective seeds, put
+$Z=P+\sum_{a=1}^q u_a(L)v_a(K)$. Then
+\begin{align}
+ \E (H-P)^2 &\le \lambda(r-2)/r,\label{eq:upper}\\
+ \E (H-Z)^2 &\ge
+ \frac{\lambda}{r}\left[r-2-4\sum_i(1+n\rho_i)-4q\right]_+ .
+ \label{eq:rank}
+\end{align}
+The bound with $q=0$ also holds if an arbitrary sum of functions,
+each omitting at least one slot, is added to $P$.
+\end{proposition}
+\begin{proof}
+Index rows by one character from each nontrivial opposite pair and
+columns by one point $A$ from each affine opposite pair (equivalently
+by its abscissa). The real $n$-by-$n$ matrix
+$W_{j,A}=\chi_j(A)+\chi_j(-A)$ satisfies
+$WW^\top=rI-2J$ and $W{\bf1}=-{\bf1}$ by character orthogonality.
+Here $J$ is the all-ones matrix. In slot $i$ let $z_i$ be the column
+of accepted-abscissa bits, and let $B_i$ be the abscissa-to-residue
+incidence matrix modulo $\tau_i$. The two-abscissa law gives
+\[
+ \E z_i z_i^\top=\rho_i I+\rho_i^2(J-B_iB_i^\top).
+\]
+Define $A_i=\E (Wz_i)(Wz_i)^\top/\nu_i$. Then
+\[
+ I-A_i=\frac{2-\rho_i}{r}J+
+             \frac{\rho_i}{r}W B_iB_i^\top W^\top .
+\]
+In particular $0\preceq A_i\preceq I$ and
+$\tr(I-A_i)\le 1+n\rho_i$, since
+$\|W\|_{\rm op}^2\le r$ and $\|B_i\|_F^2=n$. For the centered
+feature $Wz_i-\E Wz_i=Wz_i+\rho_i{\bf1}$ the same proof replaces
+$2-\rho_i$ by $2$ and gives the same trace bound.
+
+For a nonempty set $S$ let $U_S$ have columns equal to the products
+of the respective normalized Fourier features, indexed by the
+characters, on the probability space of the seeds in $S$.
+Independence gives $U_S^*U_S=A_S=\mathop{\circ}_{i\in S}A_i$
+(entrywise product). Positivity of entrywise products of positive
+semidefinite matrices follows by using tensor products of Gram
+vectors. Applying it to $(I-A)\circ B$ bounds $A\circ B$ above by
+$I\circ B\preceq I$ when both factors are positive contractions.
+The diagonal product inequality $1-\prod x_i\le\sum(1-x_i)$ for
+$0\le x_i\le1$ gives
+$\tr(I-A_S)\le\sum_{i\in S}(1+n\rho_i)$.
+
+Fourier inversion with opposite characters paired expresses the
+residual kernel as $(\sqrt{\prod_i\nu_i}/r)U_L D_T U_K^*$, with
+$D_T$ diagonal of entries $\chi_j(T)+\chi_j(-T)$.
+Here $\|D_T\|_{\rm op}\le2$ and $\tr D_T^2=r-2$ since $2T\ne O$.
+Squared kernel norm is mean squared error on the two probability
+spaces. After removing the common squared scale $\lambda/r$, its
+value is $\tr(D_T A_L D_T A_K)$. It is at most $\tr D_T^2$ and
+at least $\tr D_T^2-4\tr(I-A_L)-4\tr(I-A_K)$. For the latter,
+expand around the identity and observe that
+$\tr(D_T(I-A_L)D_T(I-A_K))\ge0$. Every squared singular value in
+this normalization is at most $4$. Projecting onto the column space
+of any rank-$q$ approximation can remove at most $4q$ units of
+squared norm. This proves (\ref{eq:rank}).
+
+For the last assertion project $R$ with
+$\prod_i(I-\E_i)$, where $\E_i$ averages only the seed of slot $i$.
+These commuting orthogonal projections annihilate every term which
+omits a slot. The remaining Fourier expression replaces all features
+by their centered versions, so its squared norm has the same lower
+bound. This proof allows sums over different omitted slots.
+\end{proof}
+
+At the balanced tuned or paid widths,
+$m/r+\sum_i\rho_i=o(1)$. For $q=o(r)$ the mean-square error is
+therefore at least $(1-o(1))\lambda$, while slot sizes alone attain
+at most $\lambda$. The actual mean of $H$ is
+$\prod_i\rho_i\,((r-1)^m-(-1)^m)/r$ for $T\ne O$, obtained by
+convolving the full affine mask $1_G-1_{\{O\}}$. Thus at paid widths
+the slot sizes give small root-mean-square error relative to the
+mean, of order $\lambda^{-1/2}$, even though the absolute
+root-mean-square error is of order $\sqrt{\lambda}$.
+
+\section{Predicting the parity bit directly}
+Replace $2/3$ by $1/2$ in the balanced width construction. This gives
+$1/4<\lambda\le1/2$. Write $V=H\bmod 2$ and interpret a predictor
+$Y$ as a matrix of output bits on a fixed nontrivial seed split.
+\begin{proposition}
+In the balanced asymptotic regime above, if the real rank of $Y$
+is $q=o(r)$, then
+\[
+    \Prb(Y\ne V)\ \ge\ \Prb(V=1)-o(1)
+             \ \ge\ 3/16-o(1).
+\]
+Always predicting even attains the first probability on the right.
+The same comparison with the constant-zero predictor holds for
+any Boolean event contained in $\{H>0\}$.
+\end{proposition}
+\begin{proof}
+The proof of (\ref{eq:rank}) gives an operator norm bound on the
+residual, $\|R\|_{\rm op}\le2\sqrt{\lambda/r}$ in the probability
+weights of the seeds. Put $u=\E Y$. The sum of the singular values
+of the weighted matrix $Y$ is at most $\sqrt q\,\|Y\|_F=\sqrt{qu}$,
+by Cauchy--Schwarz. Pairing a singular-value expansion of $Y$ with
+$R$ gives $|\E(RY)|\le2\sqrt{\lambda q u/r}$.
+
+Put $p_0=\E P=\lambda(1-1/r)^m$ and $\sigma_P^2=\operatorname{Var}P$.
+Each slot size has mean $\mu_i=(r-1)\rho_i$ and variance at most
+$2\mu_i$, since each abscissa contributes two points and distinct
+abscissa indicators have nonpositive covariance. Independence gives
+\[
+   \sigma_P^2\le p_0^2\left(\prod_i(1+2/\mu_i)-1\right)=o(1).
+\]
+Thus $\E(HY)\le p_0u+(\sigma_P+2\sqrt{\lambda q/r})\sqrt{u}$.
+For any event with indicator $V'\le H$ this yields the finite bound
+\[
+ \Prb(Y\ne V')-\Prb(V'=1)
+  \ \ge\ (1-2p_0)u
+       -2(\sigma_P+2\sqrt{\lambda q/r})\sqrt{u}.
+\]
+Since $p_0\le1/2$, the maximal improvement tends to zero. For parity,
+the isolation result with these widths gives
+$\Prb(V=1)\ge\lambda(1-\lambda)-o(1)\ge3/16-o(1)$.
+\end{proof}
+
+This prediction result uses the real rank of the output bit itself.
+Thresholding a low-rank real score may yield a high-rank bit matrix.
+The result makes no running-time claim for algorithms that process
+the slots jointly or compute over a finite field.
+
+\section{Consequence for the time bound}
+Since $\Prb(H>0)\le\E H\le\lambda$, constant coverage requires
+$\prod_i\nu_i=\Omega(N)$. The isolation construction attains that
+scale and keeps $\log_2(2\sum_i\tau_i)=b/m+O(\log m+1)$.
+The existing conditional cost for a joint query has log scale
+$mb/\sqrt{\log_2 b}$. Paying for the factor base and for these queries
+in the project ledger still gives the existing conditional estimate
+\[
+ \log_2 \E T_{\rm solve}\ \le\
+ (26.2933775156+o(1))\frac{b}{(\log_2 b)^{1/4}}
+\]
+under the existing finite-packet assumption A.1 and the inherited
+contraction hypotheses. The constant is carried over from the earlier
+short-hash construction. Isolation supplies a simpler success criterion.
+The exponent would change only with a saving elsewhere in the ledger,
+such as a cheaper joint parity evaluator that also handles the
+restricted windows. The rank and projection bounds price specified
+forms of approximation and give no general running-time lower bound.
+
+\paragraph{Finite results and reproduction.}
+Run \texttt{python -B research/mixed\_coefficient/verify.py} with NumPy.
+The checks enumerate the full seed distributions by merging identical
+masks and preserving their integer multiplicities. They cover the
+order-19 and order-31 prime curves and an order-8 curve with four
+rational two-torsion points including the identity. On the four-slot
+order-19 fixture they check all seven nontrivial seed splits up to
+interchanging sides. Direct bisection recovered all 42 isolated
+guarded target instances in the chosen restriction fixtures.
+
+On $y^2=x^3+44x+1$ over $\mathbb F_{65521}$, direct point counting
+certifies the prime order $r=65419$. The following are evaluations of
+the inequalities, with no sampling of seeds on this curve. Three
+width-32 slots give $\lambda=0.49821632$ to eight decimal places,
+singleton probability above $0.20027$, and a mean-square error of at
+least $0.99074\lambda$ for $P$ plus any 100 separated real products.
+At widths $(16,32,32)$ the Boolean parity error for real rank at most
+100 exceeds $0.1135$. For this last number minimize the finite parity
+bound over $\sqrt u$, bounding the maximal possible gain by
+$(\sigma_P+2\sqrt{\lambda q/r})^2/(1-2p_0)$, and use the isolation
+bound for $\Prb(V=1)$.
+
+The project inputs used here are the coverage
+lemma in \texttt{compressed\_relation\_search.tex}, the cost ledger in
+\texttt{research/short\_hash\_count/count.tex}, and the coefficient
+identity in \texttt{research/second\_digit/digit.tex}.
+\end{document}

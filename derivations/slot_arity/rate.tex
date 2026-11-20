@@ -1,0 +1,399 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{proposition}{Proposition}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\pc}{\operatorname{popcount}}
+\title{Can the target count use fewer independent slots?}
+\author{Project research note}
+\date{17 November 2026}
+\begin{document}
+\maketitle
+
+The current conditional bound pays, in the logarithm of expected time,
+for a factor base of scale $b/m$ and a count of scale
+$mb/\sqrt{\log_2 b}$. Here $b=\lceil\log_2p\rceil$ and $m$ is the
+number of slots. If the count could use effective arity $\sqrt m$
+at the same success probability, the balance would move from
+$b/(\log_2 b)^{1/4}$ to $b/(\log_2 b)^{1/3}$, by taking
+$m\asymp(\log_2 b)^{1/3}$. We test this possibility using repeated
+hashes, the family of independent hash shifts, and explicit blocks.
+Exact counting reduces to single coefficients of powers modulo small
+prime squares. For constant-probability detection at each prescribed
+nonidentity target, primes of order $m$ suffice. The cost of the
+second base-prime digit is still open, and the $1/3$ rate remains unproved.
+
+Write $G=E(\mathbb F_p)$ additively. A slot $F$ is the set of
+affine points with $(\alpha x+\beta\bmod M)<\tau$, where $M=2^b$,
+$\alpha$ is odd, and $\tau$ is a power of two smaller than $M$.
+Thus $F=-F$ and $|F|\le 2\tau$. For the project's paid width,
+$\log_2\tau=b/m+O(\log b+\log m)$. The baseline and its offset
+reduction are in \texttt{../short\_hash\_count/count.tex}.
+Our algebra concerns the ordinary ordered count at one target.
+Guarded C38 counts have extra restrictions on intermediate sums.
+
+\section{What one bit of the count can see}
+Use the integral group algebra, writing $[P][Q]=[P+Q]$.
+Suppose the $m$ slots consist of masks $h_j=\sum_{P\in F_j}[P]$
+repeated $m_j$ times, for $1\le j\le g$, and let $H=\prod_j h_j^{m_j}$.
+For $e\ge0$ define $D_e h_j=\sum_{P\in F_j}[2^eP]$.
+If $I_j$ is the set of one-bits in $m_j$, then
+\[
+   H\bmod 2=\prod_j\prod_{e\in I_j} D_e h_j\bmod 2 .
+\]
+Indeed, squaring in the commutative group algebra in characteristic
+two doubles each point, and the binary expansion supplies the product.
+The new arity is $s=\sum_j |I_j|$. In an odd-order group, for a
+single mask and $m=2^e$, parity at $T$ is exactly the one membership
+bit $1_F([2^e]^{-1}T)$, where the inverse is that of the doubling
+automorphism. No table of sums is involved. Parity can certify a
+nonzero integer count only on the support of this reduced product,
+of size at most $(2\tau)^s$. In the one-mask power-of-two case the
+price is exact for every fixed $T\ne O$. With a uniform shift, the
+unique point $[2^e]^{-1}T$ passes in exactly $\tau$ of the $M$
+shifts. The expected number of independent trials until odd parity
+is $M/\tau=2^{(1-1/m)b+O(\log b+\log m)}$.
+
+\begin{proposition}
+For precision $q\ge1$, every target visible in $H\bmod 2^q$ is a
+sum of at most $d=\min(m,s+q-1)$ terms of the form $2^e P$ with
+$P\in F_j$ and $2^e\le m_j$. In particular, for every choice of seeds,
+\[
+ |\supp(H\bmod 2^q)|\le
+ \left(1+2\tau\sum_j(1+\lfloor\log_2 m_j\rfloor)\right)^d .
+\]
+\end{proposition}
+\begin{proof}
+Group the ordered tuples by their multiplicities $n_{j,P}$.
+Each class has weight $\prod_j m_j!/\prod_{j,P}n_{j,P}!$. Using
+$v_2(u!)=u-\pc(u)$, its valuation is
+$\sum_{j,P}\pc(n_{j,P})-s$.
+If $H(T)$ is nonzero modulo $2^q$, at least one class for $T$
+has valuation less than $q$. Expand each of its multiplicities in
+binary. This expresses $T$ as the sum of at most $s+q-1$ terms,
+also at most $m$. Pad to $d$ terms with the identity and count the
+choices. Several encodings can give the same target.
+\end{proof}
+
+On the prime-order subclass let $r=|G|$, so $\log_2 r=b+O(1)$.
+For a uniform nonidentity target independent of the masks, the
+success probability of the nonzero-residue test is at most
+\[
+ \min\{1,\ 2^{-(1-d/m)b+O(m(\log b+\log m))}\}.
+\]
+This applies also after averaging over any seed distribution independent
+of that target. For polylogarithmic $m$, even $d=m-1$ makes this
+probability $2^{-b/m+O(m(\log b+\log m))}$. Thus constant visibility
+requires $q\ge m-s+1$ asymptotically. If $s=O(\sqrt m)$ and $q=1$,
+the retry cost for independent uniform trials is $2^{(1-o(1))b}$
+as $m\to\infty$. This argument prices a test that accepts on a
+nonzero residue. A zero can conceal many tuples, and other existence
+tests and target-dependent seed choices have different coverage laws.
+
+Widening the hashes also has a price. For parity and constant
+visibility at uniform targets, the support bound alone requires
+$s\log_2(2\tau)\ge b-O(1)$. The existing factor-base enumeration
+prices $\tau$ candidates per mask. If the reduced $s$-factor
+product is then priced at the existing long-coordinate rate,
+the two charges have scales at least $b/s$ and
+$s b/\sqrt{\log_2 b}$, respectively, up to constants and additive
+lower-order terms. Optimizing that ledger gives the original
+fourth-root logarithmic saving. Even granting the fast contraction
+estimate for the doubled masks would not certify the proposed
+third-root saving by this change of width.
+
+\paragraph{The precise bit at which independent slots return.}
+For arbitrary slot indicators $f_1,\ldots,f_m$ put
+\[
+ A=\sum_{S\subseteq[m]}(-1)^{m-|S|}
+       \left(\sum_{j\in S} f_j\right)^m .
+\]
+Expansion cancels every monomial omitting a slot. The surviving
+multiplicity is $m!$, so $A=m!\prod_i f_i$ in the integral group
+algebra. Set $v=m-\pc(m)$. The low $v$ bits of $A(T)$ vanish, and
+bit $v$ (numbering from zero) equals the parity of the independent
+target count. Thus a routine for powers of \emph{sums} of hash masks
+at precision $v+1$ suffices for that parity, at $2^m$ calls. For
+polylogarithmic $m$ the extra $m$ in the log of the call count is
+lower order in the rates considered here. Such sums are weighted
+functions and need not be individual dyadic masks. For exact counts
+bounded by $U$, precision $v+\lceil\log_2(U+1)\rceil$ suffices by
+dividing out $2^v$ and inverting the odd part of $m!$. These identities
+locate the necessary precision without providing a fast power routine.
+For the classical polarization identity, see
+\href{https://arxiv.org/abs/1309.1275}
+{E. G. F. Thomas, A polarization identity for multilinear maps}.
+
+\section{Exact reconstruction using only prime squares}
+There is a way around the increasing binary precision. For a prime
+$l\ge m$ define the additive map $\Phi_l([P])=[lP]$, extended
+$\mathbb Z$-linearly. On the integral group algebra set
+\[
+        D_l(h)=\frac{h^l-\Phi_l(h)}{l}\bmod l .
+\]
+The numerator is coefficientwise divisible by $l$, by the Frobenius
+identity and Fermat's little theorem on integer coefficients.
+Evaluating $D_l(h)(T)$ requires only the numerator modulo $l^2$.
+For $r$ prime and $l\ne r$, $\Phi_l(h)(T)$ is one evaluation of $h$
+at $[l]^{-1}T$. Its cost is polynomial for the masks below on the
+supplied-order input. This leaves the coefficient of $h^l$ modulo
+$l^2$ to compute.
+
+For nonnegative coefficients there is an integer interpretation. Give
+point $P$ exactly $h(P)$ colors. Cyclic rotation acts on length-$l$
+words of colored points with sum $T$. Its fixed words are constant
+and there are exactly $\Phi_l(h)(T)$ of them. Every other orbit has
+size $l$, so $D_l(h)(T)$ is the number of these orbits modulo $l$.
+Listing the orbits explicitly can be expensive even for one genuine
+unweighted hash mask of size $a$. At least $a^l-a^{l-1}-a$ words
+are nonconstant and sum to a nonidentity target, since at most
+$a^{l-1}$ sum to the identity. Some nonidentity target has at least
+$(a^l-a^{l-1}-a)/(l(r-1))$ orbits. At the paid threshold a shift
+with $a\ge r^{1/m}$ exists by the average $(r-1)\tau/M$. For any
+queried prime $l\ge2m$ this example has $\Omega(r/l)$ orbits at
+one target. The digit is one small residue even in this case.
+
+\begin{proposition}
+For a known bound $0\le H(T)=(f_1*\cdots*f_m)(T)\le U$, the
+exact integer $H(T)$ reduces deterministically to
+$2^m\operatorname{poly}(m,\log(U+2))$ queries for single coefficients
+$D_l(h)(T)$. Each $h$ is a sum of some original slot indicators and
+a nonnegative integer multiple of $[O]$. The primes have size
+polynomial in $m+\log(U+2)$.
+\end{proposition}
+\begin{proof}
+For each prime $l\ge m$, pad the list of $m$ inputs with $l-m$
+copies of $[O]$. Apply the integral polarization identity at arity
+$l$. The alternating sum of all $\Phi_l$ terms vanishes by additivity
+since $l\ge2$. Divide by $l$ before reducing modulo $l$.
+Group identical padding inputs by the number $t$ selected to obtain
+\[
+ (l-1)!\, H(T)\equiv
+ \sum_{S\subseteq[m]}\ \sum_{t=0}^{l-m}
+ (-1)^{l-|S|-t}\binom{l-m}{t}
+ D_l\left(t[O]+\sum_{j\in S} f_j\right)(T) \pmod l .
+\]
+The factorial $(l-1)!$ is invertible modulo $l$. Equivalently,
+query each raw coefficient of $h^l$ modulo $l^2$, accumulate the
+signed sum modulo $l^2$, and divide its canonical residue by $l$.
+The $\Phi_l$ terms cancel across the entire sum. This version never
+evaluates a pushforward and applies even if $l$ divides $|G|$.
+There are at most $2^m(l-m+1)$ queries regardless of the size
+of the padding. Use distinct primes with product exceeding $U$,
+then recover the unique integer in $[0,U]$ by the Chinese remainder
+theorem. For example, $L=\max(1,\lceil\log_2(U+1)\rceil)$ primes
+greater than $m$ suffice. A sieve up to a polynomial in $L+m$ finds
+them. Indeed $\binom{2N}{N}\ge 4^N/(2N+1)$, and its valuation at
+each prime $a$ is at most $\lfloor\log_a(2N)\rfloor$, by subtracting
+the factorial floor sums. Thus $\binom{2N}{N}\le(2N)^{\pi(2N)}$,
+giving sufficiently many primes by taking $N$ of order $(L+m+2)^2$.
+The binomial weights, arithmetic modulo $l$, and integer reconstruction
+have polynomial overhead per query. The sum mask is specified by $S,t$
+and the seeds. The reduction never materializes a partial-sum support.
+\end{proof}
+
+In the project, $U=(2\tau)^{m-1}$ suffices since the final group
+element is determined by the other $m-1$. All requested powers thus
+have modulus polynomial in $b,m$ (and word length $O(\log(b+m))$).
+At polylogarithmic arity the extra $m+O(\log b)$ in the logarithm of
+the query count is lower order than $b/(\log_2 b)^{1/3}$.
+The apparent reduction to an easy Frobenius map fails specifically
+in the next digit. For example,
+\[
+ D_l(A+B)-D_l(A)-D_l(B)
+   =\sum_{j=1}^{l-1}\frac{(-1)^{j-1}}{j} A^j B^{l-j}\pmod l
+\]
+by $\binom{l}{j}/l=\binom{l-1}{j-1}/j$. The required second digit
+contains interactions between the masks even for one target. A fast
+algorithm for this digit with suitably uniform dependence on $l$
+would advance exact counting. Calling the existing contractor on
+$l$ factors does not establish such an algorithm.
+
+\paragraph{Linear-size primes already suffice for constant detection probability.}
+The preceding deterministic reconstruction also handles exceptional
+seeds with many tuples. For the project's distribution one can
+enforce $m<l\le16m$ when the desired output is a certificate that
+the ordinary count is positive. Here let $N=|G|$ with $N\ge30m$ as in
+the supplied coverage lemma. This argument allows composite $N$ as
+the raw-power implementation requires no inverse of $l$ on $G$.
+For each fixed $T\ne O$, consider
+all ordered affine tuples summing to $T$. There are at most
+$N^{m-1}$, and each survives the independent shifts with probability
+$(\tau/M)^m$. Thus
+\[
+  \mathbb E H(T)\le (N\tau/M)^m/N < 4^m .
+\]
+The strict bound uses the smallest paid dyadic threshold in the
+regime $2N^{1/m}\ge20m$. This holds eventually for polylogarithmic
+$m$ as $b$ grows. The inherited targetwise coverage bound gives
+$\Pr(H(T)>0)>2/5$ because every guarded tuple is ordinary.
+Take primes with product $J>10\cdot4^m$. A nonzero residue provides
+a true certificate, and every $0<H(T)<J$ is detected. Markov's
+inequality therefore gives detection probability greater than
+$2/5-1/10=3/10$ for each fixed nonidentity target.
+
+For sufficiently large $m$, the primes in $(m,16m]$ have more
+than enough product. In fact $\binom{16m}{8m}\ge 2^{16m}/(16m+1)$.
+All prime factors after their first copy contribute at most
+$(16m)^{\sqrt{16m}}$, using the valuation bound above. Conversely
+the product of primes through $m$ is at most $2^{4m}$, by rounding
+up to a power of two and bounding each dyadic interval's product
+by its central binomial coefficient. Hence the logarithm of the
+interval product is at least $12m-O(\sqrt m\log m)$ in base two.
+The total number of digit queries is $O(2^m m^2)$. This sharpens the
+missing algorithm to prime powers with degree only linear in the
+original arity for this distributional nonemptiness test. The test
+certifies ordinary tuples. The guaranteed detection probability and
+the cost of evaluating a digit are distinct parts of the accounting.
+For $\ell>m$, the later calculation in
+\texttt{../second\_digit/digit.tex} takes the padding differences
+before querying any digits. They cancel the unpadded digit and leave
+a degree-$m$ mixed coefficient. A fast individual digit routine is
+sufficient for this reduction, and the combined query admits that
+additional simplification.
+
+\section{Independent seeds at one fixed target}
+Assume $G$ has odd prime order $r\ge5$, let $n=(r-1)/2$ and
+let $X$ be the $n$ affine abscissas. Keep every multiplier fixed and
+vary the shifts of the actual hash family. Consider a split of the slots
+into two nonempty groups. A separated evaluation with $q$ scalar terms
+has the form $\sum_{\nu=1}^q L_\nu(\text{left shifts})
+R_\nu(\text{right shifts})$. At a fixed target its matrix of values
+has rank at most $q$. We bound this rank with no free target index.
+
+Let $c$ be the number of residue classes modulo $\tau$ fully contained
+in $X$ when these classes are taken inside $\mathbb Z/M$. Define
+$\delta=\max(c-1,0)$. For each fixed odd $\alpha$, the span of the
+shift masks has dimension $n-\delta$ over any field. Indeed, extend
+an annihilating vector on $\alpha X$ by zero to the full cycle.
+Every window of length $\tau$ sums to zero. Subtract adjacent window
+conditions to obtain $\tau$-periodicity. Hence the vector is constant
+on each complete class, vanishes on the others and has sum zero over
+one period. Conversely these conditions suffice. Multiplication by
+$\alpha$ permutes the residue classes and preserves completeness.
+This is a calculation on abscissas, each representing one signed
+point pair, with no division by two in characteristic two. If
+$M-p\ge\tau$ then $c=0$ because the omitted canonical tail meets
+every residue class.
+
+\paragraph{Rational arithmetic.}
+Fix a target $T$ and all shifts except one in each group. Choose the
+fixed shifts so their masks are nonempty. Their convolution $k$
+(the identity for the empty collection) is invertible over
+$\mathbb Q$. Each mask polynomial in a cyclic coordinate of $G$ has
+nonzero value at one and at every nontrivial $r$th root of unity,
+since the latter have minimal polynomial $1+z+\cdots+z^{r-1}$ and
+the indicator is nonconstant. No cyclic coordinates need to be
+computed by an algorithm for this proof.
+On the $(n+1)$-dimensional space of even group functions the form
+$(f,g)\mapsto(f*g*k)(T)$ is nondegenerate. In Fourier coordinates
+the nontrivial characters pair by inversion, with target multiplier
+$\zeta^{iT}+\zeta^{-iT}\ne0$ for $i\ne0$ because $r$ is odd.
+The trivial component is nonzero as well. Restricting each side to a
+space of codimension $1+\delta$ gives the lower bound
+\[
+       \operatorname{rank}_{\mathbb Q} \ge n-1-2\delta .
+\]
+It holds for every target and every nonempty choice of the fixed masks.
+Since $c\le\tau$, the bound has size $2^{b-O(1)}$ at paid polylogarithmic
+arities tending to infinity. The asymptotic statements here are bounds
+on the prime-order instances as their size increases.
+
+When $\delta=0$ and each group has at least two slots, the rank is
+exactly $n+1$. The one-slot span is all even functions vanishing at
+the identity, with basis $e_P=[P]+[-P]$, one per sign pair. The
+two-slot products span the full even space. Indeed, if a functional
+$l$ annihilates them, $e_P^2=e_{2P}+2[O]$ forces
+$l(e_Q)=-2l([O])$ for every $Q\ne O$. For $P\ne\pm Q$,
+$e_Pe_Q=e_{P+Q}+e_{P-Q}$ then forces $4l([O])=0$. Further slots
+can each be contracted to one virtual $e_P$ by linear combinations
+of shifts. This element is invertible over $\mathbb Q$ by the same
+root argument. Pairing the two full spans gives the claim.
+
+\paragraph{Parity.}
+At every $T\ne O$ the rank of the full matrix over $\mathbb F_2$
+is at least $n-2\delta$ and at most $n$. To see this, the subspace
+$V$ of even functions with zero at $O$ equals the even functions
+with zero augmentation (sum of coefficients) in this characteristic.
+It is closed under convolution and has dimension $n$. Over the
+algebraic closure, the Fourier transform identifies it with the
+$n$ independent nontrivial pairs of character coordinates. This
+transform exists because $r$ is odd. The pairing at $T\ne O$ has
+diagonal factors $\zeta^{iT}+\zeta^{-iT}\ne0$, so it is
+nondegenerate on $V$. At $O$ it vanishes.
+
+For each extra slot take a nonzero difference of adjacent windows.
+Such a difference exists by the positive dimension of the slot span
+and the fact that each canonical abscissa is retained by some shifts
+and omitted by others. It is a signed pair $e_P$, or a difference
+of two distinct signed pairs $e_P-e_Q$, up to sign. Both act
+invertibly on $V$. In characteristic two $z+z^{-1}=0$ for an
+$r$th root only if $z=1$, and $z+z^{-1}=w+w^{-1}$ implies
+$z=w$ or $z=w^{-1}$. A nontrivial character of a prime-order group
+is faithful. Therefore none of the $n$ multipliers vanishes.
+Contract these extra shift axes by the corresponding two coefficients
+on each side, leaving one free slot on each side. This operation
+is a linear row and column transformation of the full matrix.
+The two remaining spaces in $V$ have codimension $\delta$, giving
+the stated lower bound. Ranks are unchanged by extending the field.
+If actual fixed shifts are required, expand the product of window
+differences. Rank subadditivity shows some single choice of the
+other shifts has rank at least $(n-2\delta)/2^{m-2}$.
+
+Thus a short sum of separated scalar products across independent
+hash seeds fails even at one prescribed nonidentity target and even
+with parity output. This is an exact-rank result. Approximation,
+expected running time over seeds, and computations that read both
+groups jointly are outside its lower bound.
+
+\section{Charging materialized blocks}
+For completeness consider grouping the slots into $a$ blocks and
+handing full supports to an outer contraction. At the original
+independent-hash coverage threshold, with probability at least $1/4$,
+the whole support contains at least $(r-1)/5$ targets. This follows
+by averaging the supplied targetwise coverage probability $>2/5$
+over the nonidentity targets, as in \texttt{../c38\_arithmetic\_join/join.tex}.
+On that same event, simultaneously for every partition (including
+a seed-dependent one), the product of the $a$ block support sizes
+is at least $(r-1)/5$. Consequently the largest table has log size
+at least $(b-O(1))/a$.
+
+If the proposed outer step is priced using the current $a$-slot
+long-coordinate estimate of order $ab/\sqrt{\log_2 b}$, then even
+granting that estimate for table inputs and ignoring their interface
+cost, the two lines of the budget obey
+\[
+ \max\left\{\frac{b-O(1)}a,\frac{a b}{\sqrt{\log_2 b}}\right\}
+ \ \ge\ (1-o(1))\frac{b}{(\log_2 b)^{1/4}} .
+\]
+The second line is a charge in this proposed analysis. It is not a
+lower bound on the runtime of all outer contractions. The existing
+$26.2933775156+o(1)$ time coefficient and its conditional status are
+unchanged by these tests. The open algorithmic question is whether
+one can evaluate the full mixed coefficient using joint access to
+the seeds, below the current arity cost, with sufficient visibility
+and witness recovery under the paid target distribution.
+
+\paragraph{Finite checks.}
+Run \texttt{python -B research/slot\_arity/verify.py} from the
+project root. The order-19 and order-31 curves check rational
+one-target lower bounds with fixed background masks and balanced-cut
+parity ranks at every target. For rational balanced ranks the checker
+certifies a lower bound by a minor modulo 1009, matching the
+characteristic-zero dimension upper bound. Tuple convolution checks
+the repeated-mask bit support and polarization. On the order-19
+fixture eight equal four-point slots reach all 19 targets as ordinary
+counts, of which four have odd count. The prime-square reconstruction
+recovers ordinary counts as large as 122 and 568 on the two curves.
+The reference digit oracle computes literal powers on the tiny group.
+An exhaustive three-slot shift average verifies the first-moment
+identity at every target over 4096 independent shift choices.
+An additional curve
+$y^2=x^3+9x+1$ over $\mathbb F_{1031}$ has order 1019 and, at the
+original eight-slot coverage threshold $\tau=512$, all 2048 shifts
+at multiplier seven give one-slot rank 509 modulo two. Its balanced
+fixed-target ranks of 510 over the rationals and 509 modulo two at
+nonidentity targets follow from the proofs. The large balanced
+matrix is never constructed. These finite checks measure algebraic
+ranks and coefficients, not solver runtimes.
+\end{document}
