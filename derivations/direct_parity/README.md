@@ -4,6 +4,17 @@
 
 ## Where the cost went
 
+### Further attempts at the same exponent
+
+* **Test a whole pencil at once.** A projective pencil contains $p+1$ sections. On a regular grid we need to expand only one slot and test at most $2w$ candidate sections. A degree-$e$ parameterized curve needs at most $2ew$ candidate parameters. We bound how much of the witness search can be captured by a low-dimensional algebraic family, including cases where its coefficients use a word computed from all the seeds. [Pencil algorithm, coverage and parity bounds](families.md)
+* **Discard the nonwitness factors.** Move each selected point with a speed equal to its local challenge bit. On a singleton the quadratic character of one leading coefficient over $\mathbb F_{p^2}$ gives the exact witness sign. Alternatively, two ordinary determinant products modulo $p^2$ distinguish zero, one and multiple witnesses on a regular grid. A third gives the entire singleton address at the thinned widths. The direct implementation still visits every tuple. [Tangent and precision-two calculations](deformation.md)
+* **Predict parity from coarse matches.** If a bucketed join leaves $K$ candidate pairs, a bounded nonlinear score gives *each* candidate expected absolute parity correlation at least $1/(4\sqrt K)$. Parseval caps a guarantee for every candidate at $1/\sqrt K$. The score avoids expanding the $K$ pairs. Constructing its two input lists still costs $2^{b/2-o(b)}$ on typical balanced singleton roots. [Score, controls and costs](multiscale.md)
+* **Encode the bit in characteristic two.** A binary dual-number product directly returns the desired bit on a singleton. Even for one fixed raw address bit and one target with $2T\ne O$, an exact seed-independent algebra homomorphism with linear readout on *all* seed products requires dimension at least $N/4-2$, with $N=\#E(\mathbb F_p)$. This leaves approximate prediction and implicit evaluation open. [Dimension calculation](orbit.md)
+
+None of these computations improves the conditional log-time exponent. The coarse-match score gives a quantitative target for further work: produce enough information about the matching buckets from the seeds, at a cost below the existing bound and with sufficient fresh-seed success. A separate target is computing the tangent coefficient's quadratic character directly without evaluating the whole product.
+
+### Direct formulas and their costs
+
 | Approach | What can be computed | Cost or limitation |
 |---|---|---|
 | [One coefficient and a section test](coefficient.md) | The signed zero count equals the product of the signed slot sizes minus one coefficient of a product of slot polynomials. Equivalently, on a regular singleton exactly one projective section contributes the witness sign. Given that section, factoring one degree-at-most-$m+1$ polynomial and testing its rational points against the seeds recovers the whole tuple. | When one slot is known only through its incidences with proposed sections, even constant parity correlation on successful roots needs at least $2^{(1-1/m)b-O(m+\log m)}$ queries. A quantitative tradeoff also allows a challenge-independent message computed from every seed. |
@@ -16,6 +27,7 @@ The section test isolates a concrete remaining question. Can one compute the sig
 
 ## Finite checks
 
+- [Batch section tests](../../evidence/check_section_families.txt), [tangent readout](../../evidence/check_section_deformation.txt), [coarse-score alignments](../../evidence/check_multiscale.txt) and [binary products](../../evidence/check_orbit_parity.txt) exercise the four follow-up approaches. The batch test covers every pencil in a projective plane over $\mathbb F_{101}$. The tangent test covers zero through three witnesses and checks the distinct multiple-witness output against the XOR of their addresses.
 - [Coefficient and section check](../../evidence/check_projective_coefficient.txt). Direct coefficient extraction agrees with determinants on 160 signed grids. On a regular $\mathbb F_{13}$ singleton, factorizations of all 183 sections identify one witness section, and every one of the 64 parity challenges agrees with the coefficient calculation.
 - [Graded kernel](../../evidence/check_direct_algebra.txt) and [scalar join](../../evidence/check_scalar_join.txt). The kernel test covers three- and four-slot fixtures, including colliding partial sections and an empty target. On a separate four-slot fixture, projected joins agree with the direct determinant test for all 256 challenges on both an empty target and a singleton.
 - [Fourier sampling](../../evidence/check_direct_fiber.txt) and [target-specific projections](../../evidence/check_direct_projection.txt). The importance-sampling comparison on 384 legal tuples gives one-draw mean squared errors of 383 for uniform sampling and 109.559381 with the optimal proposal. The projection check independently compares the Gram identities with explicit address sums.

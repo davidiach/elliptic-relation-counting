@@ -1,0 +1,9 @@
+p=13, N=19, rational two-torsion size=1: 256 mixed seeds, 614 singleton target fibers, product span 9 contains pair dimension 9.
+  Fixed-target Gram ranks by order(2T): 19->[9]
+  Exact anchor/tail seed matrix ranks across eligible targets: 9 to 9.
+p=17, N=16, rational two-torsion size=4: 2048 mixed seeds, 1288 singleton target fibers, product span 10 contains pair dimension 6.
+  Fixed-target Gram ranks by order(2T): 2->[2]
+  Exact anchor/tail seed matrix ranks across eligible targets: 5 to 6.
+p=29, N=36, rational two-torsion size=2: 2048 mixed seeds, 16158 singleton target fibers, product span 18 contains pair dimension 17.
+  Fixed-target Gram ranks by order(2T): 2->[8], 3->[12], 6->[14], 9->[16], 18->[16]
+  Exact anchor/tail seed matrix ranks across eligible targets: 10 to 18.

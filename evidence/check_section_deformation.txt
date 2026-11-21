@@ -1,0 +1,4 @@
+p=101, m=3, 64 signed tuples, 6 parity-encoding shifts for d=2; hit counts [0, 1, 2, 3], 256 jet-character checks, all count markers and packed singleton addresses recovered.
+  Three ordinary products modulo 10201, two choices of lifts: empty/single/multiple classification and singleton labels agree with enumeration.
+p=1031, m=4, 256 signed tuples, 22 parity-encoding shifts for d=7; hit counts [0, 1, 2], 768 jet-character checks, all count markers and packed singleton addresses recovered.
+  Three ordinary products modulo 1062961, two choices of lifts: empty/single/multiple classification and singleton labels agree with enumeration.

@@ -29,6 +29,10 @@ CHECKS = (
     "check_scalar_join",
     "check_direct_fiber",
     "check_direct_projection",
+    "check_section_families",
+    "check_section_deformation",
+    "check_multiscale",
+    "check_orbit_parity",
 )
 
 

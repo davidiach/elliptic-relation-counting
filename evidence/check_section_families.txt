@@ -1,0 +1,4 @@
+F_13: 11712 exact signed pencil sums including common base points and overlapping masks.
+F_101: all 10303 pencils, 102 sections each; at most four candidates per pencil, 15 distinct partial sections from 16 tuples.
+Among 8192 anchor seeds, 1196 regular guarded singletons; largest fixed-pencil hit count 442 (bound 512).
+Seed-selected point on a smooth conic: 3 visible candidates (bound 8), 3 actual hits.

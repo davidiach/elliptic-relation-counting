@@ -1,0 +1,5 @@
+p=101, N=103, guarded singleton T=[34]G, witness address 6, 2 left and 4 right tuples.
+  All 128 binary hashes: mean coarse matches 4.500.
+  Mask 1, 4 candidate addresses, 2 occupied buckets: all 256 coin strings, 8 challenges and all candidate alignments checked.
+  Minimum mean absolute coefficient 0.216506, guaranteed floor 0.125000, minimax ceiling 0.500000.
+  Four exclusive labels per side: all 65536 hash assignments gave mean 1.869202 jointly occupied prefixes out of four.
