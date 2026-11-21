@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "archive_sha256": "95f2078edf80cc3ce1090be7a4216fa1f407e91044d376d035c99ebf7b9204c5",
+  "package_suites_passed": 8,
+  "spectral": {
+    "partitions": 280,
+    "exact_averaging_matrix_entries": 1296,
+    "independently_derived_averaged_forms": [
+      {
+        "types": [
+          0,
+          0,
+          0
+        ],
+        "mean": "175/204",
+        "residual_squared": "481636/541875"
+      },
+      {
+        "types": [
+          0,
+          0,
+          1
+        ],
+        "mean": "6769/7650",
+        "residual_squared": "1955599/2601000"
+      },
+      {
+        "types": [
+          0,
+          1,
+          0
+        ],
+        "mean": "6769/7650",
+        "residual_squared": "1955599/2601000"
+      },
+      {
+        "types": [
+          0,
+          1,
+          1
+        ],
+        "mean": "13951/15300",
+        "residual_squared": "869573/1445000"
+      },
+      {
+        "types": [
+          1,
+          0,
+          0
+        ],
+        "mean": "6769/7650",
+        "residual_squared": "1955599/2601000"
+      },
+      {
+        "types": [
+          1,
+          0,
+          1
+        ],
+        "mean": "13951/15300",
+        "residual_squared": "869573/1445000"
+      },
+      {
+        "types": [
+          1,
+          1,
+          0
+        ],
+        "mean": "13951/15300",
+        "residual_squared": "869573/1445000"
+      },
+      {
+        "types": [
+          1,
+          1,
+          1
+        ],
+        "mean": "399/425",
+        "residual_squared": "507/1156"
+      }
+    ]
+  },
+  "inverse_moments": {
+    "distributions": 16,
+    "exact_inverse_moment_inequalities": 150,
+    "field": "F_2",
+    "ambient_dimension": 3,
+    "maximum_training_length": 7
+  },
+  "selectors": {
+    "nonzero_residue_inverses": 15,
+    "monomial_cardinal_checks": 1450,
+    "off_grid_nilpotent_comparisons": 300,
+    "fixture": "(Z/2048)[u,e]/(u^4+u+1,e^3), (r,k)=(2,4),(3,4)"
+  },
+  "scope": "Selected finite algebra and probability checks. No proof or execution of the assumed asymptotic packet contractor.",
+  "source_sha256": "71d65d480a1884e8bd5fcdf90aa9ddea768721e61f78cf9890af5b66699572e7",
+  "python": "3.12.2"
+}

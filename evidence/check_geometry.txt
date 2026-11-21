@@ -1,0 +1,5 @@
+Distinct final abscissas at arities 3 through 8: [4, 8, 16, 32, 64, 128]
+Field 13: 288 quartic zeros and 2,520 nonzeros checked.
+Field 17: 288 quartic zeros and 4,608 nonzeros checked.
+Field 19: 308 quartic zeros and 5,848 nonzeros checked.
+Field 37: 1,124 quartic zeros and 44,164 nonzeros checked.

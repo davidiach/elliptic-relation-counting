@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "finite_cases": 30,
+  "derivative_checks": 4640,
+  "mode_weights": 1395,
+  "Gaussian_checks": 9,
+  "interpolation_monomials": 75,
+  "asymptotic_certificates": 35,
+  "central_certificates": 39,
+  "seconds": 0.265
+}

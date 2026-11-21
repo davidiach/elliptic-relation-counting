@@ -1,0 +1,1 @@
+{"status": "passed", "independent_smith_cases": 60, "subset_certificates": 6}

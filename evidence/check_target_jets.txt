@@ -1,0 +1,57 @@
+F_13, order 19, widths 2, target (0, 1)
+  regular nonempty: mass 367,104, positive 258,288
+    Z2         69,312
+    raw2       36,480
+    jet2       26,448
+    raw3       18,960
+    raw2+dZ2   1,728
+    raw5       1,200
+    jet5       0
+    raw5+jet   0
+  at least three sign orbits: mass 51,840, positive 49,440
+    Z2         2,400
+    raw2       2,160
+    jet2       1,440
+    raw3       576
+    raw2+dZ2   96
+    raw5       0
+    jet5       0
+    raw5+jet   0
+F_13, order 19, widths 4, target (0, 1)
+  regular nonempty: mass 80,064, positive 71,040
+    Z2         2,880
+    raw2       336
+    jet2       192
+    raw3       0
+    raw2+dZ2   0
+    raw5       0
+    jet5       0
+    raw5+jet   0
+  at least three sign orbits: mass 67,392, positive 64,704
+    Z2         2,304
+    raw2       336
+    jet2       192
+    raw3       0
+    raw2+dZ2   0
+    raw5       0
+    jet5       0
+    raw5+jet   0
+F_23, order 31, widths 2, target (0, 1)
+  regular nonempty: mass 25,884,768, positive 11,769,600
+    Z2         9,210,048
+    raw2       6,997,536
+    jet2       5,703,408
+    raw3       3,550,752
+    raw2+dZ2   1,703,952
+    raw5       43,584
+    jet5       3,840
+    raw5+jet   0
+  at least three sign orbits: mass 3,951,360, positive 3,064,608
+    Z2         886,752
+    raw2       886,752
+    jet2       883,536
+    raw3       532,464
+    raw2+dZ2   525,072
+    raw5       2,448
+    jet5       768
+    raw5+jet   0

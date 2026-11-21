@@ -1,7 +1,12 @@
-"""Run each paper check and compare its output with the recorded evidence."""
+"""Run the reproducibility checks and compare their output with the recorded evidence."""
+import argparse
+import hashlib
+import os
 from pathlib import Path
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
+from zipfile import ZipFile
 
 
 ROOT = Path(__file__).resolve().parent
@@ -47,13 +52,39 @@ CHECKS = (
     "check_candidate_splices",
     "check_candidate_arithmetic",
     "check_candidate_fingerprint",
+    "check_batch",
+    "check_geometry",
+    "check_sign_identity",
+    "check_target_jets",
+    "probe_target_jets",
+    "check_quartic_decoder",
+    "check_opposite_targets",
+    "check_dense_weighted",
+    "check_seed_rank",
+    "check_weak_recovery",
+    "probe_weak_gate",
+)
+
+C38_CHECKS = ("check_strided_compiler", "check_reciprocal", "check_sparse", "check_weighted")
+# These reference implementations come from the supplied archives listed in the README.
+C38_SOURCES = (
+    ("ECDLP_v6_complete.zip", "b213c4b3ffb4ef9301fda5f2ac277a5bbfb70ec95cd35d76f9679b4f37922d80",
+     ("reusable-profiled-ecdl-v6/reproducibility/new_code/arithmetic_alternating_chord.py",)),
+    ("simplex-alphabet-ecdl-v6.zip", "b4ed0d2ab9bf5dae521e3e63634ccbfee8a85af234b709053c10abfe60901f6c",
+     ("simplex-alphabet-ecdl/reproducibility/code/simplex_contraction.py",
+      "simplex-alphabet-ecdl/reproducibility/code/native_jet_contraction.py",
+      "simplex-alphabet-ecdl/reproducibility/code/weighted_matrix_join.py")),
 )
 
 
-def main():
-    for name in CHECKS:
+def compare_checks(names, reference_dir=None):
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+    env.pop("PYTHONOPTIMIZE", None)
+    if reference_dir is not None:
+        env["PYTHONPATH"] = str(reference_dir)
+    for name in names:
         run = subprocess.run([sys.executable, "-B", str(ROOT / "checks" / (name+".py"))],
-                             cwd=ROOT, capture_output=True, text=True, check=False)
+                             cwd=ROOT, capture_output=True, encoding="utf-8", env=env)
         sys.stdout.write(run.stdout)
         if run.returncode:
             sys.stderr.write(run.stderr)
@@ -62,6 +93,29 @@ def main():
         if expected.splitlines() != run.stdout.splitlines():
             raise SystemExit(f"{name}: computed output differed from the recorded evidence.")
         print(f"{name}: matches recorded evidence.", flush=True)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-archives", type=Path, metavar="DIR",
+                        help="also run the four C38 integration checks with the original ZIPs in DIR")
+    args = parser.parse_args()
+    if args.source_archives is None:
+        compare_checks(CHECKS)
+        print("Four C38 integration checks are available with --source-archives DIR.")
+        return
+    with TemporaryDirectory() as tmp:
+        for filename, digest, members in C38_SOURCES:
+            path = args.source_archives / filename
+            if not path.is_file():
+                parser.error(f"Missing source archive: {path}")
+            if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                parser.error(f"Source archive has an unexpected SHA-256 digest: {path}")
+            with ZipFile(path) as archive:
+                for member in members:
+                    (Path(tmp) / Path(member).name).write_bytes(archive.read(member))
+        compare_checks(C38_CHECKS, tmp)
+    compare_checks(CHECKS)
 
 
 if __name__ == "__main__":

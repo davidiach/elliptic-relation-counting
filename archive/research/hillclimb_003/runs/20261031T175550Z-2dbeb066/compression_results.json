@@ -1,0 +1,269 @@
+{
+  "status": "passed",
+  "root_minors": [
+    {
+      "b": 4,
+      "L": 8,
+      "limb_bits": 4,
+      "degree": 1,
+      "sources": 1,
+      "minor_dimension": 2,
+      "evaluated_entries": 4,
+      "full_digit_set_sizes": [
+        16
+      ],
+      "exact_larger_minor_dimension": 16,
+      "left_symbol_ports": 25,
+      "right_symbol_ports": 25,
+      "fixed_ports": 206
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "limb_bits": 4,
+      "degree": 1,
+      "sources": 2,
+      "minor_dimension": 4,
+      "evaluated_entries": 16,
+      "full_digit_set_sizes": [
+        16
+      ],
+      "exact_larger_minor_dimension": 256,
+      "left_symbol_ports": 50,
+      "right_symbol_ports": 50,
+      "fixed_ports": 156
+    },
+    {
+      "b": 17,
+      "L": 16,
+      "limb_bits": 4,
+      "degree": 2,
+      "sources": 1,
+      "minor_dimension": 4,
+      "evaluated_entries": 16,
+      "full_digit_set_sizes": [
+        16,
+        16
+      ],
+      "exact_larger_minor_dimension": 256,
+      "left_symbol_ports": 50,
+      "right_symbol_ports": 50,
+      "fixed_ports": 418
+    },
+    {
+      "b": 17,
+      "L": 16,
+      "limb_bits": 4,
+      "degree": 2,
+      "sources": 2,
+      "minor_dimension": 16,
+      "evaluated_entries": 256,
+      "full_digit_set_sizes": [
+        16,
+        16
+      ],
+      "exact_larger_minor_dimension": 65536,
+      "left_symbol_ports": 100,
+      "right_symbol_ports": 100,
+      "fixed_ports": 318
+    },
+    {
+      "b": 31,
+      "L": 64,
+      "limb_bits": 2,
+      "degree": 3,
+      "sources": 1,
+      "minor_dimension": 8,
+      "evaluated_entries": 64,
+      "full_digit_set_sizes": [
+        4,
+        4,
+        4
+      ],
+      "exact_larger_minor_dimension": 64,
+      "left_symbol_ports": 93,
+      "right_symbol_ports": 155,
+      "fixed_ports": 1034
+    },
+    {
+      "b": 31,
+      "L": 64,
+      "limb_bits": 2,
+      "degree": 3,
+      "sources": 2,
+      "minor_dimension": 64,
+      "evaluated_entries": 4096,
+      "full_digit_set_sizes": [
+        4,
+        4,
+        4
+      ],
+      "exact_larger_minor_dimension": 4096,
+      "left_symbol_ports": 186,
+      "right_symbol_ports": 310,
+      "fixed_ports": 786
+    }
+  ],
+  "actual_projected_cases": [
+    {
+      "r": 1,
+      "original_tensor_support": 2,
+      "projected_entries": 4,
+      "counts": {
+        "sparse_child_assignments": 8,
+        "actual_projected_entries": 4,
+        "actual_source_children_checked": 8,
+        "full_child_cross_checks": 4,
+        "full_deformation_cross_checks": 1
+      },
+      "protected_slice": null,
+      "exact_factored_join": true,
+      "target_table_sum": "(1 - 2*c(Z) + 2*c(Z)^2)^r",
+      "factored_formula": "(4 - 4*c(Z) + 2*c(Z)^2)^r",
+      "rejected_shortcut": "Ignoring exterior source moments changes the constant term from 4^r to 1",
+      "seconds": 0.031
+    },
+    {
+      "r": 2,
+      "original_tensor_support": 4,
+      "projected_entries": 16,
+      "counts": {
+        "sparse_child_assignments": 64,
+        "actual_projected_entries": 16,
+        "actual_source_children_checked": 32,
+        "full_child_cross_checks": 6,
+        "full_deformation_cross_checks": 1
+      },
+      "protected_slice": {
+        "normalized_binary_rank": 2,
+        "valuation": 6,
+        "coefficient_degree": 2,
+        "precision": 17,
+        "degree_cap": 4,
+        "weight": 6,
+        "jet_rank_lower_bound": "2/3"
+      },
+      "exact_factored_join": true,
+      "target_table_sum": "(1 - 2*c(Z) + 2*c(Z)^2)^r",
+      "factored_formula": "(4 - 4*c(Z) + 2*c(Z)^2)^r",
+      "rejected_shortcut": "Ignoring exterior source moments changes the constant term from 4^r to 1",
+      "seconds": 0.187
+    },
+    {
+      "r": 3,
+      "original_tensor_support": 8,
+      "projected_entries": 64,
+      "counts": {
+        "sparse_child_assignments": 512,
+        "actual_projected_entries": 64,
+        "actual_source_children_checked": 128,
+        "full_child_cross_checks": 2
+      },
+      "protected_slice": null,
+      "exact_factored_join": true,
+      "target_table_sum": "(1 - 2*c(Z) + 2*c(Z)^2)^r",
+      "factored_formula": "(4 - 4*c(Z) + 2*c(Z)^2)^r",
+      "rejected_shortcut": "Ignoring exterior source moments changes the constant term from 4^r to 1",
+      "seconds": 0.344
+    },
+    {
+      "r": 4,
+      "original_tensor_support": 16,
+      "projected_entries": 256,
+      "counts": {
+        "sparse_child_assignments": 4096,
+        "actual_projected_entries": 256,
+        "actual_source_children_checked": 512,
+        "full_child_cross_checks": 2
+      },
+      "protected_slice": {
+        "normalized_binary_rank": 6,
+        "valuation": 12,
+        "coefficient_degree": 4,
+        "precision": 29,
+        "degree_cap": 8,
+        "weight": 12,
+        "jet_rank_lower_bound": "6/5"
+      },
+      "exact_factored_join": true,
+      "target_table_sum": "(1 - 2*c(Z) + 2*c(Z)^2)^r",
+      "factored_formula": "(4 - 4*c(Z) + 2*c(Z)^2)^r",
+      "rejected_shortcut": "Ignoring exterior source moments changes the constant term from 4^r to 1",
+      "seconds": 3.313
+    }
+  ],
+  "symbolic_family": [
+    {
+      "r": 2,
+      "protected_rank": 2,
+      "jet_rank_lower_bound": "2/3",
+      "minimum_precision": 7,
+      "minimum_jet_length": 3,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 4,
+      "protected_rank": 6,
+      "jet_rank_lower_bound": "6/5",
+      "minimum_precision": 13,
+      "minimum_jet_length": 5,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 6,
+      "protected_rank": 20,
+      "jet_rank_lower_bound": "20/7",
+      "minimum_precision": 19,
+      "minimum_jet_length": 7,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 8,
+      "protected_rank": 70,
+      "jet_rank_lower_bound": "70/9",
+      "minimum_precision": 25,
+      "minimum_jet_length": 9,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 10,
+      "protected_rank": 252,
+      "jet_rank_lower_bound": "252/11",
+      "minimum_precision": 31,
+      "minimum_jet_length": 11,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 16,
+      "protected_rank": 12870,
+      "jet_rank_lower_bound": "12870/17",
+      "minimum_precision": 49,
+      "minimum_jet_length": 17,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 32,
+      "protected_rank": 601080390,
+      "jet_rank_lower_bound": "601080390/33",
+      "minimum_precision": 97,
+      "minimum_jet_length": 33,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    },
+    {
+      "r": 64,
+      "protected_rank": 1832624140942590534,
+      "jet_rank_lower_bound": "1832624140942590534/65",
+      "minimum_precision": 193,
+      "minimum_jet_length": 65,
+      "scope": "Algebraic consequence of the proved copy-factor formula"
+    }
+  ],
+  "inherited_source_hashes": {
+    "vendor/simplex_contraction.py": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d",
+    "vendor/native_jet_contraction.py": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d",
+    "vendor/weighted_matrix_join.py": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300",
+    "vendor/arithmetic_alternating_chord.py": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e",
+    "vendor/intervals.py": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2"
+  },
+  "scope": "Natural Fourier cuts of actual C38 first tensors and actual projected children of explicit local restrictions. High exact rank coexists with a compact factored formula. These finite packet geometries are not the asymptotic balanced schedule; no full C38 projected-table closure or ECDLP improvement is claimed."
+}

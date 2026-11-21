@@ -1,0 +1,31 @@
+{"part": "hs", "t": 1, "status": "passed", "seconds": 0.078}
+{"part": "outs", "t": 1, "status": "passed", "seconds": 0.079}
+{"part": "carry_ports", "t": 1, "status": "passed", "seconds": 0.046}
+{"part": "range", "t": 1, "status": "passed", "seconds": 0.047}
+{"part": "nonzero", "t": 1, "status": "passed", "seconds": 0.047}
+{"part": "relay_pair", "t": 1, "status": "passed", "seconds": 0.156}
+{"part": "hs", "t": 2, "status": "passed", "seconds": 0.454}
+{"part": "outs", "t": 2, "status": "passed", "seconds": 0.515}
+{"part": "carry_ports", "t": 2, "status": "passed", "seconds": 0.188}
+{"part": "range", "t": 2, "status": "passed", "seconds": 0.14}
+{"part": "nonzero", "t": 2, "status": "passed", "seconds": 0.157}
+{"part": "relay_pair", "t": 2, "status": "passed", "seconds": 8.921}
+{
+  "status": "passed",
+  "counts": {
+    "public_data_compilations": 18,
+    "incident_predicate_programs_checked": 168,
+    "explicit_edges_checked": 89892,
+    "equality_relays_checked": 10518,
+    "rejected_split_relay_states": 54,
+    "nonincident_read_controls": 18,
+    "coherent_mutation_agreements": 90,
+    "full_graph_completions_enumerated": 80,
+    "pinned_contractions": 12,
+    "pinned_witness_recoveries": 12,
+    "independently_checked_active_calls": 12,
+    "conditional_count_calls": 34,
+    "recovery_active_calls": 14,
+    "inconsistent_pin_rejections": 2
+  }
+}

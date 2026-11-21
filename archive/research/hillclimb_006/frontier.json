@@ -1,0 +1,44 @@
+{
+  "ultimate_target": "Correct classical general-prime-field ECDLP in expected bit time 2^(tilde O(sqrt(b))) under the established subgroup/cofactor scope",
+  "goal_status": "active_not_achieved",
+  "iteration": 6,
+  "continuation": "../hillclimb_007/frontier.json",
+  "previous_goal_turn_classification": "progress: exact balanced C38 projection fixtures, dense-mode valuation formula and protected counterexample to a normalized determinant shortcut",
+  "accepted_results": [
+    "Exact cubic integrality defect for the natural geometric difference grid",
+    "A polynomial-size paired-node repair with proved minimal separated shift and minimal common local scale for n>=4",
+    "Independent exact quadratic normalized diagonal spectrum k(k+1)",
+    "A realizable all-one tensor deformation forcing both readout precision and jet length",
+    "A 2^(M/4) feasible-candidate lower bound for the repaired odd-node reconstruction with unrestricted mode enumeration, n>=7",
+    "Exact invariance under uniform affine coordinate changes"
+  ],
+  "rejected_shortcuts": [
+    "Treat quadratic diagonal valuations as a runtime improvement without checking local constants",
+    "Repair a nonintegral constant term by scaling the local jet variable",
+    "Assume polynomial node count makes the repaired precision cost negligible",
+    "Increase every coordinate gap uniformly to obtain a new spectrum"
+  ],
+  "scope_limits": [
+    "The enumeration bound concerns a specified geometric family, paired-node repair, odd-node reconstruction, and unrestricted candidate enumeration",
+    "No lower bound against support-aware contraction, nonuniform coefficient precision, even-node schedules, or other grids",
+    "The all-one witness is easy for algorithms that exploit its structure directly",
+    "No new complete ECDLP exponent or unconditional contractor"
+  ],
+  "baseline_status": "Conditional time coefficient 27.0138774237432612803 on b/(log2(b))^(1/4); unchanged",
+  "next_hypothesis": {
+    "claim_to_test": "Balanced low-bit clusters can retain useful nonuniform mode weights without the geometric repair's precision penalty",
+    "family": "X_(u,n)={2^u*x+r : x in {0,1,2,4,...,2^(n-2)}, 0<=r<2^u}",
+    "initial_evidence": "15 finite fixtures; central nodes can be integral while other retained nodes fail, with worst constant valuation -16 at n=8 and u=1,2,3",
+    "first_gate": "Derive exact derivative and mode valuations, select admissible interpolation nodes, and compute new Hermite losses",
+    "acceptance": "A paid resource recurrence that improves the complete ECDLP exponent after construction, extraction, recursion and arity balancing",
+    "rejection": "Integrality, interpolation degree, precision or geometry costs erase the gain"
+  },
+  "unresolved": [
+    "Independent complete audit and implementation of the inherited packet foundation",
+    "Full unpinned C38 contraction and witness recovery",
+    "Efficient complete source-weighted pairing of compact circuits",
+    "Complete larger-arity reduction audit",
+    "A route to the square-root target"
+  ],
+  "checkpoint": "latest_run.json"
+}

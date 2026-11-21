@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "counts": {
+    "realized_partition_bound_checks": 50,
+    "pair_sectors": 235,
+    "selected_partition_0": 107,
+    "adaptive_projected_values": 620,
+    "matrix_products": 1880,
+    "scalar_multiplications": 1984,
+    "adaptive_tree_joins": 1880,
+    "peak_adaptive_partial_entries": 6,
+    "independent_mode_sum_cases": 48,
+    "adaptive_projected_cache_hits": 919,
+    "selected_partition_20": 30,
+    "selected_partition_90": 2,
+    "selected_partition_10": 26,
+    "selected_partition_130": 10,
+    "selected_partition_30": 5,
+    "selected_partition_2": 3,
+    "selected_partition_12": 7,
+    "selected_partition_70": 5,
+    "selected_partition_180": 2,
+    "selected_partition_40": 7,
+    "selected_partition_24": 1,
+    "selected_partition_1": 6,
+    "selected_partition_50": 7,
+    "selected_partition_132": 4,
+    "selected_partition_11": 1,
+    "selected_partition_71": 7,
+    "selected_partition_112": 3,
+    "selected_partition_110": 2,
+    "strassen_calls": 1,
+    "duplicated_coordinate_nonnumeric_ring_cases": 1,
+    "active_recursions_checked_directly": 70,
+    "checked_depth_1": 68,
+    "checked_depth_0": 2
+  },
+  "recursion": [
+    {
+      "t": 2,
+      "depth": 2,
+      "axes": [],
+      "value": [
+        28
+      ],
+      "independent_expected": [
+        28
+      ],
+      "stats": {
+        "peak_coefficient_dimension": 16,
+        "peak_jet_axes": 2,
+        "peak_precision_bits": 57,
+        "contraction_calls": 6869,
+        "maximum_recursion_depth": 2,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 261602,
+        "coefficient_products": 381178,
+        "unit_inversions": 2478,
+        "pair_sectors": 1512,
+        "selected_partition_0": 1512,
+        "direct_leaf_contractions": 6800,
+        "streamed_simplex_packet_entries": 61608,
+        "direct_simplex_assignments": 40800,
+        "projected_simplex_children": 6868,
+        "adaptive_projected_values": 6868,
+        "matrix_products": 12096,
+        "scalar_multiplications": 15940,
+        "adaptive_tree_joins": 12096,
+        "peak_adaptive_partial_entries": 4,
+        "immutable_higher_precision_accesses": 20400,
+        "immutable_extra_axis_accesses": 20400,
+        "simplex_jet_nodes": 414,
+        "exact_scalar_readouts": 69,
+        "complete_simplex_contractions": 69,
+        "active_depth_1": 68,
+        "active_depth_0": 1
+      }
+    },
+    {
+      "t": 3,
+      "depth": 1,
+      "axes": [
+        [
+          "jet1",
+          2
+        ]
+      ],
+      "value": [
+        16,
+        0
+      ],
+      "independent_expected": [
+        16,
+        0
+      ],
+      "stats": {
+        "peak_coefficient_dimension": 12,
+        "peak_jet_axes": 2,
+        "peak_precision_bits": 43,
+        "contraction_calls": 273,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 28578,
+        "coefficient_products": 55838,
+        "unit_inversions": 30,
+        "pair_sectors": 22,
+        "selected_partition_0": 22,
+        "direct_leaf_contractions": 272,
+        "streamed_simplex_packet_entries": 5440,
+        "direct_simplex_assignments": 5440,
+        "projected_simplex_children": 272,
+        "adaptive_projected_values": 272,
+        "matrix_products": 176,
+        "scalar_multiplications": 404,
+        "adaptive_tree_joins": 176,
+        "peak_adaptive_partial_entries": 21,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      }
+    }
+  ],
+  "scope": "Exact pair-sector join implementation compared with Cartesian sums, duplicated coordinate families, nilpotent coefficients, actual nontrivial Strassen products, and full small simplex recursion. The asymptotic matrix formulas and packing search are not executed.",
+  "source_hashes": {
+    "vendor/simplex_contraction.py": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d",
+    "vendor/native_jet_contraction.py": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d",
+    "vendor/weighted_matrix_join.py": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300",
+    "vendor/arithmetic_alternating_chord.py": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e",
+    "vendor/intervals.py": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2"
+  }
+}

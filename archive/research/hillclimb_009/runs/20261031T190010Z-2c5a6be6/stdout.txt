@@ -1,0 +1,9 @@
+{"L": 2, "generic_rank": 7, "C38_copy_rank": 4}
+{"L": 4, "generic_rank": 29, "C38_copy_rank": 16}
+{"L": 8, "generic_rank": 121, "C38_copy_rank": 121}
+{"family": "generic", "L": 2, "degree": 6, "generators": 16, "jets": 8, "standard_full_Hermite_scale": 10, "optimal_full_space_exact_scale": 9, "optimal_integer_family_parity_scale": 9, "seconds": 0.0}
+{"family": "copy", "L": 2, "degree": 6, "generators": 4, "jets": 8, "standard_full_Hermite_scale": 10, "optimal_full_space_exact_scale": 9, "optimal_integer_family_parity_scale": 4, "seconds": 0.0}
+{"family": "generic", "L": 4, "degree": 28, "generators": 256, "jets": 40, "standard_full_Hermite_scale": 45, "optimal_full_space_exact_scale": 27, "optimal_integer_family_parity_scale": 27, "seconds": 1.172}
+{"family": "copy", "L": 4, "degree": 28, "generators": 16, "jets": 40, "standard_full_Hermite_scale": 45, "optimal_full_space_exact_scale": 27, "optimal_integer_family_parity_scale": 8, "seconds": 0.031}
+{"family": "copy", "L": 8, "degree": 120, "generators": 256, "jets": 136, "standard_full_Hermite_scale": 128, "optimal_full_space_exact_scale": 102, "optimal_integer_family_parity_scale": 102, "seconds": 14.625}
+{"status": "passed", "seconds": 16.75, "readout_certificates": 5, "observation_trials": 100, "negative_controls": 11}

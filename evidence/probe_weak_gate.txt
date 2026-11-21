@@ -1,0 +1,3 @@
+Gram readout agrees with direct signed determinant sums for m=4 and m=6
+p=65521, m=4, n=1000000 per law, matched 0.49941, planted 0.50031, gap +0.00090, 95% Hoeffding half-width 0.00192
+p=65521, m=6, n=1000000 per law, matched 0.49977, planted 0.49972, gap -0.00005, 95% Hoeffding half-width 0.00192

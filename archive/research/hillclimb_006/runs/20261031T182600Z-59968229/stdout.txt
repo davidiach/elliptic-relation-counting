@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "families": 16,
+  "derivative_checks": 5024,
+  "Cauchy_eliminations": 16,
+  "packet_jet_checks": 22,
+  "dilation_checks": 54,
+  "seconds": 2.203
+}

@@ -1,0 +1,40 @@
+NEXT EXPERIMENT: THE ACTUAL DEFORMATION SPACE
+
+The degree-only readout has verified finite savings, but cannot improve
+the consecutive-grid geometric precision scale asymptotically. Avoid
+another unpriced numerical optimization of that same objective.
+
+First determine what polynomials the contractor actually produces.
+
+1. Start with a complete small packet and literal binary selector
+   polynomials. Generate each deformation polynomial obtained by fixing
+   the source and target Boolean assignments. Evaluate W polynomials
+   and the selector composition exactly over the rationals.
+
+2. Compare with the native implementation on original assignments and
+   several exact deformation values. Keep source weighting and padding
+   in the definition. If a C38 restriction is used, label its scope.
+
+3. Compute the exact rational span and a coefficient-lattice description
+   after explicitly charging known common denominators. Do not assume a
+   common polynomial factor from an individual W entry: the full
+   selector composition includes constants and sums.
+
+4. Optimize readout only on the proved space. The target functional is
+   evaluation at zero on that space, not automatically the coordinate
+   vector e_0 of the old monomial basis. Certify both reconstruction and
+   optimality, with an explicit witness lying in the same space.
+
+5. Include a legal tensor assignment designed to falsify every proposed
+   universal relation. Compare general packet tensors, equality-copy
+   restrictions, and actual C38 predicates rather than silently moving
+   between those input classes.
+
+Acceptance requires a uniform structural explanation and full access,
+normalization, coefficient-dimension and recursion costs. A low-rank
+finite sample or a gain from inputs smaller than a full packet is only
+a diagnostic. A generic full span is a useful rejection result, not a
+lower bound against all ECDLP algorithms.
+
+Keep the general square-root-in-b target, and the missing complete C38
+contraction/witness-recovery milestone, explicit throughout.

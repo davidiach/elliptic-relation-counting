@@ -5,3 +5,6 @@
 *.typ text eol=lf
 *.py text eol=lf
 *.md text eol=lf
+# Preserve the bytes used in historical run hashes on every checkout.
+archive/research/**/*.json -text whitespace=cr-at-eol
+archive/research/**/*.txt -text whitespace=cr-at-eol

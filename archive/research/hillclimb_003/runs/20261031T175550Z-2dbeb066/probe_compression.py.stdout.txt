@@ -1,0 +1,11 @@
+{"root_minor": "passed", "b": 4, "L": 8, "limb_bits": 4, "degree": 1, "sources": 1, "minor_dimension": 2, "evaluated_entries": 4, "full_digit_set_sizes": [16], "exact_larger_minor_dimension": 16, "left_symbol_ports": 25, "right_symbol_ports": 25, "fixed_ports": 206}
+{"root_minor": "passed", "b": 4, "L": 8, "limb_bits": 4, "degree": 1, "sources": 2, "minor_dimension": 4, "evaluated_entries": 16, "full_digit_set_sizes": [16], "exact_larger_minor_dimension": 256, "left_symbol_ports": 50, "right_symbol_ports": 50, "fixed_ports": 156}
+{"root_minor": "passed", "b": 17, "L": 16, "limb_bits": 4, "degree": 2, "sources": 1, "minor_dimension": 4, "evaluated_entries": 16, "full_digit_set_sizes": [16, 16], "exact_larger_minor_dimension": 256, "left_symbol_ports": 50, "right_symbol_ports": 50, "fixed_ports": 418}
+{"root_minor": "passed", "b": 17, "L": 16, "limb_bits": 4, "degree": 2, "sources": 2, "minor_dimension": 16, "evaluated_entries": 256, "full_digit_set_sizes": [16, 16], "exact_larger_minor_dimension": 65536, "left_symbol_ports": 100, "right_symbol_ports": 100, "fixed_ports": 318}
+{"root_minor": "passed", "b": 31, "L": 64, "limb_bits": 2, "degree": 3, "sources": 1, "minor_dimension": 8, "evaluated_entries": 64, "full_digit_set_sizes": [4, 4, 4], "exact_larger_minor_dimension": 64, "left_symbol_ports": 93, "right_symbol_ports": 155, "fixed_ports": 1034}
+{"root_minor": "passed", "b": 31, "L": 64, "limb_bits": 2, "degree": 3, "sources": 2, "minor_dimension": 64, "evaluated_entries": 4096, "full_digit_set_sizes": [4, 4, 4], "exact_larger_minor_dimension": 4096, "left_symbol_ports": 186, "right_symbol_ports": 310, "fixed_ports": 786}
+{"projected_case": "passed", "r": 1, "seconds": 0.031}
+{"projected_case": "passed", "r": 2, "seconds": 0.187}
+{"projected_case": "passed", "r": 3, "seconds": 0.344}
+{"projected_case": "passed", "r": 4, "seconds": 3.313}
+{"status": "passed", "root_minor_cases": 6, "actual_projected_entries": 340}

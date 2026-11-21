@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "counts": {
+    "matrix_parameter_candidates": 30,
+    "integer_schedule_cases": 60,
+    "selector_sizes": 9
+  },
+  "scope": "Exact support inequalities, rational numerical enclosures, finite schedule guards and conditional transfer arithmetic. This is not a formal proof of the inherited foundations or an implementation of their asymptotic runtime."
+}

@@ -1,0 +1,724 @@
+{
+  "status": "passed",
+  "families": [
+    {
+      "n": 3,
+      "original_nodes": 5,
+      "derivative_at_zero": 2,
+      "derivative_at_one": 1,
+      "unrepaired_constant_valuation": -1,
+      "repaired_nodes": 9,
+      "minimal_pair_shift": 3,
+      "local_scale": 3,
+      "odd_base_weight_min": 4,
+      "odd_base_weight_max": 4,
+      "quadratic_mode_increments": [
+        0,
+        2
+      ],
+      "exponential_candidate_bound_applies": false
+    },
+    {
+      "n": 4,
+      "original_nodes": 9,
+      "derivative_at_zero": 6,
+      "derivative_at_one": 4,
+      "unrepaired_constant_valuation": -2,
+      "repaired_nodes": 17,
+      "minimal_pair_shift": 4,
+      "local_scale": 4,
+      "odd_base_weight_min": 4,
+      "odd_base_weight_max": 4,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6
+      ],
+      "exponential_candidate_bound_applies": false
+    },
+    {
+      "n": 5,
+      "original_nodes": 15,
+      "derivative_at_zero": 14,
+      "derivative_at_one": 8,
+      "unrepaired_constant_valuation": -6,
+      "repaired_nodes": 29,
+      "minimal_pair_shift": 14,
+      "local_scale": 14,
+      "odd_base_weight_min": 14,
+      "odd_base_weight_max": 16,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12
+      ],
+      "exponential_candidate_bound_applies": false
+    },
+    {
+      "n": 6,
+      "original_nodes": 23,
+      "derivative_at_zero": 28,
+      "derivative_at_one": 13,
+      "unrepaired_constant_valuation": -15,
+      "repaired_nodes": 45,
+      "minimal_pair_shift": 36,
+      "local_scale": 36,
+      "odd_base_weight_min": 36,
+      "odd_base_weight_max": 42,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20
+      ],
+      "exponential_candidate_bound_applies": false
+    },
+    {
+      "n": 7,
+      "original_nodes": 33,
+      "derivative_at_zero": 50,
+      "derivative_at_one": 19,
+      "unrepaired_constant_valuation": -31,
+      "repaired_nodes": 65,
+      "minimal_pair_shift": 74,
+      "local_scale": 74,
+      "odd_base_weight_min": 74,
+      "odd_base_weight_max": 86,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 8,
+      "original_nodes": 45,
+      "derivative_at_zero": 82,
+      "derivative_at_one": 26,
+      "unrepaired_constant_valuation": -56,
+      "repaired_nodes": 89,
+      "minimal_pair_shift": 132,
+      "local_scale": 132,
+      "odd_base_weight_min": 132,
+      "odd_base_weight_max": 152,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 9,
+      "original_nodes": 59,
+      "derivative_at_zero": 126,
+      "derivative_at_one": 34,
+      "unrepaired_constant_valuation": -92,
+      "repaired_nodes": 117,
+      "minimal_pair_shift": 214,
+      "local_scale": 214,
+      "odd_base_weight_min": 214,
+      "odd_base_weight_max": 244,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 10,
+      "original_nodes": 75,
+      "derivative_at_zero": 184,
+      "derivative_at_one": 43,
+      "unrepaired_constant_valuation": -141,
+      "repaired_nodes": 149,
+      "minimal_pair_shift": 324,
+      "local_scale": 324,
+      "odd_base_weight_min": 324,
+      "odd_base_weight_max": 366,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 11,
+      "original_nodes": 93,
+      "derivative_at_zero": 258,
+      "derivative_at_one": 53,
+      "unrepaired_constant_valuation": -205,
+      "repaired_nodes": 185,
+      "minimal_pair_shift": 466,
+      "local_scale": 466,
+      "odd_base_weight_min": 466,
+      "odd_base_weight_max": 522,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 12,
+      "original_nodes": 113,
+      "derivative_at_zero": 350,
+      "derivative_at_one": 64,
+      "unrepaired_constant_valuation": -286,
+      "repaired_nodes": 225,
+      "minimal_pair_shift": 644,
+      "local_scale": 644,
+      "odd_base_weight_min": 644,
+      "odd_base_weight_max": 716,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 13,
+      "original_nodes": 135,
+      "derivative_at_zero": 462,
+      "derivative_at_one": 76,
+      "unrepaired_constant_valuation": -386,
+      "repaired_nodes": 269,
+      "minimal_pair_shift": 862,
+      "local_scale": 862,
+      "odd_base_weight_min": 862,
+      "odd_base_weight_max": 952,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110,
+        132
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 14,
+      "original_nodes": 159,
+      "derivative_at_zero": 596,
+      "derivative_at_one": 89,
+      "unrepaired_constant_valuation": -507,
+      "repaired_nodes": 317,
+      "minimal_pair_shift": 1124,
+      "local_scale": 1124,
+      "odd_base_weight_min": 1124,
+      "odd_base_weight_max": 1234,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110,
+        132,
+        156
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 15,
+      "original_nodes": 185,
+      "derivative_at_zero": 754,
+      "derivative_at_one": 103,
+      "unrepaired_constant_valuation": -651,
+      "repaired_nodes": 369,
+      "minimal_pair_shift": 1434,
+      "local_scale": 1434,
+      "odd_base_weight_min": 1434,
+      "odd_base_weight_max": 1566,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110,
+        132,
+        156,
+        182
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 16,
+      "original_nodes": 213,
+      "derivative_at_zero": 938,
+      "derivative_at_one": 118,
+      "unrepaired_constant_valuation": -820,
+      "repaired_nodes": 425,
+      "minimal_pair_shift": 1796,
+      "local_scale": 1796,
+      "odd_base_weight_min": 1796,
+      "odd_base_weight_max": 1952,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110,
+        132,
+        156,
+        182,
+        210
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 17,
+      "original_nodes": 243,
+      "derivative_at_zero": 1150,
+      "derivative_at_one": 134,
+      "unrepaired_constant_valuation": -1016,
+      "repaired_nodes": 485,
+      "minimal_pair_shift": 2214,
+      "local_scale": 2214,
+      "odd_base_weight_min": 2214,
+      "odd_base_weight_max": 2396,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110,
+        132,
+        156,
+        182,
+        210,
+        240
+      ],
+      "exponential_candidate_bound_applies": true
+    },
+    {
+      "n": 18,
+      "original_nodes": 275,
+      "derivative_at_zero": 1392,
+      "derivative_at_one": 151,
+      "unrepaired_constant_valuation": -1241,
+      "repaired_nodes": 549,
+      "minimal_pair_shift": 2692,
+      "local_scale": 2692,
+      "odd_base_weight_min": 2692,
+      "odd_base_weight_max": 2902,
+      "quadratic_mode_increments": [
+        0,
+        2,
+        6,
+        12,
+        20,
+        30,
+        42,
+        56,
+        72,
+        90,
+        110,
+        132,
+        156,
+        182,
+        210,
+        240,
+        272
+      ],
+      "exponential_candidate_bound_applies": true
+    }
+  ],
+  "derivative_valuation_checks": 5024,
+  "independent_direct_derivative_products": 182,
+  "exact_Cauchy_elimination_checks": 16,
+  "all_one_packet_jets": [
+    {
+      "n": 3,
+      "node": "-1",
+      "jet_length": 5,
+      "proved_divisibility": 1,
+      "first_nonzero_degree": 1,
+      "observed_minimum_valuation": 5
+    },
+    {
+      "n": 3,
+      "node": "1",
+      "jet_length": 5,
+      "proved_divisibility": 1,
+      "first_nonzero_degree": 1,
+      "observed_minimum_valuation": 5
+    },
+    {
+      "n": 3,
+      "node": "7",
+      "jet_length": 5,
+      "proved_divisibility": 1,
+      "first_nonzero_degree": 3,
+      "observed_minimum_valuation": 5
+    },
+    {
+      "n": 3,
+      "node": "9",
+      "jet_length": 5,
+      "proved_divisibility": 1,
+      "first_nonzero_degree": 3,
+      "observed_minimum_valuation": 5
+    },
+    {
+      "n": 4,
+      "node": "-1",
+      "jet_length": 6,
+      "proved_divisibility": 0,
+      "first_nonzero_degree": 2,
+      "observed_minimum_valuation": 6
+    },
+    {
+      "n": 4,
+      "node": "1",
+      "jet_length": 6,
+      "proved_divisibility": 0,
+      "first_nonzero_degree": 2,
+      "observed_minimum_valuation": 5
+    },
+    {
+      "n": 4,
+      "node": "3",
+      "jet_length": 6,
+      "proved_divisibility": 0,
+      "first_nonzero_degree": 3,
+      "observed_minimum_valuation": 8
+    },
+    {
+      "n": 4,
+      "node": "15",
+      "jet_length": 6,
+      "proved_divisibility": 0,
+      "first_nonzero_degree": 4,
+      "observed_minimum_valuation": 6
+    },
+    {
+      "n": 4,
+      "node": "17",
+      "jet_length": 6,
+      "proved_divisibility": 0,
+      "first_nonzero_degree": 4,
+      "observed_minimum_valuation": 5
+    },
+    {
+      "n": 4,
+      "node": "19",
+      "jet_length": 6,
+      "proved_divisibility": 0,
+      "first_nonzero_degree": 4,
+      "observed_minimum_valuation": 8
+    },
+    {
+      "n": 5,
+      "node": "-1",
+      "jet_length": 7,
+      "proved_divisibility": 33,
+      "first_nonzero_degree": 3,
+      "observed_minimum_valuation": 49
+    },
+    {
+      "n": 5,
+      "node": "1",
+      "jet_length": 7,
+      "proved_divisibility": 33,
+      "first_nonzero_degree": 3,
+      "observed_minimum_valuation": 46
+    },
+    {
+      "n": 5,
+      "node": "3",
+      "jet_length": 7,
+      "proved_divisibility": 27,
+      "first_nonzero_degree": 4,
+      "observed_minimum_valuation": 51
+    },
+    {
+      "n": 5,
+      "node": "16383",
+      "jet_length": 7,
+      "proved_divisibility": 33,
+      "first_nonzero_degree": 5,
+      "observed_minimum_valuation": 49
+    },
+    {
+      "n": 5,
+      "node": "16385",
+      "jet_length": 7,
+      "proved_divisibility": 33,
+      "first_nonzero_degree": 5,
+      "observed_minimum_valuation": 46
+    },
+    {
+      "n": 5,
+      "node": "16387",
+      "jet_length": 7,
+      "proved_divisibility": 27,
+      "first_nonzero_degree": 5,
+      "observed_minimum_valuation": 51
+    },
+    {
+      "n": 7,
+      "node": "-1",
+      "jet_length": 9,
+      "proved_divisibility": 395,
+      "first_nonzero_degree": 5,
+      "observed_minimum_valuation": 449
+    },
+    {
+      "n": 7,
+      "node": "1",
+      "jet_length": 9,
+      "proved_divisibility": 395,
+      "first_nonzero_degree": 5,
+      "observed_minimum_valuation": 439
+    },
+    {
+      "n": 7,
+      "node": "3",
+      "jet_length": 9,
+      "proved_divisibility": 335,
+      "first_nonzero_degree": 6,
+      "observed_minimum_valuation": 437
+    },
+    {
+      "n": 7,
+      "node": "18889465931478580854783",
+      "jet_length": 9,
+      "proved_divisibility": 395,
+      "first_nonzero_degree": 7,
+      "observed_minimum_valuation": 449
+    },
+    {
+      "n": 7,
+      "node": "18889465931478580854785",
+      "jet_length": 9,
+      "proved_divisibility": 395,
+      "first_nonzero_degree": 7,
+      "observed_minimum_valuation": 439
+    },
+    {
+      "n": 7,
+      "node": "18889465931478580854787",
+      "jet_length": 9,
+      "proved_divisibility": 335,
+      "first_nonzero_degree": 7,
+      "observed_minimum_valuation": 437
+    }
+  ],
+  "uniform_dilation_identities": 54,
+  "balanced_cluster_pilot": [
+    {
+      "u": 1,
+      "clusters": 3,
+      "ports": 6,
+      "difference_nodes": 11,
+      "central_constant_valuation": 1,
+      "worst_retained_node": -1,
+      "worst_retained_constant_valuation": 1
+    },
+    {
+      "u": 1,
+      "clusters": 4,
+      "ports": 8,
+      "difference_nodes": 19,
+      "central_constant_valuation": 1,
+      "worst_retained_node": -5,
+      "worst_retained_constant_valuation": 0
+    },
+    {
+      "u": 1,
+      "clusters": 5,
+      "ports": 10,
+      "difference_nodes": 33,
+      "central_constant_valuation": 3,
+      "worst_retained_node": -13,
+      "worst_retained_constant_valuation": 1
+    },
+    {
+      "u": 1,
+      "clusters": 6,
+      "ports": 12,
+      "difference_nodes": 53,
+      "central_constant_valuation": 7,
+      "worst_retained_node": -13,
+      "worst_retained_constant_valuation": 0
+    },
+    {
+      "u": 1,
+      "clusters": 8,
+      "ports": 16,
+      "difference_nodes": 111,
+      "central_constant_valuation": 21,
+      "worst_retained_node": -13,
+      "worst_retained_constant_valuation": -16
+    },
+    {
+      "u": 2,
+      "clusters": 3,
+      "ports": 12,
+      "difference_nodes": 23,
+      "central_constant_valuation": 2,
+      "worst_retained_node": -2,
+      "worst_retained_constant_valuation": 1
+    },
+    {
+      "u": 2,
+      "clusters": 4,
+      "ports": 16,
+      "difference_nodes": 39,
+      "central_constant_valuation": 2,
+      "worst_retained_node": -10,
+      "worst_retained_constant_valuation": 0
+    },
+    {
+      "u": 2,
+      "clusters": 5,
+      "ports": 20,
+      "difference_nodes": 69,
+      "central_constant_valuation": 6,
+      "worst_retained_node": -26,
+      "worst_retained_constant_valuation": 1
+    },
+    {
+      "u": 2,
+      "clusters": 6,
+      "ports": 24,
+      "difference_nodes": 113,
+      "central_constant_valuation": 14,
+      "worst_retained_node": -26,
+      "worst_retained_constant_valuation": 0
+    },
+    {
+      "u": 2,
+      "clusters": 8,
+      "ports": 32,
+      "difference_nodes": 243,
+      "central_constant_valuation": 42,
+      "worst_retained_node": -26,
+      "worst_retained_constant_valuation": -16
+    },
+    {
+      "u": 3,
+      "clusters": 3,
+      "ports": 24,
+      "difference_nodes": 47,
+      "central_constant_valuation": 3,
+      "worst_retained_node": -4,
+      "worst_retained_constant_valuation": 1
+    },
+    {
+      "u": 3,
+      "clusters": 4,
+      "ports": 32,
+      "difference_nodes": 79,
+      "central_constant_valuation": 3,
+      "worst_retained_node": -20,
+      "worst_retained_constant_valuation": 0
+    },
+    {
+      "u": 3,
+      "clusters": 5,
+      "ports": 40,
+      "difference_nodes": 141,
+      "central_constant_valuation": 9,
+      "worst_retained_node": -52,
+      "worst_retained_constant_valuation": 1
+    },
+    {
+      "u": 3,
+      "clusters": 6,
+      "ports": 48,
+      "difference_nodes": 233,
+      "central_constant_valuation": 21,
+      "worst_retained_node": -52,
+      "worst_retained_constant_valuation": 0
+    },
+    {
+      "u": 3,
+      "clusters": 8,
+      "ports": 64,
+      "difference_nodes": 507,
+      "central_constant_valuation": 63,
+      "worst_retained_node": -52,
+      "worst_retained_constant_valuation": -16
+    }
+  ],
+  "conclusions": [
+    "The natural geometric difference grid has negative local constant valuations of cubic magnitude.",
+    "A minimal separated paired-node repair restores local integrality with polynomially many nodes and polynomial bit lengths.",
+    "For n>=7, odd-node Hermite reconstruction plus unrestricted normalized-mode enumeration still has a 2^(M/4) feasible-candidate lower bound at some required node.",
+    "Uniform dilation of all coordinates and interpolation nodes is exactly invariant."
+  ],
+  "scope": "A specific geometric coordinate family, a specific minimal paired-node repair, and reconstruction using only odd-node jet residues with unrestricted candidate enumeration. This is not a lower bound for all nonuniform grids, support-aware methods, or ECDLP algorithms.",
+  "seconds": 2.203
+}

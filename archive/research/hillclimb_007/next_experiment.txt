@@ -1,0 +1,52 @@
+NEXT EXPERIMENT: DEGREE-AWARE LINEAR JET READOUT
+
+Motivation
+The full Hermite functional is unique on degree < total_jet_count, but
+may be nonoptimal on the smaller actual deformation degree. The new
+enumeration bounds explicitly do not cover optimized functionals that
+use these linear dependencies.
+
+Finite model
+For degree d, make the integer jet evaluation matrix
+  A[(tau,j),k] = binom(k,j) * tau^(k-j) * 2^(ell_tau*j)
+for 0<=k<=d, 0<=j<q_tau, with zero entries when j>k.
+Find exact rational weights w with w*A=e_0, minimizing the common
+2-adic denominator exponent L (all 2^L*w integral at 2).
+This optimizes a LINEAR readout on arbitrary rational polynomials of
+degree <=d. It is not automatically a lower bound for nonlinear readout
+with additional coefficient-integrality or tensor-support promises.
+
+Proposed certification
+1. Choose any confluent Vandermonde square minor of size d+1 by taking
+   initial jet prefixes totaling d+1. Its determinant valuation C is
+   known from node differences and local scales.
+2. Work modulo 2^K with K>C+2. Use minimal-valuation pivots and unit row
+   and column operations to diagonalize the row module. Transform e_0
+   by the same column operations.
+3. The minimal denominator exponent is
+   max_i(valuation(diagonal_i)-valuation(transformed_target_i),0).
+   The explicit full-rank minor bounds all relevant invariant factors;
+   values beyond the finite working precision must not be guessed.
+4. Recover modular row coefficients, then lift to an EXACT rational
+   identity. Correct the residual using the known square minor. Since
+   the residual is divisible by 2^K, its correction has enough valuation
+   to preserve the proposed denominator bound.
+5. Retain both the exact rational identity and the modular obstruction
+   at L-1. Compare against the existing full Hermite coefficients.
+
+First cases
+Small consecutive grids and the balanced geometric-cluster grids from
+iteration 007, including overdetermined jet sets. Include controls where
+the full degree equals total_jet_count-1, where the readout is unique.
+
+Do not confuse this linear-operator objective with computing only the
+constant coefficient modulo 2 on integer-coefficient polynomials; that
+is a different module/precision problem. Actual deformation coefficients
+have known dyadic denominators, and their structure must be charged if
+used in a later, stronger model.
+
+Acceptance
+Exact reconstruction and optimality certificates first. An asymptotic
+gain requires a constructive uniform readout, its construction cost,
+precision profile, all coefficient dimensions, and the full recursive
+and ECDLP balance. Keep the square-root target unchanged.

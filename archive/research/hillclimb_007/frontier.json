@@ -1,0 +1,35 @@
+{
+  "ultimate_target": "Correct classical general-prime-field ECDLP in expected bit time 2^(tilde O(sqrt(b))) under the established subgroup/cofactor scope",
+  "goal_status": "active_not_achieved",
+  "iteration": 7,
+  "previous_goal_turn_classification": "progress: derived the geometric-grid integrality failure, a polynomial repair, and a realizable readout witness with an exponential candidate bound",
+  "accepted_results": [
+    "Exact residue decomposition and derivative valuations for balanced low-bit geometric clusters",
+    "Necessary and sufficient retained-node constant-integrality condition for complete coarse classes",
+    "Exact normalized diagonal spectrum and integral triangular-factor certificates",
+    "Exact highest-jet Hermite coefficient losses, verified against full interpolation identities",
+    "Candidate-universe bounds excluding an exponent gain for complete-coarse and positive-central node policies with triangular multiplicities and standard full Hermite readout"
+  ],
+  "method_limits": [
+    "Bounds concern unrestricted feasible-mode enumeration, not all actual supports",
+    "Another linear readout can exploit degree constraints when the jet set is overdetermined",
+    "Arbitrary selective coarse nodes, nontriangular profiles and coefficient-aware precision are not excluded",
+    "No full unpinned C38 contraction or stronger complete ECDLP exponent"
+  ],
+  "baseline_status": "Conditional time coefficient 27.0138774237432612803 on b/(log2(b))^(1/4); unchanged",
+  "next_hypothesis": {
+    "claim_to_test": "Optimizing the linear jet readout on the actual degree-limited polynomial space reduces precision enough to improve the paid mode recurrence",
+    "first_gate": "Exact 2-adic row-module denominator optimum, exact rational reconstruction weights, and a certificate excluding the next smaller denominator",
+    "acceptance": "Uniform constructive savings that survive construction costs, coefficient dimensions, recursion and complete ECDLP arity balancing",
+    "rejection": "No meaningful precision saving, a flawed module model, or costs that erase the apparent gain"
+  },
+  "unresolved": [
+    "Independent complete audit and implementation of the inherited packet foundation",
+    "Full unpinned C38 contraction and witness recovery",
+    "Efficient source-weighted pairing without complete mode catalogues",
+    "Complete larger-arity reduction audit",
+    "A route to the square-root target"
+  ],
+  "checkpoint": "latest_run.json",
+  "continuation": "../hillclimb_008/frontier.json"
+}

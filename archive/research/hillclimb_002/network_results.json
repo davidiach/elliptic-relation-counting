@@ -1,0 +1,765 @@
+{
+  "status": "passed",
+  "counts": {
+    "public_data_compilations": 18,
+    "incident_predicate_programs_checked": 168,
+    "explicit_edges_checked": 89892,
+    "equality_relays_checked": 10518,
+    "rejected_split_relay_states": 54,
+    "nonincident_read_controls": 18,
+    "coherent_mutation_agreements": 90,
+    "full_graph_completions_enumerated": 80,
+    "pinned_contractions": 12,
+    "pinned_witness_recoveries": 12,
+    "independently_checked_active_calls": 12,
+    "conditional_count_calls": 34,
+    "recovery_active_calls": 14,
+    "inconsistent_pin_rejections": 2
+  },
+  "cases": [
+    {
+      "b": 4,
+      "L": 8,
+      "m": 2,
+      "t": 1,
+      "edges": 2076,
+      "tensors": 146,
+      "categories": {
+        "simplex_fourier": 1800,
+        "binary_carry_routes": 264,
+        "range": 10,
+        "nonzero": 2
+      }
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "m": 2,
+      "t": 2,
+      "edges": 996,
+      "tensors": 146,
+      "categories": {
+        "simplex_fourier": 720,
+        "binary_carry_routes": 264,
+        "range": 10,
+        "nonzero": 2
+      }
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "m": 3,
+      "t": 1,
+      "edges": 4688,
+      "tensors": 352,
+      "categories": {
+        "simplex_fourier": 4000,
+        "binary_carry_routes": 660,
+        "range": 24,
+        "nonzero": 4
+      }
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "m": 3,
+      "t": 2,
+      "edges": 2288,
+      "tensors": 352,
+      "categories": {
+        "simplex_fourier": 1600,
+        "binary_carry_routes": 660,
+        "range": 24,
+        "nonzero": 4
+      }
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "m": 4,
+      "t": 1,
+      "edges": 6564,
+      "tensors": 490,
+      "categories": {
+        "simplex_fourier": 5600,
+        "binary_carry_routes": 924,
+        "range": 34,
+        "nonzero": 6
+      }
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "m": 4,
+      "t": 2,
+      "edges": 3204,
+      "tensors": 490,
+      "categories": {
+        "simplex_fourier": 2240,
+        "binary_carry_routes": 924,
+        "range": 34,
+        "nonzero": 6
+      }
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 2,
+      "t": 1,
+      "edges": 3616,
+      "tensors": 306,
+      "categories": {
+        "simplex_fourier": 3024,
+        "binary_carry_routes": 532,
+        "range": 50,
+        "nonzero": 10
+      }
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 2,
+      "t": 2,
+      "edges": 1744,
+      "tensors": 306,
+      "categories": {
+        "simplex_fourier": 1152,
+        "binary_carry_routes": 532,
+        "range": 50,
+        "nonzero": 10
+      }
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 3,
+      "t": 1,
+      "edges": 8190,
+      "tensors": 745,
+      "categories": {
+        "simplex_fourier": 6720,
+        "binary_carry_routes": 1330,
+        "range": 120,
+        "nonzero": 20
+      }
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 3,
+      "t": 2,
+      "edges": 4030,
+      "tensors": 745,
+      "categories": {
+        "simplex_fourier": 2560,
+        "binary_carry_routes": 1330,
+        "range": 120,
+        "nonzero": 20
+      }
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 4,
+      "t": 1,
+      "edges": 11470,
+      "tensors": 1041,
+      "categories": {
+        "simplex_fourier": 9408,
+        "binary_carry_routes": 1862,
+        "range": 170,
+        "nonzero": 30
+      }
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 4,
+      "t": 2,
+      "edges": 5646,
+      "tensors": 1041,
+      "categories": {
+        "simplex_fourier": 3584,
+        "binary_carry_routes": 1862,
+        "range": 170,
+        "nonzero": 30
+      }
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 2,
+      "t": 1,
+      "edges": 3692,
+      "tensors": 344,
+      "categories": {
+        "simplex_fourier": 3024,
+        "binary_carry_routes": 608,
+        "range": 50,
+        "nonzero": 10
+      }
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 2,
+      "t": 2,
+      "edges": 1820,
+      "tensors": 344,
+      "categories": {
+        "simplex_fourier": 1152,
+        "binary_carry_routes": 608,
+        "range": 50,
+        "nonzero": 10
+      }
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 3,
+      "t": 1,
+      "edges": 8304,
+      "tensors": 802,
+      "categories": {
+        "simplex_fourier": 6720,
+        "binary_carry_routes": 1444,
+        "range": 120,
+        "nonzero": 20
+      }
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 3,
+      "t": 2,
+      "edges": 4144,
+      "tensors": 802,
+      "categories": {
+        "simplex_fourier": 2560,
+        "binary_carry_routes": 1444,
+        "range": 120,
+        "nonzero": 20
+      }
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 4,
+      "t": 1,
+      "edges": 11622,
+      "tensors": 1117,
+      "categories": {
+        "simplex_fourier": 9408,
+        "binary_carry_routes": 2014,
+        "range": 170,
+        "nonzero": 30
+      }
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 4,
+      "t": 2,
+      "edges": 5798,
+      "tensors": 1117,
+      "categories": {
+        "simplex_fourier": 3584,
+        "binary_carry_routes": 2014,
+        "range": 170,
+        "nonzero": 30
+      }
+    }
+  ],
+  "recursion": [
+    {
+      "t": 1,
+      "part": "hs",
+      "total_edges": 2076,
+      "free_edges": 1,
+      "pinned_edges": 2075,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 2,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 16,
+        "contraction_calls": 29,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 0,
+        "ring_multiplications": 568,
+        "coefficient_products": 640,
+        "unit_inversions": 42,
+        "pair_sectors": 14,
+        "selected_partition_0": 14,
+        "direct_leaf_contractions": 28,
+        "streamed_simplex_packet_entries": 56,
+        "direct_simplex_assignments": 56,
+        "projected_simplex_children": 28,
+        "adaptive_projected_values": 28,
+        "matrix_products": 112,
+        "scalar_multiplications": 112,
+        "adaptive_tree_joins": 112,
+        "peak_adaptive_partial_entries": 1,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 2,
+        "active_calls": 1
+      },
+      "seconds": 0.078
+    },
+    {
+      "t": 1,
+      "part": "outs",
+      "total_edges": 2076,
+      "free_edges": 1,
+      "pinned_edges": 2075,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 2,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 16,
+        "contraction_calls": 29,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 0,
+        "ring_multiplications": 568,
+        "coefficient_products": 640,
+        "unit_inversions": 42,
+        "pair_sectors": 14,
+        "selected_partition_0": 14,
+        "direct_leaf_contractions": 28,
+        "streamed_simplex_packet_entries": 56,
+        "direct_simplex_assignments": 56,
+        "projected_simplex_children": 28,
+        "adaptive_projected_values": 28,
+        "matrix_products": 112,
+        "scalar_multiplications": 112,
+        "adaptive_tree_joins": 112,
+        "peak_adaptive_partial_entries": 1,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 2,
+        "active_calls": 1
+      },
+      "seconds": 0.079
+    },
+    {
+      "t": 1,
+      "part": "carry_ports",
+      "total_edges": 2076,
+      "free_edges": 1,
+      "pinned_edges": 2075,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 2,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 16,
+        "contraction_calls": 29,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 0,
+        "ring_multiplications": 568,
+        "coefficient_products": 640,
+        "unit_inversions": 42,
+        "pair_sectors": 14,
+        "selected_partition_0": 14,
+        "direct_leaf_contractions": 28,
+        "streamed_simplex_packet_entries": 56,
+        "direct_simplex_assignments": 56,
+        "projected_simplex_children": 28,
+        "adaptive_projected_values": 28,
+        "matrix_products": 112,
+        "scalar_multiplications": 112,
+        "adaptive_tree_joins": 112,
+        "peak_adaptive_partial_entries": 1,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 2,
+        "active_calls": 1
+      },
+      "seconds": 0.046
+    },
+    {
+      "t": 1,
+      "part": "range",
+      "total_edges": 2076,
+      "free_edges": 1,
+      "pinned_edges": 2075,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 2,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 16,
+        "contraction_calls": 29,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 0,
+        "ring_multiplications": 568,
+        "coefficient_products": 662,
+        "unit_inversions": 42,
+        "pair_sectors": 14,
+        "selected_partition_0": 14,
+        "direct_leaf_contractions": 28,
+        "streamed_simplex_packet_entries": 56,
+        "direct_simplex_assignments": 56,
+        "projected_simplex_children": 28,
+        "adaptive_projected_values": 28,
+        "matrix_products": 112,
+        "scalar_multiplications": 112,
+        "adaptive_tree_joins": 112,
+        "peak_adaptive_partial_entries": 1,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 3,
+        "active_calls": 1
+      },
+      "seconds": 0.047
+    },
+    {
+      "t": 1,
+      "part": "nonzero",
+      "total_edges": 2076,
+      "free_edges": 1,
+      "pinned_edges": 2075,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 2,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 16,
+        "contraction_calls": 29,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 0,
+        "ring_multiplications": 568,
+        "coefficient_products": 662,
+        "unit_inversions": 42,
+        "pair_sectors": 14,
+        "selected_partition_0": 14,
+        "direct_leaf_contractions": 28,
+        "streamed_simplex_packet_entries": 56,
+        "direct_simplex_assignments": 56,
+        "projected_simplex_children": 28,
+        "adaptive_projected_values": 28,
+        "matrix_products": 112,
+        "scalar_multiplications": 112,
+        "adaptive_tree_joins": 112,
+        "peak_adaptive_partial_entries": 1,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 3,
+        "active_calls": 1
+      },
+      "seconds": 0.047
+    },
+    {
+      "t": 1,
+      "part": "relay_pair",
+      "total_edges": 2076,
+      "free_edges": 2,
+      "pinned_edges": 2074,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 4,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 29,
+        "contraction_calls": 131,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 0,
+        "ring_multiplications": 3456,
+        "coefficient_products": 5123,
+        "unit_inversions": 108,
+        "pair_sectors": 66,
+        "selected_partition_0": 66,
+        "streamed_simplex_packet_entries": 812,
+        "direct_leaf_contractions": 130,
+        "direct_simplex_assignments": 400,
+        "projected_simplex_children": 130,
+        "adaptive_projected_values": 130,
+        "matrix_products": 528,
+        "scalar_multiplications": 536,
+        "adaptive_tree_joins": 528,
+        "peak_adaptive_partial_entries": 2,
+        "adaptive_projected_cache_hits": 76,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 5,
+        "active_calls": 2
+      },
+      "seconds": 0.156
+    },
+    {
+      "t": 2,
+      "part": "hs",
+      "total_edges": 996,
+      "free_edges": 1,
+      "pinned_edges": 995,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 4,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 30,
+        "contraction_calls": 133,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 4372,
+        "coefficient_products": 5802,
+        "unit_inversions": 42,
+        "pair_sectors": 28,
+        "selected_partition_0": 28,
+        "direct_leaf_contractions": 132,
+        "streamed_simplex_packet_entries": 792,
+        "direct_simplex_assignments": 792,
+        "projected_simplex_children": 132,
+        "adaptive_projected_values": 132,
+        "matrix_products": 224,
+        "scalar_multiplications": 300,
+        "adaptive_tree_joins": 224,
+        "peak_adaptive_partial_entries": 4,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 2,
+        "active_calls": 1
+      },
+      "seconds": 0.454
+    },
+    {
+      "t": 2,
+      "part": "outs",
+      "total_edges": 996,
+      "free_edges": 1,
+      "pinned_edges": 995,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 4,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 30,
+        "contraction_calls": 133,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 4372,
+        "coefficient_products": 5802,
+        "unit_inversions": 42,
+        "pair_sectors": 28,
+        "selected_partition_0": 28,
+        "direct_leaf_contractions": 132,
+        "streamed_simplex_packet_entries": 792,
+        "direct_simplex_assignments": 792,
+        "projected_simplex_children": 132,
+        "adaptive_projected_values": 132,
+        "matrix_products": 224,
+        "scalar_multiplications": 300,
+        "adaptive_tree_joins": 224,
+        "peak_adaptive_partial_entries": 4,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 2,
+        "active_calls": 1
+      },
+      "seconds": 0.515
+    },
+    {
+      "t": 2,
+      "part": "carry_ports",
+      "total_edges": 996,
+      "free_edges": 1,
+      "pinned_edges": 995,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 4,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 30,
+        "contraction_calls": 133,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 4372,
+        "coefficient_products": 5802,
+        "unit_inversions": 42,
+        "pair_sectors": 28,
+        "selected_partition_0": 28,
+        "direct_leaf_contractions": 132,
+        "streamed_simplex_packet_entries": 792,
+        "direct_simplex_assignments": 792,
+        "projected_simplex_children": 132,
+        "adaptive_projected_values": 132,
+        "matrix_products": 224,
+        "scalar_multiplications": 300,
+        "adaptive_tree_joins": 224,
+        "peak_adaptive_partial_entries": 4,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 2,
+        "active_calls": 1
+      },
+      "seconds": 0.188
+    },
+    {
+      "t": 2,
+      "part": "range",
+      "total_edges": 996,
+      "free_edges": 1,
+      "pinned_edges": 995,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 4,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 30,
+        "contraction_calls": 133,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 4372,
+        "coefficient_products": 6006,
+        "unit_inversions": 42,
+        "pair_sectors": 28,
+        "selected_partition_0": 28,
+        "direct_leaf_contractions": 132,
+        "streamed_simplex_packet_entries": 792,
+        "direct_simplex_assignments": 792,
+        "projected_simplex_children": 132,
+        "adaptive_projected_values": 132,
+        "matrix_products": 224,
+        "scalar_multiplications": 300,
+        "adaptive_tree_joins": 224,
+        "peak_adaptive_partial_entries": 4,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 3,
+        "active_calls": 1
+      },
+      "seconds": 0.14
+    },
+    {
+      "t": 2,
+      "part": "nonzero",
+      "total_edges": 996,
+      "free_edges": 1,
+      "pinned_edges": 995,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 4,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 30,
+        "contraction_calls": 133,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 1,
+        "ring_multiplications": 4372,
+        "coefficient_products": 6006,
+        "unit_inversions": 42,
+        "pair_sectors": 28,
+        "selected_partition_0": 28,
+        "direct_leaf_contractions": 132,
+        "streamed_simplex_packet_entries": 792,
+        "direct_simplex_assignments": 792,
+        "projected_simplex_children": 132,
+        "adaptive_projected_values": 132,
+        "matrix_products": 224,
+        "scalar_multiplications": 300,
+        "adaptive_tree_joins": 224,
+        "peak_adaptive_partial_entries": 4,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 3,
+        "active_calls": 1
+      },
+      "seconds": 0.157
+    },
+    {
+      "t": 2,
+      "part": "relay_pair",
+      "total_edges": 996,
+      "free_edges": 2,
+      "pinned_edges": 994,
+      "expected": 1,
+      "got": 1,
+      "recursion": {
+        "peak_coefficient_dimension": 8,
+        "peak_jet_axes": 1,
+        "peak_precision_bits": 58,
+        "contraction_calls": 3011,
+        "maximum_recursion_depth": 1,
+        "max_scalar_loss_bits": 2,
+        "ring_multiplications": 772400,
+        "coefficient_products": 1650765,
+        "unit_inversions": 108,
+        "pair_sectors": 300,
+        "selected_partition_0": 300,
+        "streamed_simplex_packet_entries": 172300,
+        "direct_leaf_contractions": 3010,
+        "direct_simplex_assignments": 87360,
+        "projected_simplex_children": 3010,
+        "adaptive_projected_values": 3010,
+        "matrix_products": 2400,
+        "scalar_multiplications": 6420,
+        "adaptive_tree_joins": 2400,
+        "peak_adaptive_partial_entries": 40,
+        "adaptive_projected_cache_hits": 1204,
+        "simplex_jet_nodes": 6,
+        "exact_scalar_readouts": 1,
+        "complete_simplex_contractions": 1,
+        "active_depth_0": 1
+      },
+      "recovery": {
+        "count_calls": 5,
+        "active_calls": 2
+      },
+      "seconds": 8.921
+    }
+  ],
+  "inherited_source_hashes": {
+    "vendor/simplex_contraction.py": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d",
+    "vendor/native_jet_contraction.py": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d",
+    "vendor/weighted_matrix_join.py": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300",
+    "vendor/arithmetic_alternating_chord.py": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e",
+    "vendor/intervals.py": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2"
+  },
+  "scope": "Public-data C38 graph compilation, explicit relay equality, incident-only entry access, exact contraction and witness recovery with all but one or two edges pinned. No unpinned relation search, asymptotic packing implementation, or asymptotic runtime validation."
+}

@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "records": [
+    {
+      "script": "balanced_projection.py",
+      "returncode": 0,
+      "seconds": 5.875,
+      "status": "passed",
+      "result_sha256": "5841539389ea6e8d802be8b7565658c1b4d424d244015b0d9064b5ea606e22d9"
+    },
+    {
+      "script": "normalized_permanent.py",
+      "returncode": 0,
+      "seconds": 9.61,
+      "status": "passed",
+      "result_sha256": "63a6a4a03f3ec4167ab3ae5e9070b1cc6c66556ccb2823d0d47cbf2c2093804d"
+    }
+  ],
+  "source_sha256": {
+    "hillclimb_001\\adaptive_pair_join.py": "d9be62659f0ea35ce5c24d54c431be98df5952fcef26111f4b417e0c197dc36b",
+    "hillclimb_001\\c38_simplex.py": "92778a98058805337161f0cc3b77f3a77a8274586d4d6af5207406d6061df4b7",
+    "hillclimb_001\\certify_bounds.py": "b35ed20b8bc1a21eb9770e7a6aaf0f9900aee95578afb323aa4973c64a744b64",
+    "hillclimb_001\\common.py": "3548000f4a22b1997006e6f3ef825d67b0509984cbd8bdb492052cc310ab2548",
+    "hillclimb_001\\run_all.py": "d39c2c02eedb15473d71eb266461b4b7c0df8ca924f32770adc84717896cce9c",
+    "hillclimb_001\\source_manifest.json": "8c7b423deb25bfaf09d9936202a045d281a6cafae4bc531efa33145ac2fdbaeb",
+    "hillclimb_001\\vendor\\arithmetic_alternating_chord.py": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e",
+    "hillclimb_001\\vendor\\intervals.py": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2",
+    "hillclimb_001\\vendor\\native_jet_contraction.py": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d",
+    "hillclimb_001\\vendor\\simplex_contraction.py": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d",
+    "hillclimb_001\\vendor\\weighted_matrix_join.py": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300",
+    "hillclimb_001\\verify_adaptive_simplex.py": "3e7a5c42bc9f67d9a89d079b44ea6eb29680afe28480735926b22641579fe8d9",
+    "hillclimb_001\\verify_c38_simplex.py": "7dd716e4fc910fe98e1eb1afd6220c1f6a68635af69eabdad3d38b3eb6c503c4",
+    "hillclimb_002\\c38_network.py": "14ebb87532624f38b0645f5fb58fc158abed9a4f3b73c98d613017fbca65cef4",
+    "hillclimb_002\\run_all.py": "83c7af5242002974ecdc16f1584e234c00f53ee45eb587db9c339ca5dbb69044",
+    "hillclimb_002\\spectrum_audit.py": "20f4b1578feddf0e7989bd1c81d9e734c17360b818fa45bde1ce7e2fefa8017e",
+    "hillclimb_002\\verify_network.py": "f8b6cc94660000f01f14d48f0dddf131d8b38985872b2475fdc07562b3e48ed9",
+    "hillclimb_002\\verify_source_enumeration.py": "c843f091ee46e7d0dfe3036e39edd2de91b7fee38ef338ae2428697060df319a",
+    "hillclimb_003\\c38_slices.py": "6fb8b20358108d261378574098aa2d20be0a6f7b6f11dd23d17a75008ccedbe5",
+    "hillclimb_003\\factor_network.py": "fddec725a3653b8056c3f1e96600e712c92484169f661ab553754b5bdb5ebc32",
+    "hillclimb_003\\probe_compression.py": "40d290a06846f18cef8a0c91a91b37542698975b4ce7d220ab6235f0ee8c35f9",
+    "hillclimb_003\\run_all.py": "1ca194a25385eadc499996bb6b6db3678dacc6fa14e03bf0b7dc613d73d2abc2",
+    "hillclimb_003\\verify_factoring.py": "c89213599326acedd96e0efd1eaad96f9ad34a09af12f58cbf8f3c28cfc5fb25",
+    "hillclimb_005\\balanced_projection.py": "0cc073c175135148211d63098ca07bf79eeac2ae72f9bc675d68eb17529dbfbd",
+    "hillclimb_005\\closure.tex": "86f10b227a36f819456087ba4f509942e04f21d8ca873bfe8f7716525ffdd0ce",
+    "hillclimb_005\\normalized_permanent.py": "a7dfc683ab8160567f0075e931bd0b9f26731f3217c86949bd3eb86b858e4c3e",
+    "hillclimb_005\\run_all.py": "bbc9b5ac6b2b329e867f2f8f4f9d56614c0a527b1c10a209466d1ed18be0faac"
+  },
+  "sources_unchanged": true,
+  "python": "3.12.2",
+  "scope": "Finite balanced C38 projection identity and counterexamples to specific compression shortcuts. No complete ECDLP improvement."
+}

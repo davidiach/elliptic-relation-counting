@@ -1,6 +1,6 @@
 # Counting relations in independently hashed elliptic-curve slots
 
-[Read the v2 paper (PDF)](paper.pdf) · [Editable Typst source](paper.typ) · [Index of mathematical derivations](derivations/README.md) · [Recorded experiments](evidence/)
+[Read the v2 paper (PDF)](paper.pdf) · [Editable Typst source](paper.typ) · [Mathematical supplement](derivations/README.md) · [Recorded experiments](evidence/) · [Historical reports](archive/README.md)
 
 For a fixed elliptic-curve target $T$ with $2T\ne O$, any adaptive predictor that leaves a whole slot unread has error at least $\lambda-O(\lambda^2)$ at the proposed sparse widths. Joint determinant moments can be computed within the proposed budget. Decoding the relation count from them at growing arity remains open.
 
@@ -9,6 +9,10 @@ For a fixed elliptic-curve target $T$ with $2T\ne O$, any adaptive predictor tha
 **20 November 2026 follow-up.** When we can choose the sampler, fixing most abscissa bits in all but one slot gives the previously derived conditional time coefficient **24.00246** for general primes in the inherited input class. With slightly narrower slots, almost every successful seed has one signed relation whose entire address takes $b+O(m)$ bits. We prove a communication lower bound for verifiers that keep each seed local. Using every public seed, we can cheaply compute a signed determinant score. Its correlation with the correct address is exponentially small at growing arity. Constructing the short address at a cost that improves the end-to-end exponent remains open. The v2 paper covers the sampler that uses an affine hash in every slot. [Sampled-slot results and cost comparison](derivations/sampled_slots/README.md) · [Joint determinant test](derivations/sampled_slots/signed_moment.md)
 
 ## Results
+
+**Research supplement, 22 November 2026.** With the mixed sampler and the inherited finite-packet and reduction assumptions, the group-equation construction gives leading time coefficient **24.00246** for general primes in the comparison class, **19.59793** for primes with bounded signed radix support, and **13.85783** for primes $p=2^b-c$ with positive, polynomially bounded $c$. Each coefficient multiplies $b/(\log_2 b)^{1/4}$ in the bound on log expected time. The supplement includes the fixed-bit compiler, its checks on small graphs, and the weak-detection argument for affine hashes. [Group equations and hypotheses](derivations/group_equations/results.md) · [Compiler derivation](derivations/strided_slots/results.md) · [Weak detection](derivations/strided_slots/weak_detection.md)
+
+For three-slot determinant moments, the additional experiments compare target derivatives on unseen masks, give a certificate for small quartic instances, and reconstruct dense slot supports using weighted measurements. The dense reconstruction has quadratic cost up to logarithmic factors at balanced widths. [Target derivatives](derivations/joint_parity/target_jets.md) · [Quartic decoder](derivations/joint_parity/quartic_decoder.md) · [Dense weighted moments](derivations/joint_parity/dense_weighted.md)
 
 **False candidates on isolated witnesses, 21 November 2026.** Translating the signed leaves before checking only abscissas inside the chord tree keeps every genuine witness. For each eligible fixed target the mean number of wrong signed addresses on guarded singleton seeds is at most $(1+o(1))/(2m^2)$ at the thinned widths. The direct tree still carries $m-2$ full-field abscissas. Several checked offsets give zero wrong addresses for the same proposed tuple. The conditional end-to-end exponent is unchanged. [Filter, evidence and comparison](derivations/false_candidates/README.md)
 
@@ -40,10 +44,17 @@ python -m pip install -r requirements.txt
 python reproduce.py
 ```
 
-The runner compares every output with its committed transcript. Each script can also be run independently.
+The default suite compares 52 outputs with their committed transcripts. To include the four C38 integration checks, pass the directory containing the original `ECDLP_v6_complete.zip` and `simplex-alphabet-ecdl-v6.zip`. The runner checks both archive hashes, loads four reference modules into a temporary directory, and compares all 56 outputs. The historical checkpoint replay has its own inputs and instructions. [Historical checks](archive/README.md#replay-the-historical-checks)
+
+```sh
+python reproduce.py --source-archives /path/to/local/archives
+```
 
 | Script | What it checks |
 |---|---|
+| [Fixed-bit compiler](checks/strided_compiler.py) · [Compiler checks](checks/check_strided_compiler.py) · [Reciprocal](checks/check_reciprocal.py) · [Sparse quotient](checks/check_sparse.py) · [Weighted transform](checks/check_weighted.py) | C38 integration checks on the original arithmetic fixtures, including rejection of corrupted assignments. |
+| [Batching](checks/check_batch.py) · [Chord geometry](checks/check_geometry.py) · [Weak recovery](checks/check_weak_recovery.py) · [Weak gate trials](checks/probe_weak_gate.py) | Finite residual fibers, signed abscissa counts, and the difference between planted and independently marked slots. |
+| [Sign identity](checks/check_sign_identity.py) · [Target derivatives](checks/check_target_jets.py) · [Held-out masks](checks/probe_target_jets.py) · [Quartic decoder](checks/check_quartic_decoder.py) · [Opposite targets](checks/check_opposite_targets.py) · [Dense weighted moments](checks/check_dense_weighted.py) · [Seed rank](checks/check_seed_rank.py) | Symbolic identities, exact finite collisions, unseen-mask predictions, and reconstruction from weighted slot measurements. |
 | [False-address counts](checks/check_candidate_targets.py) · [Universal offsets](checks/check_candidate_offsets.py) · [Intermediate fingerprints](checks/check_candidate_splices.py) · [Quotient arithmetic](checks/check_candidate_arithmetic.py) · [Cut and additive bounds](checks/check_candidate_fingerprint.py) | Complete fixed-target singleton patterns, joint offset tests, internal completions, and average false addresses for short fingerprints. |
 | [Streamed sections](checks/check_chord_sections.py) · [Adaptive cosets](checks/check_quarter_cosets.py) · [Isogeny traces](checks/check_implicit_chord_algebra.py) · [Fixed-target poles](checks/check_implicit_chord_fiber.py) · [Masked errors](checks/check_implicit_chord_projection.py) | Section equality against literal products, subgroup coverage of actual seed states, exact trace and pole identities, and the difference between average and singleton accuracy. |
 | [Product-free chord calculation](checks/check_chord_difference.py) · [Local algebra](checks/check_difference_algebra.py) · [Balanced speeds](checks/check_difference_fiber.py) · [Quadratic marker](checks/check_difference_projection.py) | Literal equality modulo $p^2$, recovery of a witness bit, zero versus multiple hits, and an ordinary incidence test for Walsh parity. |

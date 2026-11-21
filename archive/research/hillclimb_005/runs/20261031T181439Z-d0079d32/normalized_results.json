@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "normalized_scalar_matrix": [
+    [
+      "1/7",
+      "9/35",
+      "3/7"
+    ],
+    [
+      "1/11",
+      "5/33",
+      "50/231"
+    ],
+    [
+      "1/15",
+      "7/65",
+      "21/143"
+    ]
+  ],
+  "scalar_identity_defect": "-8/495990495",
+  "reciprocal_matrix_determinant": "-22/135",
+  "raw_Cauchy_positive_control": true,
+  "actual_packet_entry_equals_permanent": true,
+  "actual_mode_weights": [
+    5,
+    7,
+    11
+  ],
+  "finite_jet_defect": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    16060399221156610048
+  ],
+  "protected_valuation": 49,
+  "precision": 64,
+  "jet_length": 7,
+  "dense_last_row_checks": [
+    {
+      "L": 8,
+      "nonzero_modes": 4,
+      "precision": 17,
+      "largest_leading_valuation": 12
+    },
+    {
+      "L": 16,
+      "nonzero_modes": 8,
+      "precision": 33,
+      "largest_leading_valuation": 27
+    },
+    {
+      "L": 32,
+      "nonzero_modes": 16,
+      "precision": 65,
+      "largest_leading_valuation": 58
+    },
+    {
+      "L": 64,
+      "nonzero_modes": 32,
+      "precision": 129,
+      "largest_leading_valuation": 121
+    },
+    {
+      "L": 128,
+      "nonzero_modes": 64,
+      "precision": 257,
+      "largest_leading_valuation": 248
+    }
+  ],
+  "scope": "Rejects applying the raw Cauchy Borchardt identity directly to these normalized mode coefficients, including nonzero diagonal row/column rescalings over Q. Does not exclude different structured-permanent algorithms.",
+  "primary_reference": "https://arxiv.org/abs/2309.05886"
+}

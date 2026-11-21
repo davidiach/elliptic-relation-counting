@@ -1,0 +1,4 @@
+p=2^13-13=8179, n=8, FFT ring q^e=1663^2: 64 basis products, 8 base words per paired boundary, 12 positive and 12 negative quotient checks, 24 rejections
+p=2^19-19=524269, n=16, FFT ring q^e=14591^2: 256 basis products, 16 base words per paired boundary, 12 positive and 12 negative quotient checks, 24 rejections
+p=101, actual C38 arithmetic, m=3,4,5: 22 valid equation checks, 9 perturbed witnesses rejected
+p=29, actual C38 arithmetic, m=3,4,5: 22 valid equation checks, 9 perturbed witnesses rejected

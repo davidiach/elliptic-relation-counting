@@ -1,0 +1,13 @@
+{
+  "returncode": 0,
+  "seconds": 2.281,
+  "source_sha256": {
+    "grid_audit.tex": "ad351b6875ea558c6cd084eff41bf899e47e4fd92545e43bba4841a94a41f125",
+    "nonuniform_grid.py": "9b429952ce4bc6d5726d3c7f24342ce7682ce6ce77f672417f060c81398d71df",
+    "run_all.py": "5c618f7c525476c1d877aaaf1f92c0b38921ee103b6a18a3384ab74c3a3bc772"
+  },
+  "sources_unchanged": true,
+  "python": "3.12.2",
+  "result_sha256": "a6898a9db77cfd549ec1fd0894ac50a5f95233516845ff690bc98ae004dd98db",
+  "status": "passed"
+}

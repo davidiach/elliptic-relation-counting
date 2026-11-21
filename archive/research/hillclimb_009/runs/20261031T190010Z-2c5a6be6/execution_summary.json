@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "seconds": 16.906,
+  "source_sha256": {
+    "hillclimb_001\\c38_simplex.py": "92778a98058805337161f0cc3b77f3a77a8274586d4d6af5207406d6061df4b7",
+    "hillclimb_001\\common.py": "3548000f4a22b1997006e6f3ef825d67b0509984cbd8bdb492052cc310ab2548",
+    "hillclimb_001\\vendor\\arithmetic_alternating_chord.py": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e",
+    "hillclimb_001\\vendor\\intervals.py": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2",
+    "hillclimb_001\\vendor\\native_jet_contraction.py": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d",
+    "hillclimb_001\\vendor\\simplex_contraction.py": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d",
+    "hillclimb_001\\vendor\\weighted_matrix_join.py": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300",
+    "hillclimb_002\\c38_network.py": "14ebb87532624f38b0645f5fb58fc158abed9a4f3b73c98d613017fbca65cef4",
+    "hillclimb_003\\c38_slices.py": "6fb8b20358108d261378574098aa2d20be0a6f7b6f11dd23d17a75008ccedbe5",
+    "hillclimb_006\\nonuniform_grid.py": "9b429952ce4bc6d5726d3c7f24342ce7682ce6ce77f672417f060c81398d71df",
+    "hillclimb_007\\cluster_audit.py": "baff3cf99448d7bf30e5f9865d84ca2603ec7d7d047ffd9be7f226253a9b6a82",
+    "hillclimb_008\\optimal_readout.py": "dc1212332bc0b644b6c61dfeb3cbc8a956ac12d5f03b906690a5df0cf2d32de4",
+    "hillclimb_008\\readout_results.json": "c68409dd7ebce439112c13ed47448e0c85ba0eb0bdde0fd27c730117f2be477b",
+    "hillclimb_008\\verify_certificate.py": "34232077eab8a9e37d2f78c3fd2cef9cd019d8f19ba4c899121ab7aa4eb858f3",
+    "hillclimb_009\\basis_labels.json": "f8750c0eeff3c500069e4c91e0fcd422409a8461425eb6b1b92ad3174875f51b",
+    "hillclimb_009\\packet_space.py": "82c670f48a2a935c24742694b650d197d515b40b2128379488d4cc305a629f94",
+    "hillclimb_009\\parity_readout.py": "d78dce1077bd1a8629a528bc8e964937b76fe782f092d2a9b2f280217efa16ff",
+    "hillclimb_009\\run_all.py": "3387e5824ba04746a95129b033c8eeea8b8c2d34568d118329b8a4da050a2a85",
+    "hillclimb_009\\space_and_parity.tex": "df97422743170951545cf009901253ecbe93c748c48c39092ee3283b6975df14",
+    "hillclimb_009\\space_audit.py": "2282d6be709a7e2ce030adea4d3fb770c1c70005ee571918fd569c4f7d6442c8"
+  },
+  "sources_unchanged": true,
+  "python": "3.12.2",
+  "result_sha256": "da8bf5be7766126adf28290b4bcd8ce5e089e25139f9f628a8d8af7e0c059b93"
+}

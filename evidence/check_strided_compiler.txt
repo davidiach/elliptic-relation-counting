@@ -1,0 +1,11 @@
+Geometry p=13, N=19, runs=2, difference-set size 9, maximum fiber 4
+Exact m=3, 2,048 seed combinations, all 18 affine targets, guarded coverage 0.8613..0.9307
+Geometry p=13, N=19, runs=1, difference-set size 3, maximum fiber 4
+Exact m=4, 65,536 seed combinations, all 18 affine targets, guarded coverage 0.4138..0.4383
+Geometry p=19, N=20, runs=2, difference-set size 9, maximum fiber 4
+Exact m=3, 32,768 seed combinations, all 19 affine targets, guarded coverage 0.1658..0.2409
+Geometry p=101, N=103, runs=2, difference-set size 21, maximum fiber 4
+Strided layout verified on 4 nontrivial shapes up to 65,537 bits
+C38 b=4, m=3, alphabet=2: 4,688 -> 3,988 edges, 300 fixed input symbols, corrupted cases rejected
+C38 b=7, m=5, alphabet=6: 8,122 -> 7,202 edges, 256 fixed input symbols, corrupted cases rejected
+conditional time constant 24.002459963814, space constant 12.001229981907

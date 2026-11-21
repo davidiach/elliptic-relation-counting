@@ -1,0 +1,8 @@
+p=13, m=3, negative leaves=(0, 1, 4), target=(0, 1): assignments=22308, residuals=20201, max fiber=4, projective directions=15221
+  2 of 5 random equations: 64/64 false acceptances
+  3 of 5 random equations: 64/64 false acceptances
+  4 of 5 random equations: 33/64 false acceptances
+p=7, m=4, negative leaves=(0, 1, 0, 0), target=(2, 3): assignments=61397, residuals=51006, max fiber=6, projective directions=43422
+  4 of 7 random equations: 64/64 false acceptances
+  5 of 7 random equations: 62/64 false acceptances
+  6 of 7 random equations: 18/64 false acceptances

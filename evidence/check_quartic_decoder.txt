@@ -1,0 +1,33 @@
+Collision F_37: shared third-slot data [18, 17, 11, 11, 28, 25], counts [0, 5], x-weighted readouts [((22, 33, 8, 23, 0), 30), ((24, 31, 28, 20, 0), 27)].
+Same third-slot collision at (30, 5), single-abscissa anchors: [1, 0].
+Exact F_13 width 2, target (0, 1) (ordered seed multiplicities):
+  k=1: all 146,784, certified 146,784, positive 75,840, found 75,840
+  k=2: all 168,480, certified 168,480, positive 133,008, found 133,008
+Exact F_23 width 2, target (0, 1) (ordered seed multiplicities):
+  k=1: all 10,721,424, certified 10,658,784, positive 3,060,720, found 3,025,728
+  k=2: all 11,211,984, certified 11,202,384, positive 5,644,272, found 5,638,128
+Exact F_23 width 4, target (12, 15) (ordered seed multiplicities):
+  k=1: all 1,654,080, certified 1,648,080, positive 466,416, found 466,416
+  k=2: all 5,308,224, certified 5,298,816, positive 2,654,592, found 2,650,944
+  k=3: all 3,328,608, certified 3,304,800, positive 2,205,552, found 2,193,264
+  k=4: all 95,040, certified 88,512, positive 81,456, found 77,232
+F_23, 30,000 plants + 30,000 unlabeled seeds; 20,000 independent fresh tests:
+  Errors: absent 3,165, jet 1,976, memorized mask triple 1,975.
+  Eligible new mask triples: 756 draws, 254 positives; jet called 0 true and 0 false positives on them.
+  Jet plus odd-block lookup: 1,976 errors; unseen true/false positives 0/0.
+  Structural readout: standalone_errors 1,955, hybrid_errors 1,752, certified 3,117, novel_certified 410, novel_true_positives 7, novel_false_positives 0, novel_in_shape 410, novel_in_shape_hits 7
+F_101, 30,000 plants + 30,000 unlabeled seeds; 20,000 independent fresh tests:
+  Errors: absent 4,763, jet 4,744, memorized mask triple 4,744.
+  Eligible new mask triples: 9,540 draws, 3,284 positives; jet called 0 true and 0 false positives on them.
+  Jet plus odd-block lookup: 4,744 errors; unseen true/false positives 0/0.
+  Structural readout: standalone_errors 4,143, hybrid_errors 4,138, certified 3,701, novel_certified 3,631, novel_true_positives 599, novel_false_positives 0, novel_in_shape 3,632, novel_in_shape_hits 599
+F_103, 30,000 plants + 30,000 unlabeled seeds; 20,000 independent fresh tests:
+  Errors: absent 4,230, jet 4,216, memorized mask triple 4,216.
+  Eligible new mask triples: 8,877 draws, 2,914 positives; jet called 0 true and 0 false positives on them.
+  Jet plus odd-block lookup: 4,216 errors; unseen true/false positives 0/0.
+  Structural readout: standalone_errors 3,622, hybrid_errors 3,620, certified 3,892, novel_certified 3,795, novel_true_positives 587, novel_false_positives 0, novel_in_shape 3,799, novel_in_shape_hits 587
+F_103, 30,000 plants + 30,000 unlabeled seeds; 20,000 independent fresh tests:
+  Errors: absent 14,797, jet 14,797, memorized mask triple 14,797.
+  Eligible new mask triples: 8,337 draws, 6,262 positives; jet called 0 true and 0 false positives on them.
+  Jet plus odd-block lookup: 14,797 errors; unseen true/false positives 0/0.
+  Structural readout: standalone_errors 14,730, hybrid_errors 14,730, certified 308, novel_certified 308, novel_true_positives 67, novel_false_positives 0, novel_in_shape 310, novel_in_shape_hits 68

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "counts": {
+    "independent_curve_pairs_examined": 3468,
+    "source_triples_examined": 26364,
+    "complete_graph_witnesses_checked": 67,
+    "complete_source_searches": 12,
+    "uncovered_targets": 3,
+    "covered_targets": 9
+  }
+}

@@ -1,0 +1,46 @@
+{"name": "constant", "degree": 0, "jets": 2, "optimal_common": 0, "full_common": 1, "full_geometric": 1, "optimal_geometric": 0}
+{"name": "two_values", "degree": 1, "jets": 2, "optimal_common": 1, "full_common": 1, "full_geometric": 1, "optimal_geometric": 1}
+{"name": "single_odd", "degree": 4, "jets": 5, "optimal_common": 12, "full_common": 12, "full_geometric": 12, "optimal_geometric": 12}
+{"name": "single_even", "degree": 4, "jets": 5, "optimal_common": 8, "full_common": 8, "full_geometric": 16, "optimal_geometric": 16}
+{"name": "overdetermined", "degree": 2, "jets": 4, "optimal_common": 4, "full_common": 5, "full_geometric": 5, "optimal_geometric": 4}
+{"name": "unique", "degree": 3, "jets": 4, "optimal_common": 5, "full_common": 5, "full_geometric": 5, "optimal_geometric": 5}
+{"name": "zero_node", "degree": 4, "jets": 5, "optimal_common": 0}
+{"name": "unequal_scales", "degree": 5, "jets": 7, "optimal_common": 6}
+{"name": "random_0", "degree": 4, "jets": 6, "optimal_common": 13}
+{"name": "random_1", "degree": 1, "jets": 8, "optimal_common": 0}
+{"name": "random_2", "degree": 1, "jets": 4, "optimal_common": 1}
+{"name": "random_3", "degree": 9, "jets": 10, "optimal_common": 7}
+{"name": "random_4", "degree": 0, "jets": 1, "optimal_common": 0}
+{"name": "random_5", "degree": 0, "jets": 3, "optimal_common": 0}
+{"name": "random_6", "degree": 2, "jets": 3, "optimal_common": 4}
+{"name": "random_7", "degree": 4, "jets": 7, "optimal_common": 1}
+{"name": "random_8", "degree": 3, "jets": 5, "optimal_common": 0}
+{"name": "random_9", "degree": 2, "jets": 3, "optimal_common": 6}
+{"name": "random_10", "degree": 1, "jets": 6, "optimal_common": 1}
+{"name": "random_11", "degree": 1, "jets": 6, "optimal_common": 0}
+{"name": "random_12", "degree": 8, "jets": 10, "optimal_common": 16}
+{"name": "random_13", "degree": 2, "jets": 5, "optimal_common": 3}
+{"name": "random_14", "degree": 6, "jets": 8, "optimal_common": 2}
+{"name": "random_15", "degree": 1, "jets": 5, "optimal_common": 0}
+{"name": "random_16", "degree": 0, "jets": 5, "optimal_common": 0}
+{"name": "random_17", "degree": 7, "jets": 8, "optimal_common": 9}
+{"name": "random_18", "degree": 0, "jets": 9, "optimal_common": 0}
+{"name": "random_19", "degree": 0, "jets": 1, "optimal_common": 0}
+{"name": "random_20", "degree": 4, "jets": 5, "optimal_common": 8}
+{"name": "random_21", "degree": 2, "jets": 5, "optimal_common": 0}
+{"name": "random_22", "degree": 0, "jets": 3, "optimal_common": 0}
+{"name": "random_23", "degree": 1, "jets": 7, "optimal_common": 0}
+{"name": "consecutive_2_2_1", "degree": 7, "jets": 10, "optimal_common": 6, "full_common": 9, "full_geometric": 9, "optimal_geometric": 6}
+{"name": "consecutive_2_2_2", "degree": 14, "jets": 20, "optimal_common": 13, "full_common": 21, "full_geometric": 21, "optimal_geometric": 13}
+{"name": "consecutive_2_2_4", "degree": 28, "jets": 40, "optimal_common": 27, "full_common": 45, "full_geometric": 45, "optimal_geometric": 27}
+{"name": "consecutive_3_2_1", "degree": 15, "jets": 20, "optimal_common": 15, "full_common": 22, "full_geometric": 22, "optimal_geometric": 15}
+{"name": "consecutive_3_2_2", "degree": 30, "jets": 40, "optimal_common": 32, "full_common": 48, "full_geometric": 48, "optimal_geometric": 32}
+{"name": "consecutive_3_3_1", "degree": 15, "jets": 34, "optimal_common": 6, "full_common": 29, "full_geometric": 29, "optimal_geometric": 8}
+{"name": "consecutive_3_3_2", "degree": 30, "jets": 34, "optimal_common": 25, "full_common": 29, "full_geometric": 29, "optimal_geometric": 25}
+{"name": "consecutive_3_3_4", "degree": 60, "jets": 68, "optimal_common": 51, "full_common": 62, "full_geometric": 62, "optimal_geometric": 51}
+{"name": "consecutive_3_3_8", "degree": 120, "jets": 136, "optimal_common": 102, "full_common": 128, "full_geometric": 128, "optimal_geometric": 102}
+{"name": "cluster_4_1_1_1_False", "degree": 18, "jets": 20, "optimal_common": 35, "full_common": 36, "full_geometric": 36, "optimal_geometric": 35}
+{"name": "cluster_4_2_2_1_False", "degree": 38, "jets": 50, "optimal_common": 43, "full_common": 65, "full_geometric": 65, "optimal_geometric": 43}
+{"name": "cluster_4_2_2_1_True", "degree": 38, "jets": 40, "optimal_common": 82, "full_common": 83, "full_geometric": 83, "optimal_geometric": 82}
+{"name": "cluster_5_1_1_1_False", "degree": 32, "jets": 36, "optimal_common": 62, "full_common": 69, "full_geometric": 69, "optimal_geometric": 62}
+{"status": "passed", "seconds": 45.61, "counts": {"common_certificates": 45, "geometric_certificates": 19, "minor_determinants": 37, "inverse_entry_checks": 656, "module_index_checks": 45, "unique_hermite_controls": 4, "negative_controls": 3}, "expanded_jet_checks": 7278, "large_formula_certificates": 90}

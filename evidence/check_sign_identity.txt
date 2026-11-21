@@ -1,0 +1,1 @@
+Literal sign-summed square and four squared minors agree over Z (76 nonzero monomials).

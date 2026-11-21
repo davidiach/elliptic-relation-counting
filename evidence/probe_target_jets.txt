@@ -1,0 +1,6 @@
+F_23, 30,000 plants + 30,000 unlabeled seeds; 20,000 independent fresh tests:
+  Errors: absent 3,165, jet 1,976, memorized mask triple 1,975.
+  Eligible new mask triples: 756 draws, 254 positives; jet called 0 true and 0 false positives on them.
+F_101, 30,000 plants + 30,000 unlabeled seeds; 20,000 independent fresh tests:
+  Errors: absent 4,763, jet 4,744, memorized mask triple 4,744.
+  Eligible new mask triples: 9,540 draws, 3,284 positives; jet called 0 true and 0 false positives on them.

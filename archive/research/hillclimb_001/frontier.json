@@ -1,0 +1,33 @@
+{
+  "ultimate_target": "Classical ECDLP in expected time 2^(tilde O(sqrt(b))) with complete accounting and independently reviewable proof",
+  "iteration": 1,
+  "continuation": "../hillclimb_002/frontier.json",
+  "status": "conditional_composition_with_finite_interface_evidence",
+  "accepted_finite_results": [
+    "Actual C38 Fourier words and binary auxiliary states survive joint simplex recoding",
+    "Exact adaptive pair-sector joins agree with independent finite sums",
+    "Adaptive pair-sector joins integrate with complete small simplex recursion",
+    "Parameterized whole-domain support inequalities have rational certificates"
+  ],
+  "conditional_results": [
+    {"name": "C38 plus simplex plus original adaptive bound", "time_coefficient": "27.1540388396761496", "saving_power": "1/4"},
+    {"name": "Improved published matrix inputs", "time_coefficient": "27.1332688250847988", "space_coefficient": "13.5666344125423994", "saving_power": "1/4"},
+    {"name": "Additional recent rectangular preprint", "time_coefficient": "27.0138774237432613", "space_coefficient": "13.5069387118716306", "saving_power": "1/4", "additional_dependency": "https://arxiv.org/html/2610.10494v2"}
+  ],
+  "rejected_shortcuts": [
+    {"idea": "Reuse the old endpoint-only support bound after changing matrix parameters", "reason": "At m=7/12 and R^2=9/4 the maximum lies in the interior; the certificate includes an exact counterexample and uses the full support formula"},
+    {"idea": "Treat a growing simplex alphabet as fixed in the sharper theorem", "reason": "Uniform scalar losses, coefficient dimensions, packet-entry costs and side wires must be recharged; proof.tex provides a separate conditional extension"},
+    {"idea": "Interpret coefficient improvements as a stronger logarithmic saving power", "reason": "The complete balance still has relation exponent proportional to mb/sqrt(log b)"}
+  ],
+  "unresolved": [
+    "Independent validation of the inherited foundational proof chain",
+    "Full unpinned C38 arithmetic network through contraction and witness extraction",
+    "Implementation of asymptotic deterministic packing and matrix formula catalogs",
+    "Any improved saving power or credible finite-size crossover"
+  ],
+  "next_priorities": [
+    "Executable C38 local graph descriptors and carefully scoped pinned integration",
+    "Search for compressed projected-table representations with complete access costs",
+    "A counterexample-driven search for a changed normalized mode/precision spectrum"
+  ]
+}

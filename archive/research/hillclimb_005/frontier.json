@@ -1,0 +1,37 @@
+{
+  "ultimate_target": "Correct classical general-prime-field ECDLP in expected bit time 2^(tilde O(sqrt(b))) with the established subgroup/cofactor scope",
+  "goal_status": "active_not_achieved",
+  "iteration": 5,
+  "continuation": "../hillclimb_006/frontier.json",
+  "previous_goal_turn_classification": "progress: adopted reviewed local lemmas and a stronger conditional baseline from the new ZIP",
+  "accepted_results": [
+    "Actual C38 copy restrictions in two explicit balanced finite packings, including a fully unequal packet word",
+    "Compact target generating polynomials agree with 400 actual projected entries and the full source-weighted node joins",
+    "Both full node joins agree with independent sums over original assignments",
+    "Dense normalized row scopes survive finite precision, with an exact all-L valuation formula",
+    "An actual normalized packet permanent violates the raw Cauchy determinant identity at protected finite precision"
+  ],
+  "rejected_shortcuts": [
+    "Keep every mode exponent binary after mixing copies within a populated packet",
+    "Assume original C38 factor separation implies bounded mode scopes",
+    "Use the raw Cauchy Borchardt identity after normalized mode decomposition",
+    "Switch to raw Cauchy columns while retaining the normalized explicit-enumeration bound"
+  ],
+  "surviving_representation": "A short circuit in dense linear forms; efficient complete coefficient extraction and source-weighted pairing remain unproved",
+  "baseline_status": "27.0138774237432612803 times b/(log2(b))^(1/4) remains conditional; no improved complete exponent",
+  "next_hypothesis": {
+    "claim_to_test": "Nonuniform dyadic packet coordinates can improve the mode spectrum after all interpolation and integrality losses are charged",
+    "first_candidate": "X={0,1,2,4,...,2^(n-2)} with the distinct signed-difference grid",
+    "first_gate": "Exact derivative valuations at retained nodes, especially tau=1; negative constant terms cannot be repaired by jet-variable scaling",
+    "acceptance": "Complete improved recurrence including difference-grid size, local precision, Hermite readout, packing, entries and children",
+    "rejection": "The precision/construction costs erase the spectral improvement, or the required finite identities fail"
+  },
+  "unresolved": [
+    "Independent complete audit and implementation of the packet foundation",
+    "Full unpinned C38 contraction and witness recovery",
+    "Efficient repeated source-weighted pairing of compact circuits",
+    "Complete larger-arity reduction audit",
+    "A route to the square-root-in-b target"
+  ],
+  "checkpoint": "latest_run.json"
+}

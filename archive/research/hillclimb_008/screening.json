@@ -1,0 +1,92 @@
+[
+  {
+    "a": 2,
+    "u": 2,
+    "M": 1,
+    "degree": 7,
+    "jets": 10,
+    "full": 9,
+    "optimal": 6,
+    "seconds": 0.0
+  },
+  {
+    "a": 2,
+    "u": 2,
+    "M": 2,
+    "degree": 14,
+    "jets": 20,
+    "full": 21,
+    "optimal": 13,
+    "seconds": 0.0
+  },
+  {
+    "a": 2,
+    "u": 2,
+    "M": 4,
+    "degree": 28,
+    "jets": 40,
+    "full": 45,
+    "optimal": 27,
+    "seconds": 0.0
+  },
+  {
+    "a": 3,
+    "u": 2,
+    "M": 1,
+    "degree": 15,
+    "jets": 20,
+    "full": 22,
+    "optimal": 15,
+    "seconds": 0.016
+  },
+  {
+    "a": 3,
+    "u": 2,
+    "M": 2,
+    "degree": 30,
+    "jets": 40,
+    "full": 48,
+    "optimal": 32,
+    "seconds": 0.016
+  },
+  {
+    "a": 3,
+    "u": 3,
+    "M": 1,
+    "degree": 15,
+    "jets": 34,
+    "full": 29,
+    "optimal": 6,
+    "seconds": 0.0
+  },
+  {
+    "a": 3,
+    "u": 3,
+    "M": 2,
+    "degree": 30,
+    "jets": 34,
+    "full": 29,
+    "optimal": 25,
+    "seconds": 0.015
+  },
+  {
+    "a": 3,
+    "u": 3,
+    "M": 4,
+    "degree": 60,
+    "jets": 68,
+    "full": 62,
+    "optimal": 51,
+    "seconds": 0.266
+  },
+  {
+    "a": 4,
+    "u": 3,
+    "M": 3,
+    "degree": 93,
+    "jets": 136,
+    "full": 133,
+    "optimal": 53,
+    "seconds": 6.234
+  }
+]

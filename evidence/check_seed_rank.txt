@@ -1,0 +1,7 @@
+N=19, widths=(2, 2, 2), cut=1, modes=9, best residual of nonconstant count at rank 4 / lambda = 0.090091, full nonconstant energy / lambda = 0.555177
+N=31, widths=(2, 2, 2), cut=1, modes=15, best residual of nonconstant count at rank 7 / lambda = 0.130467, full nonconstant energy / lambda = 0.724984
+N=103, widths=(4, 4, 4), cut=1, modes=51, best residual of nonconstant count at rank 25 / lambda = 0.153241, full nonconstant energy / lambda = 0.858890
+N=97, widths=(4, 8, 4, 8), cut=2, modes=48, best residual of nonconstant count at rank 24 / lambda = 0.138915, full nonconstant energy / lambda = 0.764385
+Noncyclic group order 20, target order 5, 4 real modes, 8 opposite pairs verified
+Noncyclic group order 44, target order 11, 4 real modes, 20 opposite pairs verified
+Bounded polynomial margin filter verified at four gap sizes

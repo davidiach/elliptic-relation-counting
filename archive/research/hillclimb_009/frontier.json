@@ -1,0 +1,42 @@
+{
+  "ultimate_target": "Correct classical general-prime-field ECDLP in expected bit time 2^(tilde O(sqrt(b))) under the established subgroup/cofactor scope",
+  "goal_status": "active_not_achieved",
+  "iteration": 9,
+  "previous_goal_turn_classification": "progress: certified optimal degree-aware readout, finite savings, and a geometric operator-precision obstruction",
+  "accepted_results": [
+    "Full exact polynomial spans for legal complete binary packets of sizes 2, 4 and 8",
+    "A fixed actual C38 predicate restriction at packet size 8 already has full 121-dimensional polynomial span",
+    "A proved full-span extension for arbitrary products of the certified size-eight packet family",
+    "A distinct certified solver for parity recovery on integer-generated deformation families with unequal jet precision",
+    "At size 8 the actual C38 predicate family needs geometric precision scale 102, matching full-space exact readout; a lower-precision collision is retained",
+    "Independent reconstruction of the actual predicate, complete packet allocation, polynomial families, native selector jets, and rank and parity certificates"
+  ],
+  "rejected_shortcuts": [
+    "Infer a common deformation divisor from the factors of individual W entries",
+    "Assume a universally proper polynomial space merely because the local predicate comes from C38",
+    "Promote small-copy-family readout savings without checking a larger complete packet",
+    "Treat a rational-span lower bound as automatically covering modular-only recovery on an integer-generated family"
+  ],
+  "method_limits": [
+    "The full-span theorem for growing packet size remains unproved",
+    "The parity lower certificate concerns prescribed observations and an integer-generated source family",
+    "The source weights use an arbitrary joint tensor next to a pinned C38 predicate, not an unrestricted complete C38 relation graph",
+    "The finite complete local packing is not the asymptotic balanced packing schedule",
+    "No complete unpinned C38 contraction, uniform faster representation or stronger complete ECDLP exponent"
+  ],
+  "baseline_status": "Conditional time coefficient 27.0138774237432612803 on b/(log2(b))^(1/4); unchanged",
+  "next_hypothesis": {
+    "claim_to_test": "The actual C38 source projection has fully characterized fibers, allowing exact structured elimination of all auxiliary wires without hidden multiplicities",
+    "first_gate": "Prove the reverse direction from any accepted graph assignment to canonical arithmetic sources and auxiliary states; compute complete unpinned counts on small independent-hash instances",
+    "acceptance": "Constructive fiber characterization, complete counts and conditional witness recovery agreeing with independent curve enumeration, with explicit complexity and no planted witness",
+    "rejection": "Spurious graph assignments, unaccounted auxiliary multiplicities, unjustified canonicalization, or a contraction shortcut that assumes the witness"
+  },
+  "unresolved": [
+    "Uniform constructive audit of the finite packet framework and all entry costs",
+    "Full unpinned C38 contraction and witness recovery",
+    "Source-weighted representations closed under recursion without excessive mode enumeration",
+    "Complete larger-arity reduction audit",
+    "A route to the square-root target"
+  ],
+  "checkpoint": "latest_run.json"
+}

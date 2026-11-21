@@ -1,0 +1,34 @@
+{
+  "ultimate_target": "Correct classical ECDLP in expected bit time 2^(tilde O(sqrt(b))) for the stated general prime-field subgroup/cofactor class",
+  "goal_status": "active_not_achieved",
+  "iteration": 3,
+  "continuation": "../hillclimb_004/frontier.json",
+  "previous_goal_turn_classification": "progress: added executable C38 graph interfaces, independent source searches, an enumeration barrier and corrected exponent-transfer requirements",
+  "accepted_structural_results": [
+    "Actual C38 first tensors have large identity minors across specified Fourier-word cuts",
+    "A finite C38 projected-child family has exponential exact block rank but an O(r)-factor polynomial representation",
+    "The full join of that family includes the two source moment tables and is computed by a compact exact formula",
+    "The complete general-prime C38 graph factors into small source groups and single-equation tensors with explicit charged equality-copy wires",
+    "The refactored root degree bound is tilde O(sqrt(b)), independent of the multiplicative arity factor m; total edges remain tilde O(mb)"
+  ],
+  "rejected_shortcuts": [
+    "Assume that all useful exact projected representations must have small rank across the group cut",
+    "Drop exterior child moment tables when evaluating a compact target-table formula",
+    "Treat a small arithmetic-circuit description as proof of cheap coefficientwise contraction",
+    "Treat valid finite singleton packet examples as evidence for closure under the asymptotic balanced schedule"
+  ],
+  "corrected_prior_obstacle": "The degree obstruction for large m in iteration 002 is removed by the new exact compiler, at a paid constant-factor increase in wire count. Other larger-arity reduction hypotheses remain unaudited.",
+  "baseline_status": "27.1332688250847988 remains conditional; no new complete runtime bound or saving power",
+  "next_hypothesis": {
+    "claim_to_test": "The refactored C38 factors have an exact representation with controlled mode/source interaction scopes through the full recursion",
+    "acceptance": "Proved construction, entry access, coefficient extraction and join costs, including all coefficient dimensions and precision, yielding a better complete ECDLP exponent",
+    "rejection": "A family forcing excessive interaction width or extraction cost for the proposed representation, or a paid recurrence that restores the previous exponent"
+  },
+  "unresolved": [
+    "Independent complete audit of inherited foundational proofs",
+    "Full unpinned C38 contraction and witness recovery",
+    "Closure of compact factors under actual balanced packet recursion",
+    "Complete larger-arity coverage and reduction audit",
+    "Any improvement to the asymptotic exponent sufficient for the square-root goal"
+  ]
+}

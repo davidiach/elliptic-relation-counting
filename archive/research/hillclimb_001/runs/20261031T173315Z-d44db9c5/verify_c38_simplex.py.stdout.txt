@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "counts": {
+    "actual_C38_simplex_instances": 60,
+    "Fourier_words_recoded": 36608,
+    "local_first_predicates": 320,
+    "local_middle_predicates": 240,
+    "local_closure_predicates": 160,
+    "rejected_out_of_domain": 60,
+    "rejected_noncanonical": 60,
+    "rejected_wrong_length": 60,
+    "rejected_changed_output": 60,
+    "rejected_bad_state": 45,
+    "exhaustive_word_bijections": 81,
+    "exhaustive_noncanonical_rejections": 101
+  },
+  "scope": "Actual C38 source/middle/closure predicates, canonical joint-simplex words, unchanged binary side states and recovered curve tuples. No complete C38 network contraction or asymptotic packing is executed."
+}

@@ -1,0 +1,35 @@
+{
+  "ultimate_target": "Correct classical ECDLP in expected bit time 2^(tilde O(sqrt(b))) for the stated general prime-field subgroup/cofactor class",
+  "goal_status": "active_not_achieved",
+  "iteration": 2,
+  "continuation": "../hillclimb_003/frontier.json",
+  "previous_goal_turn_classification": "progress: created and activated the persistent research goal",
+  "current_progress": [
+    "Implemented an incident-only public-data C38 graph compiler with explicit two-edge state relays",
+    "Connected pinned C38 graph contraction to exact conditional-count witness recovery",
+    "Exhaustively compared independently hashed m=2 arithmetic instances with independent curve-point-pair enumeration",
+    "Independently checked finite scalar Smith exponents using rational elimination",
+    "Proved a feasible-subset lower bound for unrestricted mode candidate enumeration",
+    "Derived the polynomial-exponent ECDLP transfer including factor-base and linear-algebra costs"
+  ],
+  "baseline_status": {
+    "time_coefficient": "27.1332688250847988",
+    "saving_power": "1/4",
+    "qualification": "Conditional on inherited foundations; no new asymptotic bound in iteration 2"
+  },
+  "rejected_routes": [
+    {"proposal": "Improve the saving power solely by visiting the same unrestricted mode tuples in a better order", "evidence": "An explicit 2^(Omega(M/sqrt(u))) feasible subset survives the degree cap", "scope": "Candidate enumeration only; not actual nonzero support or implicit algorithms"},
+    {"proposal": "Treat a 2^(tilde O(sqrt(S))) generic contractor as sufficient for the ECDLP goal through the current reduction", "evidence": "The paid arity balance gives b^(2/3); the square-root target needs theta<=1/3 in this model"}
+  ],
+  "unresolved": [
+    "Independent proof audit of the complete inherited contraction theorem and arithmetic/reduction chain",
+    "Full unpinned C38 contraction and witness recovery",
+    "Exact compact projected-table representations with complete construction/access/composition bounds",
+    "A stronger asymptotic exponent and uniformity in the required larger-arity regime"
+  ],
+  "next_hypotheses": [
+    {"hypothesis": "Actual C38 projected-child functions admit an exact representation smaller than the unrestricted candidate universe", "acceptance": "A proved size and composition bound with paid entry/construction costs that improves the complete exponent", "rejection": "Counterexamples forcing large size for the proposed representation, or construction costs that restore the old exponent"},
+    {"hypothesis": "A new deformation or reconstruction profile improves the normalized spectrum/precision tradeoff", "acceptance": "A complete degree, precision, multiplicity, geometry and recurrence derivation with independent checks", "rejection": "Precision or representation costs cancel the spectral improvement"}
+  ],
+  "scope_alert": "The inherited generic low-degree contraction theorem also implies subexponential exact width-3 CNF counting; audit.tex derives this implication. It is not an independent certification or disproof."
+}

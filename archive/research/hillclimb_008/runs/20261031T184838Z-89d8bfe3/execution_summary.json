@@ -1,0 +1,28 @@
+{
+  "returncode": 0,
+  "seconds": 45.75,
+  "source_sha256": {
+    "hillclimb_006\\nonuniform_grid.py": "9b429952ce4bc6d5726d3c7f24342ce7682ce6ce77f672417f060c81398d71df",
+    "hillclimb_007\\cluster_audit.py": "baff3cf99448d7bf30e5f9865d84ca2603ec7d7d047ffd9be7f226253a9b6a82",
+    "hillclimb_007\\cluster_bounds.tex": "cf01997f55af866956846d6c92aafc3c2c87d11727854fb23d721791eb794fdf",
+    "hillclimb_008\\optimal_readout.py": "dc1212332bc0b644b6c61dfeb3cbc8a956ac12d5f03b906690a5df0cf2d32de4",
+    "hillclimb_008\\polynomial_obstruction.py": "4b65657f963ffa3723b32597c4a0cfd427ed740a2fe1bc47f2a8e04ff613bb0f",
+    "hillclimb_008\\readout.tex": "12955e5ca73bcc75166d3ddbacf49e9fd4f665bd943be486a3ee7e7f49fe6bd1",
+    "hillclimb_008\\readout_audit.py": "6a3c15a6dcc2f68a308a6ce16758d8612da9275bdf132baaebae733fdae4d667",
+    "hillclimb_008\\run_all.py": "d732a3e4ac5c17fcd00aded5964d48298eb3914a285a3477ac3a18895e4c89c5",
+    "hillclimb_008\\verify_certificate.py": "34232077eab8a9e37d2f78c3fd2cef9cd019d8f19ba4c899121ab7aa4eb858f3"
+  },
+  "sources_unchanged": true,
+  "python": "3.12.2",
+  "status": "passed",
+  "result_sha256": "c68409dd7ebce439112c13ed47448e0c85ba0eb0bdde0fd27c730117f2be477b",
+  "counts": {
+    "common_certificates": 45,
+    "geometric_certificates": 19,
+    "minor_determinants": 37,
+    "inverse_entry_checks": 656,
+    "module_index_checks": 45,
+    "unique_hermite_controls": 4,
+    "negative_controls": 3
+  }
+}

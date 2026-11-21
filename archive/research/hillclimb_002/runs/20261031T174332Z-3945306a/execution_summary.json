@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "python": "3.12.2",
+  "records": [
+    {
+      "script": "spectrum_audit.py",
+      "returncode": 0,
+      "seconds": 0.187,
+      "result": "spectrum_results.json",
+      "status": "passed"
+    },
+    {
+      "script": "verify_network.py",
+      "returncode": 0,
+      "seconds": 13.281,
+      "result": "network_results.json",
+      "status": "passed"
+    },
+    {
+      "script": "verify_source_enumeration.py",
+      "returncode": 0,
+      "seconds": 0.609,
+      "result": "source_enumeration_results.json",
+      "status": "passed"
+    }
+  ],
+  "source_hashes": {
+    "hillclimb_001\\adaptive_pair_join.py": "d9be62659f0ea35ce5c24d54c431be98df5952fcef26111f4b417e0c197dc36b",
+    "hillclimb_001\\c38_simplex.py": "92778a98058805337161f0cc3b77f3a77a8274586d4d6af5207406d6061df4b7",
+    "hillclimb_001\\certify_bounds.py": "b35ed20b8bc1a21eb9770e7a6aaf0f9900aee95578afb323aa4973c64a744b64",
+    "hillclimb_001\\common.py": "3548000f4a22b1997006e6f3ef825d67b0509984cbd8bdb492052cc310ab2548",
+    "hillclimb_001\\run_all.py": "d39c2c02eedb15473d71eb266461b4b7c0df8ca924f32770adc84717896cce9c",
+    "hillclimb_001\\source_manifest.json": "8c7b423deb25bfaf09d9936202a045d281a6cafae4bc531efa33145ac2fdbaeb",
+    "hillclimb_001\\vendor\\arithmetic_alternating_chord.py": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e",
+    "hillclimb_001\\vendor\\intervals.py": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2",
+    "hillclimb_001\\vendor\\native_jet_contraction.py": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d",
+    "hillclimb_001\\vendor\\simplex_contraction.py": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d",
+    "hillclimb_001\\vendor\\weighted_matrix_join.py": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300",
+    "hillclimb_001\\verify_adaptive_simplex.py": "3e7a5c42bc9f67d9a89d079b44ea6eb29680afe28480735926b22641579fe8d9",
+    "hillclimb_001\\verify_c38_simplex.py": "7dd716e4fc910fe98e1eb1afd6220c1f6a68635af69eabdad3d38b3eb6c503c4",
+    "hillclimb_002\\audit.tex": "0b93049f4dde46ec5a72700f4a852da584a17af5257f96700373df891a726225",
+    "hillclimb_002\\c38_network.py": "14ebb87532624f38b0645f5fb58fc158abed9a4f3b73c98d613017fbca65cef4",
+    "hillclimb_002\\run_all.py": "83c7af5242002974ecdc16f1584e234c00f53ee45eb587db9c339ca5dbb69044",
+    "hillclimb_002\\spectrum_audit.py": "20f4b1578feddf0e7989bd1c81d9e734c17360b818fa45bde1ce7e2fefa8017e",
+    "hillclimb_002\\verify_network.py": "f8b6cc94660000f01f14d48f0dddf131d8b38985872b2475fdc07562b3e48ed9",
+    "hillclimb_002\\verify_source_enumeration.py": "c843f091ee46e7d0dfe3036e39edd2de91b7fee38ef338ae2428697060df319a"
+  },
+  "sources_unchanged": true,
+  "scope": "Exact finite graph and source-enumeration checks, independent finite Smith spectra, and explicit candidate-universe certificates. Not an unpinned network solver or a complete asymptotic proof."
+}

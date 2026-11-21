@@ -1,0 +1,197 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "status": "passed",
+      "edges": 648,
+      "vertices": 1293,
+      "ordered_label_classes": 81,
+      "load_per_class": 8,
+      "packet_size": 8,
+      "packets": 81,
+      "full_packets": 81,
+      "selected_packet_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "selected_packet_fully_occupied": true,
+      "actual_C38_copy_pairs": 2,
+      "live_positions": [
+        0,
+        6,
+        4,
+        2
+      ],
+      "selected_mode_weights": [
+        4,
+        6,
+        10,
+        12
+      ],
+      "original_global_count": 4,
+      "target_entries_checked": 70,
+      "source_assignments_evaluated": 1120,
+      "unit_padding_packet_checks": 4800,
+      "fixed_target_rows": [],
+      "precision": 96,
+      "jet_length": 9,
+      "full_join_matches_independent_64_term_deformation": true,
+      "repeated_mode_coefficients": [
+        {
+          "exponents": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "leading_degree": 2,
+          "leading_valuation": 10,
+          "coefficient": [
+            0,
+            0,
+            5728450234267508957200845824,
+            37725936542818880418136993792,
+            5903207563994932502346510336,
+            28128344949245853452489850880,
+            70738206224411485915967782912,
+            8775704176090609344033325056,
+            37626365733490018298016825344
+          ]
+        },
+        {
+          "exponents": [
+            4,
+            0,
+            0,
+            0
+          ],
+          "leading_degree": 4,
+          "leading_valuation": 18,
+          "coefficient": [
+            0,
+            0,
+            0,
+            0,
+            49362157491037519169217363968,
+            1404798307943594750432509952,
+            46609018022761530295375101952,
+            31732978373154390140554051584,
+            17335852541118517690945765376
+          ]
+        }
+      ],
+      "binary_mode_truncation_changes_full_join": {
+        "first_degree": 2,
+        "valuation": 10
+      },
+      "compact_formula": "product_pairs (1-u_a-u_b+2*u_a*u_b) * product_fixed_rows (1-u_x), with u_e=sum_j A[e,j]*z_j",
+      "scope": "Exactly balanced finite three-group, two-coordinate packing with a full selected packet and a genuine restricted C38 F0 factor. Not the full C38 network or asymptotic schedule; no lower bound against all symbolic algorithms.",
+      "seconds": 1.453
+    },
+    {
+      "status": "passed",
+      "edges": 324,
+      "vertices": 645,
+      "ordered_label_classes": 81,
+      "load_per_class": 4,
+      "packet_size": 16,
+      "packets": 36,
+      "full_packets": 9,
+      "selected_packet_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "selected_packet_fully_occupied": true,
+      "actual_C38_copy_pairs": 2,
+      "live_positions": [
+        0,
+        12,
+        8,
+        4
+      ],
+      "selected_mode_weights": [
+        5,
+        7,
+        11,
+        13,
+        19,
+        21,
+        25
+      ],
+      "original_global_count": 4,
+      "target_entries_checked": 330,
+      "source_assignments_evaluated": 5280,
+      "unit_padding_packet_checks": 2100,
+      "fixed_target_rows": [
+        2,
+        14,
+        10,
+        6
+      ],
+      "precision": 128,
+      "jet_length": 5,
+      "full_join_matches_independent_64_term_deformation": true,
+      "repeated_mode_coefficients": [
+        {
+          "exponents": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "leading_degree": 2,
+          "leading_valuation": 11,
+          "coefficient": [
+            0,
+            0,
+            81290537729699579480482698004809570304,
+            317276924094123413988611304948823318528,
+            256029032623877099399810449638585032704
+          ]
+        },
+        {
+          "exponents": [
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "leading_degree": 4,
+          "leading_valuation": 20,
+          "coefficient": [
+            0,
+            0,
+            0,
+            0,
+            15537720038390322602129456606821220352
+          ]
+        }
+      ],
+      "binary_mode_truncation_changes_full_join": {
+        "first_degree": 2,
+        "valuation": 11
+      },
+      "compact_formula": "product_pairs (1-u_a-u_b+2*u_a*u_b) * product_fixed_rows (1-u_x), with u_e=sum_j A[e,j]*z_j",
+      "scope": "Exactly balanced finite three-group, two-coordinate packing with a full selected packet and a genuine restricted C38 F0 factor. Not the full C38 network or asymptotic schedule; no lower bound against all symbolic algorithms.",
+      "seconds": 4.281
+    }
+  ]
+}

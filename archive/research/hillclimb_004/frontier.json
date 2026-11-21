@@ -1,0 +1,46 @@
+{
+  "ultimate_target": "Correct classical general-prime-field ECDLP in expected bit time 2^(tilde O(sqrt(b))) with the supplied subgroup/order and polynomial-cofactor scope",
+  "goal_status": "active_not_achieved",
+  "iteration": 4,
+  "continuation": "../hillclimb_005/frontier.json",
+  "previous_goal_turn_classification": "progress: reviewed a new source package, validated independent local lemmas, reproduced eight suites, removed an extra matrix-preprint dependency from the conditional baseline",
+  "accepted_local_results": [
+    "Inverse-span moment bounds and one-pilot reuse under the explicitly matching conditional row laws",
+    "Unit-separated lower-set cardinal selectors of scale one over an unramified dyadic extension",
+    "Nine-group spectral join bound sqrt(14) times the edge-weight Euclidean norm using alpha=0.32 and omega=2.39"
+  ],
+  "conditional_baseline": {
+    "time_coefficient": "27.0138774237432612803",
+    "space_coefficient": "13.5069387118716306401",
+    "scale": "b/(log2(b))^(1/4)",
+    "scope": "Original C38 ledger and polylogarithmic relation arity; depends on the finite packet framework and remaining complete proof-chain audit",
+    "extra_recent_rectangular_preprint_required": false,
+    "implemented_complete_contractor": false
+  },
+  "validation": {
+    "supplied_suites_passed": 8,
+    "package_rerun": "../../_review/reruns/compressed_relation_search_20261031/checks/run_report.json",
+    "independent_checkpoint": "latest_run.json",
+    "original_archive_sha256": "95f2078edf80cc3ce1090be7a4216fa1f407e91044d376d035c99ebf7b9204c5"
+  },
+  "not_claimed": [
+    "An improved asymptotic saving power",
+    "An unconditional general ECDLP algorithm",
+    "Integration of the unramified unit selectors into our complete contractor",
+    "Full unpinned C38 contraction and witness recovery",
+    "A complete proof of Assumption A.1 from the new package",
+    "The same numerical wire coefficient for iteration 003's larger factored graph"
+  ],
+  "next_hypothesis": {
+    "claim_to_test": "Compact representations for the refactored C38 factors remain cheap under actual balanced packet mode projection, coefficient extraction and joins",
+    "acceptance": "Complete construction/access/precision/recursion cost proof yielding an improved ECDLP exponent after arity optimization",
+    "rejection": "Explicit obstruction to the proposed representation or a paid recurrence that restores the old exponent"
+  },
+  "unresolved": [
+    "Independent complete audit and implementation of the packet foundation",
+    "Full unpinned C38 contraction and witness recovery",
+    "Closure of compact representations under the balanced schedule",
+    "Complete larger-arity reduction audit",
+    "A route to the square-root-in-b target"
+  ]
+}

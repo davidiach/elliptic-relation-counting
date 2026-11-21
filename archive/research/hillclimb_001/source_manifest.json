@@ -1,0 +1,81 @@
+{
+  "archives": {
+    "simplex-alphabet-ecdl-v6.zip": "b4ed0d2ab9bf5dae521e3e63634ccbfee8a85af234b709053c10abfe60901f6c",
+    "ECDLP_v6_complete.zip": "b213c4b3ffb4ef9301fda5f2ac277a5bbfb70ec95cd35d76f9679b4f37922d80",
+    "sharper-complete-ecdl-v6-reproducibility.zip": "5f2a196f785a7000ce32dadd53698517437f820f5807e182885e71ebb5ea8f9d"
+  },
+  "files": {
+    "vendor/simplex_contraction.py": {
+      "archive": "simplex-alphabet-ecdl-v6.zip",
+      "member": "simplex-alphabet-ecdl/reproducibility/code/simplex_contraction.py",
+      "sha256": "58ccc39bf9bf1bc37de9f788426533e0b84c716cd59fe4f6482386a4ce0e014d"
+    },
+    "vendor/native_jet_contraction.py": {
+      "archive": "simplex-alphabet-ecdl-v6.zip",
+      "member": "simplex-alphabet-ecdl/reproducibility/code/native_jet_contraction.py",
+      "sha256": "a2253e7427d55983ab6f378b77a8cefc3e24d1e9eac92c6a431bace907457e8d"
+    },
+    "vendor/weighted_matrix_join.py": {
+      "archive": "simplex-alphabet-ecdl-v6.zip",
+      "member": "simplex-alphabet-ecdl/reproducibility/code/weighted_matrix_join.py",
+      "sha256": "53aedcd791db842c1ca1f9a404a6ee4f3078ce9ae74aedb3e27f516d55b6e300"
+    },
+    "vendor/arithmetic_alternating_chord.py": {
+      "archive": "ECDLP_v6_complete.zip",
+      "member": "reusable-profiled-ecdl-v6/reproducibility/new_code/arithmetic_alternating_chord.py",
+      "sha256": "824ed896329004df3d9f3ceb5680125b6a05eccd9025f7c7ea17f776b29ae56e"
+    },
+    "vendor/intervals.py": {
+      "archive": "sharper-complete-ecdl-v6-reproducibility.zip",
+      "member": "sharper-complete-ecdl-v6/reproducibility/code/verify_rectangular_bounds.py",
+      "sha256": "0ff588c62a713a278d57bed25656345d8de5d45d499cc7785bb1cd0c66498ef2"
+    }
+  },
+  "premise_sources": [
+    {
+      "archive": "ECDLP_v6_complete.zip",
+      "member": "reusable-profiled-ecdl-v6/reproducibility/paper/arithmetic_merged.tex",
+      "sha256": "2b3f3a326598bbd5a320f01407cd08be84c6e6dc5cdcf8890f43b3e8ba90b648"
+    },
+    {
+      "archive": "ECDLP_v6_complete.zip",
+      "member": "reusable-profiled-ecdl-v6/reproducibility/paper/reusable_merged.tex",
+      "sha256": "631734cfc3fa5fdd0e1affb0c015151d8712ba2afb209e47fe62eed039c6b506"
+    },
+    {
+      "archive": "ECDLP_v6_complete.zip",
+      "member": "reusable-profiled-ecdl-v6/reproducibility/paper/ecdl_transfer.tex",
+      "sha256": "2b4b6b43e4905f58dfcf8d9416ec5bf355cdc47e4d08ae267b3437861b12514e"
+    },
+    {
+      "archive": "sharper-complete-ecdl-v6-reproducibility.zip",
+      "member": "sharper-complete-ecdl-v6/reproducibility/paper/orientation_packet_rounding.tex",
+      "sha256": "1bcaa176b0eae808ffc84bb54db604fd30951c21a193dd0458350b4d8d59a1f3"
+    },
+    {
+      "archive": "sharper-complete-ecdl-v6-reproducibility.zip",
+      "member": "sharper-complete-ecdl-v6/reproducibility/paper/pair_weight_adaptive_joins.tex",
+      "sha256": "07b787ea6dbaec0b8fa5666485aa45f46e5a814b31140d01c8273eadd4b0554a"
+    },
+    {
+      "archive": "sharper-complete-ecdl-v6-reproducibility.zip",
+      "member": "sharper-complete-ecdl-v6/reproducibility/paper/rectangular_boundary_joins.tex",
+      "sha256": "be7e248691fafc7319db7816395adb5dfee08fb7f86f0955cd4916ecfa612fac"
+    },
+    {
+      "archive": "sharper-complete-ecdl-v6-reproducibility.zip",
+      "member": "sharper-complete-ecdl-v6/reproducibility/paper/uniform_implementation.tex",
+      "sha256": "b53fb1f30f58f3c990a4ddbcfe73bc36feb7e4896c99c1f58805f70f53c8d260"
+    },
+    {
+      "archive": "simplex-alphabet-ecdl-v6.zip",
+      "member": "simplex-alphabet-ecdl/reproducibility/notes/v6_deformation/SIMPLEX_UNIFORM_COMPILER.md",
+      "sha256": "2edde23a8189ab1e412bc5b91f9e5358eaa78602d0a5a687010bf1773e3f3f51"
+    },
+    {
+      "archive": "simplex-alphabet-ecdl-v6.zip",
+      "member": "simplex-alphabet-ecdl/reproducibility/code/selector_scaling_results.json",
+      "sha256": "96703c6975afe9e56493a0d17dc0c346da03b17b0e6f805845b450204a71645c"
+    }
+  ]
+}

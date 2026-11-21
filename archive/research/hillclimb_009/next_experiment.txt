@@ -1,0 +1,41 @@
+NEXT EXPERIMENT: COMPLETE C38 SOURCE FIBERS AND STRUCTURED ELIMINATION
+
+Return to the actual full arithmetic network after rejecting a universal
+local polynomial-space shortcut. The earlier source enumeration checked
+that each constructed witness is accepted and matches an independent
+curve tuple. It did not by itself prove that every accepted edge
+assignment is one of those witnesses or that auxiliary multiplicities
+are exactly one.
+
+1. Inspect the complete compiler and each source, equation, carry, range,
+   hash and equality-relay predicate. Define a source projection using
+   only declared graph variables; do not read a hidden global assignment
+   from inside a tensor entry program.
+
+2. Prove or refute that every accepted graph assignment is uniquely
+   determined by its canonical source variables. Track Fourier-word
+   inversion, canonical encodings, quotient ranges, carry chains,
+   initialized/terminal states, relays, and hash tests. If a fiber can
+   contain multiple assignments, compute its multiplicity instead of
+   silently discarding it.
+
+3. Implement the resulting exact marginalization as explicit structured
+   variable elimination. Its output must count all accepted assignments
+   of an UNPINNED small graph, not only check a list of constructed
+   witnesses. Independent field/curve enumeration supplies a comparison,
+   not a replacement for the graph-fiber proof.
+
+4. Use independently selected hashes, both covered and uncovered target
+   points, and conditional counts sufficient to recover and verify a
+   witness. Include deliberate changes to boundary states and canonical
+   Fourier constraints that would expose an invalid uniqueness claim.
+
+5. Charge all source enumeration and elimination costs. A correct finite
+   elimination algorithm is a foundation milestone, not a subexponential
+   contractor or the square-root ECDLP goal. Identify which actual
+   arithmetic structure remains available for a faster representation.
+
+The broad finite packet assumption and the full asymptotic recurrence
+remain separate audit obligations. Do not transfer a generic-oracle
+claim to the actual arithmetic implementation without its construction
+and access costs.

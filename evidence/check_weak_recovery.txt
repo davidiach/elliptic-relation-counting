@@ -1,0 +1,3 @@
+p=13, m=3, noisy witness control: Q-R=0.041068, mixed gap=0.040040, planted prefix survival=0.78601, guaranteed >= 0.002502
+p=13, m=3, square character of Z2: Q-R=0.002734, mixed gap=0.002409, planted prefix survival=0.94156, guaranteed >= 0.000151
+p=13, m=4, noisy witness control: Q-R=0.058562, mixed gap=0.056829, planted prefix survival=0.69651, guaranteed >= 0.001776

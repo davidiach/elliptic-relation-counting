@@ -1,0 +1,194 @@
+{
+  "status": "passed",
+  "counts": {
+    "independent_curve_pairs_examined": 3468,
+    "source_triples_examined": 26364,
+    "complete_graph_witnesses_checked": 67,
+    "complete_source_searches": 12,
+    "uncovered_targets": 3,
+    "covered_targets": 9
+  },
+  "records": [
+    {
+      "fixture": 0,
+      "target": [
+        0,
+        1
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 7,
+        "beta1": 8,
+        "alpha2": 13,
+        "beta2": 3
+      },
+      "witnesses": 1
+    },
+    {
+      "fixture": 1,
+      "target": [
+        4,
+        11
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 15,
+        "beta1": 7,
+        "alpha2": 13,
+        "beta2": 1
+      },
+      "witnesses": 1
+    },
+    {
+      "fixture": 2,
+      "target": [
+        8,
+        12
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 15,
+        "beta1": 13,
+        "alpha2": 9,
+        "beta2": 2
+      },
+      "witnesses": 1
+    },
+    {
+      "fixture": 3,
+      "target": [
+        12,
+        5
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 7,
+        "beta1": 4,
+        "alpha2": 1,
+        "beta2": 11
+      },
+      "witnesses": 0
+    },
+    {
+      "fixture": 4,
+      "target": [
+        1,
+        9
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 5,
+        "beta1": 2,
+        "alpha2": 7,
+        "beta2": 2
+      },
+      "witnesses": 0
+    },
+    {
+      "fixture": 5,
+      "target": [
+        7,
+        0
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 5,
+        "beta1": 10,
+        "alpha2": 1,
+        "beta2": 9
+      },
+      "witnesses": 0
+    },
+    {
+      "fixture": 6,
+      "target": [
+        11,
+        2
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 7,
+        "beta1": 1,
+        "alpha2": 1,
+        "beta2": 2
+      },
+      "witnesses": 1
+    },
+    {
+      "fixture": 7,
+      "target": [
+        0,
+        12
+      ],
+      "hash_bits": 2,
+      "hashes": {
+        "alpha1": 3,
+        "beta1": 1,
+        "alpha2": 5,
+        "beta2": 14
+      },
+      "witnesses": 3
+    },
+    {
+      "fixture": 8,
+      "target": [
+        5,
+        1
+      ],
+      "hash_bits": 4,
+      "hashes": {
+        "alpha1": 3,
+        "beta1": 8,
+        "alpha2": 13,
+        "beta2": 6
+      },
+      "witnesses": 16
+    },
+    {
+      "fixture": 9,
+      "target": [
+        10,
+        6
+      ],
+      "hash_bits": 4,
+      "hashes": {
+        "alpha1": 13,
+        "beta1": 4,
+        "alpha2": 7,
+        "beta2": 0
+      },
+      "witnesses": 14
+    },
+    {
+      "fixture": 10,
+      "target": [
+        12,
+        8
+      ],
+      "hash_bits": 4,
+      "hashes": {
+        "alpha1": 1,
+        "beta1": 9,
+        "alpha2": 7,
+        "beta2": 10
+      },
+      "witnesses": 16
+    },
+    {
+      "fixture": 11,
+      "target": [
+        4,
+        2
+      ],
+      "hash_bits": 4,
+      "hashes": {
+        "alpha1": 9,
+        "beta1": 7,
+        "alpha2": 11,
+        "beta2": 15
+      },
+      "witnesses": 14
+    }
+  ],
+  "scope": "Every source triple for 12 independent-hash m=2 F_13 instances compared with every curve-point pair. All found witnesses pass the full explicit graph. Enumeration is used, not unpinned recursive contraction."
+}

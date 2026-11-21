@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "counts": {
+    "complete_graph_refactorings": 4,
+    "local_product_equivalences": 324,
+    "original_predicates_checked": 36,
+    "whole_graph_mutation_agreements": 48,
+    "rejected_new_wire_inconsistencies": 32,
+    "dependency_arities_checked": 99
+  },
+  "records": [
+    {
+      "b": 4,
+      "L": 8,
+      "m": 2,
+      "t": 1,
+      "original_edges": 2076,
+      "factored_edges": 3676,
+      "added_equality_edges": 1600,
+      "original_max_degree": 900,
+      "factored_max_degree": 500,
+      "max_parallel_multiplicity": 50,
+      "vertices": 770,
+      "max_equation_sources": 4,
+      "max_source_consumers": 3
+    },
+    {
+      "b": 4,
+      "L": 8,
+      "m": 3,
+      "t": 2,
+      "original_edges": 2288,
+      "factored_edges": 4048,
+      "added_equality_edges": 1760,
+      "original_max_degree": 800,
+      "factored_max_degree": 280,
+      "max_parallel_multiplicity": 20,
+      "vertices": 976,
+      "max_equation_sources": 6,
+      "max_source_consumers": 5
+    },
+    {
+      "b": 4,
+      "L": 16,
+      "m": 5,
+      "t": 1,
+      "original_edges": 16044,
+      "factored_edges": 32508,
+      "added_equality_edges": 16464,
+      "original_max_degree": 3850,
+      "factored_max_degree": 756,
+      "max_parallel_multiplicity": 42,
+      "vertices": 6344,
+      "max_equation_sources": 8,
+      "max_source_consumers": 6
+    },
+    {
+      "b": 7,
+      "L": 16,
+      "m": 8,
+      "t": 2,
+      "original_edges": 13754,
+      "factored_edges": 24890,
+      "added_equality_edges": 11136,
+      "original_max_degree": 4013,
+      "factored_max_degree": 288,
+      "max_parallel_multiplicity": 16,
+      "vertices": 6011,
+      "max_equation_sources": 8,
+      "max_source_consumers": 6
+    }
+  ]
+}

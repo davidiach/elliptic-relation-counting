@@ -1,0 +1,37 @@
+{
+  "ultimate_target": "Correct classical general-prime-field ECDLP in expected bit time 2^(tilde O(sqrt(b))) under the established subgroup/cofactor scope",
+  "goal_status": "active_not_achieved",
+  "iteration": 8,
+  "previous_goal_turn_classification": "progress: exact balanced-cluster formulas and limited-method obstructions; degree-aware linear readout was a remaining loophole",
+  "accepted_results": [
+    "Constructive optimal dyadic denominator for exact linear readout on a degree-limited rational polynomial space, with exact upper and lower certificates",
+    "Certified unequal-budget feasibility and optimal geometric precision profiles",
+    "Finite reductions including 128 to 102 denominator-loss bits on a packet-compatible degree-120 fixture",
+    "Uniform lower bound Omega(M*L/u) for the consecutive-grid geometric precision scale, matching the standard readout order",
+    "Uniform Omega(M*n^2*B/v) geometric precision lower bounds for the two balanced-cluster node policies, under the stated parameter conditions",
+    "An explicit integer-polynomial obstruction valid regardless of the number of available jets at the retained centers"
+  ],
+  "method_limits": [
+    "Readout identities are required on all rational polynomials of the bounded degree",
+    "Actual deformation subspaces, coefficient-lattice promises and modular-only recovery may behave differently",
+    "An operator-precision bound alone is not a complete candidate-count or runtime theorem",
+    "Different precision profiles and support-aware intermediate representations remain open",
+    "No full unpinned C38 contraction or stronger complete ECDLP exponent"
+  ],
+  "baseline_status": "Conditional time coefficient 27.0138774237432612803 on b/(log2(b))^(1/4); unchanged",
+  "next_hypothesis": {
+    "claim_to_test": "The actual packet deformation polynomials occupy a constructively usable proper space whose structure reduces readout or intermediate-representation costs",
+    "first_gate": "Generate exact polynomial families from literal complete-packet tensor definitions, certify their span and readout identities, and compare with the full degree-space optimum",
+    "acceptance": "A uniform justified structural restriction that survives source weighting, arbitrary legal tensor entries, recursion and all construction costs",
+    "rejection": "The span is already full, normalization erases the gain, a claimed restriction fails on a legal input, or accessing the restriction costs as much as the avoided work"
+  },
+  "unresolved": [
+    "Complete constructive audit of the inherited packet foundation",
+    "Full unpinned C38 contraction and witness recovery",
+    "Efficient source-weighted pairing without complete mode catalogues",
+    "Complete larger-arity reduction audit",
+    "A route to the square-root target"
+  ],
+  "checkpoint": "latest_run.json",
+  "continuation": "../hillclimb_009/frontier.json"
+}

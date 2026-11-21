@@ -1,0 +1,5 @@
+All 36,160 bounded scalar inputs agree with divisibility across both wrap signs.
+Field 13, 3 slots, radix 16, wrap sign +1: direct and Fourier coefficients agree.
+Field 17, 4 slots, radix 32, wrap sign -1: direct and Fourier coefficients agree.
+Field 101, 5 slots, radix 4, wrap sign +1: direct and Fourier coefficients agree.
+660 curve-equation checks: 48 zero and 612 nonzero residuals.

@@ -1,0 +1,35 @@
+NEXT HYPOTHESIS -- NONUNIFORM DYADIC PACKET COORDINATES
+
+Purpose: seek a real change in the normalized mode/precision spectrum,
+not another optimization of the existing constant.
+
+Candidate: replace consecutive packet coordinates by geometrically
+spaced coordinates X={0,1,2,4,...,2^(n-2)}. At an odd local node, the
+normalized Cauchy diagonal may gain quadratic rather than linear mode
+valuations. This apparent gain is not yet an algorithmic improvement.
+
+First falsification gate:
+1. Form the DISTINCT signed-difference grid D=X-X and C(T)=product(T-d).
+2. Compute v_2(C'(tau))-v_2(C'(0)) for every retained tau in D, starting
+   with tau=1. This is a nonzero W-entry's constant-term valuation.
+3. Negative values cannot be repaired just by shrinking the local jet
+   variable T=tau+2^ell Z; their constant terms remain nonintegral.
+4. Derive and charge any necessary common scaling, readout loss, degree
+   increase, Hermite multiplicity, and number of coefficient entries.
+5. Compare normalized diagonal gains against those losses. Reject any
+   entropy claim that omits the local constant term or uses a multiset
+   of differences as if it were a distinct interpolation grid.
+
+Working algebra to verify, not yet a certified result:
+For n>=3, with m=n-2, counting distinct differences suggests
+    v_2(C'(0)) = (m^3+5*m)/3,
+    v_2(C'(1)) = (n^2-n-4)/2.
+If correct, the geometric candidate incurs a cubic negative constant
+valuation, despite a quadratic diagonal gain. Test independently by
+direct products, then prove the count or produce a counterexample.
+
+Acceptance requires a complete improved resource recurrence, including
+packing, coefficient extraction, precision and child construction.
+A local spectral gain alone does not pass. If the geometric family
+fails, distinguish that family from a lower bound against all nonuniform
+coordinate sets and consider other grids or a different representation.
