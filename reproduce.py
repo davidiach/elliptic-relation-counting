@@ -37,6 +37,11 @@ CHECKS = (
     "check_difference_algebra",
     "check_difference_fiber",
     "check_difference_projection",
+    "check_chord_sections",
+    "check_implicit_chord_algebra",
+    "check_implicit_chord_fiber",
+    "check_quarter_cosets",
+    "check_implicit_chord_projection",
 )
 
 

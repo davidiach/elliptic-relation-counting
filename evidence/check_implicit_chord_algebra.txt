@@ -1,0 +1,5 @@
+p=17, order 16: 256 chord identities, 10 normalized isogenies of degrees [2, 4], 160 coset traces; 16 full doubling traces.
+p=19, order 20: 400 chord identities, 5 normalized isogenies of degrees [2, 4, 5], 100 coset traces; 20 full doubling traces.
+p=37, order 36: 1296 chord identities, 4 normalized isogenies of degrees [2, 3, 4, 6], 144 coset traces; 0 full doubling traces.
+p=101, mixed-slot unary formula versus balanced chords: 180 field-digit checks, including 112 empty, 36 singleton and 32 multiple-witness cases.
+p=19, 8192 weighted two-slot mixed seeds: collision accounting at density 1/2 for all 9 nontrivial rational subgroups; largest expected number of covered distinct half sums for a fixed subgroup 0.8828.

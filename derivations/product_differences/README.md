@@ -4,6 +4,8 @@
 
 ## What the equality answers
 
+The [subsequent half-list analysis](../implicit_chords/README.md) gives a bounded-storage version of this exact calculation and determines which poles survive cancellation for a raw abscissa bit.
+
 Let $h$ count the ordinary target tuples and let the endpoint be $-T$. Use the same original lifts in both products. Speeds are measured in the invariant tangent direction, and the speed at each row is the difference between the two calls. On a regular grid:
 
 | Fiber | Exact equality condition | Computation |

@@ -1,0 +1,6 @@
+p=29, N=36: 551 full-field kernel column checks, 471 empty regular targets, 365 singleton targets (309 bit one).
+  0 selected witnesses required the branch-point check. Largest reduced right denominator degree 13, largest checked independent-column matrix rank 3.
+p=101, N=103: 5252 full-field kernel column checks, 1757 empty regular targets, 711 singleton targets (548 bit one).
+  0 selected witnesses required the branch-point check. Largest reduced right denominator degree 16, largest checked independent-column matrix rank 4.
+p=29, full rational two-torsion: a regular singleton on the four pinned abscissas 15,21 | 0,1 needs the separate fixed-left-sum check.
+p=1031: 101 nonempty affine masks with paired four-term relations, up to 10 points; maximum overlap across all nonzero shifts 2.

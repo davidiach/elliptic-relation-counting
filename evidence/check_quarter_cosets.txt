@@ -1,0 +1,2 @@
+F_13, group size 19: 1 nontrivial subgroups, 5,461 seed-state/subgroup checks, 5,292 where the two quarter sizes alone did not bound a coset's tuple mass. Three density thresholds checked in each case.
+F_19, group size 20: 9 nontrivial subgroups, 86,112 seed-state/subgroup checks, 37,685 where the two quarter sizes alone did not bound a coset's tuple mass. Three density thresholds checked in each case.

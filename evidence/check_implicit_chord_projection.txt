@@ -1,0 +1,9 @@
+F_101, cyclic order 103: comparing with both literal precision-two products on each target.
+  zero, equal: errors 0/96 overall, 0 on empty targets, 0/8 on singletons.
+    Positive shifts j=1,2,3 had [0, 0, 0] errors; all-shift failure on 0/8 singleton targets.
+  one ordinate, pole: errors 4/96 overall, 0 on empty targets, 4/8 on singletons.
+    Positive shifts j=1,2,3 had [4, 0, 2] errors; all-shift failure on 8/8 singleton targets.
+  three ordinates, exact: errors 0/96 overall, 0 on empty targets, 0/8 on singletons.
+    Positive shifts j=1,2,3 had [3, 3, 1] errors; all-shift failure on 7/8 singleton targets.
+  Group order 114: checked 16 abscissa-multiset identities with stabilizer order three.
+  F_8191: all 256 challenge transcripts on a regular guarded singleton; measured nonzero witness Walsh coefficient 2/256.

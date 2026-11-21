@@ -1,0 +1,6 @@
+F_101, 4 width-two slots: 48 literal product comparisons, hit classes [0, 1], 24 comparisons mixed section classes. Peak entries per section side 2 vs 4 in the balanced join.
+  Additional literal equality from cancellation of 4 nonzero empty-section digits.
+F_1031, 6 width-two slots: 48 literal product comparisons, hit classes [0, 1], 24 comparisons mixed section classes. Peak entries per section side 4 vs 8 in the balanced join.
+  Additional literal equality from cancellation of 4 nonzero empty-section digits.
+F_101, 6 width-two slots: 72 literal product comparisons, hit classes [0, 1, 2], 48 comparisons mixed section classes. Peak entries per section side 4 vs 8 in the balanced join.
+  Additional literal equality from cancellation of 4 nonzero empty-section digits.
