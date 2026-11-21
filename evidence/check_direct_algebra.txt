@@ -1,0 +1,5 @@
+p=13, overlapping slots: all four nullities and 64 signed projective-incidence comparisons over 183 sections.
+p=101, m=3, 15 distinct partial sections, T=[12]G: hit count 1; critical source degree 6, quotient dimension 16, 64 exact Fermat-parity comparisons.
+p=101, m=3, 16 distinct partial sections, T=[13]G: hit count 1; critical source degree 6, quotient dimension 16, 64 exact Fermat-parity comparisons.
+p=101, m=3, empty control, T=[2]G: hit count 0; critical source degree 6, quotient dimension 16, 64 exact Fermat-parity comparisons.
+p=101, m=4, four-slot singleton, T=[3]G: hit count 1; critical source degree 3, quotient dimension 8, 256 exact Fermat-parity comparisons.

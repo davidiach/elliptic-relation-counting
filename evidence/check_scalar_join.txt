@@ -1,0 +1,3 @@
+F_101, 0 witness: 15/102 directions produce a false match; all 256 signed joins agree with the determinant test.
+F_101, 1 witness: 13/102 directions produce a false match; all 256 signed joins agree with the determinant test.
+F_1031, 28 labels on each side, one match: polynomial ranks 1 through 28, disjoint reciprocal rank 27.

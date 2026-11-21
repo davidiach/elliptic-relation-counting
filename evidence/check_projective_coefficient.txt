@@ -1,0 +1,7 @@
+F_3, m=2: 40 signed grids and all 4 projective point indicators verified.
+F_3, m=3: 40 signed grids and all 13 projective point indicators verified.
+F_5, m=3: 40 signed grids and all 31 projective point indicators verified.
+F_7, m=2: 40 signed grids and all 8 projective point indicators verified.
+Regular sampled singleton over F_13: all 64 address parities agree with capped coefficient extraction.
+Factoring all 183 sections and testing the three seeds finds one witness section; shared-root control passed.
+All 128 hidden anchor seeds with visible tails fixed: 12 regular guarded singletons; largest address/section masses 6/12 seeds (bound 16).

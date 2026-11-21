@@ -8,6 +8,8 @@ This AI-assisted research preprint studies a fixed-target counting problem behin
 
 ## Results
 
+**Direct witness parity, 21 November 2026.** The signed zero count $M_0-M_{p-1}$ can be computed as one coefficient of a product formed from the slots. On a regular singleton a single elliptic section gives the whole witness. A proposed section can be checked in polynomial time from the seeds, even when the slots are exponentially wide. Finding it cheaply remains open. We derive the first degree that reveals it in the explicit quotient and bounds for scalar powering and sparse Fourier evaluation. The conditional end-to-end exponent gains no improvement from these methods. [Proofs, costs and finite checks](derivations/direct_parity/README.md)
+
 **Nonlinear signed moments.** Over the field of order 13, an exact search found a two-moment table that favors the correct tuple on one target. In six-slot trials over the field of order 65,521, a cheap nonlinear character score ranked the witness above a wrong legal tuple at essentially the chance rate on two independent targets. We prove bounds for random coefficient searches and target-specific sparse lookups, and show how an exact parity decoder can require exponentially many signed determinant values. The general-prime log-time bound stays at $(24.00246+o(1))b/(\log_2 b)^{1/4}$. [Results, costs and open cases](derivations/nonlinear_moments/README.md)
 
 | Question | Result | Scope |
@@ -32,6 +34,8 @@ The runner compares every output with its committed transcript. Each script can 
 
 | Script | What it checks |
 |---|---|
+| [Direct coefficient](checks/check_projective_coefficient.py) · [Graded kernel](checks/check_direct_algebra.py) · [Scalar join](checks/check_scalar_join.py) | Independent calculations of signed witness parity, polynomial root finding on sections, first kernel degree and intermediate matrix ranks. |
+| [Fourier estimators](checks/check_direct_fiber.py) · [Sparse projections](checks/check_direct_projection.py) | Importance-sampling variance, phase-order bounds, exact interpolation and character Gram identities. |
 | [Arithmetic and quadrature](checks/check_accounting.py) | Conditional constants, 8,192 exhaustive inverse-hash cases, 160 larger products, offset rounding for 103 targets, and 24 direct interpolation comparisons. |
 | [Exact population](checks/check_pooled_zero.py) | All eligible small-curve seed multiplicities, pooled count certificates, planted calibration, and 756 exact marginal-likelihood comparisons. |
 | [Fresh-seed trials](checks/probe_pooled_zero.py) | Independent planted training and fresh evaluation on two larger finite fields. Reproduces the raw-moment rank and error measurements. |

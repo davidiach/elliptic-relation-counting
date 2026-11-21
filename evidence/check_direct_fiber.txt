@@ -1,0 +1,7 @@
+p=101: 55 unpaired offset quadruples, all 101 shifts each; largest zero count 2 (bound 16).
+p=1031: 55 unpaired offset quadruples, all 1031 shifts each; largest zero count 3 (bound 16).
+p=101: affine width-four law: 522/8192 masks have an unpaired four-point relation; maximum good energy/size^2 21/8.
+p=101: fixed-bit width-four law: 2/32 masks have an unpaired four-point relation; maximum good energy/size^2 5/2.
+p=1031: 384 legal tuples, 346 represented targets, 512 challenges; exact signed-row Gram matrix checked.
+  One-sample complex mean squared error: uniform 383.000000, optimal challenge-dependent importance proposal 109.559381.
+  308 singleton targets: sum of best squared sign correlations using one interval in the first character's phase order 3.582672; all dyadic block bounds verified.

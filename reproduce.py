@@ -24,6 +24,11 @@ CHECKS = (
     "probe_nonlinear_moments",
     "probe_pinned_moments",
     "probe_dense_residues",
+    "check_projective_coefficient",
+    "check_direct_algebra",
+    "check_scalar_join",
+    "check_direct_fiber",
+    "check_direct_projection",
 )
 
 
