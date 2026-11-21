@@ -10,6 +10,7 @@ F_13 regular two-orbit inputs, exact fresh-seed multiplicities:
   prefix 9: certified counts 145,776, bits 146,256, positive certificates 119,376, errors defaulting undecided to absent 13,632.
   prefix 10: certified counts 151,008, bits 151,008, positive certificates 122,736, errors defaulting undecided to absent 10,272.
   prefix 12: certified counts 151,008, bits 151,008, positive certificates 122,736, errors defaulting undecided to absent 10,272.
+  Raw twelfth moment alone: 168,480 exact counts, zero misses.
   Nine moments, 60,000 independent plants and 60,000 unlabeled fresh seeds: 2 bins predicted positive, exact errors 7,680 (7,200 false positives, 480 false negatives) of 168,480.
   Defaulting unresolved cases to absent makes 13,632 errors.
   Plant-calibrated integer count: 10,320 exact-population mistakes; smallest candidate default: 14,112.

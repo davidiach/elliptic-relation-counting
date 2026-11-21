@@ -13,6 +13,7 @@ F_101, order 103, widths (4, 4, 4), lambda=0.3238
   one: 549 seeds, 45 hits, 0 errors.
   two: 1,732 seeds, 261 hits, 0 errors.
   many: 5,509 seeds, 2,299 hits, 2,299 errors.
+  Irregular masks: 1,064 fresh hits.
   Nine-moment exact counts on 1,715/1,732 two-orbit seeds.
   Total readout errors 3,363/16,000, including 0 false positives. Always absent makes 3,669 errors.
 F_1031, order 1019, widths (8, 16, 16), lambda=0.2476
@@ -27,5 +28,6 @@ F_1031, order 1019, widths (8, 16, 16), lambda=0.2476
   one: 8 seeds, 0 hits, 0 errors.
   two: 44 seeds, 2 hits, 0 errors.
   many: 12,388 seeds, 2,929 hits, 2,929 errors.
+  Irregular masks: 343 fresh hits.
   Nine-moment exact counts on 44/44 two-orbit seeds.
   Total readout errors 3,272/16,000, including 0 false positives. Always absent makes 3,274 errors.

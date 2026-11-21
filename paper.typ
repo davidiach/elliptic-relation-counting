@@ -1,4 +1,4 @@
-#set document(title: "Counting relations in independently hashed elliptic-curve slots", author: "davidiach research repository", date: datetime(year: 2026, month: 11, day: 20))
+#set document(title: "Counting relations in independently hashed elliptic-curve slots", author: "davidiach research repository", date: datetime(year: 2026, month: 11, day: 21))
 #set page(paper: "a4", margin: (x: 23mm, top: 22mm, bottom: 22mm),
   footer: context [#set text(size: 8.5pt, fill: rgb("#425450"))
     Hashed elliptic-curve relations #h(1fr) #counter(page).display("1")])
@@ -13,16 +13,17 @@
 #let public = "https://github.com/bochum-crypto/subexponential-ecdl/blob/1ee44e562b1b9a50ea339f3b8f81112b5a24b96f/subexponential-ecdl.pdf"
 #let project = "https://github.com/davidiach/elliptic-relation-counting"
 
-#text(size: 9pt, tracking: 0.8pt, fill: rgb("#31584f"))[RESEARCH PREPRINT · 20 NOVEMBER 2026]
+#text(size: 9pt, tracking: 0.8pt, fill: rgb("#31584f"))[RESEARCH PREPRINT · 21 NOVEMBER 2026]
 #v(8pt)
 #block[#set par(justify: false); #text(size: 26pt, weight: "bold")[Counting relations in independently hashed elliptic-curve slots]]
 #v(4pt)
 #text(size: 14pt)[Conditional complexity, planted distributions, and certificates from determinant moments]
 #v(4pt)
-Published by #link(project)[davidiach] · AI-assisted mathematical research · Version 1
+Published by #link(project)[davidiach] · AI-assisted mathematical research · Version 2
 #v(9pt)
-#label[Abstract.] For a fixed point on an elliptic curve, we study the number of ordered representations of that point as a sum from independently hashed slots. A short inverse-hash circuit gives a conditional improvement to the leading time coefficient in a supplied relation-search framework, from 27.01388 to 26.29338. The power of the logarithmic saving is $1/4$ in both bounds. Separately, we give a finite second-moment bound for isolation and an exact likelihood formula for planted relations. At the proposed sparse widths, a predictor that leaves one whole slot unread has error at least $lambda-O(lambda^2)$ even with adaptive access to the other slots. Determinant power sums can be evaluated jointly on a smaller interpolation grid. For three slots of sizes 2, 2 and 4, nine pooled moments certify 145,776 exact counts among 168,480 eligible seed triples on one small curve. Tests on larger pools locate the outstanding difficulty in the decoding step. A square-root-in-bitlength bound remains open.
+#label[Abstract.] We count ordered representations of a fixed elliptic-curve point $T$ as a sum from independently hashed slots. When $2T != O$ and the slots have the proposed sparse widths, the probability of exactly one representation is $lambda+O(lambda^2)$. A predictor that leaves one whole slot unread has error at least $lambda-O(lambda^2)$ on the existence question, even with adaptive access to the other slots. The proof uses a finite second-moment bound and the exact likelihood of the seeds under planting. Interpolation computes determinant power sums jointly across all slots. For regular slots of sizes 2, 2 and 4 on a curve over $bb(F)_13$, nine pooled moments certify exact counts for 145,776 of 168,480 eligible seed triples, and the twelfth moment alone determines all 168,480 counts. Efficient decoding at growing arity remains open. Under the supplied finite-packet assumption and inherited relation-search estimates, a short inverse-hash circuit reduces the coefficient of $b/(log_2 b)^(1/4)$ in the upper bound on log expected time from 27.01388 to 26.29338.
 
+#v(5pt)
 = The question and its baselines
 Let $b=ceil(log_2 p)$ and $L=log_2 b$. Akshima, Bacho, Huang, Kiltz, Nishaburi, Nooripoor, Tittelbach and Wiedijk derive a conditional expected-time bound $2^(O(b/L^(1/4)))$ on prime-order curves over prime fields, with an extension to fixed cofactors. Their version 0.2 assumes a Boolean tensor-contraction result. It gives no numerical leading coefficient for this comparison. A separate, supplied manuscript develops an explicit finite-packet model and reports a coefficient of 27.01388. We compare numerical coefficients only within that framework on the overlapping input class.
 
@@ -67,9 +68,11 @@ At balanced widths with $nu_i$ large compared with $m$, $2^m/N=o(lambda)$ and $l
 
 #pagebreak()
 = What planting reveals about the seeds
+Fix a nonidentity target $T$ for the likelihood formulas below. For the sparse-error bound we also assume $2T != O$, so that the fixed-target second-moment bound of Section 3 applies.
+
 Let $P$ denote the fresh seed law. To draw from the planted law $Q$, sample a uniform ordered affine tuple of sum $T$, then independently draw each hash conditional on retaining its marked point. The last point is forced by the first $m-1$, with rejection if it equals $O$. For a given marked abscissa, sample $alpha$ as usual, draw $u$ uniformly below $tau$, and set $beta=u-alpha x mod M$. Counting the ways to plant the same seeds gives
 $ (d Q)/(d P) = H/mu, quad mu=bb(E)_P H=((N-1)^m-(-1)^m)/N product_i rho_i. $
-The numerator counts affine tuples by convolution of the indicator of the nonidentity elements. For any acceptance event $A$, the score $mu+P(A)-2mu Q(A)$ differs from its fresh existence error by at most $bb(E)_P (H-1)_+$. This permits calibration using planted examples and unlabeled fresh seeds at a prescribed target.
+Convolving the indicator of the nonidentity elements gives $((N-1)^m-(-1)^m)/N$ ordered affine tuples at each nonidentity target. For any acceptance event $A$, the score $mu+P(A)-2mu Q(A)$ differs from its fresh existence error by at most $bb(E)_P (H-1)_+$. This permits calibration using planted examples and unlabeled fresh seeds at a prescribed target.
 
 == An unread slot forces first-order error
 Let $R$ plant *independent* uniform affine marks in the slots, with no sum condition. If $D=product_i abs(F_i)$, then $(d R)/(d P)=D/(bb(E)_P D)$. Under $R$, conditionally on the hashes, the marks are uniform independently in the observed slots. Enforcing the target sum gives $Q$. For a nonempty observed subset $I$ of size $s$, write $t=m-s$, $D_I=product_(i in I) abs(F_i)$ and $H_I$ for its count at $T$. The exact marginal likelihood is
@@ -79,7 +82,7 @@ Indeed $t$ independent affine marks sum to $u$ with probability
 $ frac(1,N) (1+ frac((-1)^t (N bold(1)_(u=O)-1),(N-1)^t)). $
 Average this identity over the observed marks. Under $R$, $W=H_I/D_I$ lies in $[0,1]$ with mean $a_s=(1-(-1)^s/(N-1)^s)/N$. The inequality $bb(E) abs(W-a_s)<=2a_s (1-a_s)$ now gives total variation $O((N-1)^(-t))$ between these marginal laws.
 
-An adaptive algorithm reading at most $m-1$ slots may be partitioned by the least index it leaves unread. Its decision on the part corresponding to index $i$ is measurable on all slots except $i$. Summing gives $abs(Q(A)-R(A))=O(m/N)$. Meanwhile $op("Var")(abs(F_i))<=2bb(E) abs(F_i)$ by the two-abscissa bound. Independence gives relative variance of $D$ at most $product_i (1+2/(bb(E) abs(F_i)))-1$, exponentially small in $b/m$ at the balanced widths. Thus $Q(A)<=P(A)+o(lambda)$. As $P(H>0,A)<=mu Q(A)$, fresh error is at least $lambda-O(lambda^2)$. The statement permits arbitrary computation on every slot read. A statistic supplied from all slots, including a single pooled moment, lies outside this access model.
+An adaptive algorithm reading at most $m-1$ slots may be partitioned by the least index it leaves unread. Its decision on the part corresponding to index $i$ is measurable on all slots except $i$. Summing gives $abs(Q(A)-R(A))=O(m/N)$. Meanwhile $op("Var")(abs(F_i))<=2bb(E) abs(F_i)$ by the two-abscissa bound. Independence gives relative variance of $D$ at most $product_i (1+2/(bb(E) abs(F_i)))-1$, exponentially small in $b/m$ at the balanced widths. Thus $Q(A)<=P(A)+o(lambda)$. Since $P(H>0,A)<=mu Q(A)$, fresh error is at least $P(H>0)+(1-2mu)P(A)-o(lambda^2)$. At the proposed widths $mu$ tends to zero, so the coefficient of $P(A)$ is eventually nonnegative and the lower bound is $lambda-O(lambda^2)$. The statement permits arbitrary computation on every slot read. A statistic supplied from all slots, including a single pooled moment, lies outside this access model.
 
 #pagebreak()
 = Evaluating the joint moments
@@ -116,22 +119,23 @@ At a surviving separation the zero multiplicity is the order at $z=0$ of $K_+(z-
 = What the finite experiments measure
 The small-curve reference enumerates masks and computes determinants independently of the decoder. On $y^2=x^3+4x+1$ over $bb(F)_13$, $N=19$, $T$ is the first affine point in lexicographic order. At widths $(2,2,2)$ modulo 16, the regular inputs with slot sizes $(2,2,4)$ up to permutation account for 168,480 seed triples with multiplicity. Exactly 133,008 have a hit.
 
-#grid((0.9fr,1.15fr,1.15fr,1.2fr), [*Moments*], [*Count certified*], [*Bit certified*], [*Misses on default*],
- [8], [123,312], [123,792], [36,096], [9], [145,776], [146,256], [13,632],
- [10], [151,008], [151,008], [10,272], [12], [151,008], [151,008], [10,272])
-#text(size: 9.5pt)[Table 2. The default reports absence on unresolved inputs. Every issued certificate agreed with direct counting. The denominator conditions on this slot shape.]
+#grid((1.5fr,1fr,1fr,1.2fr), [*Readout and moments*], [*Count certified*], [*Bit certified*], [*Misses on default*],
+ [Octic, 1–8], [123,312], [123,792], [36,096], [Octic, 1–9], [145,776], [146,256], [13,632],
+ [Octic, 1–10], [151,008], [151,008], [10,272], [Octic, 1–12], [151,008], [151,008], [10,272],
+ [Fermat, 12 alone], [168,480], [168,480], [0])
+#text(size: 9.5pt)[Table 2. The default reports absence on unresolved inputs. In $bb(F)_13$, each nonzero determinant has twelfth power one, so the raw moment satisfies $Z_12 equiv 16-H mod 13$. Each of the four pairs from the smaller slots admits at most one completion. Thus $0 <= H <= 4$ and the residue determines the integer count.]
 
 Keep the nine-moment certificates and bin the unresolved cases by their candidate count sets. Use 60,000 independently generated plants and 60,000 unlabeled fresh seeds to fit the test $2mu Q(v)>P(v)$ for each bin $v$. Across the entire eligible population, existence mistakes fall from 13,632 to 7,680, including 7,200 false positives. For integer counts, on training plants only, check the four possible completions and use $P(H=j,v)=(mu/j)Q(H=j,v)$ for $j>0$. Pick the most probable admissible count. This makes 10,320 mistakes, versus 14,112 for the smallest compatible count, using zero on abstention.
 
 == Independent fresh-seed tests at larger widths
 We drew 12,000 plants per field to fit equations, then 16,000 independent fresh seeds per field to score the resulting rules. One family contained the 11 weighted monomials of degree at most eight in three normalized even central moments. Another contained every monomial of ordinary degree at most two in the nine raw field moments, including the constant. On regular masks containing at least three orbits, the planted evaluation matrices attained full rank 11 and 55 in their respective eligible populations on both curves. Every nonzero equation in either family therefore fails on a genuine plant.
 
-#grid((0.85fr,1.25fr,1.1fr,1.2fr,1.1fr), [*Field*], [*Fresh hits*], [*Two-orbit counts certified*], [*Larger-pool hits missed*], [*All errors*],
- [101], [3,669], [1,715 / 1,732], [2,299 / 2,299], [3,363],
- [1,031], [3,274], [44 / 44], [2,929 / 2,929], [3,272])
-#text(size: 9.5pt)[Table 3. Widths were $(4,4,4)$ and $(8,16,16)$, with orders 103 and 1,019. The fitted rule returned absence where it had no test. Both trials had zero false positives.]
+#grid((auto,1fr,1fr,1fr,1fr,1fr,1fr), [*Field*], [*Fresh hits*], [*Irregular*], [*1 orbit*], [*2 orbits*], [*3+ orbits*], [*Misses*],
+ [101], [3,669], [1,064], [45], [261], [2,299], [3,363],
+ [1,031], [3,274], [343], [0], [2], [2,929], [3,272])
+#text(size: 9.5pt)[Table 3. Fresh hits are partitioned by mask regularity and, for regular masks, by orbit count. All misses came from irregular masks or regular masks with at least three orbits. Both trials had zero false positives. Widths were $(4,4,4)$ and $(8,16,16)$, with group orders 103 and 1,019, respectively.]
 
-The larger-field rule captured two of 3,274 fresh positives. These experiments identify a failure of the tested families on typical larger pools. Two finite fields do not estimate an asymptotic error rate for unrestricted decoders.
+Across all regular two-orbit seeds, including negatives, nine moments certified the exact count on 1,715 of 1,732 seeds over $bb(F)_101$ and all 44 over $bb(F)_1031$. On the latter field the fitted rule detected two of 3,274 fresh positives. The behavior of unrestricted decoders at growing field size remains open.
 
 #pagebreak()
 = Other approaches and the open exponent
@@ -153,6 +157,6 @@ The larger-field rule captured two of 3,274 fresh positives. These experiments i
 
 *Supplement.* The repository contains the project’s mathematical derivations for the inverse-hash accounting, circuit joins, target isolation, packet span, determinant moments, planted certificates, and the norm, section-product and field-unit alternatives. The topic index maps them to the sections of this paper. These are working proofs, including scope conditions and failed approaches, available for independent review.
 
-*Reproduction.* The release includes four command-line checks and their recorded output. The accounting check recomputes the coefficients, 8,192 small inverse-hash cases, 160 larger products, rounding at 103 targets, and 24 comparisons of interpolated to enumerated moments. A second script exhausts the small pooled inputs and checks the marginal planting law on 756 partial mask patterns. A third runs the larger fresh-seed trials using fixed pseudorandom seeds and separate training and evaluation streams. A fourth verifies finite modular ranks behind the generic packet-span theorem. The small-curve reference arithmetic is included. No source archive is required to run these checks. #link(project)[Repository, paper source, derivations, and experimental evidence.]
+*Reproduction.* Four checks in the repository reproduce the main paper experiments. Each has a recorded transcript. The accounting check recomputes the coefficients, 8,192 small inverse-hash cases, 160 larger products, rounding at 103 targets, and 24 comparisons of interpolated to enumerated moments. A second script exhausts the small pooled inputs and checks the marginal planting law on 756 partial mask patterns. A third runs the larger fresh-seed trials using fixed pseudorandom seeds and separate training and evaluation streams. A fourth verifies finite modular ranks behind the generic packet-span theorem. The small-curve reference arithmetic is included. No source archive is required to run these checks. #link(project)[Repository, paper source, derivations, and experimental evidence.]
 
 *Status.* This is an AI-assisted working paper prepared for public scrutiny. The algebraic propositions have direct arguments and finite checks under their stated hypotheses. The end-to-end numerical bound remains conditional on the named upstream ingredients. No full-scale timing or independent peer review is claimed.

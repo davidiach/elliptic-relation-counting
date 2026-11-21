@@ -30,6 +30,10 @@ def tally(stats, cache, sets, target, p, mass, true_hits=None):
     values, truth = pooled_observation(sets, target, p)
     if true_hits is not None:
         assert truth == true_hits
+    if p == 13:
+        # Each nonzero determinant contributes one to the raw twelfth moment.
+        assert 0 <= truth <= 4 and (16 - values[11]) % p == truth
+        stats["Fermat exact"] += mass
     if values not in cache:
         cache[values] = pooled_certificate(p, values, ORDERS)
     stats["total"] += mass
@@ -94,6 +98,8 @@ def check_actual_seeds():
             reference[possible, hits] += mass
     print("F_13 regular two-orbit inputs, exact fresh-seed multiplicities:")
     report(stats)
+    assert stats["Fermat exact"] == stats["total"] == 168480
+    print(f"  Raw twelfth moment alone: {stats['Fermat exact']:,} exact counts, zero misses.")
     assert stats[12, "exact"] > 0 and stats[12, "positive"] > 0
     check_planted_readout(curve, masks, keys, reference, stats)
     check_marginals(len(curve), target, masks, masses)

@@ -173,12 +173,17 @@ def run(p, a, widths, seed, n_train=12000, n_test=16000):
                     if possible == frozenset({0}) or 0 not in possible:
                         answer = 0 not in possible
             tot[name,"errors"] += answer != present
+        elif present:
+            # A hit requires a nonempty slot product, so this mask is irregular.
+            tot["irregular hits"] += 1
         tot["errors"] += answer != present
         tot["false positives"] += answer and not present
     print(f"  {n_test:,} independent fresh seeds, {tot['hits']:,} positives, "
           f"{tot['regular nonempty']:,} regular nonempty.")
     for name in ("one","two","many"):
         print(f"  {name}: {tot[name]:,} seeds, {tot[name,'hits']:,} hits, {tot[name,'errors']:,} errors.")
+    assert tot["hits"] == tot["irregular hits"] + sum(tot[name, "hits"] for name in ("one", "two", "many"))
+    print(f"  Irregular masks: {tot['irregular hits']:,} fresh hits.")
     print(f"  Nine-moment exact counts on {tot['exact pooled counts']:,}/{tot['two']:,} two-orbit seeds.")
     print(f"  Total readout errors {tot['errors']:,}/{n_test:,}, including {tot['false positives']:,} false positives. "
           f"Always absent makes {tot['hits']:,} errors.")
