@@ -1,0 +1,8 @@
+F_101: 220 literal comparisons, equality/inequality counts for zero hits 14/106, one hit 25/35, multiple hits 40/0.
+  Verified the raw-bit reciprocal formula or singleton residue on 54 comparisons.
+  Matched the full normalized field digit on all 180 empty and singleton comparisons.
+F_1031: 230 literal comparisons, equality/inequality counts for zero hits 23/197, one hit 3/7, multiple hits 0/0.
+  Verified the raw-bit reciprocal formula or singleton residue on 69 comparisons.
+  Matched the full normalized field digit on all 230 empty and singleton comparisons.
+F_17: 12 full chord transforms with identities, opposite and repeated points, tangents and rational two-torsion.
+F_1031, six width-two slots: 20 comparisons with independent integer determinants, hit-count classes [0, 1] (2 denotes two or more).

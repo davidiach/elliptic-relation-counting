@@ -1,0 +1,4 @@
+p=41, A=8, 3 rational nonidentity two-torsion points, hit counts [0, 1, 2], 24 complete challenge comparisons.
+  Checked 384 ordinary determinants with folded tags over F_(p^2), 32 singleton comparisons against literal products modulo 1681.
+p=101, A=17, 0 rational nonidentity two-torsion points, hit counts [0, 1], 16 complete challenge comparisons.
+  Checked 256 ordinary determinants with folded tags over F_(p^2), 32 singleton comparisons against literal products modulo 10201.

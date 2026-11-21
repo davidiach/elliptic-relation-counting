@@ -33,6 +33,10 @@ CHECKS = (
     "check_section_deformation",
     "check_multiscale",
     "check_orbit_parity",
+    "check_chord_difference",
+    "check_difference_algebra",
+    "check_difference_fiber",
+    "check_difference_projection",
 )
 
 

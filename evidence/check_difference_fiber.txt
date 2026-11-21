@@ -1,0 +1,4 @@
+p=29, target x=10, 0 witnesses: all three balanced coefficients vanish. Pinning one fixed-slot bit gives calibrated subgrid witness counts [0, 0].
+p=29, target x=10, 1 witnesses: all three balanced coefficients vanish. Pinning one fixed-slot bit gives calibrated subgrid witness counts [1, 0].
+p=29, target x=10, 2 witnesses: all three balanced coefficients vanish. Pinning one fixed-slot bit gives calibrated subgrid witness counts [0, 2].
+Every tuple passed the alternant identity for all row pairs. Two independent lift choices passed balanced and address-dependent product checks.

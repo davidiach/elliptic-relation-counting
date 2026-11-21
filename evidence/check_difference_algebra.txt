@@ -1,0 +1,2 @@
+p=101, slot sizes [4, 4, 4], hit counts [0, 1, 2, 3]; graded dimensions and empty/singleton pairing ranks verified, 48 compact minor tests, 65 true precision-two comparisons.
+p=1031, slot sizes [4, 4, 4], hit counts [0, 1]; graded dimensions and empty/singleton pairing ranks verified, 48 compact minor tests, 65 true precision-two comparisons.
