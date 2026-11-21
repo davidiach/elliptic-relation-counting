@@ -1,0 +1,5 @@
+F_13, N=19: 100 projective input pairs checked against every projective root, 288 translated signed-leaf identities.
+F_19, N=20: 144 projective input pairs checked against every projective root, 272 translated signed-leaf identities.
+F_13: 8,192 weighted mixed seeds, 306 ordered target pairs; largest cross moment 335/256, proved upper bound 2793/256.
+F_257, N=249, width one, three slots, fixed R=T: 60,026 guarded singleton abscissa patterns; 8,734 wrong accepted addresses, 9,238 surplus internal assignments, 10,232 extra sign patterns.
+  Conditional means 0.145504, 0.153900, 0.170459, respectively.

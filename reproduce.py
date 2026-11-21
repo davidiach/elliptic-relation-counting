@@ -42,6 +42,11 @@ CHECKS = (
     "check_implicit_chord_fiber",
     "check_quarter_cosets",
     "check_implicit_chord_projection",
+    "check_candidate_targets",
+    "check_candidate_offsets",
+    "check_candidate_splices",
+    "check_candidate_arithmetic",
+    "check_candidate_fingerprint",
 )
 
 

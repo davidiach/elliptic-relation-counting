@@ -1,0 +1,4 @@
+F_13, 8,192 weighted three-slot roots: 940 guarded singletons at one fixed target. The one-bit cut retains the witness and averages 9.5191 wrong addresses; reciprocal-count mass 0.01394 <= representative mass 0.03214 <= 0.25000.
+30-bit p, two width-8 intervals: 10 quotient values; validated 8-bit prime 241 on all 64 inputs, 1 true.
+61-bit p, two width-16 intervals: 17 quotient values; validated 11-bit prime 1447 on all 256 inputs, 1 true.
+F_13, 65,536 weighted four-slot roots: 2,726 guarded singletons. Optimal prefix- and leaf-dependent quotient lists at caps 1,2,4 cover 0.9178, 0.9985, 1.0000 conditionally; forced-tail and collision bounds checked for every local list.

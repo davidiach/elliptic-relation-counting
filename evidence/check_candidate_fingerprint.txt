@@ -1,0 +1,7 @@
+F_13, group order 19: 8,192 weighted mixed seeds, 18 eligible targets, 6,876 regular guarded singletons.
+  Prefix 1: two-tag test kept every witness; 48,272 wrong address/target pairs, including at least 48 forced by rectangles.
+  Prefix 2: two-tag test kept every witness; 48,840 wrong address/target pairs, including at least 2,248 forced by rectangles.
+  Prefix 3: two-tag test kept every witness; 48,916 wrong address/target pairs, including at least 11,104 forced by rectangles.
+  All complete binary additive tests with local-mask tags together leave 103,620 of 103,620 wrong pairs (witness-constraint rank 231).
+  Every distinct group-label pair collides on exactly half of 32 binary rows; independent rows give the stated per-address expectation.
+  Modal increments corrected all 53 positions of each perturbed additive table, for output groups of orders 2 and 53.

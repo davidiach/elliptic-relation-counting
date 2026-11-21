@@ -1,0 +1,3 @@
+F_13, order 19: all 6,859 ordered point/point/target triples. Wrong triples after each successive offset: [972, 102, 4, 0].
+F_1031, cyclic curve order 1019: all 16,807 nontrivial sign-pattern systems inconsistent across 5 offsets at arity 3.
+Cyclic additive group of order 2^61-1: all 16,807 nontrivial sign-pattern systems inconsistent across 5 offsets at arity 3.

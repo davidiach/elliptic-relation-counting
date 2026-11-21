@@ -1,0 +1,6 @@
+F_13, balanced, tags 2+3 bits: 1 witness kept for all 1024 hash pairs; mean wrong addresses 2219/256, one-jump lower bound 165/32, mean wrong completions 435/32.
+F_13, chain, tags 2+3 bits: 1 witness kept for all 1024 hash pairs; mean wrong addresses 8889/1024, one-jump lower bound 165/32, mean wrong completions 435/32.
+F_13, balanced, tags 5+5 bits: 1 witness kept for all 1024 hash pairs; mean wrong addresses 945/1024, one-jump lower bound 945/1024, mean wrong completions 1215/1024.
+F_13, chain, tags 5+5 bits: 1 witness kept for all 1024 hash pairs; mean wrong addresses 945/1024, one-jump lower bound 945/1024, mean wrong completions 1215/1024.
+F_13, balanced, tags 7+7 bits: 1 witness kept for all 16384 hash pairs; mean wrong addresses 3825/16384, one-jump lower bound 3825/16384, mean wrong completions 4095/16384.
+F_13, chain, tags 7+7 bits: 1 witness kept for all 16384 hash pairs; mean wrong addresses 3825/16384, one-jump lower bound 3825/16384, mean wrong completions 4095/16384.
