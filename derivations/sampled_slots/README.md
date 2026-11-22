@@ -18,7 +18,7 @@ We tested a score computable from every public seed in $w\,\operatorname{poly}(b
 
 ## Which exponent is already covered
 
-The archived paper uses independent affine permutations in every slot and gives coefficient $26.29337752$. The baseline $24.00245996$ for this follow-up uses the freedom to choose the mixed sampler. Here is the accounting on the same finite-packet assumptions. [Original release and attribution](../../README.md)
+The all-affine construction in Section 2 of the main paper gives coefficient $26.29337752$. The baseline $24.00245996$ for this follow-up uses the freedom to choose the mixed sampler. Here is the accounting on the same finite-packet assumptions. [Original release and attribution](../../README.md)
 
 The supplied C38 graph has $8m-7+3t$ complete transform arrays, $t=\lfloor(m-1)/2\rfloor$. Each array costs $(4+o(1))b$ Boolean-equivalent word edges. An abscissa bit $i$ belongs to row $\lfloor i/k\rfloor\bmod V$ where $k=\Theta((\log b)^2)$ and $V=\Theta(\sqrt b/\log b)$. Sort positions by owner and then by bit position and take the first $\ell$ as the free bits. Each owner contains $\Omega(b/V)$ positions. The free bits meet $h=O(1+\ell V/b)$ owners and form at most $s=\lceil b/(kV)\rceil$ runs. Thus $h/V=o(1)$ at the optimized arity and $m2^s/w=o(1)$, as required for isolation.
 

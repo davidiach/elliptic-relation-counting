@@ -2,6 +2,8 @@
 
 These are the original project working derivations, organized by question. The main paper provides a common notation and adjudicates the competing approaches. The dated notes preserve the assumptions and narrower input classes used in each argument. The [historical archive](../archive/README.md) preserves earlier reports, checking programs, and the original checkpoint records. The [reproduction instructions](../README.md#reproduce-the-experiments) identify the four C38 checks that use supplied reference modules. Each [release check](../checks/) has a [recorded output](../evidence/).
 
+In the [v3 paper](../paper.pdf), Table 1 and Section 2 compare the two general-prime constructions with the two special-prime bounds. Sections 4–5 cover weak detection under the affine seed law. Section 7 covers three-slot target derivatives and weighted decoding, and Section 8 gives the cofactor extension for separated approximations.
+
 | Topic | Derivations | What the result gives |
 |---|---|---|
 | Group equations and special primes | [Cost comparison](group_equations/results.md), [sparse division](group_equations/sparse.md), [weighted transform](group_equations/weighted.md), [batching](group_equations/batching.md), [degree bounds](group_equations/chord_geometry.md) | Conditional time coefficients by prime family, and limits on batching and low-degree equation checks. |
