@@ -1,0 +1,10 @@
+Curve F_5, group order 7: mask span 3, Fourier extension degree 3, paired transform invertible
+Curve F_7, group order 13: mask span 6, Fourier extension degree 12, paired transform invertible
+Curve F_13, group order 19: mask span 9, Fourier extension degree 18, paired transform invertible
+Curve F_17, group order 19: mask span 9, Fourier extension degree 18, paired transform invertible
+Affine support families: 212 ; affine images: 18340
+Exact paired Fourier parity comparisons: 40443
+Exact fixed-mask restrictions: 5094
+Seed-local networks: 100 ; exact seed-tuple contractions: 800 ; grouped monomials: 5686
+Finite binomial/degree inequalities: 33152
+All checks passed. Component tests only; no improved ECDLP exponent claimed.

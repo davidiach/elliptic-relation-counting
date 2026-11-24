@@ -1,0 +1,18 @@
+Joint obstruction: 9,228 center checks; 68 explicit local polynomials; 4,932 coefficients.
+Joint mode budgets: 628 exact degree/weight inequalities.
+Low-degree lifts: 24 exact rational deformations and parity comparisons.
+Support-degree inequality: all 65,535 nonzero 4-bit truth tables.
+Fourier row l=5, B=4, lambda=1, Q=2476099: 1,024 legal rows; rank 781; max fibre 4.
+Fourier row l=5, B=4, lambda=2, Q=2476099: 1,024 legal rows; rank 1,024; max fibre 1.
+Fourier row l=7, B=3, lambda=1, Q=571787: 2,187 legal rows; rank 2,059; max fibre 3.
+Fourier row l=7, B=3, lambda=2, Q=571787: 2,187 legal rows; rank 2,187; max fibre 1.
+Fourier row l=11, B=2, lambda=1, Q=3418801: 2,048 legal rows; rank 2,047; max fibre 2.
+Fourier row l=11, B=2, lambda=2, Q=3418801: 2,048 legal rows; rank 2,048; max fibre 1.
+Fourier projection: 10,518 legal assignments checked.
+Middle quadratic images: 36 fixtures; 16,116 assignments; every simple-root image bound holds.
+XOR diagnostic (width, median/max Walsh eigenvalue valuation at t=L+1):
+  16: 9/15
+  64: 15/63
+  256: 21/255
+  1024: 29/1023
+  4096: 37/4095

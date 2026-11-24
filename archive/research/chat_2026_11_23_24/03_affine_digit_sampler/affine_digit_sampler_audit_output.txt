@@ -1,0 +1,10 @@
+p=13: 156 affine masks; all 156 ordered distinct-abscissa inclusion counts exact
+p=17: 272 affine masks; all 272 ordered distinct-abscissa inclusion counts exact
+p=37: 1332 affine masks; all 1332 ordered distinct-abscissa inclusion counts exact
+4 digit-block image/entropy checks passed
+p=13: 24336 ordered mask pairs; exact first and second moments at all 18 eligible targets
+p=17: 73984 ordered mask pairs; exact first and second moments at all 18 eligible targets
+p=13, m=2, degree=8: planted evaluation rank 495/495; 495 distinct sampled positive seeds; 17 rational target tuples
+p=17, m=2, degree=8: planted evaluation rank 495/495; 496 distinct sampled positive seeds; 17 rational target tuples
+p=13, m=3, degree=4: planted evaluation rank 210/210; 211 distinct sampled positive seeds; 307 rational target tuples
+All finite checks passed. No end-to-end contraction benchmark.

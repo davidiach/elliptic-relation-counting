@@ -1,0 +1,7 @@
+256-bit prime, n=15, lambda=2, det bit length=426, v_p(det)=1.
+  Polynomial quotient checks: 100 exact, 100 rejected.
+  Twisted Fourier: 8 product and exact quotient identities; two-stage row factorization and conjugate compression verified.
+384-bit prime, n=15, lambda=1, det bit length=873, v_p(det)=1.
+  Polynomial quotient checks: 100 exact, 100 rejected.
+  Twisted Fourier: 8 product and exact quotient identities; two-stage row factorization and conjugate compression verified.
+Chord identities: 2144 verified line triples, including 88 doubling triples.

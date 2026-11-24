@@ -1,0 +1,8 @@
+p=13, m=2: 169 sequential and 169 balanced homogeneous resultant comparisons; ratios {1}, {1}
+p=17, m=3: 289 sequential and 289 balanced homogeneous resultant comparisons; ratios {9}, {9}
+p=37, m=4: 1369 sequential and 1369 balanced homogeneous resultant comparisons; ratios {10}, {33}
+p=43, m=4: 1849 sequential and 1849 balanced homogeneous resultant comparisons; ratios {6}, {13}
+totals: 3676 sequential, 3676 balanced comparisons
+361 exact collective resultant/product comparisons over the full grid
+spectrum p=257, curve a=1, c=7, r=281, W=64: 512 pair samples, 64 distinct symbolic factors; numeric distinct values min/mean/max=50/56.701/63; mean energy=79.902; 123 algebraically positive samples, mean distinct on positives=56.504
+PASS: homogeneous resultant recursion, collective evaluation and spectrum.

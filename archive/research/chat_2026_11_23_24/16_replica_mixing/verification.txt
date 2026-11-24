@@ -1,0 +1,19 @@
+signed partitions k=2: 3 distinct subspaces
+signed partitions k=3: 11 distinct subspaces
+signed partitions k=4: 49 distinct subspaces
+signed partitions k=5: 257 distinct subspaces
+signed partitions k=6: 1,539 distinct subspaces
+pattern checks: 1,859 exact rank/uniqueness; 1,485 compatible proper-type duplicate checks
+exact moment p=5 r=7 m=3 k=2: 343 seed classes, 9 local signed types, 26 admissible patterns, 49 target vectors, 2 primes
+exact moment p=5 r=7 m=3 k=3: 343 seed classes, 33 local signed types, 921 admissible patterns, 343 target vectors, 2 primes
+exact moment p=5 r=7 m=4 k=3: 2,401 seed classes, 44 local signed types, 11,859 admissible patterns, 343 target vectors, 2 primes
+exact moment p=7 r=13 m=3 k=3: 9,261 seed classes, 33 local signed types, 1,021 admissible patterns, 2,197 target vectors, 2 primes
+exact moment totals: 119 local signed-type arrays, 13,827 admissible pattern tuples, 2,932 target-vector coefficients, 12,348 seed classes
+character p=5 r=7 d=1: 4 good slopes, 0 bad slopes, 24 nontrivial character comparisons (numerical), max ratio to bound 0.500000, total mass 24
+character p=13 r=19 d=2: 12 good slopes, 0 bad slopes, 4,320 nontrivial character comparisons (numerical), max ratio to bound 0.527323, total mass 288
+character p=13 r=19 d=3: 12 good slopes, 0 bad slopes, 82,296 nontrivial character comparisons (numerical), max ratio to bound 0.225802, total mass 360
+character p=13 r=19 d=4: 12 good slopes, 0 bad slopes, 1,563,840 nontrivial character comparisons (numerical), max ratio to bound 0.127354, total mass 432
+character p=37 r=37 d=3: 36 good slopes, 0 bad slopes, 1,823,472 nontrivial character comparisons (numerical), max ratio to bound 0.206429, total mass 1128
+character p=101 r=101 d=2: 100 good slopes, 0 bad slopes, 1,020,000 nontrivial character comparisons (numerical), max ratio to bound 0.647879, total mass 9800
+character totals: (176, 0, 4493952)
+PASS (finite component checks only; no exponent improvement claimed)

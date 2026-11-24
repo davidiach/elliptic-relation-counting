@@ -1,0 +1,12 @@
+aux p=101, ell=7, #Eprime=84, width=3, trials=1
+aux p=127, ell=11, #Eprime=143, width=5, trials=5
+aux p=257, ell=13, #Eprime=234, width=6, trials=2
+aux p=509, ell=13, #Eprime=546, width=6, trials=17
+aux p=1009, ell=19, #Eprime=969, width=9, trials=7
+aux p=2003, ell=29, #Eprime=2088, width=14, trials=29
+aux p=4093, ell=29, #Eprime=4176, width=14, trials=69
+Auxiliary supports and recurrence: {'abscissas': 8099, 'multiplication_comparisons': 504, 'curve_proposals': 130, 'auxiliary_curves': 7} max memoized states: 4069
+Masked torsion gcd: {'repeated': 31, 'degree_drop': 270, 'lanes': 399, 'roots': 785, 'moments': 2394, 'fixtures': 100, 'square_filtered_lanes': 399, 'square_filtered_roots': 424, 'square_filtered_moments': 2394, 'zero': 50}
+Actual elliptic relation grids: {'planted': 16, 'degree_drop': 4, 'addresses': 422, 'positive': 24, 'rational_filter_comparisons': 422, 'retained_positive': 24, 'fibers': 84, 'grids': 32, 'projected': 13}
+Dense singleton coefficient tests: {'coefficient_root_bounds': 106, 'translation_evaluations': 31660, 'union_bounds': 4}
+All assertions passed. Explicit finite-lane component checks only.

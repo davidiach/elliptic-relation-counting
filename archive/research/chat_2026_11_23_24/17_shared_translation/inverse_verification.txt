@@ -1,0 +1,6 @@
+inverse p=13, m=2: 24 lift tuples, 0 exceptional paths, 6 targets, 144 norm evaluations, 12 candidate translations, 12 true translations, max polynomial degree 8
+inverse p=17, m=3: 8 lift tuples, 0 exceptional paths, 6 targets, 48 norm evaluations, 0 candidate translations, 0 true translations, max polynomial degree 56
+inverse p=37, m=4: 48 lift tuples, 8 exceptional paths, 6 targets, 288 norm evaluations, 15 candidate translations, 4 true translations, max polynomial degree 320
+inverse p=43, m=4: 96 lift tuples, 0 exceptional paths, 6 targets, 576 norm evaluations, 11 candidate translations, 5 true translations, max polynomial degree 320
+inverse totals (tuples, exceptional paths, targets, norm checks, candidate translations, true translations): [176, 8, 24, 1056, 38, 21]
+PASS: symbolic inverse translations, exact toy root checks.

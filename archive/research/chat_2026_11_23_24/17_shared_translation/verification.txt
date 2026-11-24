@@ -1,0 +1,16 @@
+moments p=5, group=7*1, blocks=1, m=2, k=3: 4 seed classes, 64 block-pattern arrays, 42 admissible combinations, 343 coefficients
+moments p=13, group=19*1, blocks=2, m=3, k=2: 156 seed classes, 12 block-pattern arrays, 26 admissible combinations, 361 coefficients
+moments p=13, group=19*1, blocks=3, m=4, k=3: 700 seed classes, 24 block-pattern arrays, 210 admissible combinations, 6859 coefficients
+moments p=19, group=5*4, blocks=2, m=3, k=2: 40 seed classes, 7 block-pattern arrays, 11 admissible combinations, 25 coefficients
+moments p=5, group=7*1, blocks=5, m=6, k=2: 512 seed classes, 12 block-pattern arrays, 63 admissible combinations, 49 coefficients
+moments p=43, group=13*4, blocks=2, m=3, k=2: 256 seed classes, 9 block-pattern arrays, 17 admissible combinations, 169 coefficients
+exact moment totals (seed classes, block-pattern arrays, admissible combinations, coefficients): [1668, 128, 369, 7806]
+robust-span pruning: 240 fixtures, 33240 functional checks
+slope-avoidance identities: 224 supports, 7168 slope checks, 4824 allowed, 2344 excluded
+geometry p=13, r=19, h=1: cumulative good offset sets 47, bad 0
+geometry p=17, r=19, h=1: cumulative good offset sets 94, bad 0
+geometry p=19, r=5, h=4: cumulative good offset sets 141, bad 0
+geometry p=43, r=7, h=8: cumulative good offset sets 188, bad 0
+geometry p=43, r=13, h=4: cumulative good offset sets 219, bad 16
+geometry totals: 219 admissible offset sets, 16 rejected sets, 13456 coefficient choices, 168952 exact projected-fiber bounds, 322170 numerical character comparisons; max observed fiber 36
+PASS: exact component identities and numerical character checks; not an ECDLP runtime test.

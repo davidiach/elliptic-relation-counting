@@ -1,0 +1,10 @@
+fixture 101 7 1 #E 84 curve 47 38 H (64, 41) proposals 9
+fixture 101 7 2 #E 98 curve 90 4 H (77, 33) proposals 41
+fixture 257 7 2 #E 245 curve 74 130 H (45, 254) proposals 114
+fixture 509 7 2 #E 539 curve 226 396 H (94, 448) proposals 27
+fixture 1009 7 2 #E 1029 curve 465 694 H (270, 865) proposals 60
+fixture 347 7 3 #E 343 curve 157 342 H (0, 79) proposals 7
+fixture 127 3 3 #E 135 curve 82 7 H (110, 80) proposals 11
+fixture 257 5 2 #E 250 curve 115 100 H (180, 216) proposals 102
+{'kernel evaluations': 1605, 'declared degree drops': 240, 'planted zeros': 336, 'scalar norm checks': 960, 'chart comparisons': 960, 'modular kernel checks': 240, 'power sum checks': 312, 'repeated-pole controls': 148, 'rational trace checks': 480, 'isogeny homomorphism checks': 480, 'towers': 24}
+All assertions passed. Exact finite component tests; no collective trace benchmark.

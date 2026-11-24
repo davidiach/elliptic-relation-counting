@@ -1,0 +1,6 @@
+p=13, r=19, h=1, m=2, w=2, offsets=(0, 1, 2, 3): 936 root/target/translation checks, 88 accepted inverse tickets, exact acceptance=11/36, 0 algebraic extra candidate incidences, 52 overlap checks
+p=17, r=19, h=1, m=3, w=2, offsets=(0, 1, 2, 3, 4, 5): 2448 root/target/translation checks, 124 accepted inverse tickets, exact acceptance=31/432, 0 algebraic extra candidate incidences, 136 overlap checks
+p=29, r=5, h=4, m=2, w=2, offsets=(0, 1, 2, 3): 464 root/target/translation checks, 12 accepted inverse tickets, exact acceptance=3/256, 28 algebraic extra candidate incidences, 116 overlap checks
+p=43, r=7, h=8, m=2, w=2, offsets=(0, 1, 2, 3): 1032 root/target/translation checks, 240 accepted inverse tickets, exact acceptance=5/128, 30 algebraic extra candidate incidences, 172 overlap checks
+totals (incidences, accepted tickets, algebraic extras, overlap checks): [4880, 464, 58, 476]
+PASS: exact planted inverse distribution and reuse bound checks.

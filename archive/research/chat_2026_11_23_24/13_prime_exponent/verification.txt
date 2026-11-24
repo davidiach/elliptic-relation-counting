@@ -1,0 +1,4 @@
+Curve p=65521, a=44, c=1, prime group order=65419.
+m=3, w=2: trials=120, regular=120, unique=120, extra circuits=0, determinant/group comparisons=26400, dense Cauchy-Binet identities=240, union bound for extra circuits=0.00334765
+m=4, w=2: trials=80, regular=79, unique=79, extra circuits=0, determinant/group comparisons=143780, dense Cauchy-Binet identities=158, union bound for extra circuits=0.02780538
+All assertions passed. Finite diagnostics; no faster relation evaluator implemented.

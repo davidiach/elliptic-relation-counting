@@ -1,0 +1,4 @@
+Homogeneous recurrence: {'homogeneous': 420, 'infinity': 313}
+One-determinant chart checks: {'degree_drop': 232, 'repeated': 23, 'determinants': 3792, 'true_positives': 1200, 'false_positives': 0, 'fibers': 316, 'exhaustive_eta': 4225, 'root_bound_checks': 22}
+Ring-valued summation polynomial construction: {'values': 720, 'coefficient_lanes': 1062, 'fixtures': 40}
+All assertions passed. No collective trace was computed.

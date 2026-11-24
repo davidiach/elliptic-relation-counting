@@ -8,3 +8,4 @@
 # Preserve the bytes used in historical run hashes on every checkout.
 archive/research/**/*.json -text whitespace=cr-at-eol
 archive/research/**/*.txt -text whitespace=cr-at-eol
+archive/research/chat_2026_11_23_24/**/SHA256SUMS -text

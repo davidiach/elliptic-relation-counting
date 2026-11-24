@@ -1,0 +1,13 @@
+p=13, m=2, h=1: degrees (A,X)=(4,2); raw degree=4, removed content=0; 169 exact incidence checks; 28 algebraic signed finite hits, 24 rational nonbranch hits, 2 extra coordinate hits, 0 branch-path hits, 0 infinity paths
+p=17, m=3, h=1: degrees (A,X)=(12,4); raw degree=20, removed content=8; 289 exact incidence checks; 8 algebraic signed finite hits, 8 rational nonbranch hits, 0 extra coordinate hits, 0 branch-path hits, 0 infinity paths
+p=37, m=4, h=1: degrees (A,X)=(32,8); raw degree=112, removed content=80; 1369 exact incidence checks; 114 algebraic signed finite hits, 48 rational nonbranch hits, 32 extra coordinate hits, 0 branch-path hits, 2 infinity paths
+p=43, m=4, h=1: degrees (A,X)=(32,8); raw degree=112, removed content=80; 1849 exact incidence checks; 136 algebraic signed finite hits, 96 rational nonbranch hits, 10 extra coordinate hits, 8 branch-path hits, 0 infinity paths
+p=19, m=2, h=2: degrees (A,X)=(16,2); raw degree=16, removed content=0; 361 exact incidence checks; 36 algebraic signed finite hits, 32 rational nonbranch hits, 2 extra coordinate hits, 0 branch-path hits, 0 infinity paths
+p=19, m=3, h=2: degrees (A,X)=(48,4); raw degree=80, removed content=32; 361 exact incidence checks; 32 algebraic signed finite hits, 32 rational nonbranch hits, 0 extra coordinate hits, 0 branch-path hits, 0 infinity paths
+p=19, m=2, h=3: degrees (A,X)=(36,2); raw degree=48, removed content=12; 361 exact incidence checks; 34 algebraic signed finite hits, 30 rational nonbranch hits, 2 extra coordinate hits, 0 branch-path hits, 2 infinity paths
+p=29, m=2, h=4: degrees (A,X)=(64,2); raw degree=64, removed content=0; 841 exact incidence checks; 48 algebraic signed finite hits, 4 rational nonbranch hits, 20 extra coordinate hits, 8 branch-path hits, 16 infinity paths
+p=43, m=2, h=8: degrees (A,X)=(256,2); raw degree=256, removed content=0; 1849 exact incidence checks; 114 algebraic signed finite hits, 58 rational nonbranch hits, 15 extra coordinate hits, 2 branch-path hits, 14 infinity paths
+totals (incidence, algebraic signed hits, rational nonbranch signed hits, extra coordinates, branch paths, infinity paths): [7449, 550, 332, 83, 18, 34]
+28 exact interval orbit partitions, 34608 covered address tuples
+8 distinct normalized polynomials, 2888 shift-incidence comparisons, 361 complete batched forward queries
+PASS: exact primitive image polynomials and diagonal batching.

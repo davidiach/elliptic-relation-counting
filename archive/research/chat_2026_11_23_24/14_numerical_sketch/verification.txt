@@ -1,0 +1,19 @@
+Packing/peeling fixtures: 75 nonzero surviving spaces: 60 peeled blocks: 43
+Exact dual-support inequalities: 5033
+Adaptive two-query curve: p=13r=19m=3, w=32
+Fresh relative comparisons: 507 good-plant comparisons: 12168 signed type cases: 80
+Adaptive transcript probabilities: 169 all normalized exactly
+Observed TV (rounded for display only): 5.619737822040639e-08
+Covered-address probability (rounded): 7.512019230769231e-05
+Certified TV and covered-address upper bound: 0.00024414082499999996
+Full two-power-sum vector (x, x^2), maximum relative deviation from uniform:
+ w=4relative deviation=2.1538125091121154
+ w=8relative deviation=0.288128848651294
+ w=16relative deviation=0.014527532270766752
+ w=32relative deviation=7.262563186359848e-05
+ w=64relative deviation=1.900485449112322e-09
+ w=128relative deviation=1.298086928570672e-18
+All point-conditioned moment translations verified exactly.
+Nonlinear local-summary fixtures: 3 one-bit summaries; joint target/sketch cells: 152
+Exact joint-law TV (rounded): 0.00014121041587153256 product bound: 0.0005321393321836607
+ALL CHECKS PASSED

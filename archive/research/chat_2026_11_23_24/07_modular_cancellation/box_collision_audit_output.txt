@@ -1,0 +1,13 @@
+Box code: 96 exact decompositions, 1,872 linear projections; 1,827 bridge fiber checks, 27,968 fixed-output reconvergence checks
+Collision audit p=257, m=3, w=2, n=64, nominal lambda=0.031128405, candidate paths=131,584
+  invalid fraction=0.015814993; same-leaf ordered collision pairs/path=0.0040430447; other-leaf ordered collision pairs/path=0.039290491
+  singleton fiber fraction=0.94199903; active full-support boxes/path=0.94234101; min root ratio=0.72568093; analytic other-leaf expectation bound=1.6809339
+Collision audit p=4093, m=3, w=2, n=32, nominal lambda=0.0019545566, candidate paths=1,047,808
+  invalid fraction=0.0010230882; same-leaf ordered collision pairs/path=0.0002576808; other-leaf ordered collision pairs/path=0.0025596292
+  singleton fiber fraction=0.9961596; active full-support boxes/path=0.9961596; min root ratio=0.99376985; analytic other-leaf expectation bound=0.10554605
+Collision audit p=65521, m=3, w=2, n=12, nominal lambda=0.00012209826, candidate paths=6,290,016
+  invalid fraction=6.3592843e-05; same-leaf ordered collision pairs/path=1.6852103e-05; other-leaf ordered collision pairs/path=0.00013926833
+  singleton fiber fraction=0.99978029; active full-support boxes/path=0.99978029; min root ratio=0.99962607; analytic other-leaf expectation bound=0.006593306
+Collision audit p=101, m=4, w=2, n=20, nominal lambda=0.15841584, candidate paths=3,264,320
+  invalid fraction=0.22861239; same-leaf ordered collision pairs/path=0.021865503; other-leaf ordered collision pairs/path=0.21305571
+  singleton fiber fraction=0.57956665; active full-support boxes/path=0.58901394; min root ratio=0.34753946; analytic other-leaf expectation bound=51.326733

@@ -1,0 +1,9 @@
+Locality/prefix-swap comparisons: 197136
+Independent label-law comparisons, symmetric cases: 15625 49
+Exact packing optimum comparisons: 250 packet patterns: 21
+Repeated-label padding ratios, r=3: [(1, '1'), (2, '5/3'), (3, '3'), (4, '17/3'), (5, '11'), (6, '65/3')]
+Hierarchical vs flat synthetic packet counts: [(1, 1, 1), (2, 1, 2), (3, 1, 4), (4, 1, 8), (5, 1, 16), (6, 1, 32), (7, 1, 64), (8, 1, 128)]
+Padded entropy regressions, maximum observed entropy defect: 150 4.3142236944351735
+Precision valuations, explicit polynomial expansions, coefficients, upper taper checks: 40800 336 10016 17168
+Matrix full-rank differences, coset packets, localization checks, crossing rank tests: 276 3660 41316 11
+All assertions passed.

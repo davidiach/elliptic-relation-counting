@@ -1,0 +1,4 @@
+Complete fixed-cardinality Hermite readouts: 34
+Locally integral Taylor coefficients: 10228
+Independent normalized determinant evaluation comparisons: 648
+ALL ASSERTIONS PASSED

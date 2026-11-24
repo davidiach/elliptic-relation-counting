@@ -1,0 +1,25 @@
+Spectral p=13, N=19, m=2, w=3: 361 covariance entries; 2 flattenings; max norm^2/bound=0.894348; 60 slice projections and 80 expansion comparisons
+Spectral p=13, N=19, m=3, w=2: 361 covariance entries; 3 flattenings; max norm^2/bound=0.379734; 60 slice projections and 80 expansion comparisons
+Spectral p=17, N=17, m=3, w=3: 289 covariance entries; 3 flattenings; max norm^2/bound=0.365615; 60 slice projections and 80 expansion comparisons
+Spectral p=37, N=37, m=3, w=4: 1369 covariance entries; 3 flattenings; max norm^2/bound=0.441506; 60 slice projections and 80 expansion comparisons
+Character p=101: one exceptional discriminant factor among 5 slopes; 101 quadratic sums; 202 directional checks; bit Fourier L1 max=2.882074
+Literal rational determinant moment: 100/100 agree
+Average-gap control p=13, N=19: only 2/18 targets carry signal; signed average=0; absolute average=0.056432; centered energy verified
+Residual parity sketch: 200 exact polynomial-expansion and affine-flat cancellation checks
+All finite assertions passed. Run probe cases as p m w n arguments.
+Full-value probe p=101, N=107, m=3, w=3, nominal lambda=0.30003, n=30000 training AND n=30000 held-out per law; pointwise 95% half-width=0.011089
+  formal Z2: held-out gap=-0.009267; CI=[-0.020356,+0.001822]; scaled L2^2 estimate=-0.000388
+  rational Z2: held-out gap=+0.000733; CI=[-0.010356,+0.011822]; scaled L2^2 estimate=+0.001524
+  rational Z2 / tuple count: held-out gap=+0.005200; CI=[-0.005889,+0.016289]; scaled L2^2 estimate=+0.001622
+Full-value probe p=257, N=281, m=4, w=3, nominal lambda=0.41198, n=30000 training AND n=30000 held-out per law; pointwise 95% half-width=0.011089
+  formal Z2: held-out gap=-0.004433; CI=[-0.015522,+0.006656]; scaled L2^2 estimate=-0.000880
+  rational Z2: held-out gap=+0.004133; CI=[-0.006956,+0.015222]; scaled L2^2 estimate=-0.000642
+  rational Z2 / tuple count: held-out gap=+0.000700; CI=[-0.010389,+0.011789]; scaled L2^2 estimate=-0.000604
+Full-value probe p=1009, N=967, m=4, w=4, nominal lambda=0.22333, n=50000 training AND n=50000 held-out per law; pointwise 95% half-width=0.008589
+  formal Z2: held-out gap=+0.008360; CI=[-0.000229,+0.016949]; scaled L2^2 estimate=-0.000343
+  rational Z2: held-out gap=-0.000860; CI=[-0.009449,+0.007729]; scaled L2^2 estimate=-0.000539
+  rational Z2 / tuple count: held-out gap=-0.000320; CI=[-0.008909,+0.008269]; scaled L2^2 estimate=+0.000533
+Full-value probe p=4093, N=3967, m=5, w=4, nominal lambda=0.22077, n=60000 training AND n=60000 held-out per law; pointwise 95% half-width=0.007841
+  formal Z2: held-out gap=-0.003283; CI=[-0.011124,+0.004558]; scaled L2^2 estimate=-0.002568
+  rational Z2: held-out gap=-0.001400; CI=[-0.009241,+0.006441]; scaled L2^2 estimate=+0.001186
+  rational Z2 / tuple count: held-out gap=+0.002300; CI=[-0.005541,+0.010141]; scaled L2^2 estimate=-0.002675
