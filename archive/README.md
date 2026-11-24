@@ -6,7 +6,7 @@
 | 31 October 2026 | [Compressed relation-search audit](research/hillclimb_004/README.txt) · [Recorded audit result](research/hillclimb_004/runs/20261031T180405.300821Z/independent_audit.json) | Review of the pilot-reuse argument, unit selectors and spectral join, with independent finite checks. |
 | 17 November 2026 | [Progress toward the square-root ECDLP goal (PDF)](2026-11-17-research-progress.pdf) | A dated account of the conditional bounds and open problems. |
 
-The [research directory](research/) preserves the earlier checking programs, checkpoint reports, and the latest successful run records from each of the nine October checkpoints. Its filenames and source hashes follow the original workspace layout. The [v3 paper](../paper.pdf) and [derivations index](../derivations/README.md) give the current results and their hypotheses.
+The [research directory](research/) preserves the earlier checking programs, checkpoint reports, and the latest successful run records from each of the nine October checkpoints. Its filenames and source hashes follow the original workspace layout. The [current paper](../paper.pdf) and [derivations index](../derivations/README.md) give the current results and their hypotheses.
 
 ## Replay the historical checks
 

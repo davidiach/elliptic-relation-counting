@@ -1,10 +1,10 @@
 # General-prime ECDLP research checkpoints, 23–24 November 2026
 
-This is a **historical AI-assisted exploratory research archive**, not a revised paper or a claim of a new ECDLP algorithm. It preserves the notes, source files, and recorded experimental outputs of the conversation in chronological order. The original version 3 paper and its established conditional comparison remain unchanged.
+This is a **historical AI-assisted exploratory research archive**, not a revised paper or a claim of a new ECDLP algorithm. It preserves the notes, source files, and recorded experimental outputs of the conversation in chronological order. The [version 3 paper](https://github.com/davidiach/elliptic-relation-counting/blob/b85f1f0f4969fe84c68be6245c2f8e18e7dfd6ee/paper.pdf) was the baseline for these checkpoints.
 
 ## Status and review boundary
 
-- Paper v3 reports a conditional general-prime mixed-sampler time coefficient 24.00246 on the scale `b/(log2 b)^(1/4)`. The conversation subsequently explored conditional coefficient candidates 13.85782672, 12.39481703, and 11.31486814. These candidates have **not received a complete independent proof-chain audit**.
+- Paper v3 reports a conditional general-prime mixed-sampler time coefficient 24.00246 on the scale `b/(log2 b)^(1/4)`. The conversation subsequently explored conditional coefficient candidates 13.85782672, 12.39481703, and 11.31486814. These were candidates at import. The [version 4 paper](../../../paper.pdf) gives the A.1 graph proof for the section-norm coefficient.
 - No strict asymptotic improvement over `b/(log2 b)^(1/4)` is established. Square-root-in-bitlength and other improved exponents in the notes are targets or conditional transfers, not demonstrated algorithms.
 - The current frontier is evaluating a collective norm/trace without expanding the remaining Cartesian grid. Local isogeny, resultant, and residue computations do not resolve that cost.
 - Claims, assumptions, finite regressions, and unsuccessful experiments are preserved as originally recorded. They may contain gaps or errors; inclusion here is not endorsement. Numerical regressions are not cryptographic-scale performance tests. No independent novelty or priority claim is made.
@@ -42,7 +42,7 @@ This is a **historical AI-assisted exploratory research archive**, not a revised
 
 ## Integrity and reproduction
 
-`MANIFEST.json` records the SHA-256 of every original ZIP and its individual members, their exact original filenames, and corresponding Git blob IDs. The ZIP members are stored unpacked, byte-for-byte, in their checkpoint directories; original binary ZIP containers are intentionally not duplicated in Git. The initial stand-alone verifier is included separately. The supplied baseline PDF is already the repository's `paper.pdf` (identical Git blob ID).
+`MANIFEST.json` records the SHA-256 of every original ZIP and its individual members, their exact original filenames, and corresponding Git blob IDs. The ZIP members are stored unpacked, byte-for-byte, in their checkpoint directories; original binary ZIP containers are intentionally not duplicated in Git. The initial stand-alone verifier is included separately. The supplied baseline PDF is the [pinned version 3 paper](https://github.com/davidiach/elliptic-relation-counting/blob/b85f1f0f4969fe84c68be6245c2f8e18e7dfd6ee/paper.pdf) identified by the manifest's Git blob ID.
 
 ```sh
 python -B archive/research/chat_2026_11_23_24/verify_archive.py
