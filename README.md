@@ -1,10 +1,12 @@
 # Counting relations in independently hashed elliptic-curve slots
 
-[Read the v3 paper (PDF)](paper.pdf) · [Editable Typst source](paper.typ) · [Mathematical supplement](derivations/README.md) · [Recorded experiments](evidence/) · [Historical reports](archive/README.md)
+[Read the v4 paper (PDF)](paper.pdf) · [Editable Typst source](paper.typ) · [Mathematical supplement](derivations/README.md) · [Recorded experiments](evidence/) · [Historical reports](archive/README.md)
+
+**Version 4 · 24 November 2026.** For general field primes in the paper’s curve and subgroup class, independent field-affine thin-slot masks and a section norm give leading coefficients of **11.31486814 for log expected bit time** and **5.65743407 for log space**. Both multiply $Z_b=b/(\log_2 b)^{1/4}$. The result assumes the finite dyadic packet interface (A.1) and the inherited contraction and reduction estimates. Section 2 proves that the growing composite-degree graph meets A.1, bounds every proposed quotient before reducing modulo the Fourier modulus, and checks the raw field masks for collisions before rational-point filtering. Table 1 retains **24.00246** for the general-prime mixed fixed-bit sampler. [Section-norm derivation and finite checks](archive/research/chat_2026_11_23_24/08_section_norm/)
 
 For a fixed elliptic-curve target $T$ with $2T\ne O$, any adaptive predictor that leaves a whole slot unread has error at least $\lambda-O(\lambda^2)$ at the proposed sparse widths. Joint determinant moments can be computed within the proposed budget. Decoding the relation count from them at growing arity remains open.
 
-**Version 3 · 22 November 2026.** Table 1 compares conditional time and space bounds by field prime and sampler. Within the inherited input class, the leading time coefficient is **26.29338** with independent affine hashes and **24.00246** when the algorithm chooses the mixed sampler. The mixed sampler gives **19.59793** for primes with bounded signed radix support and **13.85783** for primes $p=2^b-c$ with $1\le c\le b^C$ for fixed $C$. These rounded coefficients multiply $b/(\log_2 b)^{1/4}$ in the upper bound on log expected time. Section 2 derives the four rows under finite-packet Assumption A.1 and the inherited reduction estimates. Sections 4–5 give the weak-detection criterion and its finite test. Section 7 covers the target-derivative experiments and the dense three-slot decoder. [Group-equation derivations](derivations/group_equations/results.md) · [Fixed-bit sampler](derivations/strided_slots/results.md) · [Decoding results](derivations/joint_parity/dense_weighted.md)
+**Version 3 · 22 November 2026.** Table 1 compared conditional time and space bounds by field prime and sampler. Within the inherited input class, the reported leading time coefficient was **26.29338** with independent affine hashes and **24.00246** when the algorithm chooses the mixed sampler. The mixed sampler gives **19.59793** for primes with bounded signed radix support and **13.85783** for primes $p=2^b-c$ with $1\le c\le b^C$ for fixed $C$. These rounded coefficients multiply $b/(\log_2 b)^{1/4}$ in the upper bound on log expected time. That revision derived its four rows under finite-packet Assumption A.1 and the inherited reduction estimates. Sections 4–5 give the weak-detection criterion and its finite test. Section 7 covers the target-derivative experiments and the dense three-slot decoder. [Version 3 PDF](https://github.com/davidiach/elliptic-relation-counting/blob/b85f1f0f4969fe84c68be6245c2f8e18e7dfd6ee/paper.pdf) · [Group-equation derivations](derivations/group_equations/results.md) · [Fixed-bit sampler](derivations/strided_slots/results.md) · [Decoding results](derivations/joint_parity/dense_weighted.md)
 
 **Version 2 · 21 November 2026.** The twelfth moment resolves all 168,480 eligible counts in Table 2 over $\mathbb F_{13}$. This revision also made the planting hypotheses explicit and partitioned the fresh hits in both larger-field trials. [Version 2 PDF](https://github.com/davidiach/elliptic-relation-counting/blob/9dcbb4ed9e58fd69d2adf0f39c0deeb25bfbf171/paper.pdf)
 
@@ -22,7 +24,7 @@ At slightly narrower mixed-sampler widths, almost every successful seed has one 
 
 **Direct witness parity, 21 November 2026.** The signed zero count $M_0-M_{p-1}$ can be computed as one coefficient of a product formed from the slots. On a regular singleton a single elliptic section gives the whole witness. A proposed section can be checked in polynomial time from the seeds, even when the slots are exponentially wide. Finding it cheaply remains open. We derive the first degree that reveals it in the explicit quotient and bounds for scalar powering and sparse Fourier evaluation. The conditional end-to-end exponent gains no improvement from these methods. [Proofs, costs and finite checks](derivations/direct_parity/README.md)
 
-**Nonlinear signed moments.** Over the field of order 13, an exact search found a two-moment table that favors the correct tuple on one target. In six-slot trials over the field of order 65,521, a cheap nonlinear character score ranked the witness above a wrong legal tuple at essentially the chance rate on two independent targets. We prove bounds for random coefficient searches and target-specific sparse lookups, and show how an exact parity decoder can require exponentially many signed determinant values. The general-prime log-time bound stays at $(24.00246+o(1))b/(\log_2 b)^{1/4}$. [Results, costs and open cases](derivations/nonlinear_moments/README.md)
+**Nonlinear signed moments.** Over the field of order 13, an exact search found a two-moment table that favors the correct tuple on one target. In six-slot trials over the field of order 65,521, a cheap nonlinear character score ranked the witness above a wrong legal tuple at essentially the chance rate on two independent targets. We prove bounds for random coefficient searches and target-specific sparse lookups, and show how an exact parity decoder can require exponentially many signed determinant values. These moment experiments left the mixed fixed-bit bound at $(24.00246+o(1))b/(\log_2 b)^{1/4}$. [Results, costs and open cases](derivations/nonlinear_moments/README.md)
 
 | Question | Result | Scope |
 |---|---|---|
@@ -43,6 +45,8 @@ python reproduce.py
 ```
 
 The default suite compares 52 outputs with their committed transcripts. To include the four C38 integration checks, pass the directory containing the original `ECDLP_v6_complete.zip` and `simplex-alphabet-ecdl-v6.zip`. The runner checks both archive hashes, loads four reference modules into a temporary directory, and compares all 56 outputs. The historical checkpoint replay has its own inputs and instructions. [Historical checks](archive/README.md#replay-the-historical-checks)
+
+Run the section-norm component check separately with `python -B archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit.py`. It compares regular norm certificates with direct group sums and exercises lifted residuals on two finite polynomial rings. The growing-degree bound follows from Section 2. [Recorded output](archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit_output.txt)
 
 ```sh
 python reproduce.py --source-archives /path/to/local/archives
@@ -75,7 +79,7 @@ The reference code enumerates small curves and tuples to establish ground truth.
 
 ## Build the paper
 
-The PDF was built with Typst 0.15.2. With the Typst CLI, run `typst compile paper.typ paper.pdf`. Alternatively, install the Python package `typst==0.15.2` and run `python -c "import typst; typst.compile('paper.typ', output='paper.pdf')"`.
+The PDF was built with the Python package `typst==0.15.2` (Typst engine 0.15.1). From the repository root, run `python -c "import typst; typst.compile('paper.typ', output='paper.pdf')"`. With the Typst CLI, use `typst compile paper.typ paper.pdf`.
 
 ## Attribution and provenance
 

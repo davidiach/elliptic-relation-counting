@@ -2,7 +2,7 @@
 
 These are the original project working derivations, organized by question. The main paper provides a common notation and adjudicates the competing approaches. The dated notes preserve the assumptions and narrower input classes used in each argument. The [historical archive](../archive/README.md) preserves earlier reports, checking programs, and the original checkpoint records. The [reproduction instructions](../README.md#reproduce-the-experiments) identify the four C38 checks that use supplied reference modules. Each [release check](../checks/) has a [recorded output](../evidence/).
 
-In the [v3 paper](../paper.pdf), Table 1 and Section 2 compare the two general-prime constructions with the two special-prime bounds. Sections 4–5 cover weak detection under the affine seed law. Section 7 covers three-slot target derivatives and weighted decoding, and Section 8 gives the cofactor extension for separated approximations.
+In the [v4 paper](../paper.pdf), Table 1 and Section 2 compare three general-prime constructions and two special-prime bounds. The [section-norm checkpoint](../archive/research/chat_2026_11_23_24/08_section_norm/section_norm_research_note.md) supplies the short-weight and thin-digit lemmas for the field-affine row. Sections 4–5 cover weak detection under the affine seed law. Section 7 covers three-slot target derivatives and weighted decoding, and Section 8 gives the cofactor extension for separated approximations.
 
 | Topic | Derivations | What the result gives |
 |---|---|---|
