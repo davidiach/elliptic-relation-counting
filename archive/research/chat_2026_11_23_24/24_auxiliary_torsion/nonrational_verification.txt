@@ -1,0 +1,3 @@
+p=13, ell=5, curve coefficients=(11,8), order=20, rational support=(7, 11)
+Nonrational roots: 2. Division polynomial alone gives a false hit on irreducible quadratic [9, 4, 1].
+Filtered determinant: 3 false hits out of 169 eta values; rigorous bound 4. All assertions passed.

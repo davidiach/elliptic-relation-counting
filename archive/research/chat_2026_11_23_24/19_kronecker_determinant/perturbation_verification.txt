@@ -1,0 +1,2 @@
+340 full truncated norms, including 100 actual summation-polynomial cases: {'recovered': 95, 'overflow': 124, 'empty': 113, 'collision': 8}; 179 recovered zero addresses.
+PASS: valuation, projection polynomial, collision handling and all reconstructed coordinates.

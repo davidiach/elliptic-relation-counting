@@ -1,0 +1,1097 @@
+{
+  "scope": "AI-assisted exploratory research in the November 23–24, 2026 conversation",
+  "baseline": {
+    "paper_git_blob": "7d2008d32a9f38ee8c8881d8cfd1259f037dc343",
+    "paper_sha256": "c305721b6386885f9d9caa59ee457c0bcbe24ba43a3c560e0290e61d41c8f10a",
+    "base_commit": "b85f1f0f4969fe84c68be6245c2f8e18e7dfd6ee"
+  },
+  "status": "Historical working notes; not independently audited; no improved general-prime asymptotic exponent established.",
+  "checkpoints": [
+    {
+      "directory": "00_polynomial_ring",
+      "title": "Principal-ideal polynomial-ring compiler (initial verifier)",
+      "note": null,
+      "files": [
+        {
+          "path": "00_polynomial_ring/polynomial_ring_verifier.py",
+          "sha256": "2c7b64282180f580fa9a1ba95390b68da790d15a825745a3629198f8d3430e27",
+          "git_blob": "e76152e7ce295c55f6f9e956ee8e8528d4ed1bb1",
+          "bytes": 9942,
+          "original_member": "polynomial_ring_verifier.py"
+        },
+        {
+          "path": "00_polynomial_ring/polynomial_ring_verifier_output.txt",
+          "sha256": "e6b48e7376716fad710ac01b7674db8936a8e2cbb84a2c29bada2aacb0d5a8ef",
+          "git_blob": "e40f17082390ba169c47b8e63e9ddf38154dde13",
+          "bytes": 561,
+          "original_member": "polynomial_ring_verifier_output.txt"
+        }
+      ]
+    },
+    {
+      "directory": "01_abscissa_chain",
+      "archive_name": "abscissa_chain_research.zip",
+      "archive_sha256": "9f9d04852e1663a56f60c0f1d8d26c5a6606fde7cb4572c0f6a708a2ff3d0a40",
+      "files": [
+        {
+          "path": "01_abscissa_chain/abscissa_chain_note.md",
+          "sha256": "c6a925e6946240b32848230df042c420a09de621f370a63e1b925527f317714a",
+          "git_blob": "d17658eea1f57d3870d4518ec1b24f815a8d578b",
+          "bytes": 11609,
+          "original_member": "abscissa_chain_note.md"
+        },
+        {
+          "path": "01_abscissa_chain/abscissa_chain_audit.py",
+          "sha256": "6090f443e2d3491a13cf5a9527b86c0199f2bcb5b51d7dadd679fb3399f668c0",
+          "git_blob": "ee9297bd0069b0119390b59af42d853acab3fdef",
+          "bytes": 5761,
+          "original_member": "abscissa_chain_audit.py"
+        },
+        {
+          "path": "01_abscissa_chain/abscissa_chain_audit_output.txt",
+          "sha256": "8855fca7f814276ce08adefbfdf7465c328322b60df6e7a95ef5235d2009f36d",
+          "git_blob": "3e6a043c6e5e799e021f98bcd0a582c52ac16938",
+          "bytes": 2313,
+          "original_member": "abscissa_chain_audit_output.txt"
+        },
+        {
+          "path": "01_abscissa_chain/polynomial_ring_verifier.py",
+          "sha256": "2c7b64282180f580fa9a1ba95390b68da790d15a825745a3629198f8d3430e27",
+          "git_blob": "e76152e7ce295c55f6f9e956ee8e8528d4ed1bb1",
+          "bytes": 9942,
+          "original_member": "polynomial_ring_verifier.py"
+        },
+        {
+          "path": "01_abscissa_chain/polynomial_ring_verifier_output.txt",
+          "sha256": "e6b48e7376716fad710ac01b7674db8936a8e2cbb84a2c29bada2aacb0d5a8ef",
+          "git_blob": "e40f17082390ba169c47b8e63e9ddf38154dde13",
+          "bytes": 561,
+          "original_member": "polynomial_ring_verifier_output.txt"
+        }
+      ],
+      "note": "01_abscissa_chain/abscissa_chain_note.md",
+      "title": "General-prime coefficient candidate: abscissa-only principal-ideal compiler"
+    },
+    {
+      "directory": "02_large_arity",
+      "archive_name": "large_arity_research.zip",
+      "archive_sha256": "1f6ad0117b6ec9bc850b840d07bd221ed485180193eb359cc9182a146fccce20",
+      "files": [
+        {
+          "path": "02_large_arity/large_arity_research_note.md",
+          "sha256": "3cc23425ec87e92949700af310f95f6313be91375961ef91507f35bc451a39a4",
+          "git_blob": "5f127ede449104a0e259c612388838384afa9446",
+          "bytes": 15838,
+          "original_member": "large_arity_research_note.md"
+        },
+        {
+          "path": "02_large_arity/short_projector_audit.py",
+          "sha256": "9f06021474d13ffef948f505fa75d60f3d5e05030eec7f1d0423409480b2b3dc",
+          "git_blob": "868f623915370e2db952161ae21218073c79d5d1",
+          "bytes": 7376,
+          "original_member": "short_projector_audit.py"
+        },
+        {
+          "path": "02_large_arity/short_projector_audit_output.txt",
+          "sha256": "3ed7a4d9a2038622591896b3cef17198089fb07bb6319e35250925d8bcb50f20",
+          "git_blob": "a4b167b41f1f5608130bc51704aa36cb7ea14e11",
+          "bytes": 602,
+          "original_member": "short_projector_audit_output.txt"
+        },
+        {
+          "path": "02_large_arity/polynomial_ring_verifier.py",
+          "sha256": "2c7b64282180f580fa9a1ba95390b68da790d15a825745a3629198f8d3430e27",
+          "git_blob": "e76152e7ce295c55f6f9e956ee8e8528d4ed1bb1",
+          "bytes": 9942,
+          "original_member": "polynomial_ring_verifier.py"
+        },
+        {
+          "path": "02_large_arity/abscissa_chain_note.md",
+          "sha256": "c6a925e6946240b32848230df042c420a09de621f370a63e1b925527f317714a",
+          "git_blob": "d17658eea1f57d3870d4518ec1b24f815a8d578b",
+          "bytes": 11609,
+          "original_member": "abscissa_chain_note.md"
+        }
+      ],
+      "note": "02_large_arity/large_arity_research_note.md",
+      "title": "Large-arity relation search: short ideal projectors, shifted digit blocks, and a taper barrier"
+    },
+    {
+      "directory": "03_affine_digit_sampler",
+      "archive_name": "affine_digit_sampler_research.zip",
+      "archive_sha256": "a1aaf4bf2493fdb643afaff4fe5824076ca8d7c50a0523f89e1e37b4d134ea7e",
+      "files": [
+        {
+          "path": "03_affine_digit_sampler/affine_digit_sampler_note.md",
+          "sha256": "7a06b6652ba83dba29eef39bcc7a609d77eedf55fa1c1cfa435ef5cb5ab529e6",
+          "git_blob": "9a0f54d0422afbcd12f12c0711674d23b451abb0",
+          "bytes": 17704,
+          "original_member": "affine_digit_sampler_note.md"
+        },
+        {
+          "path": "03_affine_digit_sampler/affine_digit_sampler_audit.py",
+          "sha256": "0d1e333f09ab1b6036f9cf93cc536deaf9aaab222ce8a3d66587d7e517093051",
+          "git_blob": "2018368dbe548535fe90996d0282f1073aae8468",
+          "bytes": 5988,
+          "original_member": "affine_digit_sampler_audit.py"
+        },
+        {
+          "path": "03_affine_digit_sampler/affine_digit_sampler_audit_output.txt",
+          "sha256": "e8c9743b0a720cafcb7fee745efeba71cbf56677819d3bdd0dfb176968ce2514",
+          "git_blob": "3594f7bd4b1790c37b2199706497e1995cccd017",
+          "bytes": 882,
+          "original_member": "affine_digit_sampler_audit_output.txt"
+        }
+      ],
+      "note": "03_affine_digit_sampler/affine_digit_sampler_note.md",
+      "title": "Field-affine thin-digit samplers and a planted polynomial-readout obstruction"
+    },
+    {
+      "directory": "04_contractor_degree",
+      "archive_name": "contractor_degree_research.zip",
+      "archive_sha256": "8d4fb8b9a85441717a1d91384ba3da568c741fa41e3890dae541bb9007c0a239",
+      "files": [
+        {
+          "path": "04_contractor_degree/contractor_degree_note.md",
+          "sha256": "c6e5568e359f8336f5c279a3e3ac0f6e2dac4b5677ca0c8d9db3fdbcadb2a25d",
+          "git_blob": "335855fc1652a4cdabcacbc7e83592b74e640684",
+          "bytes": 26005,
+          "original_member": "contractor_degree_note.md"
+        },
+        {
+          "path": "04_contractor_degree/contractor_degree_audit.py",
+          "sha256": "c5a9ca570ef7d5787fe8f5ae34269e761c6c2b6491e4cac16646512cd6fedadf",
+          "git_blob": "3b83b63313aa6b2b9cb95ea9b71604df210b0b2a",
+          "bytes": 10211,
+          "original_member": "contractor_degree_audit.py"
+        },
+        {
+          "path": "04_contractor_degree/contractor_degree_audit_output.txt",
+          "sha256": "a07d3ed6d41d93cd53a34f607cc6181bc5d419a50a142d695c91858cff2f01db",
+          "git_blob": "45739b2c0065383b502a343a99b92ba991a80b64",
+          "bytes": 1092,
+          "original_member": "contractor_degree_audit_output.txt"
+        }
+      ],
+      "note": "04_contractor_degree/contractor_degree_note.md",
+      "title": "A degree-sensitive tensor contractor and two barriers to its ECDLP transfer"
+    },
+    {
+      "directory": "05_seed_local_slice_rank",
+      "archive_name": "seed_local_slice_rank_research.zip",
+      "archive_sha256": "0fdad07d8f8e3db0b578609b9c8dde979a98e303bae4d6c72cad2c96c1e30042",
+      "files": [
+        {
+          "path": "05_seed_local_slice_rank/seed_local_slice_rank_note.md",
+          "sha256": "6dc3b435dc1d27c95de28a93665d4ca43898d123c25469e9e9af113cf20a65ce",
+          "git_blob": "0b73fb90b84abd657db1b916380543ffb4266675",
+          "bytes": 20467,
+          "original_member": "seed_local_slice_rank_note.md"
+        },
+        {
+          "path": "05_seed_local_slice_rank/seed_local_slice_rank_audit.py",
+          "sha256": "c53adf8cc2ed36f9aff438301c8cbc7a4c7935a4fbb30242a34a715b0079e8d3",
+          "git_blob": "49560bb3c0995cdfe157d40c0b5c19b1c209b525",
+          "bytes": 10541,
+          "original_member": "seed_local_slice_rank_audit.py"
+        },
+        {
+          "path": "05_seed_local_slice_rank/seed_local_slice_rank_audit_output.txt",
+          "sha256": "eea86feb646b275e783aeb67e332432f39fe0a50029a1fa63fdf1f9a0d320f9e",
+          "git_blob": "b64ca4b8fc914a49eb4797e6c97fb41a8f024a74",
+          "bytes": 731,
+          "original_member": "seed_local_slice_rank_audit_output.txt"
+        },
+        {
+          "path": "05_seed_local_slice_rank/contractor_degree_note.md",
+          "sha256": "c6e5568e359f8336f5c279a3e3ac0f6e2dac4b5677ca0c8d9db3fdbcadb2a25d",
+          "git_blob": "335855fc1652a4cdabcacbc7e83592b74e640684",
+          "bytes": 26005,
+          "original_member": "contractor_degree_note.md"
+        }
+      ],
+      "note": "05_seed_local_slice_rank/seed_local_slice_rank_note.md",
+      "title": "A slice-rank obstruction to low-degree relation compilers"
+    },
+    {
+      "directory": "06_average_case_detector",
+      "archive_name": "average_case_detector_research.zip",
+      "archive_sha256": "357a0c9b42b443c5b1be3cb15f4f86ec077c6fd99a9d128147865b1fc15f1b7a",
+      "files": [
+        {
+          "path": "06_average_case_detector/average_case_detector_note.md",
+          "sha256": "160be1f12215bf9a7a1e7051c5e17d9d6bc93a5b7efb7a63bff31367378a444d",
+          "git_blob": "062a22d2d44bd8cae03774439f32e1c4d014e789",
+          "bytes": 33852,
+          "original_member": "average_case_detector_note.md"
+        },
+        {
+          "path": "06_average_case_detector/average_case_detector_audit.py",
+          "sha256": "48b0fa46838e1f5ff021fdc6ae3f773349653f722e57bb2599110a486bd3a88f",
+          "git_blob": "45eefc6d6430380457a3a7066799a6919f58189d",
+          "bytes": 13028,
+          "original_member": "average_case_detector_audit.py"
+        },
+        {
+          "path": "06_average_case_detector/average_case_detector_audit_output.txt",
+          "sha256": "e24516d384571f388e60fc713b2b25eccf1a772e468c976cab1318a3c5d13e8a",
+          "git_blob": "902e1c012f40368d72797f7180bdcedd1c88adc3",
+          "bytes": 2861,
+          "original_member": "average_case_detector_audit_output.txt"
+        },
+        {
+          "path": "06_average_case_detector/affine_digit_sampler_note.md",
+          "sha256": "7a06b6652ba83dba29eef39bcc7a609d77eedf55fa1c1cfa435ef5cb5ab529e6",
+          "git_blob": "9a0f54d0422afbcd12f12c0711674d23b451abb0",
+          "bytes": 17704,
+          "original_member": "affine_digit_sampler_note.md"
+        },
+        {
+          "path": "06_average_case_detector/seed_local_slice_rank_note.md",
+          "sha256": "6dc3b435dc1d27c95de28a93665d4ca43898d123c25469e9e9af113cf20a65ce",
+          "git_blob": "0b73fb90b84abd657db1b916380543ffb4266675",
+          "bytes": 20467,
+          "original_member": "seed_local_slice_rank_note.md"
+        }
+      ],
+      "note": "06_average_case_detector/average_case_detector_note.md",
+      "title": "Average-case weak relation detection: recovery, robust slice rank, and character readouts"
+    },
+    {
+      "directory": "07_modular_cancellation",
+      "archive_name": "modular_cancellation_research.zip",
+      "archive_sha256": "dd05844b981248cf6e8558af93d764412724f0668494905cd1b6b57e64a9b212",
+      "files": [
+        {
+          "path": "07_modular_cancellation/modular_cancellation_note.md",
+          "sha256": "836c9ba72f86f6558f137137a669935c5a01392799d8983d6c6e05a107032ffc",
+          "git_blob": "9128ff2add8c580fa742104ae145633b2bc57b99",
+          "bytes": 22193,
+          "original_member": "modular_cancellation_note.md"
+        },
+        {
+          "path": "07_modular_cancellation/modular_cancellation_audit.py",
+          "sha256": "289c84f4081fccfc634a1402aab5d43ea1b755df36cf15a6a94196beb76c2d4b",
+          "git_blob": "696d391af44b0c006e8381a9ebb777e0c7177564",
+          "bytes": 9460,
+          "original_member": "modular_cancellation_audit.py"
+        },
+        {
+          "path": "07_modular_cancellation/modular_cancellation_audit_output.txt",
+          "sha256": "bce009d00b546c07a3f8a1f94d291a1e6be388243926596aed348945af8afcae",
+          "git_blob": "6bf7eefcced64a99f2607a1a4f032ddbb1d10bd0",
+          "bytes": 1962,
+          "original_member": "modular_cancellation_audit_output.txt"
+        },
+        {
+          "path": "07_modular_cancellation/box_collision_audit.py",
+          "sha256": "d416dd508c32ce395b271ce22b046eb7e06a5180a4434427c757dc6ee72959f8",
+          "git_blob": "aac42cc3bf33c862b2cd269538658127e63a77f7",
+          "bytes": 4955,
+          "original_member": "box_collision_audit.py"
+        },
+        {
+          "path": "07_modular_cancellation/box_collision_audit_output.txt",
+          "sha256": "392282192a2eaf66dc8165ee02234f15841b144d8d59b62ce17726f66f01f3dd",
+          "git_blob": "40355735c124e94ceba9f2ff15d7937c8a07cf96",
+          "bytes": 1685,
+          "original_member": "box_collision_audit_output.txt"
+        }
+      ],
+      "note": "07_modular_cancellation/modular_cancellation_note.md",
+      "title": "Normalized chord residuals: exact box cancellation, dense odd support, and the first informative sketch"
+    },
+    {
+      "directory": "08_section_norm",
+      "archive_name": "section_norm_research.zip",
+      "archive_sha256": "d63ffcf95461888e21f450cae53abccf47e0ee6bd21cb2c9dcd46cd1c77680d9",
+      "files": [
+        {
+          "path": "08_section_norm/section_norm_research_note.md",
+          "sha256": "435d18af556e47593428b302005178cb211cd3c393a4271e1c60683c971e38ec",
+          "git_blob": "314c3553cba186ce0aa03c4a534a0f673851eb45",
+          "bytes": 23511,
+          "original_member": "section_norm_research_note.md"
+        },
+        {
+          "path": "08_section_norm/section_norm_audit.py",
+          "sha256": "14b2b5c29be298e5858f1974db20c4f738544d3fac0556850b057664d2dc155d",
+          "git_blob": "391f6671eb636235d65f40f8041bce822f5d90e5",
+          "bytes": 10576,
+          "original_member": "section_norm_audit.py"
+        },
+        {
+          "path": "08_section_norm/section_norm_audit_output.txt",
+          "sha256": "b332e915f0a2f7c8502a8b7532c04b2e355c89f112267982a201b01f52bae793",
+          "git_blob": "070b7b561544d689aa95ecbc76c40688d9c810fd",
+          "bytes": 1592,
+          "original_member": "section_norm_audit_output.txt"
+        },
+        {
+          "path": "08_section_norm/mode_budget_audit.py",
+          "sha256": "ea2a14c1bc4082e2370888f2be480c5d48a4ff7f4bb0c53abda7651c7979dae0",
+          "git_blob": "f3ddcca419cf96b67c7b09abdd58954717374926",
+          "bytes": 3265,
+          "original_member": "mode_budget_audit.py"
+        },
+        {
+          "path": "08_section_norm/mode_budget_audit_output.txt",
+          "sha256": "9217aeba8da12afc9b86add2022ecb7b6a409fd536960b0080223b4cb256c4b4",
+          "git_blob": "b5c82ec8336a93db49b4d74d2cc3908fc5af95ba",
+          "bytes": 115,
+          "original_member": "mode_budget_audit_output.txt"
+        },
+        {
+          "path": "08_section_norm/polynomial_ring_verifier.py",
+          "sha256": "2c7b64282180f580fa9a1ba95390b68da790d15a825745a3629198f8d3430e27",
+          "git_blob": "e76152e7ce295c55f6f9e956ee8e8528d4ed1bb1",
+          "bytes": 9942,
+          "original_member": "polynomial_ring_verifier.py"
+        },
+        {
+          "path": "08_section_norm/short_projector_audit.py",
+          "sha256": "9f06021474d13ffef948f505fa75d60f3d5e05030eec7f1d0423409480b2b3dc",
+          "git_blob": "868f623915370e2db952161ae21218073c79d5d1",
+          "bytes": 7376,
+          "original_member": "short_projector_audit.py"
+        }
+      ],
+      "note": "08_section_norm/section_norm_research_note.md",
+      "title": "Global elliptic section norms and pairwise compression of dyadic modes"
+    },
+    {
+      "directory": "09_mode_contraction",
+      "archive_name": "mode_contraction_research.zip",
+      "archive_sha256": "f5f36836d36497774c6ea1befc5c9b9b8c70e8e98690ff95df1098db7f0a049d",
+      "files": [
+        {
+          "path": "09_mode_contraction/mode_contraction_note.md",
+          "sha256": "12e83bf453fa3236e4554f1d5fbf741054ed5e5a3e027f44b04c43e8bf710475",
+          "git_blob": "1b33613d40280cec64948e33ca1e860a4d164015",
+          "bytes": 25396,
+          "original_member": "mode_contraction_note.md"
+        },
+        {
+          "path": "09_mode_contraction/verify_mode_contraction.py",
+          "sha256": "1402bcb8c896735748d67332c86ca5b38f7fc1a80cc0eda8c844bce41b0a3125",
+          "git_blob": "72993e8a2a16e9c7f7e3d829a6beb7652f3a8a71",
+          "bytes": 10336,
+          "original_member": "verify_mode_contraction.py"
+        },
+        {
+          "path": "09_mode_contraction/verification_output.txt",
+          "sha256": "b6b0fe7323a0d593c192595ef89700afb71a574ef3b05a652cd034c06543442f",
+          "git_blob": "4b9a203b8a4c4c064fab89dbe349010aece08645",
+          "bytes": 1442,
+          "original_member": "verification_output.txt"
+        }
+      ],
+      "note": "09_mode_contraction/mode_contraction_note.md",
+      "title": "High-precision lifting, degree-aware mode contraction, and the remaining packing gap"
+    },
+    {
+      "directory": "10_group_tensor_factorization",
+      "archive_name": "group_tensor_factorization_research.zip",
+      "archive_sha256": "d116390cfe9c175be34acea03bc27b10eb357e55ca95252692aa9455519bec5c",
+      "files": [
+        {
+          "path": "10_group_tensor_factorization/group_tensor_factorization_note.md",
+          "sha256": "fbf990622b4255fa5165fb98324c64dd31f9ad38b45147092d81c2cc3fb51318",
+          "git_blob": "260a4515e96991a1fc887bf3ca54e28e8bf1e3b6",
+          "bytes": 25399,
+          "original_member": "group_tensor_factorization_note.md"
+        },
+        {
+          "path": "10_group_tensor_factorization/verify_group_tensors.py",
+          "sha256": "c8c7980ad8b3dcf596e04c679c1c5cfd8f3f72f089bb7c0411dc1dbe70f6d5c5",
+          "git_blob": "39853fa9f83b42cdaf4dbfc937d5bdce13206954",
+          "bytes": 7040,
+          "original_member": "verify_group_tensors.py"
+        },
+        {
+          "path": "10_group_tensor_factorization/verification_output.txt",
+          "sha256": "257b95c7b7415b0e2c11d0ca1b0387eb4463b289f608908e85b7f93c5f2c05a0",
+          "git_blob": "600c05b767f7daf2454ab2ef5a395d9fe7ec9d57",
+          "bytes": 1001,
+          "original_member": "verification_output.txt"
+        }
+      ],
+      "note": "10_group_tensor_factorization/group_tensor_factorization_note.md",
+      "title": "Symbolic group splitting, fixed-budget moment ranks, and unit-separated XOR packets"
+    },
+    {
+      "directory": "11_hierarchical_shared_mode",
+      "archive_name": "hierarchical_shared_mode_research.zip",
+      "archive_sha256": "99969591f4aa3a781380023a09d14bd7482f271d36e3f70cd1cdb9df321c0052",
+      "files": [
+        {
+          "path": "11_hierarchical_shared_mode/hierarchical_shared_mode_note.md",
+          "sha256": "ef3b06b2c0f7e38f400a27a86a4665944cfd26a9c5680d66023a9f6d8fcd266f",
+          "git_blob": "5db9d26f03dba1d15f06656c186514c606b3eff4",
+          "bytes": 30099,
+          "original_member": "hierarchical_shared_mode_note.md"
+        },
+        {
+          "path": "11_hierarchical_shared_mode/packet_audit.py",
+          "sha256": "4ac6f961200cede3316333d7835287ca664414e6d391faf3bf7efa9631a0c4de",
+          "git_blob": "60dc08f15afb8e212b9a7d8715541ef0df61f6d3",
+          "bytes": 15298,
+          "original_member": "packet_audit.py"
+        },
+        {
+          "path": "11_hierarchical_shared_mode/audit_output.txt",
+          "sha256": "0f3157bb9b5f226455e5b23e8bf4b93a619fec741659a5552369d9188da4d9d2",
+          "git_blob": "db802ef184edebe3ec90935a446198997210105e",
+          "bytes": 729,
+          "original_member": "audit_output.txt"
+        },
+        {
+          "path": "11_hierarchical_shared_mode/shared_mode_audit.py",
+          "sha256": "19abd0fb220ba8fb832423623f883d8c5667ed2e3e1c40c7e0e15e32d359b958",
+          "git_blob": "ae0e87e8abbe7a6429c37433a8f8ca4c2667eef8",
+          "bytes": 7041,
+          "original_member": "shared_mode_audit.py"
+        },
+        {
+          "path": "11_hierarchical_shared_mode/shared_mode_output.txt",
+          "sha256": "7da4eb7ac0c345f76658a4ff86c7b47a3816133b6504fbf57e0db6c3e0fd4d14",
+          "git_blob": "cc66815a93e1e4edf63c42804dd264c0d5e635a5",
+          "bytes": 226,
+          "original_member": "shared_mode_output.txt"
+        }
+      ],
+      "note": "11_hierarchical_shared_mode/hierarchical_shared_mode_note.md",
+      "title": "Hierarchical packet packing and shared-mode Newton contraction"
+    },
+    {
+      "directory": "12_exterior_packet",
+      "archive_name": "exterior_packet_research.zip",
+      "archive_sha256": "486c387e10ca4d52b9f3c4942c9b97a4935c5dbfb0d3f9fc37f2e7d994059de2",
+      "files": [
+        {
+          "path": "12_exterior_packet/exterior_packet_note.md",
+          "sha256": "f538873e7a5ce4e668e4b08e9b0f1bfc68f6ac6815fbd31f968388d25883df24",
+          "git_blob": "7753d1834e7e3515e8e947dd6473b13cb4495ecb",
+          "bytes": 22429,
+          "original_member": "exterior_packet_note.md"
+        },
+        {
+          "path": "12_exterior_packet/verify.py",
+          "sha256": "f677f49737521f575d263ff119deda06ffbad2a4a2864063f2d07015a8b288f1",
+          "git_blob": "0bc1d5f005e8a256ff5b5931fed432e2024a0a19",
+          "bytes": 9496,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "12_exterior_packet/verify_readout.py",
+          "sha256": "d6f99a53b015245e4d1d0de0aa14a7c830c6db1a413e6fdd72e71a08dca7a412",
+          "git_blob": "bbaa5a8e6cf8ee065c3ab0850f10d290ace23e10",
+          "bytes": 3464,
+          "original_member": "verify_readout.py"
+        },
+        {
+          "path": "12_exterior_packet/verify_sparse.py",
+          "sha256": "f99abe048665b93a2bef6a8ebfb6d9ba734263b657f8d94c89ef9f0d7de25de8",
+          "git_blob": "326ffbf4a8c069ab06725f54feec2129161c4974",
+          "bytes": 3889,
+          "original_member": "verify_sparse.py"
+        },
+        {
+          "path": "12_exterior_packet/verification.txt",
+          "sha256": "a42eec11329c25715505e463153cb9dc5effccb872af3939c3e02994e486e8f2",
+          "git_blob": "a2b9f57f6922a53b2b1fcf50e9a2c78f0419002e",
+          "bytes": 836,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "12_exterior_packet/readout_verification.txt",
+          "sha256": "db8344631d7a945b165e1011b60fc6b7303348fae3f95d3693b96b07bdbda628",
+          "git_blob": "cd8cb0f7b972dec68e35a4683aafcadd0ba4ad1f",
+          "bytes": 177,
+          "original_member": "readout_verification.txt"
+        },
+        {
+          "path": "12_exterior_packet/sparse_verification.txt",
+          "sha256": "12ed7e0bfd767d7c79ad256011aca7ae23d87674f3f508390772b3750177c5f9",
+          "git_blob": "64ba039137f8977375358b71b4293e6ed5362e68",
+          "bytes": 196,
+          "original_member": "sparse_verification.txt"
+        }
+      ],
+      "note": "12_exterior_packet/exterior_packet_note.md",
+      "title": "Exterior-power packet deformation and a support-sensitive contractor"
+    },
+    {
+      "directory": "13_prime_exponent",
+      "archive_name": "prime_exponent_research.zip",
+      "archive_sha256": "235020864e73c487699ec2529c534bf88ef27da2354625cdfdfb67b8e5036734",
+      "files": [
+        {
+          "path": "13_prime_exponent/prime_exponent_note.md",
+          "sha256": "2ecfda9c0024a0dbb323e6c75218fd545651ac03ac8fe1e734c613afeef2c9c8",
+          "git_blob": "d0ed94f89ac2118e6cf5ce9d5d1476c17fd15450",
+          "bytes": 14194,
+          "original_member": "prime_exponent_note.md"
+        },
+        {
+          "path": "13_prime_exponent/verify.py",
+          "sha256": "c96934d20c186a006f5befdc69fef27e6b1d65792cb9fd4377d422ea1095d2f2",
+          "git_blob": "361d4a577deb0d014820fbf68c15d49e416e9cf1",
+          "bytes": 3540,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "13_prime_exponent/verification.txt",
+          "sha256": "8fd8fee990ff563166e80aa8d43e06ebd62d457a1651eadf9b0a04f133eab490",
+          "git_blob": "813edd68f25b8927dbac1ed6f6ad711d69c6e2bb",
+          "bytes": 492,
+          "original_member": "verification.txt"
+        }
+      ],
+      "note": "13_prime_exponent/prime_exponent_note.md",
+      "title": "Direct elliptic evaluation-code route: transfer target and an oracle obstruction"
+    },
+    {
+      "directory": "14_numerical_sketch",
+      "archive_name": "numerical_sketch_research.zip",
+      "archive_sha256": "eb754b5d7e90ac1bb94cc3c315505d516a9ed306892c9639f729915b49f6955c",
+      "files": [
+        {
+          "path": "14_numerical_sketch/numerical_sketch_note.md",
+          "sha256": "911dcc37c6ffe06f43eaa1dedf08176ebdc46080a86af08ac168a4ee3991ca0f",
+          "git_blob": "ab52eed441b13671f30c958910ebc6a355e20128",
+          "bytes": 20444,
+          "original_member": "numerical_sketch_note.md"
+        },
+        {
+          "path": "14_numerical_sketch/verify.py",
+          "sha256": "8b7f6a83499ffb19709f32c6c908a40dfa4a554e8caaa3c97893a155cc72e426",
+          "git_blob": "56e097cbb04f1f3f58dd7b07aca09690eda2786e",
+          "bytes": 11630,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "14_numerical_sketch/verification.txt",
+          "sha256": "fe22f860a62b9a92bc41ee7840ef9ddc76b8fefaf87482edc929ec38403375e9",
+          "git_blob": "0efd48a0bbb69923160e60b115360c1187857cde",
+          "bytes": 1094,
+          "original_member": "verification.txt"
+        }
+      ],
+      "note": "14_numerical_sketch/numerical_sketch_note.md",
+      "title": "Adaptive numerical sketches and full-value moment smoothing on elliptic planted lists"
+    },
+    {
+      "directory": "15_affine_seed_spectrum",
+      "archive_name": "affine_seed_spectrum_research.zip",
+      "archive_sha256": "946ec39fc5ad2262cedd54fd92d875b64a2ae2c7a8caa12f1f3378092ffff3ca",
+      "files": [
+        {
+          "path": "15_affine_seed_spectrum/affine_seed_spectrum_note.md",
+          "sha256": "7c735f9f8091abbd82a2104c4a1a6a1274bc05f5e9028be831d1abf288da090f",
+          "git_blob": "1f4c798d7bd77b6d04ba8d2628e09af65ec99428",
+          "bytes": 26497,
+          "original_member": "affine_seed_spectrum_note.md"
+        },
+        {
+          "path": "15_affine_seed_spectrum/verify.py",
+          "sha256": "ed4ffa761a2880de35b9ae3505cd6305d39e377387161ef0403772f0683bb12f",
+          "git_blob": "2bc928364902e4cf0fd816e1ae89e0353af58a92",
+          "bytes": 13085,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "15_affine_seed_spectrum/verification.txt",
+          "sha256": "b55bda6727f6ea0120970c704874de9bc9899190e01e085306188d4e72234f1d",
+          "git_blob": "b544947fe53d0ece5c19be9ae6c1e6861f107afd",
+          "bytes": 906,
+          "original_member": "verification.txt"
+        }
+      ],
+      "note": "15_affine_seed_spectrum/affine_seed_spectrum_note.md",
+      "title": "Exact spectral normal form and higher-order incidence for field-affine elliptic samplers"
+    },
+    {
+      "directory": "16_replica_mixing",
+      "archive_name": "replica_mixing_research.zip",
+      "archive_sha256": "064ca92b4b442685882ba93f7242f7d04b2e3a2f69db3e7a4b54fc8d4806cf08",
+      "files": [
+        {
+          "path": "16_replica_mixing/replica_mixing_note.md",
+          "sha256": "6215d894536d0003ee0dfb990bcae65be96ed160af0580a8cbc43f499a083887",
+          "git_blob": "c8960c59a052abce9fcb5a3d330030901addfe36",
+          "bytes": 23725,
+          "original_member": "replica_mixing_note.md"
+        },
+        {
+          "path": "16_replica_mixing/verify.py",
+          "sha256": "a45d32b99fdab690cc0913c10aa147f0673c8ae0dc192bde877414c5572255a8",
+          "git_blob": "e30feb5e7619375865f74f68db795033457112ae",
+          "bytes": 9997,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "16_replica_mixing/verification.txt",
+          "sha256": "f76702c478949b2b59dedeaeab1292425ff9aaa73a220bb45efb6f94358fcc53",
+          "git_blob": "cbdacb81fe16ffa2dfc045431ae065df88844489",
+          "bytes": 1989,
+          "original_member": "verification.txt"
+        }
+      ],
+      "note": "16_replica_mixing/replica_mixing_note.md",
+      "title": "Uniform replica mixing and Poisson relation counts for translated elliptic slots"
+    },
+    {
+      "directory": "17_shared_translation",
+      "archive_name": "shared_translation_research.zip",
+      "archive_sha256": "6fa907e1f8598d767653839655358ffb903fffacec33aa7294cc57cc5c3760fd",
+      "files": [
+        {
+          "path": "17_shared_translation/shared_translation_note.md",
+          "sha256": "e59726143a187a5a5ee7a2e8d3ab64547d631dc167d5143ec056d2aebfd422d0",
+          "git_blob": "1d027f69eb0e554d314c81c0b4238abffe29c6e8",
+          "bytes": 31038,
+          "original_member": "shared_translation_note.md"
+        },
+        {
+          "path": "17_shared_translation/verify.py",
+          "sha256": "934d2cf728722cf07c6a5948975b8760a162c9ad4baa1b4fa34b629fe0c40123",
+          "git_blob": "a598051d5a2718d560aed39edba6c4b7d83337e8",
+          "bytes": 12766,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "17_shared_translation/inverse_translation_verify.py",
+          "sha256": "79ed41fe6193be07e630e325f3151df879c8d29ab100727f8ab1322117618c91",
+          "git_blob": "28ab7406b2ebf198d3eaa61ef1fa8f9c4c20af05",
+          "bytes": 5973,
+          "original_member": "inverse_translation_verify.py"
+        },
+        {
+          "path": "17_shared_translation/verification.txt",
+          "sha256": "aaeff2c040a48c9d71eaacceaadca0e918b83ada01f99c48ddcae56c26a0b7c9",
+          "git_blob": "8ba41c7ae488a15f5ae5155853dd361693f10725",
+          "bytes": 1665,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "17_shared_translation/inverse_verification.txt",
+          "sha256": "f1a37ed890400425f9a0d6f0479aa01e511b743f991adbd52f2387b85db77f2d",
+          "git_blob": "08885c2c839fc0e0248f0a35118f83871be46ace",
+          "bytes": 843,
+          "original_member": "inverse_verification.txt"
+        }
+      ],
+      "note": "17_shared_translation/shared_translation_note.md",
+      "title": "Correlated translation samplers, cofactor transfer, and inverse relation queries"
+    },
+    {
+      "directory": "18_shared_norm_aggregate",
+      "archive_name": "shared_norm_aggregate_research.zip",
+      "archive_sha256": "92dfa0f5d9c74d31786756896fcefef960c66046c42960fdbbb84ffb73ee37db",
+      "files": [
+        {
+          "path": "18_shared_norm_aggregate/shared_norm_aggregate_note.md",
+          "sha256": "764b8e270e26b955e4183020aee2842bd3d1392737402655f7721344c5402bda",
+          "git_blob": "a1d54adae45484943d55ccb7d03cbc79b9d2e6c0",
+          "bytes": 27210,
+          "original_member": "shared_norm_aggregate_note.md"
+        },
+        {
+          "path": "18_shared_norm_aggregate/verify.py",
+          "sha256": "934d2cf728722cf07c6a5948975b8760a162c9ad4baa1b4fa34b629fe0c40123",
+          "git_blob": "a598051d5a2718d560aed39edba6c4b7d83337e8",
+          "bytes": 12766,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "18_shared_norm_aggregate/inverse_translation_verify.py",
+          "sha256": "79ed41fe6193be07e630e325f3151df879c8d29ab100727f8ab1322117618c91",
+          "git_blob": "28ab7406b2ebf198d3eaa61ef1fa8f9c4c20af05",
+          "bytes": 5973,
+          "original_member": "inverse_translation_verify.py"
+        },
+        {
+          "path": "18_shared_norm_aggregate/verify_norm_aggregate.py",
+          "sha256": "03de3f0629578f9e9116b2ca04d25ba2dca4de7e1f8c0765a93cc0bdb9d0e295",
+          "git_blob": "d1e4a5380db64919cb2e05d8e120387d8549cf46",
+          "bytes": 8488,
+          "original_member": "verify_norm_aggregate.py"
+        },
+        {
+          "path": "18_shared_norm_aggregate/verify_inverse_law.py",
+          "sha256": "e1fdf36fedd06753f0a858325c84e87d59debd63a7a3e620d1ed59c1ac211e97",
+          "git_blob": "16fdd9b3bfbfe2b11d3ceb34ce6298edbf85c92f",
+          "bytes": 4295,
+          "original_member": "verify_inverse_law.py"
+        },
+        {
+          "path": "18_shared_norm_aggregate/verify_collective_resultant.py",
+          "sha256": "0d7e698e78e1a3a151bceb096c894dc73f416c7933d066e6833ca2029ba119e0",
+          "git_blob": "9234069c35e1dc80ddcc93e994c470fc285f1ebd",
+          "bytes": 5333,
+          "original_member": "verify_collective_resultant.py"
+        },
+        {
+          "path": "18_shared_norm_aggregate/verification.txt",
+          "sha256": "e8d6226dd51aa4d30d095c65eeedb5bc3afb2933e298597cb191561a0e12c0fd",
+          "git_blob": "23bfcc81edbe1c68082b5a94e935d790ff4d4c99",
+          "bytes": 2409,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "18_shared_norm_aggregate/inverse_law_verification.txt",
+          "sha256": "31d84b7a47cdcfc3a461857758b342e7972fb51b832aa9d267e25dab0ca52e4f",
+          "git_blob": "a0ec57c4e889e98375bd705cc7aba892e2042795",
+          "bytes": 957,
+          "original_member": "inverse_law_verification.txt"
+        },
+        {
+          "path": "18_shared_norm_aggregate/collective_verification.txt",
+          "sha256": "b684d1d2649252b16d12a1e3e6f9b6eca84dba90f2cfe10e4f72e5f50dc939df",
+          "git_blob": "abd1271f4bd1799af5b79a04f25578879518a514",
+          "bytes": 813,
+          "original_member": "collective_verification.txt"
+        }
+      ],
+      "note": "18_shared_norm_aggregate/shared_norm_aggregate_note.md",
+      "title": "Primitive shared-translation relation polynomials, collective resultants, and exact inverse planting"
+    },
+    {
+      "directory": "19_kronecker_determinant",
+      "archive_name": "kronecker_determinant_research.zip",
+      "archive_sha256": "2a7db2b464b7ae3a2b9ba3e377e1837782c810c1d0dc26e3b3e4fe3d7aeb7c53",
+      "files": [
+        {
+          "path": "19_kronecker_determinant/kronecker_determinant_note.md",
+          "sha256": "5b730e3105f0e6c7c51e994fb004c24c9f9fafd4d7c59c96a5f073f6633f4087",
+          "git_blob": "024f727e8e9570493e82154f59cd55c3ddea74f0",
+          "bytes": 27188,
+          "original_member": "kronecker_determinant_note.md"
+        },
+        {
+          "path": "19_kronecker_determinant/verify.py",
+          "sha256": "c7cabf236615c18c8cec1a56dde891a4454e05131b4ad10790b8e44e6223b65c",
+          "git_blob": "b34c7c805be19f030033a9d5187f976e5b5cc543",
+          "bytes": 11668,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "19_kronecker_determinant/verify_perturbation.py",
+          "sha256": "838f22a83a8a73ec02c66482fa2eddba4ccb0bcee06579dff30ae3e68be81932",
+          "git_blob": "4290b085522e1c16659eef9516ecbaed992faf1c",
+          "bytes": 3267,
+          "original_member": "verify_perturbation.py"
+        },
+        {
+          "path": "19_kronecker_determinant/verification.txt",
+          "sha256": "291897e5756f40b1175c92462ff1ba444bf8d8f72b385144c698a62b75f594a3",
+          "git_blob": "de975f744e27dc0d9eaf2d0701e0a0c9f9a59f32",
+          "bytes": 601,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "19_kronecker_determinant/perturbation_verification.txt",
+          "sha256": "7230662381ed95e00c5079afd7641d638b035f9a2e4b173172f25d2fb05637ed",
+          "git_blob": "78d9204c4273c65b84688a48ee7fb9d08d019be8",
+          "bytes": 265,
+          "original_member": "perturbation_verification.txt"
+        }
+      ],
+      "note": "19_kronecker_determinant/kronecker_determinant_note.md",
+      "title": "Block norm elimination, one-call witness extraction, and the grid lifting ideal"
+    },
+    {
+      "directory": "20_fiber_gcd",
+      "archive_name": "fiber_gcd_research.zip",
+      "archive_sha256": "2c59cb6719f1a41983c04dd60bf33534da7554320e261b6adcec6d8a53e1afd2",
+      "files": [
+        {
+          "path": "20_fiber_gcd/fiber_gcd_note.md",
+          "sha256": "8a0bfa6c6c17e87d4fa0a1e2c9a088c0f3124b55cbc6ac8501b092858e6561c8",
+          "git_blob": "752407f9aeda8098904a739dd5190570bf5e1300",
+          "bytes": 22940,
+          "original_member": "fiber_gcd_note.md"
+        },
+        {
+          "path": "20_fiber_gcd/verify.py",
+          "sha256": "6060ec079495b76ca2261101a040e1bdb9da737ab92ef7258b2d3f4116bfb098",
+          "git_blob": "12bb67f7f28990a0e97fc0fb45766b2d14e3555c",
+          "bytes": 16417,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "20_fiber_gcd/verification.txt",
+          "sha256": "b4989e7714778d6d89813cbf77a5da613b5d70cdbfb81496b3036562aeaff4b8",
+          "git_blob": "5b9975e96818ea4bf256e6c142541a9da960a6bc",
+          "bytes": 795,
+          "original_member": "verification.txt"
+        }
+      ],
+      "note": "20_fiber_gcd/fiber_gcd_note.md",
+      "title": "Fiber-gcd compression, trace-only witness recovery, and sharp image-certificate degrees"
+    },
+    {
+      "directory": "21_collective_trace",
+      "archive_name": "collective_trace_research.zip",
+      "archive_sha256": "b5ed7377d5855910a0d21b12942e28ffc094c8169a790e0595032daf003ad23d",
+      "files": [
+        {
+          "path": "21_collective_trace/collective_trace_note.md",
+          "sha256": "49ffb870b1c3ca09d1fd9b3c8a53edca3c5d83a0085bca8ce43252a7b9c62063",
+          "git_blob": "b0534329d862a59e35d2366f9c1759bfa208ab1e",
+          "bytes": 24844,
+          "original_member": "collective_trace_note.md"
+        },
+        {
+          "path": "21_collective_trace/verify.py",
+          "sha256": "493920ff08d120706122a2ec7f835c658f0d9e2055d443271308569cf77b4ef9",
+          "git_blob": "c352f8bd1c0afe86e0c8fd1a7c7a5662bf528d72",
+          "bytes": 18357,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "21_collective_trace/previous_fiber_verifier.py",
+          "sha256": "6060ec079495b76ca2261101a040e1bdb9da737ab92ef7258b2d3f4116bfb098",
+          "git_blob": "12bb67f7f28990a0e97fc0fb45766b2d14e3555c",
+          "bytes": 16417,
+          "original_member": "previous_fiber_verifier.py"
+        },
+        {
+          "path": "21_collective_trace/verification.txt",
+          "sha256": "6ac9b088fc6f3057bb074c4f43b7372e1ab3834a49ac902a45d8c30fd9610c0e",
+          "git_blob": "5501608ec206354c680e7c74145e02c7cf75c61d",
+          "bytes": 1280,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "21_collective_trace/SHA256SUMS",
+          "sha256": "b3b95792c0faa079d9eaf0c5627010d1776fc503d26c31842451e44602b3b6a3",
+          "git_blob": "ac0bb3fcc1d86a80e5c5bf0a4cf78194e283aad6",
+          "bytes": 343,
+          "original_member": "SHA256SUMS"
+        }
+      ],
+      "note": "21_collective_trace/collective_trace_note.md",
+      "title": "Projected norms, batched rational traces, and a resolvent readout obstruction"
+    },
+    {
+      "directory": "22_mixed_characteristic_norm",
+      "archive_name": "mixed_characteristic_norm_research.zip",
+      "archive_sha256": "da02340054f79b1b101ed40ee7745224928f5401ddfadfdcce006a342de63a76",
+      "files": [
+        {
+          "path": "22_mixed_characteristic_norm/mixed_characteristic_norm_note.md",
+          "sha256": "f73fcbcc21509f2065dbc7e40b3470e062934ec4d834e01c16e4df9865792963",
+          "git_blob": "1c97f5a2f0a6a125fbc8626942f41f749c0254d7",
+          "bytes": 17869,
+          "original_member": "mixed_characteristic_norm_note.md"
+        },
+        {
+          "path": "22_mixed_characteristic_norm/verify.py",
+          "sha256": "91ed3e081a092f5c7979456e258527ca48deb2d640c0dc34bab2058e3f803eb4",
+          "git_blob": "58e023bfe865ede7c3c6dddaaae3f7210dc7876c",
+          "bytes": 10162,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "22_mixed_characteristic_norm/previous_fiber_verifier.py",
+          "sha256": "6060ec079495b76ca2261101a040e1bdb9da737ab92ef7258b2d3f4116bfb098",
+          "git_blob": "12bb67f7f28990a0e97fc0fb45766b2d14e3555c",
+          "bytes": 16417,
+          "original_member": "previous_fiber_verifier.py"
+        },
+        {
+          "path": "22_mixed_characteristic_norm/verification.txt",
+          "sha256": "83a1126466f748d8810fdb0828f6c708dd340b3af6879c7f97a969e3a047abde",
+          "git_blob": "b2c7ceaa802a8a25b44376103a08383467c9ee13",
+          "bytes": 992,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "22_mixed_characteristic_norm/SHA256SUMS",
+          "sha256": "34d9fbafa6798f30aded5551ea118cd1a620bec713fd9098d65931654ce403c1",
+          "git_blob": "1645798904590c4dd951bc9ec1bf11b8129570b6",
+          "bytes": 352,
+          "original_member": "SHA256SUMS"
+        }
+      ],
+      "note": "22_mixed_characteristic_norm/mixed_characteristic_norm_note.md",
+      "title": "Mixed-characteristic residue extraction and collision-free scalar norm recovery"
+    },
+    {
+      "directory": "23_coordinate_deformed_resultant",
+      "archive_name": "coordinate_deformed_resultant_research.zip",
+      "archive_sha256": "7a69e993db1d166920ce5471d16ef09ae297de8623d8f320348c9e4665a01b80",
+      "files": [
+        {
+          "path": "23_coordinate_deformed_resultant/coordinate_deformed_resultant_note.md",
+          "sha256": "89ae21f567f15a04e2be72a0206031507d8a3ae3fc114ef8b22d1368dafd1ee0",
+          "git_blob": "44464d3dea2c8a253459d4966555a47762a231d7",
+          "bytes": 21485,
+          "original_member": "coordinate_deformed_resultant_note.md"
+        },
+        {
+          "path": "23_coordinate_deformed_resultant/verify.py",
+          "sha256": "d0293612ab2509edf9cc64c88dc387b224f71b94cf9bf7eab0e14cd6c24c5b8d",
+          "git_blob": "42fa49af9fb87788868cd2d68b13cac0d44339cc",
+          "bytes": 12646,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "23_coordinate_deformed_resultant/previous_mixed_verifier.py",
+          "sha256": "91ed3e081a092f5c7979456e258527ca48deb2d640c0dc34bab2058e3f803eb4",
+          "git_blob": "58e023bfe865ede7c3c6dddaaae3f7210dc7876c",
+          "bytes": 10162,
+          "original_member": "previous_mixed_verifier.py"
+        },
+        {
+          "path": "23_coordinate_deformed_resultant/previous_fiber_verifier.py",
+          "sha256": "6060ec079495b76ca2261101a040e1bdb9da737ab92ef7258b2d3f4116bfb098",
+          "git_blob": "12bb67f7f28990a0e97fc0fb45766b2d14e3555c",
+          "bytes": 16417,
+          "original_member": "previous_fiber_verifier.py"
+        },
+        {
+          "path": "23_coordinate_deformed_resultant/verification.txt",
+          "sha256": "1895b216ce9ab4aa4430f9dde46480aaf5fdf676e2a80698b7cb934c591208e9",
+          "git_blob": "4c3041e93d90803c1cfe7584c59df8d755fc8da1",
+          "bytes": 1300,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "23_coordinate_deformed_resultant/SHA256SUMS",
+          "sha256": "76c3ccd487bb32804ea03692554d51fcf554449593d75b9cc69b7e355f95835a",
+          "git_blob": "20f503c3eabdf0601537d06185f8f366c5257611",
+          "bytes": 449,
+          "original_member": "SHA256SUMS"
+        }
+      ],
+      "note": "23_coordinate_deformed_resultant/coordinate_deformed_resultant_note.md",
+      "title": "Coordinate-deformed elliptic resultants: signed recovery and a prime-power evaluator"
+    },
+    {
+      "directory": "24_auxiliary_torsion",
+      "archive_name": "auxiliary_torsion_research.zip",
+      "archive_sha256": "1eeb3734df87911312fff20c41c46caf40db83adcccde4915d24a2f1938c1859",
+      "files": [
+        {
+          "path": "24_auxiliary_torsion/verification.txt",
+          "sha256": "60bcb0a09034375a62b8bd2a69ba13cbb33f2face885ff1f667592bfd1ec06b7",
+          "git_blob": "311c33d33f5361447ad1f8f4593408a7a7d4dccb",
+          "bytes": 1138,
+          "original_member": "auxiliary_torsion_checkpoint/verification.txt"
+        },
+        {
+          "path": "24_auxiliary_torsion/auxiliary_torsion_note.md",
+          "sha256": "1fdeb1666a048c52424aef876fe2087843191804738154d1ad0e09335b21448a",
+          "git_blob": "3c6d7548c575e7b8e6739e3497269a6816b6b912",
+          "bytes": 21414,
+          "original_member": "auxiliary_torsion_checkpoint/auxiliary_torsion_note.md"
+        },
+        {
+          "path": "24_auxiliary_torsion/verify.py",
+          "sha256": "1c2f2e310dd6a4dd3b7be32cd215d831420cb700309d4e94b3a787650b41da18",
+          "git_blob": "9769c4b1d030f83c439c11e68802dfa69882474e",
+          "bytes": 12327,
+          "original_member": "auxiliary_torsion_checkpoint/verify.py"
+        },
+        {
+          "path": "24_auxiliary_torsion/verification_before_square_filter.txt",
+          "sha256": "093d59534cc5819bc6e9abeebec1ad18b82c9a2eea5fef1b302716c31aac2fdf",
+          "git_blob": "a3b627df8417f86e40dcecf339d9573cdf0f512b",
+          "bytes": 983,
+          "original_member": "auxiliary_torsion_checkpoint/verification_before_square_filter.txt"
+        },
+        {
+          "path": "24_auxiliary_torsion/verify_chart.py",
+          "sha256": "9620c8bf249f44d67d22a114af60fe126c005965d6249e828e132467f43a6bc9",
+          "git_blob": "e7d7fde793c74639c419396ccf27b92f7b0bc1f6",
+          "bytes": 10576,
+          "original_member": "auxiliary_torsion_checkpoint/verify_chart.py"
+        },
+        {
+          "path": "24_auxiliary_torsion/previous_fiber_verifier.py",
+          "sha256": "6060ec079495b76ca2261101a040e1bdb9da737ab92ef7258b2d3f4116bfb098",
+          "git_blob": "12bb67f7f28990a0e97fc0fb45766b2d14e3555c",
+          "bytes": 16417,
+          "original_member": "auxiliary_torsion_checkpoint/previous_fiber_verifier.py"
+        },
+        {
+          "path": "24_auxiliary_torsion/SHA256SUMS",
+          "sha256": "9507c69beba8e064cde75a052627c1366d119bed85e39af1e468432ccc9139af",
+          "git_blob": "abdb6ad00d944b52877da1afb0bd8b25b550877b",
+          "bytes": 893,
+          "original_member": "auxiliary_torsion_checkpoint/SHA256SUMS"
+        },
+        {
+          "path": "24_auxiliary_torsion/chart_verification.txt",
+          "sha256": "3bf86dc948413448502e28ce6419a73b7bb10bfb94a1c07e7e744f7be8abee6a",
+          "git_blob": "e083b825893922d9bd6ad63cdd85feca1888331e",
+          "bytes": 424,
+          "original_member": "auxiliary_torsion_checkpoint/chart_verification.txt"
+        },
+        {
+          "path": "24_auxiliary_torsion/verify_nonrational.py",
+          "sha256": "ae26ff4c504411853e28001f38f04f0a9ecd6e7528b1977fddbc485a265ed1f4",
+          "git_blob": "0229f959dcfa73995f49a2f401e4a9527bff69f7",
+          "bytes": 1085,
+          "original_member": "auxiliary_torsion_checkpoint/verify_nonrational.py"
+        },
+        {
+          "path": "24_auxiliary_torsion/nonrational_verification.txt",
+          "sha256": "53aed24a96a49da3e423d28b5ae87b8b0b781db0109f86d288b9ad497bb8299c",
+          "git_blob": "ae48f14281822ac33818aa4624568a465fc69be4",
+          "bytes": 276,
+          "original_member": "auxiliary_torsion_checkpoint/nonrational_verification.txt"
+        },
+        {
+          "path": "24_auxiliary_torsion/initial_verification.txt",
+          "sha256": "0e79c7843440ddc76c307ff742be1a349b267ca8e4afdc33cef781eff79e7e54",
+          "git_blob": "26f21427dc7f5eba6e4ec1d30313711ce503e7d5",
+          "bytes": 967,
+          "original_member": "auxiliary_torsion_checkpoint/initial_verification.txt"
+        }
+      ],
+      "note": "24_auxiliary_torsion/auxiliary_torsion_note.md",
+      "title": "Auxiliary elliptic torsion supports and compact symbolic fiber elimination"
+    },
+    {
+      "directory": "25_smooth_isogeny_norm",
+      "archive_name": "smooth_isogeny_norm_research.zip",
+      "archive_sha256": "7d9c39ebd63f4c2d69bbe803784b2e84e2de0fbf7ed82af2d4549ecb4ee81874",
+      "files": [
+        {
+          "path": "25_smooth_isogeny_norm/verify.py",
+          "sha256": "3a412c0f3fb1818e48f80cd37c0ee1083678ec650ae0da6509da141a8cc94e7f",
+          "git_blob": "cb6396d3a4f98c298f142f1bbb32fab71f708863",
+          "bytes": 10240,
+          "original_member": "verify.py"
+        },
+        {
+          "path": "25_smooth_isogeny_norm/verification.txt",
+          "sha256": "b299d043043ec28f535020315ab9b1876d2d1441a628142701dd01230602ccb3",
+          "git_blob": "65557bd96f8b7d9b05410eca7f2985099600abec",
+          "bytes": 869,
+          "original_member": "verification.txt"
+        },
+        {
+          "path": "25_smooth_isogeny_norm/smooth_isogeny_norm_note.md",
+          "sha256": "3ababbd0b0dae1eb8744d379bec81b1b24da6f41919103e772aa9eaf35706afb",
+          "git_blob": "137034ef3b3e3460ccb35da931108097c92f931b",
+          "bytes": 19096,
+          "original_member": "smooth_isogeny_norm_note.md"
+        },
+        {
+          "path": "25_smooth_isogeny_norm/SHA256SUMS",
+          "sha256": "758d40d32a49c5c1faa1ae097322635855a9d84d90298405aae9d3e61cb2e2a7",
+          "git_blob": "fc539d785fd0da233309fdce2143646698a7624e",
+          "bytes": 253,
+          "original_member": "SHA256SUMS"
+        }
+      ],
+      "note": "25_smooth_isogeny_norm/smooth_isogeny_norm_note.md",
+      "title": "Smooth auxiliary isogeny towers: exact scalar norms and rational traces"
+    }
+  ]
+}

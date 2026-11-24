@@ -1,0 +1,1 @@
+80 mode networks; 9,120 exact rank/unrank checks; 4,955 valid code assignments; 947 invalid padded codes rejected.

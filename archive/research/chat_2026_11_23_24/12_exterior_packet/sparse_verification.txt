@@ -1,0 +1,5 @@
+Sparse seed-local networks: 120
+Exact contraction / slice decomposition comparisons: 3240
+Slice blocks checked: 1974
+Product and strengthened entropy inequality checks: 1722
+ALL ASSERTIONS PASSED

@@ -1,0 +1,17 @@
+Curve fixtures (p, a, c, r): [(5, 2, 1, 7), (7, 0, 3, 13), (11, 1, 5, 11), (13, 0, 2, 19), (17, 1, 3, 17), (19, 0, 2, 13)]
+Exact incidence Gram matrices: 604 matrix entries: 121804
+Extended spectrum fixture: 5 2 frequencies: 625
+Extended spectrum fixture: 7 2 frequencies: 2401
+Extended spectrum fixture: 5 3 frequencies: 450
+Extended spectrum fixture: 7 3 frequencies: 450
+Exact cyclotomic coefficient checks: 3926 on lines: 612 off lines: 3314
+Exact conditional-translation coefficient histograms: 500
+Exact rational L2 formulas: 36
+Numerical cut SVD checks: 36 support-shape spectrum pairs: 18
+Exact conditioning-TV checks: 20
+All assertions passed.
+Exact random-projection energy identities: 24 coset partitions: 612
+Final verifier passed.
+Exact rational-reconstruction comparisons: 71045
+High-order interval incidence checks: 320 nonzero: 193
+All final affine-spectrum and interval assertions passed.

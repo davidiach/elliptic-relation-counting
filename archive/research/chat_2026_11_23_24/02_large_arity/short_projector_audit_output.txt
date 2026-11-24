@@ -1,0 +1,6 @@
+96-bit p, n=5, lambda=2: bit length c=43, bit length max |E_i|=8, bit length M0=28, valid 60, rejected 60, valid but failed without E 55
+128-bit p, n=5, lambda=1: bit length c=70, bit length max |E_i|=8, bit length M0=40, valid 60, rejected 60, valid but failed without E 59
+p=13: energy 22.433701, exact average support 0.919963, mixed-count target checks 18
+p=17: energy 5.418685, exact average support 0.762713, mixed-count target checks 18
+p=19: energy 3.381637, exact average support 0.707246, mixed-count target checks 18
+Entropy partition: all 7 partitions of a surjective 8-bit digit map pass.

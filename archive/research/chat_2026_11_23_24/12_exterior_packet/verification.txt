@@ -1,0 +1,17 @@
+Exact rational minor, reduced degree and origin checks: 316
+Tight common-root multiplicity checks: 740
+Residue autocorrelation / maximum comparisons: 10908
+Normalization valuation inequalities: 11172
+Direct valuation comparisons: 1480 maximum positive loss/k: 1
+Actual Cauchy crossing entries: 456
+Bordered determinant / grouped-sign terms: 3792
+Complete minor expansions: 96
+Two-copy sign cancellation checks: 1152
+Full squared-minor group contractions: 26
+Full grouped contraction summands: 6878
+Illustrative catalogue (c=2, half precision for exterior, not runtime):
+ P= 20: unrestricted log2=15.761110, exterior log2=11.197831
+ P= 40: unrestricted log2=24.805662, exterior log2=17.882219
+ P= 80: unrestricted log2=37.838579, exterior log2=27.382272
+ P=160: unrestricted log2=56.530261, exterior log2=40.881488
+ALL ASSERTIONS PASSED

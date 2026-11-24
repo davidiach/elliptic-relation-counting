@@ -1,0 +1,8 @@
+Block and rational trace tests: {'repeated_input_roots': 20, 'zero_fibers': 107, 'blocks': 220, 'tail': 128, 'projected_masks': 759, 'dual_norms': 220, 'reciprocal_tags': 2277, 'global_residues': 660}
+Projective determinant identity: {'projective_determinants': 300, 'degree_drops': 231, 'a_zero': 38, 'valid_chart_zero_tests': 130}
+Actual elliptic projected traces: {'elliptic_grids': 108, 'fibers': 863, 'addresses': 3200, 'multi_hit_fibers': 0, 'positive_fibers': 22, 'whole_slot_fibers': 0, 'successful_readouts': 211, 'recovered_addresses': 32, 'projection_collisions': 5, 'explicit_edge_addresses': 7}
+Controlled genuine elliptic multiple-hit fibers: {'actual_two_root_addresses': 576, 'actual_two_root_fibers': 288}
+Rational readout obstruction: {'jet_rows': 1792, 'independent_zero_transcripts': 1240, 'dual_collisions': 500, 'full_rank_controls': 460}
+Projected spectrum checks: {'distinct_polynomial_pairs': 14, 'signature_evaluations': 5132, 'spectrum_observations': 31068, 'positive_algebraic_observations': 2030}
+Mean ordered collision energies (p, eliminated width, lanes, energy): [(101, 2, 4, 4.11345), (101, 4, 2, 2.01898), (137, 2, 4, 4.08516), (137, 4, 2, 2.01834)]
+All exact assertions passed. No fast collective evaluator or end-to-end timing is implemented.

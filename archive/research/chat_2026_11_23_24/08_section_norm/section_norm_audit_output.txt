@@ -1,0 +1,20 @@
+p=7, m=2: 16 distinct reduced divisors, exact support agreement
+p=7, m=3: 24 distinct reduced divisors, exact support agreement
+p=7, m=4: 12 distinct reduced divisors, exact support agreement
+p=11, m=2: 14 distinct reduced divisors, exact support agreement
+p=11, m=3: 18 distinct reduced divisors, exact support agreement
+p=11, m=4: 6 distinct reduced divisors, exact support agreement
+p=13, m=2: 42 distinct reduced divisors, exact support agreement
+p=13, m=3: 126 distinct reduced divisors, exact support agreement
+p=13, m=4: 198 distinct reduced divisors, exact support agreement
+p=17, m=2: 42 distinct reduced divisors, exact support agreement
+p=17, m=3: 126 distinct reduced divisors, exact support agreement
+p=17, m=4: 198 distinct reduced divisors, exact support agreement
+p=19, m=2: 54 distinct reduced divisors, exact support agreement
+p=19, m=3: 186 distinct reduced divisors, exact support agreement
+p=19, m=4: 360 distinct reduced divisors, exact support agreement
+Enumerated 276,077 normalized sections; 1,422 norm hits; 1,422 direct divisors; 6,294 target sign checks.
+96-bit field, lambda=2: 512 injective thin addresses.
+96-bit field: 4 short multiplier systems; max public weight bits 9; 40 exact lifted norm systems, 40 mutated systems rejected; 280 exact projected quotient identities; 40 separate target sign lifts.
+128-bit field, lambda=1: 512 injective thin addresses.
+128-bit field: 4 short multiplier systems; max public weight bits 17; 40 exact lifted norm systems, 40 mutated systems rejected; 280 exact projected quotient identities; 40 separate target sign lifts.

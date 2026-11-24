@@ -1,0 +1,6 @@
+Block norms: 600 exact product-ring comparisons, 265 nonzero zero-divisor outputs, 219 tail cases.
+Integer lifting: 400 nonzero ideal elements, 4710 exact F-adic coefficient checks, 400 cancellation controls.
+Grid quotient: 180 Smith-normal-form index comparisons; 25 singleton annihilators, 9 empty and 26 multiple-zero fixtures.
+Semaev degrees: 216 exact leading-coefficient comparisons, 27 collective degree/leading comparisons, 9 arity/curve checks.
+Clique reduction: 44 complete grid comparisons, 180224 grid assignments, 23 singleton and 4 empty instances.
+PASS: all exact component assertions.

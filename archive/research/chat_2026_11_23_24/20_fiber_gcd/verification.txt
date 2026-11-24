@@ -1,0 +1,7 @@
+Block remainders: 200 exact product-ring comparisons (117 nonempty tails).
+Masked gcd/moments: 821 scalar lanes, 188 mixed-degree fixtures, 144 whole-slot lanes, 56 repeated-root input lanes.
+Elliptic grid projections: 135 actual Semaev grids, 1097 slices (10 degree drops), 3752 literal address comparisons.
+Trace recovery: {'empty': 246, 'ok': 21, 'collision': 3}; 26 recovered addresses (with multiplicity across tests).
+Image certificates: 754 exact degree/reciprocal-matrix comparisons; 2 singular unpreconditioned matrices.
+Unit preconditioning: 100 exact diagonal pole certificates; 87 nonsingular random unit trials, 12 nonunit trials (not retried).
+Actual Semaev image certificates: 50 affine generators on 20 singleton grids, all separate-degree bounds verified (217 attempted grids).

@@ -1,0 +1,19 @@
+p= 7, curve a= 0, c= 3, m=2, targets= 6, guarded supports=    66, unguarded extra=     0, containing non-liftable leaf=     0
+p= 7, curve a= 0, c= 3, m=3, targets= 6, guarded supports=   666, unguarded extra=     0, containing non-liftable leaf=     0
+p= 7, curve a= 0, c= 3, m=4, targets= 6, guarded supports=  5802, unguarded extra=     0, containing non-liftable leaf=     0
+p=11, curve a= 1, c= 0, m=2, targets= 5, guarded supports=    50, unguarded extra=     0, containing non-liftable leaf=     0
+p=11, curve a= 1, c= 0, m=3, targets= 5, guarded supports=   386, unguarded extra=    42, containing non-liftable leaf=    25
+p=11, curve a= 1, c= 0, m=4, targets= 5, guarded supports=  2610, unguarded extra=   634, containing non-liftable leaf=   475
+p=13, curve a= 4, c= 1, m=2, targets= 9, guarded supports=   153, unguarded extra=     0, containing non-liftable leaf=     0
+p=13, curve a= 4, c= 1, m=3, targets= 9, guarded supports=  2457, unguarded extra=     0, containing non-liftable leaf=     0
+p=13, curve a= 4, c= 1, m=4, targets= 9, guarded supports= 35541, unguarded extra=     0, containing non-liftable leaf=     0
+p=17, curve a= 2, c= 0, m=2, targets= 8, guarded supports=   144, unguarded extra=     0, containing non-liftable leaf=     0
+p=17, curve a= 2, c= 0, m=3, targets= 8, guarded supports=  1904, unguarded extra=   288, containing non-liftable leaf=   144
+p=17, curve a= 2, c= 0, m=4, targets= 8, guarded supports= 23184, unguarded extra=  6816, containing non-liftable leaf=  4464
+p=19, curve a= 1, c= 0, m=2, targets= 9, guarded supports=   162, unguarded extra=     0, containing non-liftable leaf=     0
+p=19, curve a= 1, c= 0, m=3, targets= 9, guarded supports=  2498, unguarded extra=   146, containing non-liftable leaf=    81
+p=19, curve a= 1, c= 0, m=4, targets= 9, guarded supports= 33058, unguarded extra=  4326, containing non-liftable leaf=  2835
+Aggregate guarded support comparisons: 108681; unguarded extra supports: 12252; non-liftable extras: 8024.
+Ideal-coset enumeration: 343 bounded representatives, all 11 field values, 6 cosets per value; exact, disjoint, exhaustive.
+256-bit polynomial ring lambda=2: 40 divisible quartic lifts and 40 nonzero residuals rejected.
+384-bit polynomial ring lambda=1: 40 divisible quartic lifts and 40 nonzero residuals rejected.

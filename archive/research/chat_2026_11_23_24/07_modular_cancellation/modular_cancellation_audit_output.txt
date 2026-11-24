@@ -1,0 +1,18 @@
+Two-check exact bias identity: 180 histograms, 163,800 ordered check pairs
+Normalized chord identities: 12,028 complete field rows; 432 guarded chain counts; 2,497 histogram/syndrome/moment comparisons
+Probe p=101, N=107, m=3, w=4, n/law=16,000, lambda_nom=0.633663
+  Q: rank histogram [4, 0, 0, 0, 77, 2022, 9231, 4666]; two-check rate=0.4997245674; vertex rate=0.457562
+  R: rank histogram [3, 0, 0, 2, 87, 2000, 9234, 4674]; two-check rate=0.4997542534; vertex rate=0.457125
+  Q-R two-check gap=-0.0000296860, sample SE=0.0000826778, rigorous pointwise 95% half-width=0.00759202; vertex gap=+0.000437, 95% half-width=0.01518404
+Probe p=257, N=281, m=3, w=4, n/law=16,000, lambda_nom=0.249027
+  Q: rank histogram [0, 0, 0, 0, 0, 2, 70, 2182, 9190, 4556]; two-check rate=0.4999903178; vertex rate=0.307500
+  R: rank histogram [1, 0, 0, 0, 0, 2, 83, 2076, 9248, 4590]; two-check rate=0.4999591391; vertex rate=0.309625
+  Q-R two-check gap=+0.0000311787, sample SE=0.0000312497, rigorous pointwise 95% half-width=0.00759202; vertex gap=-0.002125, 95% half-width=0.01518404
+Probe p=509, N=503, m=3, w=6, n/law=16,000, lambda_nom=0.424361
+  Q: rank histogram [0, 0, 0, 0, 0, 4, 64, 2040, 9230, 4662]; two-check rate=0.4999905417; vertex rate=0.412375
+  R: rank histogram [0, 0, 0, 0, 0, 0, 70, 1973, 9244, 4713]; two-check rate=0.4999907330; vertex rate=0.408500
+  Q-R two-check gap=-0.0000001913, sample SE=0.0000001396, rigorous pointwise 95% half-width=0.00759202; vertex gap=+0.003875, 95% half-width=0.01518404
+Probe p=1021, N=1069, m=3, w=8, n/law=12,000, lambda_nom=0.501469
+  Q: rank histogram [0, 0, 0, 0, 0, 0, 0, 60, 1522, 6919, 3499]; two-check rate=0.4999976410; vertex rate=0.433000
+  R: rank histogram [0, 0, 0, 0, 0, 0, 0, 58, 1434, 7048, 3460]; two-check rate=0.4999976830; vertex rate=0.433083
+  Q-R two-check gap=-0.0000000421, sample SE=0.0000000376, rigorous pointwise 95% half-width=0.00876651; vertex gap=-0.000083, 95% half-width=0.01753302

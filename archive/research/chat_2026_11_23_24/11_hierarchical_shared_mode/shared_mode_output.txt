@@ -1,0 +1,3 @@
+40 random shared-mode joins: grid nodes, Newton pairs, max fanout, nonzero outputs: 468 1779 3 25
+12 actual hierarchical Cauchy joins: grid nodes, Newton pairs, max fanout, nonzero outputs: 410 2160 3 7
+All assertions passed.

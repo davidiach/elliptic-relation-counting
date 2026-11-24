@@ -1,0 +1,15 @@
+k=1: 2 source states, 2 used mode monomials, fixed weight 1, precision 2
+k=2: 4 source states, 5 used mode monomials, fixed weight 4, precision 2
+k=3: 8 source states, 16 used mode monomials, fixed weight 9, precision 8
+k=4: 16 source states, 55 used mode monomials, fixed weight 16, precision 10
+k=5: 32 source states, 196 used mode monomials, fixed weight 25, precision 32
+k=6: 64 source states, 714 used mode monomials, fixed weight 36, precision 38
+Moment indicator identities: 5460; fixed-budget comparisons: 53000; transformed Gram comparisons: 5460
+F_{2^2}: all tested off-coset inverse blocks nonsingular
+F_{2^3}: all tested off-coset inverse blocks nonsingular
+F_{2^4}: all tested off-coset inverse blocks nonsingular
+F_{2^5}: all tested off-coset inverse blocks nonsingular
+F_{2^6}: all tested off-coset inverse blocks nonsingular
+XOR crossing blocks: 965; field matrix entries: 36455
+Symbolic scaled-join summands: 65888; changed entry lifts: 6305; 200 exact joins
+All exact checks passed.
