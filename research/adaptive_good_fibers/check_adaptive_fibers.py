@@ -7,6 +7,12 @@ from itertools import product, combinations
 from functools import lru_cache
 from math import prod, comb
 from random import Random
+import subprocess
+import sys
+from unittest import TestCase
+
+if not __debug__:
+    raise RuntimeError("This verifier requires Python assertions.")
 
 
 def conv(a,b):
@@ -207,6 +213,36 @@ def mask_prefix_case(p,a,b,T,m,h,k,do_prefix):
     return root_checks,pattern_checks,steps,B
 
 
+def check_tuple_girth(r, blocks, t0):
+    for x, y in combinations(product(*blocks), 2):
+        if sum(x) % r == sum(y) % r:
+            distance = sum(a != b for a, b in zip(x, y))
+            assert 2*distance > t0, 'short equal-sum collision'
+
+
+def two_slot_collision_check():
+    r, t0 = 1009, 4
+    good = [(1, 5), (25, 125)]
+    bad = [(1, 5), (25, 29)]
+    x, y = (1, 29), (5, 25)
+    assert x in product(*bad) and y in product(*bad)
+    assert sum(x) % r == sum(y) % r and all(a != b for a, b in zip(x, y))
+    patterns = small_patterns(2, t0, (-2, -1, 1, 2))
+    for blocks, expected_lengths in [(good, set()), (bad, {4})]:
+        tables = fixed_tables(blocks)
+        found = set()
+        for pattern in patterns:
+            n = direct_pattern(r, blocks, pattern)
+            assert n == pattern_expect(r, tables, pattern)
+            if n:
+                found.add(len(pattern))
+        assert found == expected_lengths, 'incorrect signed collision lengths'
+    check_tuple_girth(r, good, t0)
+    with TestCase().assertRaisesRegex(AssertionError, '^short equal-sum collision$'):
+        check_tuple_girth(r, bad, t0)
+    print('Two-slot collision at sum 30 rejected. Only length-four signed patterns detected it. The collision-free control passed.')
+
+
 def shared_checks():
     rng=Random(1703);checks=patterns=0;girth_pass=0
     for r,m,h,k in [(5,5,3,1),(7,5,3,1),(11,6,4,1)]:
@@ -224,9 +260,7 @@ def shared_checks():
     for _ in range(100):
         B=[rng.sample(range(1,r),2) for i in range(3)];t0=2
         if any(direct_pattern(r,B,pat) for pat in small_patterns(3,t0,(-1,1))):continue
-        Xs=list(product(*B))
-        for X,Y in combinations(Xs,2):
-            if sum(X)%r==sum(Y)%r:assert 2*sum(a!=b for a,b in zip(X,Y))>t0
+        check_tuple_girth(r, B, t0)
         girth_pass+=1
     print(f'Direct shared-pin checks: {checks} integer energy entries, including strength four and empty blocks; {patterns} signed relation-pattern comparisons; {girth_pass} finite girth controls.')
 
@@ -272,6 +306,45 @@ def select_translations(r,B,fs,s,encoding=None):
     return T,a,initial,old,steps
 
 
+def checked_shift(r, blocks, witness, preset=()):
+    assert len(witness) == 2*len(blocks), 'wrong translation length'
+    assert all(type(x) is int and x in blocks[j//2] for j, x in enumerate(witness)), 'wrong translation block'
+    assert all(0 <= j < len(witness) and witness[j] == x for j, x in preset), 'wrong translation pin'
+    return sum(witness) % r
+
+
+def check_fixed_family(r, blocks, witnesses, shifts, size):
+    assert len(witnesses) == len(shifts) == size, 'wrong translation family size'
+    for witness, shift in zip(witnesses, shifts):
+        assert checked_shift(r, blocks, witness) == shift, 'wrong translation sum'
+
+
+def translation_witness_checks():
+    r = 11
+    original = [(1, 2), (7, 8), (4, 6)]
+    retained_blocks = [original[i] for i in (0, 2)]
+    witness = (1, 2, 4, 6)
+    shift = sum(witness) % r
+    pins = [(0, 1)]
+    assert checked_shift(r, retained_blocks, witness, pins) == shift
+    check_fixed_family(r, retained_blocks, [witness], [shift], 1)
+    for invalid, reason in [((shift,), 'wrong translation length'),
+                            ((1, 2, 7, 8, 4, 6), 'wrong translation length'),
+                            ((1, 2, 7, 6), 'wrong translation block'),
+                            ((4, 2, 1, 6), 'wrong translation block')]:
+        with TestCase().assertRaisesRegex(AssertionError, reason):
+            check_fixed_family(r, retained_blocks, [invalid], [shift], 1)
+        with TestCase().assertRaisesRegex(AssertionError, reason):
+            checked_shift(r, retained_blocks, invalid, pins)
+    with TestCase().assertRaisesRegex(AssertionError, 'wrong translation pin'):
+        checked_shift(r, retained_blocks, (2, 1, 4, 6), pins)
+    with TestCase().assertRaisesRegex(AssertionError, 'wrong translation sum'):
+        check_fixed_family(r, retained_blocks, [witness], [shift+1], 1)
+    with TestCase().assertRaisesRegex(AssertionError, 'wrong translation family size'):
+        check_fixed_family(r, retained_blocks, [], [shift], 1)
+    print('Translation validation rejected scalar sums, deleted or misplaced slots, a changed pin, an incorrect shift and an incomplete family.')
+
+
 def translation_checks():
     rng=Random(1804);steps=coverage=actual=0
     # Synthetic nonnegative penalties and retained subsets, with actual main-tuple translates.
@@ -284,6 +357,8 @@ def translation_checks():
         s=2
         while sum(r*(sum(f)/r)*((1+chi)*sum(f)/r)**(s-1) for f in fs)>=1:s+=1
         T,a,ini,end,n=select_translations(r,B,fs,s);steps+=n;coverage+=len(fs)*r
+        check_fixed_family(r, B, T, a, s)
+        assert all(any(f[(g-z)%r] < 1 for z in a) for f in fs for g in range(r))
         print(f'  Synthetic translation cover C{r}: {s} doubled-tuple shifts {a}; exact prefix identities {n}; all targets covered.')
     # Real affine-mask-generated tiny curve blocks, with relaxed finite thresholds.
     # The initial search for a strong h=2, k=1 fixture at T=8 did not find a
@@ -296,29 +371,48 @@ def translation_checks():
         q=Q((r-1)*T0,p)
         B=[[i for i in range(1,r) if (mask[G[i][1]%2][0]*G[i][0]+mask[G[i][1]%2][1])%p<T0] for mask in masks]
         arrays=phi_arrays(r,B,q,h,k);peak=max(max(v) for I,v in arrays);cut=peak*Q(99,100)
-        fs=[[x/cut for x in a] for I,a in arrays];D=counts(r,B);W=sum(D);chi=Q(r*sum(x*x for x in D)-W*W,W*W)
-        mean=[sum(f)/r for f in fs]
-        assert max((1+chi)*v for v in mean)<Q(4,5)
-        s=2
-        while sum(r*v*((1+chi)*v)**(s-1) for v in mean)>=1:s+=1
-        T,a,ini,end,n=select_translations(r,B,fs,s,lambda x:(G[x][0]<<4)|G[x][1]);steps+=n
-        for tt,z in zip(T,a):
-            v=None
-            for x in tt:v=add(v,G[x])
-            assert v==G[z]
-        holes=sum(all(f[(g-z)%r]>=1 for z in a) for f in fs for g in range(r));assert holes==0
-        for (I,A),f in zip(arrays,fs):
+        subset_steps = translations = proper_targets = 0
+        for I, values in arrays:
+            blocks = [B[i] for i in I]
+            f = [x/cut for x in values]
+            main_counts = counts(r, blocks)
+            mean = sum(f)/r
+            density_bound = Q(r*sum(x*x for x in main_counts), sum(main_counts)**2)
+            assert density_bound*mean < Q(4, 5)
+            s = 2
+            while r*mean*(density_bound*mean)**(s-1) >= 1:
+                s += 1
+            T, shifts, _, _, n = select_translations(
+                r, blocks, [f], s, lambda x: (G[x][0]<<4) | G[x][1])
+            check_fixed_family(r, [B[i] for i in I], T, shifts, s)
+            for witness, shift in zip(T, shifts):
+                point = None
+                for x in witness:
+                    point = add(point, G[x])
+                assert point == G[shift]
             for g in range(r):
-                j=next(j for j,z in enumerate(a) if f[(g-z)%r]<1)
-                # Relaxed finite threshold; verify each actual selected branch.
-                N=counts(r,[B[i] for i in I])[(g-a[j])%r];ct=0
-                for X in product(*(B[i] for i in I)):
-                    if sum(X)%r!=(g-a[j])%r:continue
-                    Y=None
-                    for x in X+T[j]:Y=add(Y,G[x])
-                    assert Y==G[g];ct+=1
-                assert ct==N;actual+=ct;coverage+=1
-        print(f'  Actual affine masks E/F13, order {r}, h={h}, k={k}, {len(arrays)} subsets: sizes {[len(F) for F in B]}, {s} known-incidence translations, {n} exact prefix identities (relaxed finite threshold).')
+                j = next(j for j, z in enumerate(shifts) if f[(g-z)%r] < 1)
+                target = (g-shifts[j]) % r
+                ct = 0
+                for X in product(*blocks):
+                    if sum(X)%r != target:
+                        continue
+                    point = None
+                    for x in X+T[j]:
+                        point = add(point, G[x])
+                    assert point == G[g]
+                    ct += 1
+                assert ct == main_counts[target] and ct > 0, 'empty or incomplete selected fiber'
+                actual += ct
+                coverage += 1
+            if len(I) < m:
+                proper_targets += r
+            subset_steps += n
+            translations += s
+        if k == 1:
+            assert proper_targets == 95, 'missing proper-subset cover checks'
+        steps += subset_steps
+        print(f'  Actual affine masks E/F13, order {r}, h={h}, k={k}, families={len(arrays)}, block sizes {[len(F) for F in B]}. Checked {translations} translations, {subset_steps} exact prefix identities and {proper_targets} proper-subset targets (relaxed finite threshold).')
     print(f'Translation selection total: {steps} exact prefix identities; {coverage} retained-subset/target cover checks; {actual} translated tuples verified by curve group law.')
 
 
@@ -366,7 +460,8 @@ def adaptive_checks():
                 g=rng.randrange(r);bad=set(rng.sample(range(r),2));req.append((g,[Q(3,2) if x in bad else Q(1,100) for x in range(r)]))
             if sum(Q(d[t],W)*f[(g-t)%r] for g,f in req for t in range(r))>=1:continue
             T,ini,end,n=adaptive_select(r,F,req,preset);steps+=n;queries+=len(req);cases+=1;maxpins=max(maxpins,len(preset))
-            assert all(f[(g-sum(T))%r]<1 for g,f in req)
+            shift = checked_shift(r, F, T, preset)
+            assert all(f[(g-shift)%r]<1 for g,f in req)
     # Exact count-expansion check for the adaptive mean at a specified target,
     # on actual small affine masks, using the shared-pin energy identity.
     G,add=curve(13,0,2);r=len(G);p=13;T0=3;m=4;h=2;k=0
@@ -382,7 +477,9 @@ def adaptive_checks():
         assert direct==expanded
         if direct/cut>=1:continue
         T,ini,end,n=adaptive_select(r,B,[(g,f)],encoding=lambda x:(G[x][0]<<4)|G[x][1]);steps+=n;queries+=1;cases+=1
-        a=sum(T)%r;N=counts(r,B)[(g-a)%r];ct=0
+        a = checked_shift(r, B, T)
+        assert f[(g-a)%r] == end < 1
+        N=counts(r,B)[(g-a)%r];ct=0
         for X in product(*B):
             if sum(X)%r!=(g-a)%r:continue
             S=None
@@ -415,10 +512,60 @@ def one_word(q,allowed):
     return X
 
 
+def check_rectangle_mass(num, den, independent):
+    assert den > 0 and 0 <= num <= den, 'invalid rectangle counts'
+    assert 2*num >= independent*den, 'rectangle probability below the lower bound'
+
+
+def check_score_pair(q, labels, left, right, X, Y):
+    scores = []
+    for allowed, word in [(left, X), (right, Y)]:
+        assert word is not None and len(word) == len(allowed) == len(labels), 'wrong witness length'
+        assert all(type(x) is int and 0 <= x < q and x in A
+                   for x, A in zip(word, allowed)), 'witness outside its allowed set'
+        assert sum(word) % q == 0, 'witness outside the parity code'
+        scores.append(sum(u[x] for u, x in zip(labels, word)) % q)
+    assert scores[0] != scores[1], 'equal modular scores'
+
+
+def cylinder_regressions():
+    # Include equality at the lower bound and a positive count just below it.
+    check_rectangle_mass(3, 12, Q(1, 2))
+    with TestCase().assertRaisesRegex(AssertionError, 'rectangle probability below the lower bound'):
+        check_rectangle_mass(2, 12, Q(1, 2))
+
+    q = 3
+    labels = [[0, 1, 2], [0, 0, 0]]
+    left, right = [{0}, {0}], [{1}, {2}]
+    X, Y = (0, 0), (1, 2)
+    check_score_pair(q, labels, left, right, X, Y)
+    for invalid, reason in [((0,), 'wrong witness length'),
+                            ((0, 0, 0), 'wrong witness length'),
+                            ((-3, 0), 'witness outside its allowed set'),
+                            ((2, 1), 'witness outside its allowed set')]:
+        with TestCase().assertRaisesRegex(AssertionError, reason):
+            check_score_pair(q, labels, left, right, invalid, Y)
+    with TestCase().assertRaisesRegex(AssertionError, 'witness outside the parity code'):
+        check_score_pair(q, labels, left, [{1}, {0}], X, (1, 0))
+    # These admissible parity words have integer scores 0 and 3, both zero in F3.
+    with TestCase().assertRaisesRegex(AssertionError, 'equal modular scores'):
+        check_score_pair(q, [range(q), range(q)], left, right, X, Y)
+    print('The rectangle boundary passed and a smaller positive mass failed. Malformed, off-code and equal-residue score witnesses were rejected.')
+
+
 def trimming_checks():
     rng=Random(1707);rects=modal=diffuse=0
     for h,q in [(16,3),(32,5),(64,7)]:
-        m=h+1;delta=Q(1,2**(h+11));U=set(range(q))
+        m=h+1;U=set(range(q))
+        tau = Q(1, 2**(h+14)*m*m)
+        delta = 8*tau
+        def weight(x):
+            return delta.denominator + int(x==0)
+        # Measure both possible one-coordinate distortions against the theorem's tolerance.
+        full = rectangle_count(q, [U]*m, weight)
+        for label in (0, 1):
+            pinned = rectangle_count(q, [{label}] + [U]*(m-1), weight)
+            assert abs(Q(q*pinned, full)-1) <= 8*tau, 'perturbation exceeds the theorem tolerance'
         for rep in range(40):
             p=rng.randrange(h//4+1);P=set(rng.sample(range(m),p))
             allowed=[{rng.randrange(q)} if i in P else set(U) for i in range(m)]
@@ -430,10 +577,7 @@ def trimming_checks():
             pins_only=[A if i in P else U for i,A in enumerate(allowed)]
             # Positive perturbation of the h-wise uniform parity law. Every
             # cylinder's relative probability changes by <=delta.
-            D=delta.denominator
-            weight=lambda x:D+int(x==0)
             den=rectangle_count(q,pins_only,weight);num=rectangle_count(q,allowed,weight)
-            assert den>0 and num>0
             # Check exact independent Bonferroni bracket and the claimed lower bound.
             es=[Q(q-len(allowed[i]),q) for i in range(m) if i not in P]
             s=[Q(1)]+[Q(0)]*len(es)
@@ -442,6 +586,7 @@ def trimming_checks():
             t=h-p if (h-p)%2 else h-p-1
             assert t>=1
             p0=prod(1-e for e in es)
+            check_rectangle_mass(num, den, p0)
             low=sum((-1)**j*s[j] for j in range(min(t,len(s)-1)+1))
             assert low<=p0 and low>=p0-(s[t+1] if t+1<len(s) else 0)
             assert low-3*delta*sum(s[:t+1])>0
@@ -457,7 +602,11 @@ def trimming_checks():
                     if E+loss>Q(h,16):continue
                     for x in rng.sample(range(q),k):labels[i][x]=x+1
                     E+=loss
-            if E==0:labels[0][0]=1;E=Q(1,q)
+            # Modal classes and the chosen differing labels are classes in F_q.
+            labels = [[v % q for v in row] for row in labels]
+            if all(len(set(row)) == 1 for row in labels):
+                labels[0][0] = 1
+                E = max(E, Q(1, q))
             # Actual modal class chosen independently per block, including ties.
             classes=[];nonmodal=[]
             for u in labels:
@@ -468,16 +617,18 @@ def trimming_checks():
             j=next(i for i,C in enumerate(classes) if len(C)<q)
             x=next(iter(classes[j]));y=next(v for v in U if labels[j][v]!=labels[j][x])
             A=[{min(C)} if i in bad else set(C) for i,C in enumerate(classes)]
-            A[j]={x};X=one_word(q,A);A[j]={y};Y=one_word(q,A)
-            assert X is not None and Y is not None and sum(X)%q==sum(Y)%q==0
-            assert sum(u[z] for u,z in zip(labels,X))!=sum(u[z] for u,z in zip(labels,Y));modal+=1
+            left, right = A.copy(), A.copy()
+            left[j], right[j] = {x}, {y}
+            X, Y = one_word(q, left), one_word(q, right)
+            check_score_pair(q, labels, left, right, X, Y)
+            modal += 1
     # h-wise uniform abstract arrays do not force a single score relation:
     # two independent parity constraints on a two-coordinate alphabet.
     q=3;m=4;alphabet=list(product(range(q),repeat=2));X=[]
     for prefix in product(alphabet,repeat=m-1):X.append(prefix+(((-sum(x for x,y in prefix))%q,(-sum(y for x,y in prefix))%q),))
     for I in combinations(range(m),m-1):assert len({tuple(z[i] for i in I) for z in X})==len(alphabet)**(m-1)
     assert all(sum(z[0] for z in x)%q==sum(z[1] for z in x)%q==0 for x in X)
-    print(f'Robust-cylinder controls: {rects} perturbed h-wise-uniform rectangles, {modal} distinct-score witness pairs ({diffuse} with diffuse blocks); retained two-constraint abstract OA negative control.')
+    print(f'All {rects} measured rectangle probabilities attained the lower bound or exceeded it. All {modal} admissible witness pairs had distinct scores in F_q ({diffuse} with diffuse blocks). The two-constraint OA control passed.')
 
 
 def score_moments(q,allowed,labels,weight=None):
@@ -556,7 +707,21 @@ def numeric_guards():
         print(f'  b={b}, m={m}, h={h}, k={k}, shift count {s}: conservative seed/cover guard {good}.')
 
 
+def optimized_mode_check():
+    # Import the file in a fresh optimized interpreter to exercise its startup guard.
+    result = subprocess.run([sys.executable, '-I', '-B', '-O', '-c',
+                             'import runpy, sys; runpy.run_path(sys.argv[1])', __file__],
+                            capture_output=True, text=True)
+    assert result.returncode != 0 and not result.stdout
+    assert result.stderr.splitlines()[-1] == 'RuntimeError: This verifier requires Python assertions.'
+    print('The verifier rejected optimized Python before producing output.')
+
+
 if __name__=='__main__':
+    optimized_mode_check()
+    two_slot_collision_check()
+    translation_witness_checks()
+    cylinder_regressions()
     shared_checks()
     mask_prefix_case(5,2,1,3,5,2,1,True)
     mask_prefix_case(7,0,3,4,6,3,1,False)
