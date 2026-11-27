@@ -151,8 +151,11 @@ def lattice_tests():
         A,u,lam=rows_for(r,D,kap,B,elliptic13() if r==13 else None)
         n=len(u);s=smith_normal_form(sp.Matrix(A),domain=sp.ZZ)
         assert [abs(int(s[i,i])) for i in range(n)]==[1]*(n-1)+[r]
-        targets=shift_support(r,B,2);bound=min(r,16*m+1)
-        assert len(targets)<=bound and all(min(q,r-q)<=8*m for q in targets)
+        short_targets = shift_support(r, B, 1)
+        assert short_targets == {q % r for q in range(-4*m, 4*m+1)}, f'C{r}: one-copy target set differs'
+        targets = shift_support(r, B, 2)
+        assert targets == {q % r for q in range(-8*m, 8*m+1)}, f'C{r}: two-copy target set differs'
+        bound = min(r, 16*m+1)
         fc,pc,W=pointwise_counts(r,B)
         print(f'r={r}, m={m}, D={D}, block sizes {[len(F) for F in B]}: {len(A)} genuine rows, rational rank {n}, modular rank {n-1}, selected lattice index {r}; individual targets {len(targets)}/{r} (bound {bound}); short fibers {fc}; pin counts {pc}.')
         if r in (1009,4093):assert 0<pc[0]<=pc[1]<r
