@@ -305,6 +305,10 @@ def main():
         print(f'  Short fibers {fibers}; pin counts {pins}; no-wrap {0<pins[0]<=pins[1]<r}.')
         for cpb in (1,2):
             S,miss,g,score=verify_completion(r,m,D,T,zeta,tau,B,basis,u,lam,start,cpb)
+            expect_recovery = cpb == 1 or r == 2039
+            assert (miss is not None) == expect_recovery, (
+                f'C{r}, copies={cpb}: expected recovery={expect_recovery}, missing residue={miss}'
+            )
             if miss is None:print(f'  Copies={cpb}: projection support {S}/{r}, missing-value branch correctly reports no missing value.')
             else:print(f'  Copies={cpb}: projection support {S}/{r}; missing {miss}; group fiber {g}; verified zero-value score {score}; full recovery.')
         if r==2039:assert 0<pins[0]<=pins[1]<r
@@ -313,4 +317,7 @@ def main():
     if len(sys.argv)>1:prior_check(sys.argv[1])
 
 
-if __name__=='__main__':main()
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Assertions required')
+    main()
