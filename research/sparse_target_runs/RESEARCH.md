@@ -100,6 +100,15 @@ witness the first block used $(43,34)$ for both parities before translation.
 The translated mask uses $(24,46)$ on even $y$ and $(22,4)$ on odd $y$.
 The verifier checks equality of the translated point set and the affine mask.
 
+### A second five-target witness
+
+On $y^2=x^3+x+46$ over $\mathbb F_{101}$, the group has order 109 and
+$P=(36,51)$. The five blocks have sizes $2,6,6,6,10$ and
+$\Phi=1.0211280659\ldots$. At $0,P,2P,3P,4P$ the raw rank is 25 and
+the pinned rank is 24 on 30 columns, giving nullity 6 at all five.
+Every other target has nullity 5, and the five matrices stacked have
+nullity 4. The fixture records the exact rational potential.
+
 ## Reproduction
 
 Run from the repository root with NumPy and python-flint installed.
