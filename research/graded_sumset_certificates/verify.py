@@ -191,6 +191,13 @@ def select(A,F,k,frame=None):
     return target[1:],T,budgets
 
 
+def check_hankel_witness(z, T, m, k, F):
+    assert len(z) == 2*k, 'returned Hankel witness has the wrong dimension'
+    lifted = (m % F.p,) + z
+    witness_rank = rank(hankel(matvec(T, lifted, F)), F)
+    assert witness_rank == k+1, f'returned Hankel witness has rank {witness_rank}, expected {k+1}'
+
+
 def random_matrix(d,F,rng,affine=False):
     while True:
         M=[[rng.randrange(F.Q) for j in range(d)] for i in range(d)]
@@ -219,6 +226,7 @@ def check_hidden():
                 A=[rng.sample(P,2*k+3)]+[rng.sample(P,3) for i in range(m-1)]
                 ans=select(A,F,k);assert ans is not None
                 z,T,B=ans;assert B==[1]*m
+                check_hankel_witness(z, T, m, k, F)
                 Ti=inverse(T,F);adjust+=Ti[0][k]==0
                 S={(0,)*(2*k)}
                 for a in A:S={vadd(x,y,F) for x in S for y in a}
@@ -243,12 +251,22 @@ def check_hidden():
     F=Field(31);k=3;M=random_matrix(7,F,rng,True);P=make_affine_curve(F,k,M)
     B=[vscale(vadd(P[i],P[i+1],F),F.inv(2),F) for i in range(0,10,2)]
     A=[P[:9],B];ans=select(A,F,k);assert ans and ans[2]==[1,2]
-    S={vadd(a,b,F) for a in A[0] for b in A[1]};assert ans[0] not in S
+    z,T,_=ans
+    check_hankel_witness(z, T, len(A), k, F)
+    S={vadd(a,b,F) for a in A[0] for b in A[1]};assert z not in S
     print(f'{checks} hidden-curve successes, {negative} honest failures, {exact} enumerated sumset points, {sampled} sampled rank bounds, {remote} sparse-span rank bounds')
     print(f'{adjust} affine-slice adjustments; one heterogeneous rank budget [1,2] passed')
 
 
 def trace(a,F):return F.sum(F.power(a,F.p**i) for i in range(F.s))
+
+
+def check_field_trace(F):
+    # Column i of multiplication by a contains the coefficients of a times basis[i].
+    basis = [F.p**i for i in range(F.s)]
+    for a in range(F.Q):
+        diagonal = [F.digits[F.mul(a, b)][i] for i, b in enumerate(basis)]
+        assert trace(a, F) == sum(diagonal) % F.p, f'field trace disagrees with multiplication matrix at {a}'
 
 
 def baseword(x,F):return sum((F.digits[a] for a in x),())
@@ -259,6 +277,7 @@ def check_norms():
     rng=Random(271126);count=0;ds=0;proj=0;char=0;balls=0
     # x^3+x+1 over F_5 and x^3+2 over F_7 are irreducible.
     for F,m in [(Field(5,(1,1,0)),2),(Field(7,(2,0,0)),3)]:
+        check_field_trace(F)
         n=(F.Q-1)//(F.p-1);k=2*m
         A=[[curve(t,k,F)[1:] for t in range(1,F.Q) if F.power(t,n)==c] for c in range(1,m+1)]
         assert all(len(a)==n for a in A)
@@ -278,14 +297,18 @@ def check_norms():
                 counts=[0]*F.p
                 for x in a:
                     y=trace(F.dot(x,u),F);assert y<F.p;counts[y]+=1
+                assert sum(c > 0 for c in counts) > 1
                 # Orthogonality: squared sum of all nontrivial base characters.
                 assert F.p*sum(z*z for z in counts)-n*n <= (F.p-1)*k*k*F.Q
                 char+=1
             for _ in range(8):
                 u=tuple(rng.randrange(F.Q) for i in range(k));assert any(u)
-                got={trace(F.dot(x,u),F) for x in a};assert all(t<F.p for t in got);proj+=1
+                got={trace(F.dot(x,u),F) for x in a}
+                assert len(got) > 1 and all(0 <= t < F.p for t in got)
+                proj+=1
         ans=select(A,F,m);assert ans is not None and ans[2]==[1]*m
         z,T,_=ans;assert z not in S
+        check_hankel_witness(z, T, len(A), m, F)
         print(f'p={F.p} s={F.s} m={m} n={n} full support={len(S)} hidden rank certificate passed')
     print(f'{count} exact retained-support points, {ds} distinct unordered doubles, {char} sampled character-count checks, {proj} sampled scalar projections')
     for p,d,m,t in [(2,5,2,1),(3,4,2,1),(3,3,2,2),(2,6,3,1)]:
@@ -394,6 +417,9 @@ def check_thick():
         X=list(product(range(p),repeat=d));missing=[i for i,x in enumerate(X) if sum(a>=L for a in x)>h]
         threshold=(L+1)**(h+1);vs=[]
         for x in X:vs.append(prod(a-j for a in x[:h+1] for j in range(L))%p)
+        support = {i for i, value in enumerate(vs) if value}
+        assert support.issubset(missing), 'separator is nonzero inside the thick ball'
+        assert support, 'separator vanishes everywhere'
         assert shift_rank(vs,X,p)==threshold
         if p**len(missing)<=100:
             vectors=product(range(p),repeat=len(missing))
