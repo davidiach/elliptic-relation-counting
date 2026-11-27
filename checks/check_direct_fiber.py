@@ -5,6 +5,7 @@ from itertools import combinations_with_replacement, product
 from random import Random
 
 import numpy as np
+from flint import arb, ctx
 
 from check_address_parity import character, transform
 from check_strided_isolation import finite_laws
@@ -76,6 +77,32 @@ def check_masks():
               f"four-point relation; maximum good energy/size^2 {largest}.")
 
 
+def first_character_phase_order(rows, targets, n):
+    # Each column gives the integer coefficients of a sum of n-th roots of unity.
+    coefficients = np.zeros((n, rows.shape[1]), dtype=np.int64)
+    coefficients[targets] = rows
+    reflected = coefficients[(-np.arange(n)) % n]
+    real = np.all(coefficients == reflected, axis=0)
+    imaginary = np.all(coefficients == -reflected, axis=0)
+    assert np.all(real ^ imaginary), "expected each fixture column on one axis"
+
+    # Conjugation fixes a real column and negates an imaginary column. Certify
+    # the remaining sign, then order the four rays from -pi/2 through +pi.
+    with ctx.workprec(96):
+        sines, cosines = zip(*[(arb(2*g)/n).sin_cos_pi() for g in targets])
+        rays = []
+        for is_real, column in zip(real, rows.T.tolist()):
+            coordinates = cosines if is_real else sines
+            value = sum(c * x for c, x in zip(column, coordinates) if c)
+            assert value > 0 or value < 0, "phase sign is unresolved"
+            if is_real:
+                rays.append(1 if value > 0 else 3)
+            else:
+                rays.append(2 if value > 0 else 0)
+    # The numeric challenge is the secondary key for every exact phase tie.
+    return sorted(range(len(rays)), key=lambda challenge: (rays[challenge], challenge))
+
+
 def check_fourier():
     probe = Probe(1031, 9, (0, 2))
     rng = Random(13041)
@@ -141,7 +168,7 @@ def check_fourier():
           f"{width} challenges; exact signed-row Gram matrix checked.")
     print(f"  One-sample complex mean squared error: uniform {uniform_mse:.6f}, "
           f"optimal challenge-dependent importance proposal {optimal_mse:.6f}.")
-    order = np.argsort(np.angle(all_terms[:, 1]), kind="stable")
+    order = first_character_phase_order(rows, targets, n)
     singletons = rows[np.array(multiplicities) == 1][:, order]
     prefixes = np.cumsum(singletons, axis=1)
     prefixes = np.column_stack((np.zeros(len(singletons), dtype=int), prefixes))

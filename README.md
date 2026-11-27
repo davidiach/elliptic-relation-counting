@@ -8,6 +8,8 @@ How much information about a discrete logarithm survives when many elliptic-curv
 
 Summing relations can lose rank. The fixed-shift paper assigns a polynomial weight to each relation and proves that the resulting matrix has a nonzero determinant. For a nonsingular elliptic curve over a prime field of characteristic greater than three whose rational points form a group of prime order, a random evaluation yields a discrete-log algorithm with expected bit time $2^{O(b/(\log_2 b)^{1/4})}$, where $b$ is the field bit length. The bound assumes the closed Boolean tensor-contraction theorem of Liu, Zhang and Ren. Finding suitable evaluations deterministically within the same time bound for every input remains open. [Theorem and assumptions](MAIN_RESULT.md) · [Source](research/fixed_shift_gram/manuscript.typ) · [Open questions](OPEN_PROBLEMS.md)
 
+Akshima et al. previously obtained the same conditional expected-time scale using randomly hashed factor bases. The fixed-shift paper uses a deterministic relation system and a single shared evaluation, with $O(b)$ expected fair bits for the whole computation. [Akshima et al., v0.2](https://github.com/bochum-crypto/subexponential-ecdl/blob/1ee44e562b1b9a50ea339f3b8f81112b5a24b96f/subexponential-ecdl.pdf) · [Weighted-count audit](COMPARATIVE_AUDIT.md#weighted-counts-against-the-closed-theorem)
+
 ### Earlier paper and version history
 
 **[Counting relations in independently hashed elliptic-curve slots](paper.pdf)** · Version 4 · 24 November 2026

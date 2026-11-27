@@ -2,7 +2,7 @@ p=101, N=103, width 4, two free-bit runs: checked all 32 fixed patterns and 102 
   Maximum single-slot normalized even moments for h=1,2,3: 1.287606, 4.725145, 30.313535.
   Checked 3 incomplete hybrid sums by direct Fourier completion.
   Interpolated the singleton indicator on 39 represented group sums with 39 consecutive modes.
-  Checked all 64 challenges for four selected modes on 64 legal addresses and all 16 Gram entries.
+  Checked all 64 challenges for modes [0, 9, 52, 61] on 64 legal addresses and all 16 Gram entries.
   Guarded singleton T=[1]G, normalized witness coefficient 0.198987, Gram upper bound 0.251219.
 p=101, composite N=114: checked 361 restricted Gram entries on 10 of 64 tuples with six quotient classes.
   Five modes collapsed to two representatives on all 64 challenges; verified norm contraction.
