@@ -3,6 +3,7 @@ Optional: supply PR36's check_joint_shadows.py to test the previous selector.
 """
 from itertools import product, combinations
 from math import gcd, prod, comb
+from numbers import Integral
 from random import Random
 from collections import Counter
 from pathlib import Path
@@ -43,6 +44,8 @@ def peel(A,qs,e):
         for _ in range(e):
             B=set(basis_indices(R,q))
             R=[a for i,a in enumerate(R) if i not in B]
+            if not R:
+                return [[a] for a in A]
     if not R:return [[a] for a in A]
     pivots=[]
     for q in qs:
@@ -225,6 +228,44 @@ def ranks_and_moments():
     print(f'Moment/rank bounds: {comp} exhaustive tiny input arrays; {tests-144} moment inequalities; 144 exact balanced-cut rank checks; largest raw fiber {maxfiber}.')
 
 
+def exhausted_peel_test():
+    from unittest.mock import Mock, patch
+    sample = [(1,), (2,)]
+    calls = Mock(wraps=basis_indices)
+    with patch.dict(globals(), basis_indices=calls):
+        partition = peel(sample, (3, 5), 10_000)
+    assert partition == [[a] for a in sample]
+    calls.assert_called_once_with(sample, 3)
+    print('Peeling two words with budget 10000 stopped after one basis scan and returned two singletons.')
+
+
+def check_three_list_absence(z, ps, lists):
+    assert z is not None and len(z) == len(ps), 'selector point has the wrong dimension'
+    assert all(isinstance(x, Integral) and 0 <= x < p for x, p in zip(z, ps)), 'invalid selector coordinate'
+    # Enumerate pair sums once and test their complements against the third list.
+    pairs = {tuple((x+y) % p for x, y, p in zip(a, b, ps)) for a in lists[0] for b in lists[1]}
+    assert all(tuple((x-y) % p for x, y, p in zip(z, c, ps)) not in pairs for c in lists[2]), 'selector point is represented'
+
+
+def invalid_point_tests():
+    ps = (3, 5)
+    lists = [[(0, 0)]] * 3
+    check_three_list_absence((1, 0), ps, lists)
+    for z, reason in (((), 'selector point has the wrong dimension'),
+                      ((1, 0, 0), 'selector point has the wrong dimension'),
+                      ((-1, 0), 'invalid selector coordinate'),
+                      ((1, 5), 'invalid selector coordinate'),
+                      ((0.5, 0), 'invalid selector coordinate'),
+                      ((0, 0), 'selector point is represented')):
+        try:
+            check_three_list_absence(z, ps, lists)
+        except AssertionError as error:
+            assert str(error) == reason, error
+        else:
+            raise AssertionError(f'accepted invalid selector point {z}')
+    print('Selector validation rejected two wrong dimensions, three invalid coordinates and one represented point.')
+
+
 def selector_test(path):
     spec=importlib.util.spec_from_file_location('joint',path);j=importlib.util.module_from_spec(spec);spec.loader.exec_module(j)
     d=10;ps=(17,)*d;qs=(3,5);m=3
@@ -240,13 +281,11 @@ def selector_test(path):
     assert all(set(P[0])==set(core) for P in partitions)
     branches=[j.branch(B,ps,qs,C) for B in product(*partitions)]
     z,phi,cap,peak,checks=j.choose(branches,ps)
-    assert z is not None
-    # Independent exact pair-sum membership check without enumerating 227^3 tuples.
-    P={tuple((x+y)%p for x,y,p in zip(a,b,ps)) for a in lists[0] for b in lists[1]}
-    assert all(tuple((x-y)%p for x,y,p in zip(z,c,ps)) not in P for c in lists[2])
+    check_three_list_absence(z, ps, lists)
     print(f'Automatic PR36-style rescue: list sizes {list(map(len,lists))}, product {prod(map(len,lists))}; whole-list ranks {[len(j.shadow(lists,q,d)[2]) for q in qs]}, recovered core ranks {[len(j.shadow([P[0] for P in partitions],q,d)[2]) for q in qs]}; {len(branches)} branches; potential {phi}; cap {cap}, peak {peak}, {checks} averaging checks; absent {z}.')
 
 
 if __name__=='__main__':
     planted_tests();closure_tests();generator_tests();ranks_and_moments()
+    exhausted_peel_test();invalid_point_tests()
     if len(sys.argv)>1:selector_test(Path(sys.argv[1]))

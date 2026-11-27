@@ -85,7 +85,7 @@ Intersect the no-repeat event, the closure-cover event and the all-cut moment ev
 
 ## 5. Exact finite verification
 
-Run `python -B check_stratification.py` (Python 3.10+, SymPy). To additionally exercise the earlier prefix selector, pass the path to `check_joint_shadows.py` from PR #36 (`37171fc06945267461e345895b9550860dd15b67`). That optional test imports the earlier selector rather than duplicating it. The independent membership test uses explicit pair sums; no contraction or cryptographic instance is used.
+From this directory, run `python -B check_stratification.py ../multicharacteristic_shadows/check_joint_shadows.py` with Python 3.10+ and SymPy to reproduce `verification.txt`. The recorded run imports the selector fixed in PR #36 (`bd3fe80c1099958dd9c8f82dc1f8afd42679ed33`). The verifier checks that the returned point has one canonical integer coordinate per modulus and independently certifies its absence using explicit pair sums. Regression fixtures reject malformed and represented points and confirm that peeling stops as soon as the last word is removed, even with a budget of 10,000. Running without the selector path skips the integration fixture.
 
 The transcript records 80 seeded affine-core partition recoveries, 120 lattice-generator HNF agreements, 140,217 exhaustive small random-array configurations in nine moment inequalities, and 144 balanced-cut rank inequalities. A concrete finite obstruction uses the identical two lists A in Z/11 Z times Z/13 Z, with the eleven words
 

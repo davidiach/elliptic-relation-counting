@@ -2,4 +2,6 @@ Planted affine cores: 80 exact partitions, 13019 input words; 80 complete core r
 Two-class obstruction: 2047 lattice closures checked against HNF, 1166186 modular membership checks; 1023 bipartitions plus unpartitioned list; minimum union 73/143. True sumset 60/143 with 121 ordered choices; 100 partition-pair sumsets full.
 Lattice generators: 120 exact HNF agreements, 1182 input words; largest selected difference count 9.
 Moment/rank bounds: 140217 exhaustive tiny input arrays; 9 moment inequalities; 144 exact balanced-cut rank checks; largest raw fiber 7.
+Peeling two words with budget 10000 stopped after one basis scan and returned two singletons.
+Selector validation rejected two wrong dimensions, three invalid coordinates and one represented point.
 Automatic PR36-style rescue: list sizes [227, 227, 227], product 11697083; whole-list ranks [8, 8], recovered core ranks [2, 2]; 27 branches; potential 13425773/2015993900449; cap 53, peak 27, 270 averaging checks; absent (16, 4, 0, 0, 0, 0, 0, 0, 0, 0).
