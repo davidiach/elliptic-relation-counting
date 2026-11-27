@@ -67,6 +67,12 @@ def check_triangular():
            (7,3,True),(8,4,True)]
     for n,w,unit in cases:
         X=balanced(n,w,unit)
+        limit = 1 if unit else w
+        expected = {
+            row for row in product(range(-limit, limit + 1), repeat=n)
+            if sum(row) == 0 and sum(map(abs, row)) <= 2*w
+        }
+        assert len(X) == len(expected) and set(X) == expected, f'Incorrect balanced alphabet for n={n}, w={w}, unit={unit}'
         degree=0; count=0
         for j,a in enumerate(X):
             k,f=separator(a,w,unit)
@@ -129,6 +135,12 @@ def check_alternants():
         assert sum(v==1 for v in C.values())==factorial(n)//2
         es=tuple(range(n))
         expected=prod(j-i for i in range(n) for j in range(i+1,n))
+        labels = list(range(-k, k+1))
+        for row, sign in C.items():
+            assert sorted(row) == labels, f'Invalid alternant support at k={k}'
+            # The Vandermonde product changes sign at every transposition.
+            vandermonde = prod(y-x for x, y in combinations(row, 2))
+            assert vandermonde == sign * expected, f'Incorrect alternant sign at k={k} for {row}'
         assert alt_moment(k,es)==moment(C,es)==expected!=0
         checked=0
         if k<=2:
@@ -213,6 +225,13 @@ def check_cycles():
     print('r | rows per tagged family | reduced dimension | deficient/full ranks | rational certificates')
     for p in (5,7,11,13,17,31,101):
         E=cycle(p);F=list(map(neg,E));d=p-1;u=tuple(range(1,p))
+        expected_entries = [-1] + [0]*(p-2) + [1]
+        for row in E+F:
+            full_edge = (-sum(row),) + row
+            assert sorted(full_edge) == expected_entries, f'Invalid signed-unit edge for p={p}'
+        # Every retained label is active and the two blocks are chosen independently.
+        max_edge_weight = max(sum(map(abs, row)) for row in E)
+        assert 2*max_edge_weight == 4, f'Incorrect two-block active weight for p={p}'
         assert len(set(E+F))==2*p
         assert sparse_moments(E,2)==sparse_moments(F,2)
         # Both orientations of each edge are distinct, cubic orientation witness.
@@ -239,6 +258,7 @@ def check_cycles():
             h=[a+b for a in E for b in F]+[a+b for a in F for b in E]
             j=[a+b for a in E for b in E]+[a+b for a in F for b in F]
             assert len(set(h+j))==4*p*p
+            assert max(sum(map(abs, row)) for row in h+j) == 4
             assert all(dot(x,z)%p==0 for x in h)
             assert all(dot(x,z)%p!=0 for x in j)
             x=[a+(0,1) for a in h]+[a+(1,1) for a in h]
