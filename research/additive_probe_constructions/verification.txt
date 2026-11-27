@@ -1,0 +1,33 @@
+EXACT-MINIMUM RADIX PROBES
+r=5 sizes=(2, 2) K=4 witness arrays=24 exhaustive=True
+r=11 sizes=(2, 3) K=5 witness arrays=720 exhaustive=True
+r=11 sizes=(3, 3) K=6 witness arrays=60480 exhaustive=True
+r=293 sizes=(2, 2, 2) K=5 witness arrays=6720 exhaustive=True
+r=175633 sizes=(2, 2, 2, 2) K=6 witness arrays=1000 exhaustive=False
+68944 witness arrays ruled out exactly.
+
+SIDON GRAPH PROBES
+r=5 sizes=(2, 2) K=4 max hit=3 checks=14400
+r=7 sizes=(2, 3) K=5 max hit=3 checks=250
+r=11 sizes=(3, 4) K=8 max hit=4 checks=250
+r=31 sizes=(6, 6) K=17 max hit=5 checks=250
+r=101 sizes=(12, 12) K=47 max hit=4 checks=250
+15400 exact cover exclusions.
+
+CYCLE-PACKING COVER LOWER BOUND
+r=31 m=2 n=20 k=3 threshold=19 extra/pair=3 cover size=42
+r=101 m=2 n=50 k=4 threshold=24 extra/pair=9 cover size=108
+r=101 m=3 n=20 k=5 threshold=19 extra/pair=2 cover size=60
+r=1009 m=4 n=30 k=7 threshold=28 extra/pair=2 cover size=121
+80 complete constructed covers; 902 disjoint cycles.
+
+GROWTH PROBES AND GROUPING
+28 exact plane-basis constructions.
+r=101 sizes=(4, 4, 4) h=6 growth product=6859 probes=25 missing=24
+r=1009 sizes=(6, 6, 6, 6) h=4 growth product=194481 probes=125 missing=124
+r=2003 sizes=(4, 4, 4) h=6 growth product=6859 probes=73 missing=72
+grouping rescue: r=101 ungrouped=83521 grouped=1089
+honest fast-growth obstruction: r=101, product=729, |S|=648, |2S|=10201
+3 growth certificates, one grouping rescue and one obstruction.
+
+All checks passed.
