@@ -6,6 +6,8 @@
 
 The manuscript also reduces the number of terms in LZR’s deterministic partial expansion. The residual contraction still gives the uniform deterministic time bound $2^{O(b/\sqrt{\log_2\log_2 b})}$ under LZR’s Appendix D assumptions. [Expansion proof](PARTIAL_EXPANSION.md) · [Bit complexity](COMPLEXITY_AUDIT.md) · [Open questions](OPEN_PROBLEMS.md)
 
+**Research follow-up under review.** PR 4 proposes shorter fixed-shift relations, a system of conditional means with full rank after normalization and consistency constraints, and adaptive prime-adic rank certificates. Selecting enough displacements deterministically within the target time bound remains open. [Follow-up note and finite checks](https://github.com/davidiach/elliptic-relation-counting/pull/4)
+
 ## Earlier paper and version history
 
 *Counting relations in independently hashed elliptic-curve slots* gives numerical bounds under a separate finite-packet assumption.

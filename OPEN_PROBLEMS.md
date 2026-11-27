@@ -15,3 +15,5 @@ The deterministic list in [Deterministic points](DETERMINISTIC_POINTS.md) reduce
 * **Source assurance.** Obtain the accepted Lean export and matching environment, rebuild it, trace the main theorem's imports, and inspect a transitive axiom report. Compare each field of the assumed Appendix D interface to a proved machine-level upstream theorem. Public statement digests make future comparison possible.
 
 A uniform positive intermediate saving $\delta<1/4$ follows if an instance-specific list is constructible and testable in $2^{O(b/(\log b)^\delta)}$ time. A coefficient improvement in an expected pilot calculation or a lower cost for partial expansion alone does not imply this result.
+
+The follow-up under review in PR 4 proposes homogeneous conditional-mean equations that eliminate the unknown displacement logarithms. Deterministically selecting enough displacements remains open. Its adaptive prime-adic tests also identify cases where rank extraction stalls. [Follow-up proofs and finite checks](https://github.com/davidiach/elliptic-relation-counting/pull/4)
