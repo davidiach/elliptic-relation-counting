@@ -11,6 +11,9 @@
 9. **Check arbitrary candidates directly.** A nonzero specialization of the signed one-pin polynomial admits deterministic bitwise extraction by additivity; zero is inconclusive. The full-rank matrix removes the need to pick fresh challenges for adaptive candidates. Verified the algebra and cancellation controls independently in checks/check_fixed_shift_gram.py.
 10. **Attempt uniform specialization.** All-ones fails on a real fixture. Distinct binary weights isolate a basis but give degree exponential in $\beta$. Full grid enumeration and a literal extension large enough in *degree* for a transcendental-style test both exceed the bound. A short universal advice list exists by counting; its construction is uncharged only in the explicitly nonuniform statement. No uniform intermediate log-power saving is claimed.
 11. **Audit the public Lean trail.** Located the main machine statement, its premise definition, the proved fixed-shift and filter entries, the proved conditional terminal result and separately open machine lemmas. Recorded digests of the displayed code. Accepted proof bodies and an axiom report were unavailable; separate public declaration templates do not decide their dependency closures.
+12. **Extract the explicit subsystem by evaluations.** The all-ones projection kills each balanced shift incidence vector and preserves every consistency row with nonzero row sum. Ordinary Vandermonde interpolation gives actual evaluations containing all these rows. On the order-19 fixture the projected rank is seven and the stack has rank eight.
+13. **Test sparse polynomial consequences.** Constructed a prime-field list by deterministic primitive-root construction, integer slope separation and geometric progressions. Every surviving direction has no nonzero sparse consequence at the stated degree and term bounds. Determinant nonvanishing alone does not supply such a consequence.
+14. **Use every ordered edge of the shift graph.** The dense one-per-block sumset gives a quantitative lower bound on violations. Comparing half-tuple differences characterizes the tables constant on each full fiber. A zero-sum argument then shows that near-complete subfamilies can retain the full row span and lose their entire evaluated contribution at a prescribed list. The exact complete-neighbor-fiber identity is the information this counterexample discards. Proofs and resource accounting are in DETERMINISTIC_POINTS.md.
 
 ## Reproduction
 
@@ -20,6 +23,7 @@ Run the following from the repository root using its Python dependencies. The fi
 
 ~~~sh
 python -B checks/check_fixed_shift_gram.py
+python -B checks/check_fixed_shift_points.py
 python -B checks/inspect_fixed_shift_formal.py
 python -B archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit.py
 python -B archive/research/chat_2026_11_23_24/verify_archive.py

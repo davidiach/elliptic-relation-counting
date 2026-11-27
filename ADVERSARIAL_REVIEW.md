@@ -22,3 +22,11 @@ This is a second, skeptical pass by the research author, backed by independent f
 | The new result improves the uniform deterministic ECDLP exponent. | **Objection sustained.** Neither deterministic point selection nor a faster residual contraction was proved. The strongest end-to-end result here is randomness-efficient Las Vegas on the prime-order intersection. |
 
 The finite verifier cross-checks matrix products computed by two different algorithms, including signs, same-slot pins, $0^0$, unused rows and singular matrices. It also checks Cauchy–Binet against individual minors and integer digit reconstruction before taking a field residue. It does not implement the asymptotic tensor contractor.
+
+## Review of the deterministic list
+
+* Distinct integer slopes can collide after exponentiation modulo $r-1$. The test bounds the largest projected exponent strictly below $r-1$ and charges a deterministic primitive root under the closed theorem. Sparse interpolation on arbitrary finite-field generators would not suffice.
+* Projecting with $\mathbf 1$ scales every consistency row by $1-2m$. Interpolation requires that scalar to be nonzero in the group-order field, and $C$ distinct base points. Both restrictions are explicit.
+* Different residual vectors can require different sparse consequences and different points. A single public list handles the whole class. The absence of any suitable consequence on some curve has not been ruled out. A rank-deficient computed stack certifies only its own kernel.
+* The density proof counts distinct ordered rows separately for each mixed group fiber. Two half-tuple comparisons can land at the same fiber, which accounts for the factor of two in the bound. The zero-sum obstruction changes the row family after the points are given. Applying it to the complete elliptic family would reverse the quantifiers.
+* An ordinary dense-shift bottleneck persists even for a symbolically spanning row family: finite-field sums can cancel on all listed points. The order-19 elliptic example exercises both explicit interpolation and complementary singular evaluations. The dense cyclic fixture and the elementary zero-sum control test separate statements.
