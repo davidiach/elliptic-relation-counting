@@ -246,36 +246,119 @@ def true_shift_rank(blocks, cpb, r):
     return sp.rank
 
 
+def order19_blocks():
+    cycle = curve_cycle(13, 4, 1)
+    assert len(cycle) == 19
+    return [
+        [i for i, (x, y) in enumerate(cycle[1:], 1) if (a * x + b) % 13 < 3]
+        for a, b in ((1, 0), (4, 1))
+    ]
+
+
+def weighted_fibers(blocks, weights, r):
+    """Enumerate doubled tuples in two labeled blocks, grouped by their sum."""
+    left, right = blocks
+    size = len(left) + len(right)
+    fibers = [[] for _ in range(r)]
+    for i, j, k, l in product(range(len(left)), range(len(left)), range(len(right)), range(len(right))):
+        value = (left[i] + left[j] + right[k] + right[l]) % r
+        weight = weights[0][i] * weights[1][j] * weights[2][k] * weights[3][l] % r
+        counts = [0] * size
+        for column in (i, j, len(left) + k, len(left) + l):
+            counts[column] += 1
+        fibers[value].append((counts, weight))
+    return fibers
+
+
+def dot(left, right):
+    return sum(x * y for x, y in zip(left, right, strict=True))
+
+
+def projected_fiber(fiber, u):
+    """Return sums of w, wc, ws, wcs and ws² for the tuple score s = c·u."""
+    mass = score_sum = square_sum = 0
+    counts_sum = [0] * len(u)
+    scored_counts = [0] * len(u)
+    for counts, weight in fiber:
+        score = dot(counts, u)
+        mass += weight
+        score_sum += weight * score
+        square_sum += weight * score**2
+        for j, count in enumerate(counts):
+            counts_sum[j] += weight * count
+            scored_counts[j] += weight * count * score
+    return mass, counts_sum, score_sum, scored_counts, square_sum
+
+
 def verify_decoupled_evaluator():
-    """Cross-check group-algebra evaluator against direct pair enumeration on C_5 and E(F_13)."""
     rng = random.Random(42)
-    r = 5
-    blks = [[0, 1], [0, 2]]
-    wx = [[rng.randrange(r) for _ in blks[l // 2]] for l in range(4)]
-    wy = [[rng.randrange(r) for _ in blks[l // 2]] for l in range(4)]
-    fast = shift_gram_from_moments(
-        slot_factored_moments(blks, 2, wx, r),
-        slot_factored_moments(blks, 2, wy, r),
-        r,
-    )
-    brute = [[0] * 4 for _ in range(4)]
-    tuples_x, tuples_y = [], []
-    for idx in product(range(2), repeat=4):
-        v = (blks[0][idx[0]] + blks[0][idx[1]] + blks[1][idx[2]] + blks[1][idx[3]]) % r
-        cols = (idx[0], idx[1], 2 + idx[2], 2 + idx[3])
-        cnt = [cols.count(j) for j in range(4)]
-        tuples_x.append((v, cnt, wx[0][idx[0]] * wx[1][idx[1]] * wx[2][idx[2]] * wx[3][idx[3]] % r))
-        tuples_y.append((v, cnt, wy[0][idx[0]] * wy[1][idx[1]] * wy[2][idx[2]] * wy[3][idx[3]] % r))
-    for vx, cx, w_x in tuples_x:
-        for vy, cy, w_y in tuples_y:
-            if (vy - vx) % r == 1:
-                w = (w_x * w_y) % r
-                a = [b - c for c, b in zip(cx, cy)]
-                for j in range(4):
-                    for k in range(4):
-                        brute[j][k] = (brute[j][k] + w * a[j] * a[k]) % r
-    assert fast == brute
-    print("Decoupled fiber-moment evaluator: exact match against brute-force pairs on C_5 (decoupled random weights).")
+    for r, blocks in ((5, [[0, 1], [0, 2]]), (19, order19_blocks())):
+        wx = [[rng.randrange(r) for _ in block] for block in blocks for _ in range(2)]
+        wy = [[rng.randrange(r) for _ in block] for block in blocks for _ in range(2)]
+        matrix = shift_gram_from_moments(
+            slot_factored_moments(blocks, 2, wx, r), slot_factored_moments(blocks, 2, wy, r), r
+        )
+        xs, ys = weighted_fibers(blocks, wx, r), weighted_fibers(blocks, wy, r)
+        size = sum(map(len, blocks))
+        direct = [[0] * size for _ in range(size)]
+        for g in range(r):
+            for (cx, weight_x), (cy, weight_y) in product(xs[g], ys[(g + 1) % r]):
+                row = [y - x for x, y in zip(cx, cy)]
+                weight = weight_x * weight_y
+                for j, v in enumerate(row):
+                    for k, w in enumerate(row):
+                        direct[j][k] += weight * v * w
+        assert matrix == [[v % r for v in row] for row in direct]
+        if r == 5:
+            print("Decoupled fiber-moment evaluator: exact match against brute-force pairs on C_5 (decoupled random weights).")
+            continue
+
+        # Contract the enumerated fibers along u before multiplying the two sides.
+        u = [rng.randrange(r) for _ in range(size)]
+        action = [0] * size
+        quadratic = 0
+        for g in range(r):
+            mx, nx, sx, gx, tx = projected_fiber(xs[g], u)
+            my, ny, sy, gy, ty = projected_fiber(ys[(g + 1) % r], u)
+            for j in range(size):
+                action[j] += mx * gy[j] + my * gx[j] - sx * ny[j] - sy * nx[j]
+            quadratic += mx * ty + my * tx - 2 * sx * sy
+        matrix_action = [dot(row, u) % r for row in matrix]
+        assert [v % r for v in action] == matrix_action
+        assert quadratic % r == dot(u, matrix_action) % r
+        print("Order-19 curve over F_13: weighted Gram matrix matches direct pairs; "
+              "Bu and u^TBu match independent fiber sums.")
+
+
+def verify_weighted_two_pin_recovery():
+    r = 7
+    blocks = [[1, 2, 3], [1, 2, 4], [1, 3, 5]]
+    weights = [[3, 2, 3], [1, 5, 4], [5, 3, 5]]
+    size = sum(map(len, blocks))
+    witness = blocks[0].index(2)  # coordinate of e_(0,2)
+    free = slot_factored_moments(blocks, 1, weights, r)
+    pinned = []
+    for i, row in enumerate(weights):
+        for j in range(len(row)):
+            restricted = list(weights)
+            restricted[i] = [w if k == j else 0 for k, w in enumerate(row)]
+            pinned.append(slot_factored_moments(blocks, 1, restricted, r))
+
+    source, target, both = (RowSpace(r, size) for _ in range(3))
+    for moment in pinned:
+        for space, left, right in ((source, moment, free), (target, free, moment)):
+            matrix = shift_gram_from_moments(left, right, r)
+            assert all(row[witness] == 0 for row in matrix)
+            space.add_matrix(matrix)
+    detects_witness = False
+    for left, right in product(pinned, repeat=2):
+        matrix = shift_gram_from_moments(left, right, r)
+        detects_witness |= any(row[witness] != 0 for row in matrix)
+        both.add_matrix(matrix)
+    assert source.rank == target.rank == 5
+    assert both.rank == size - len(blocks) == 6 and detects_witness
+    print("Weighted F_7 fixture: source-only and target-only pins each have rank 5/6 "
+          "and kill e_(0,2); two pins detect it and have rank 6/6.")
 
 
 def verify_theorem_a1_lucas_collapse():
@@ -545,8 +628,7 @@ def verify_unweighted_4m_lt_r_controls():
     print(f"Unweighted exhaustive control (r=11, m=2, cpb=2, 4m=8<11): 0/185 identical (F,F) K1/K2 drops ({dense11} dense).")
 
     # 3. Elliptic curve controls: E(F_13) r=19 (all-ones drop 7/8 -> K1=8/8), PR#4 order-37 (12/12), E(F_251) r=257 (50/50)
-    cyc13 = curve_cycle(13, 4, 1)
-    blks19 = [[cyc13.index(pt) for pt in cyc13[1:] if (a * pt[0] + b) % 13 < 3] for a, b in ((1, 0), (4, 1))]
+    blks19 = order19_blocks()
     ones19 = [[1] * len(blks19[l // 2]) for l in range(4)]
     m19 = slot_factored_moments(blks19, 2, ones19, 19)
     sp19_all1 = RowSpace(19, 10); sp19_all1.add_matrix(shift_gram_from_moments(m19, m19, 19))
@@ -651,6 +733,7 @@ if __name__ == "__main__":
     if not __debug__:
         raise SystemExit("Run without Python optimization so assertions execute.")
     verify_decoupled_evaluator()
+    verify_weighted_two_pin_recovery()
     verify_theorem_a1_lucas_collapse()
     verify_theorem_a2_small_m_binomial()
     verify_proposition_a3_forest_theorem()
