@@ -1,0 +1,9 @@
+r=101, m=2, block sizes=[43, 43], D=16, zeta=17, tau=2: 170 genuine rows, rational rank 84, modular rank 83, selected index 101.
+  Min summed circular width over 10200 nonzero (h,k): 150 at (1, 99); individual-block minima [55, 60]; 2R=300 >= r. Largest quotient class fractions ['19/43', '19/43'].
+  Short tuple counts (14, 23); one-pin masses (735, 855); no-wrap False. Joint doubled-tuple coverage checked.
+r=257, m=3, block sizes=[31, 31, 31], D=8, zeta=9, tau=3: 183 genuine rows, rational rank 90, modular rank 89, selected index 257.
+  Min summed circular width over 66048 nonzero (h,k): 558 at (85, 1); individual-block minima [143, 142, 156]; 2R=1116 >= r. Largest quotient class fractions ['11/31', '11/31', '11/31'].
+  Short tuple counts (80, 152); one-pin masses (107032, 116071); no-wrap False. Joint doubled-tuple coverage checked.
+r=1009, m=2, block sizes=[77, 77], D=32, zeta=33, tau=2: 306 genuine rows, rational rank 152, modular rank 151, selected index 1009.
+  Min summed circular width over 1018080 nonzero (h,k): 1421 at (63, 126); individual-block minima [503, 512]; 2R=2842 >= r. Largest quotient class fractions ['5/11', '5/11'].
+  Short tuple counts (4, 10); one-pin masses (385, 574); no-wrap True. Joint doubled-tuple coverage checked.
