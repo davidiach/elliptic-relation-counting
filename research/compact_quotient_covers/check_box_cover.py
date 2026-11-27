@@ -494,9 +494,25 @@ def main():
     assert digital_fixture(4093,2,64)
     if len(sys.argv)>1:
         spec=importlib.util.spec_from_file_location('prior',sys.argv[1]);mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
-        ok=0
-        for args in [(101,2,0,17),(257,3,0,22),(1009,2,0,17),(101,2,8,17),(257,3,12,22),(1009,2,10,17)]:ok+=joint_case(mod,*args)
-        assert ok>=3
-        print(f'Joint-cover completion passed {ok}/6 dictionary and augmented controls; unsuccessful probes are retained.')
+        # The bounded search misses only the augmented order-257 fixture.
+        controls = [
+            (101, 2, 0, 17, True),
+            (257, 3, 0, 22, True),
+            (1009, 2, 0, 17, True),
+            (101, 2, 8, 17, True),
+            (257, 3, 12, 22, False),
+            (1009, 2, 10, 17, True),
+        ]
+        ok = 0
+        for r, m, extra, seed, expect_success in controls:
+            success = joint_case(mod, r, m, extra, seed)
+            assert success == expect_success, (
+                f'C{r}, extra={extra}, seed={seed}: expected success={expect_success}, got {success}'
+            )
+            ok += success
+        print(f'Joint-cover completion passed {ok}/{len(controls)} dictionary and augmented controls; unsuccessful probes are retained.')
 
-if __name__=='__main__':main()
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Assertions required')
+    main()
