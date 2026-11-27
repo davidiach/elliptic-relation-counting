@@ -1,5 +1,7 @@
 $ python3 -B research/deterministic_endgame_barriers/check_pinning_barriers.py
 Decoupled fiber-moment evaluator: exact match against brute-force pairs on C_5 (decoupled random weights).
+Order-19 curve over F_13: weighted Gram matrix matches direct pairs; Bu and u^TBu match independent fiber sums.
+Weighted F_7 fixture: source-only and target-only pins each have rank 5/6 and kill e_(0,2); two pins detect it and have rank 6/6.
 Theorem A1 (Lucas collapse, r=11, m=10, F={1,2}): all1=K1=K2=K4=0 mod 11; rank(E)=rank(E+K2)=20/22.
 Theorem A1 (Lucas collapse, r=13, m=12, F={1,2}): all1=K1=K2=K4=0 mod 13; rank(E)=rank(E+K2)=24/26.
 Theorem A2 (r=19, m=3, d=6): binomial residue sums vanish through p=0; all 7 target decompositions verified; rank(E)=22/23.

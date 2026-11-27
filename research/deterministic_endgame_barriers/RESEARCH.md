@@ -62,7 +62,11 @@ $$K_{A,B} u = 0 \iff \begin{cases} v(t)^\top u + (u_{i_2, B} - u_{i_1, A})\, n(t
 
 The number of pairs with the same $t=P+A-B$ depends on the differences in the blocks. An interval of $n$ elements has $n-1$ ordered pairs with difference one, even when $n\ll\sqrt r$. In the separate $r=7,m=3$ sweep, the scalar projection $\lambda^\top K_1$ fell below $N_0-m$ on 66 dense triples. The full one-pin stack retained the individual shift rank on all 969 triples.
 
+A weighted example separates one pin from two. Over $\mathbb F_7$, take blocks $(1,2,3),(1,2,4),(1,3,5)$ with respective weights $(3,2,3),(1,5,4),(5,3,5)$ and one occurrence per block on each side. The source-only and target-only one-pin stacks each have rank 5 and annihilate the coordinate vector for label 2 in the first block. The stack with one pin on each side detects this vector and has full shift rank 6.
+
 ### Decoupled $B_{\mathrm{shift}}(x, y)$ Evaluations (Regime A-I)
+On the order-19 curve over $\mathbb F_{13}$, the verifier compares the weighted shift Gram matrix with direct enumeration of all ordered shift pairs. It also evaluates $Bu$ and $u^\top B u$ from separate source and target fiber sums.
+
 Splitting the single radix digit straddling the $X/Y$ cut yields $s_X + s_Y \le s + 1 = O(1)$ independent variables and drops $M_C$ (applied externally, with $E$ stacked directly). Against fiber-respecting dense $m = 2$ adversaries at $r = 7$, fixed coupled 2-point lists (`A1_coupled_L2`) drop to rank 4/6 on `[[1,2,3,4],[1,2,3,4]]` and 1-sided zero-projection 2-point lists (`A3_zero_L2`) drop to 5/6 on `[[1,3,5,6],[1,3,5,6]]`, while decoupled asymmetric 2-point lists (`A2_asym_L2`) hit full rank 6/6 on both. Constructing a worst-case deterministic hitting list of size $2^{O(b/L^{1/4})}$ remains open.
 
 ---
