@@ -1,0 +1,11 @@
+{
+ "description": "Reduced-floor affine seed on a prime-order curve over F_1009 (least q with q^m>=16r; LZR's 4096m floor dropped). Found by a pseudorandom search; the verifier checks every stated property exactly.",
+ "p": 1009,
+ "a": 1,
+ "b": 14,
+ "r": 1013,
+ "threshold": 128,
+ "seed": [[[244, 219], [282, 90]], [[33, 208], [201, 597]]],
+ "sizes": [135, 122],
+ "phi": "73534299043569810885/70388536778533371904"
+}
