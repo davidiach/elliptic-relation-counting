@@ -12,6 +12,14 @@ from flint import nmod_mat
 from research.deterministic_endgame_barriers.check_pinning_barriers import curve_cycle
 
 
+# The three claims in SIX_TARGETS.md, keyed by group order and generator.
+SIX_TARGET_CHECKS = {
+    (109, (4, 66)): 'contrast_counts',
+    (271, (40, 87)): 'contrast_counts',
+    (67, (18, 9)): 'every_pair_nullity',
+}
+
+
 def affine_block(cycle, p, threshold, maps):
     logs = []
     for k, (x, y) in enumerate(cycle[1:], 1):
@@ -61,22 +69,28 @@ def rank(matrix, r):
     return nmod_mat(matrix.tolist(), r).rank()
 
 
-def verify_two_point_contrast(source, blocks, shift, matrices, step, expected_counts):
+def verify_two_point_contrast(source, blocks, shift, matrices, run_logs, expected_counts):
     """Check the antisymmetric mode on two tagged translates of the same pair."""
     r = len(matrices)
     pair = source[0]
     assert len(pair) == 2 and np.array_equal(pair, source[1])
+    assert len(expected_counts) == len(run_logs), "expected one completion count per run target"
     v = np.zeros(sum(map(len, blocks)), dtype=np.int64)
     for x, sign in zip(pair, (1, -1)):
         v[np.flatnonzero(blocks[0] == (x+shift) % r).item()] = sign
         v[2 + np.flatnonzero(blocks[1] == x).item()] = -sign
+    first = dict(zip((blocks[0] - shift) % r, v[:2]))
+    second = dict(zip(blocks[1], -v[2:4]))
+    assert set(first.values()) == {-1, 1}, "expected a nonconstant signed contrast"
+    assert first == second, "corresponding labels must have opposite signs"
+    assert not np.any(v[4:]), "contrast must vanish outside the two copies"
     # Removing two pins from the four slots on the duplicate blocks leaves
     # two copies of the half-list source[1:]. Use integer cyclic convolution.
     remaining = sum_counts([*source[1:], *source[1:]], r)
     weights = np.roll(remaining, (2*shift + int(pair.sum())) % r)
     for weight, matrix in zip(weights, matrices):
         assert np.array_equal(matrix @ v, 2*weight*v)
-    at_run = [int(weights[k*step % r]) for k in range(len(expected_counts))]
+    at_run = [int(weights[t]) for t in run_logs]
     assert at_run == expected_counts and all(w % r == 0 for w in at_run)
     print(f'shared contrast completion counts={at_run}')
 
@@ -139,8 +153,13 @@ def verify(case):
     n = sum(sizes)
     assert sizes == case['sizes']
     length = len(case['nullities'])
+    required = SIX_TARGET_CHECKS.get((r, tuple(case['P'])))
+    if required is not None:
+        assert length == 6, "expected all six run targets"
+        assert required in case, f"missing required {required} check"
     step = cycle.index(tuple(case['P']))
     assert step and 1 <= length < r
+    run_logs = [k * step % r for k in range(length)]
     # Translating one block by H shifts every full target by 2H.
     # The new run has midpoint (length-1)P/2, so 4H=(length-1)P.
     shift = (length-1)*step*pow(4,-1,r) % r
@@ -177,8 +196,7 @@ def verify(case):
     exceptional = [t for t,v in enumerate(nullities) if v>m]
     assert exceptional == case['exceptional_logs']
     sampled = []
-    for k in range(length):
-        t = k*step % r
+    for k, t in enumerate(run_logs):
         direct, total, missing = enumerate_target(t,buckets,logs,sizes,r)
         assert np.array_equal(matrices[t],direct)
         assert nullities[t] == case['nullities'][k] > m
@@ -192,16 +210,23 @@ def verify(case):
     assert next_nullity == case['next_nullity']
     print(f'exceptional logs={exceptional}, joint nullity={joint}, nullity at {length}P={next_nullity}')
     if 'contrast_counts' in case:
-        verify_two_point_contrast(source, blocks, shift, matrices, step, case['contrast_counts'])
+        verify_two_point_contrast(source, blocks, shift, matrices, run_logs, case['contrast_counts'])
     if 'every_pair_nullity' in case:
         pair_nullity = case['every_pair_nullity']
-        for a, b in combinations(matrices, 2):
-            assert n-rank(np.vstack((a,b)),r) == pair_nullity
-        print(f'all {r*(r-1)//2} distinct target pairs have joint nullity {pair_nullity}')
+        checked = set()
+        for a, b in combinations(range(r), 2):
+            assert 0 <= a < b < r and (a, b) not in checked, "invalid or duplicate target pair"
+            assert n - rank(np.vstack((matrices[a], matrices[b])), r) == pair_nullity
+            checked.add((a, b))
+        assert len(checked) == r*(r-1)//2, "incomplete target-pair check"
+        print(f'all {len(checked)} distinct target pairs have joint nullity {pair_nullity}')
 
 
 if __name__ == '__main__':
     if not __debug__:
         raise RuntimeError('Run with assertions enabled.')
-    for fixture in json.loads(Path(__file__).with_name('witnesses.json').read_text()):
+    fixtures = json.loads(Path(__file__).with_name('witnesses.json').read_text())
+    present = {(case['r'], tuple(case['P'])) for case in fixtures}
+    assert SIX_TARGET_CHECKS.keys() <= present, "missing required six-target fixture"
+    for fixture in fixtures:
         verify(fixture)
