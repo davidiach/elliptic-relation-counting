@@ -1,0 +1,4 @@
+C101: genuine rational basis 42/42, modular rank 41/42.
+Recovered integer solution range [-3, 1]; sum of block widths 12.
+Identifiable individual doubled-pair displacements: 49/101.
+Two common-third target triples certified all 101 targets against one identity triple.

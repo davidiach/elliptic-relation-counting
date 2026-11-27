@@ -1,0 +1,5 @@
+C5 minimum mass by odd order: [-267, -6, 36]
+C5 fifth-order paths for all targets, chi-square and min mass: (Fraction(1, 24), 36)
+C11 first-order paths for all targets, chi-square and min mass: (Fraction(50, 6561), 16081)
+C11 one omitted block, rank/dimension, retained/full product: (15, 24, Fraction(64, 81), Fraction(64, 729))
+C11 known-shift rank, dimension, certified target values: (15, 16, 11)
