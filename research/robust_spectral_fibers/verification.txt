@@ -1,0 +1,6 @@
+Circular variance: 540 certified phase/variance bounds; 7560 independent cut trials.
+Proof constants: seven exact conservative remainder and perturbation guards.
+Wide-lift separation: r=1009, m=1024, h=256, 1010 projective slopes; modal deficit >= 2044/3, trimmed-width lower bound 1916 > 1009, variance 2048/3054243 < 8/1875. Certified positive degree-four independent minorant.
+Exact two-constraint OA: m=514, h=256, 129 paired even-moment identities through degree 256; V=1028/27 above the exclusion threshold. Abstract conditional array, not a full curve fiber.
+Approximate pair-law perturbations: 6752 exact marginal tests; 64 even-moment error bounds.
+Conditional spectral mixing: 72 synthetic laws, 576 exact cyclotomic Parseval identities, 1296 target/arity pairs, 11808 certified bias inequalities, 13104 exact translation-failure bounds, 1286 target/arity pairs with atom bound <1/2; 5884 heterogeneous pin-copy bias checks. Affine-only rho=1 negative control retained.
