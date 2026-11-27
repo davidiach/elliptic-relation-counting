@@ -6,6 +6,9 @@ checked against direct enumeration on small curves and against the
 independent construction in research/sparse_target_runs.
 """
 
+if not __debug__:
+    raise RuntimeError("This verifier requires Python assertions.")
+
 import json
 from fractions import Fraction
 from itertools import product
@@ -212,8 +215,8 @@ def check_curve_1009():
     assert len(full) == r
 
 
-def check_sparse_witnesses():
-    cases = json.loads((HERE.parent / "sparse_target_runs" / "witnesses.json").read_text())
+def check_sparse_witnesses(witness_file=HERE.parent / "sparse_target_runs" / "witnesses.json"):
+    cases = json.loads(witness_file.read_text(encoding="utf-8"))
     for case in cases:
         p, a, b, r = (case[k] for k in ("p", "a", "b", "r"))
         cycle = curve_cycle(p, a, b)
@@ -222,10 +225,14 @@ def check_sparse_witnesses():
         reference = pinned_matrices(blocks, r)
         for t in (0, 1):
             assert np.array_equal(P.integer(t)[0] % r, reference(t) % r)
-        X = sum(P.nullity(t) > P.m for t in range(r))
-        assert X == len(case["exceptional_logs"])
-        print(f"r={r}, m={P.m}, sizes={P.sizes}: H_1(0) fails (nullity {P.nullity(0)}); "
-              f"exceptional targets X={X}, N_0={P.n0}")
+        exceptional = [t for t in range(r) if P.nullity(t) > P.m]
+        recorded = case["exceptional_logs"]
+        assert all(type(t) is int for t in recorded) and sorted(recorded) == exceptional, (
+            f"r={r}, m={P.m}: exceptional targets differ: recorded {recorded}, computed {exceptional}"
+        )
+        status = "fails" if 0 in exceptional else "holds"
+        print(f"r={r}, m={P.m}, sizes={P.sizes}: H_1(0) {status} (nullity {P.nullity(0)}); "
+              f"exceptional targets X={len(exceptional)} {exceptional}, N_0={P.n0}")
         for x in (2, r - 3):
             recovery_report(P, x, [0], f"Q=[{x}]P")
 

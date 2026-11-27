@@ -93,7 +93,13 @@ def compare_checks(names, reference_dir=None):
             print(f"{name}: FAILED with exit status {run.returncode}.", flush=True)
             failures.append(name)
             continue
-        expected = (ROOT / "evidence" / (name+".txt")).read_text(encoding="utf-8-sig")
+        transcript = ROOT / "evidence" / (name + ".txt")
+        try:
+            expected = transcript.read_text(encoding="utf-8-sig")
+        except (OSError, UnicodeError) as error:
+            print(f"{name}: FAILED to read {transcript.name}: {error}", flush=True)
+            failures.append(name)
+            continue
         if expected.splitlines() != run.stdout.splitlines():
             print(f"{name}: computed output DIFFERED from the recorded evidence.", flush=True)
             failures.append(name)

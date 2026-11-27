@@ -3,22 +3,22 @@ p=41, r=47, m=3, sizes=[2, 3, 3]: entry formula equals direct enumeration at all
 p=1009, r=1013, m=2, q=128, T=128, sizes=[135, 122], Phi=1.044691 < 64/57, half-sum support 1013/1013
   all-target scan: nullity histogram {2: 1011, 3: 2}; H_1(t) fails at 2 targets [642, 965].
   single-target recovery, Q=[r-3]P: explicit rank 256/259; explicit rows plus M_t have rank 259 for 1013/1013 targets; solving at t=0 returns log Q=1010.
-r=223, m=5, sizes=[2, 8, 8, 8, 10]: H_1(0) fails (nullity 6); exceptional targets X=4, N_0=36
+r=223, m=5, sizes=[2, 8, 8, 8, 10]: H_1(0) fails (nullity 6); exceptional targets X=4 [0, 17, 120, 137], N_0=36
   Q=[2]P: explicit rank 34/38; explicit rows plus M_t have rank 38 for 1/1 targets; solving at t=0 returns log Q=2.
   Q=[220]P: explicit rank 34/38; explicit rows plus M_t have rank 38 for 1/1 targets; solving at t=0 returns log Q=220.
-r=67, m=4, sizes=[2, 10, 10, 10]: H_1(0) fails (nullity 5); exceptional targets X=5, N_0=32
+r=67, m=4, sizes=[2, 10, 10, 10]: H_1(0) fails (nullity 5); exceptional targets X=5 [0, 20, 29, 49, 58], N_0=32
   Q=[2]P: explicit rank 34/34; explicit rows plus M_t have rank 34 for 1/1 targets; solving at t=0 returns log Q=2.
   Q=[64]P: explicit rank 34/34; explicit rows plus M_t have rank 34 for 1/1 targets; solving at t=0 returns log Q=64.
-r=109, m=5, sizes=[2, 6, 6, 6, 10]: H_1(0) fails (nullity 6); exceptional targets X=5, N_0=30
+r=109, m=5, sizes=[2, 6, 6, 6, 10]: H_1(0) fails (nullity 6); exceptional targets X=5 [0, 10, 20, 30, 40], N_0=30
   Q=[2]P: explicit rank 30/32; explicit rows plus M_t have rank 32 for 1/1 targets; solving at t=0 returns log Q=2.
   Q=[106]P: explicit rank 30/32; explicit rows plus M_t have rank 32 for 1/1 targets; solving at t=0 returns log Q=106.
-r=67, m=4, sizes=[2, 10, 10, 10]: H_1(0) fails (nullity 5); exceptional targets X=6, N_0=32
+r=67, m=4, sizes=[2, 10, 10, 10]: H_1(0) fails (nullity 5); exceptional targets X=6 [0, 21, 22, 43, 44, 66], N_0=32
   Q=[2]P: explicit rank 34/34; explicit rows plus M_t have rank 34 for 1/1 targets; solving at t=0 returns log Q=2.
   Q=[64]P: explicit rank 34/34; explicit rows plus M_t have rank 34 for 1/1 targets; solving at t=0 returns log Q=64.
-r=109, m=6, sizes=[2, 2, 4, 6, 8, 8]: H_1(0) fails (nullity 7); exceptional targets X=12, N_0=30
+r=109, m=6, sizes=[2, 2, 4, 6, 8, 8]: H_1(0) fails (nullity 7); exceptional targets X=12 [0, 11, 20, 23, 33, 40, 60, 67, 77, 80, 89, 100], N_0=30
   Q=[2]P: explicit rank 26/32; explicit rows plus M_t have rank 32 for 1/1 targets; solving at t=0 returns log Q=2.
   Q=[106]P: explicit rank 26/32; explicit rows plus M_t have rank 32 for 1/1 targets; solving at t=0 returns log Q=106.
-r=271, m=7, sizes=[2, 2, 4, 6, 6, 6, 8]: H_1(0) fails (nullity 8); exceptional targets X=12, N_0=34
+r=271, m=7, sizes=[2, 2, 4, 6, 6, 6, 8]: H_1(0) fails (nullity 8); exceptional targets X=12 [0, 29, 58, 86, 103, 105, 122, 150, 179, 208, 236, 243], N_0=34
   Q=[2]P: explicit rank 35/36; explicit rows plus M_t have rank 36 for 1/1 targets; solving at t=0 returns log Q=2.
   Q=[268]P: explicit rank 35/36; explicit rows plus M_t have rank 36 for 1/1 targets; solving at t=0 returns log Q=268.
 digit family r=1087, m=2, n=17: column (m-1,j) first used at t=D^(m-1) j-1 for every j; H_1(t) fails at all 1087 targets; single-slot sumset covers 289/1087 < 7r/8.
