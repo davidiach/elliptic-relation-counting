@@ -215,7 +215,7 @@ def curve_fixture():
     V=H.T@A;R=mass[0]*V-mass[:,None]*V[0]
     assert all(T) and min(mass)>0 and max(mass)<r
     assert rank(A,r,D)==D and rank(R,r,D)==D-1 and vv==1 and adaptive(A,r)==D
-    print(f'Curve E/F5, y^2=x^3+2x+1, order 7: {len(A)} actual group-law relations, fiber counts {min(map(len,T))}..{max(map(len(T)))}, pin masses {min(mass)}..{max(mass)}, Gram rank {rank(Gram,r,D)}/{D}, adaptive rank {D}/{D}.')
+    print(f'Curve E/F5, y^2=x^3+2x+1, order 7: {len(A)} actual group-law relations, fiber counts {min(map(len,T))}..{max(map(len,T))}, pin masses {min(mass)}..{max(mass)}, Gram rank {rank(Gram,r,D)}/{D}, adaptive rank {D}/{D}.')
 
 
 if __name__=='__main__':
