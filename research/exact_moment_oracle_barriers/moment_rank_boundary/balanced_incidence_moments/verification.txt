@@ -1,0 +1,55 @@
+BALANCED BLOCK TRIANGULAR SEPARATORS
+n | w | unit | points | max degree | exact triangular zeros
+2 | 1 | 0 | 3 | 3 | 3
+3 | 1 | 0 | 7 | 3 | 21
+5 | 1 | 0 | 21 | 3 | 210
+4 | 2 | 0 | 55 | 6 | 1485
+6 | 2 | 0 | 271 | 6 | 36585
+5 | 3 | 0 | 471 | 10 | 110685
+4 | 4 | 0 | 309 | 14 | 47586
+5 | 2 | 1 | 51 | 6 | 1275
+7 | 3 | 1 | 393 | 9 | 77028
+8 | 4 | 1 | 1107 | 12 | 612171
+887049 exact triangular zero checks.
+
+NORMALIZED VANDERMONDE TRADES
+k | coordinates | mass | first moment degree | rows | exhaustive low-degree moments
+1 | 3 | 1 | 3 | 6 | 10
+2 | 5 | 3 | 10 | 120 | 2002
+3 | 7 | 6 | 21 | 5040 | 813
+2825 zero alternant moments checked.
+w | general lower degree | general upper degree | signed-unit degree
+1 | 3 | 3 | 3
+2 | 6 | 6 | 6
+3 | 10 | 10 | 9
+4 | 13 | 14 | 12
+5 | 16 | 18 | 15
+6 | 21 | 22 | 18
+7 | 24 | 26 | 21
+8 | 27 | 30 | 24
+9 | 30 | 34 | 27
+10 | 36 | 38 | 30
+11 | 39 | 42 | 33
+12 | 42 | 46 | 36
+13 | 45 | 50 | 39
+14 | 48 | 54 | 42
+15 | 55 | 58 | 45
+16 | 58 | 62 | 48
+17 | 61 | 66 | 51
+18 | 64 | 70 | 54
+19 | 67 | 74 | 57
+20 | 70 | 78 | 60
+Two triangle factors: all degree <=5 moments zero, degree-6 witness = 4.
+
+SIGNED-UNIT WEIGHT-FOUR MODULAR RANK TRADES
+r | rows per tagged family | reduced dimension | deficient/full ranks | rational certificates
+5 | 100 | 10 | 9/10 | mod 1009
+7 | 196 | 14 | 13/14 | mod 1009
+11 | 484 | 22 | 21/22 | mod 1009
+13 | 676 | 26 | 25/26 | mod 1009
+17 | 1156 | 34 | 33/34 | mod 1009
+31 | 3844 | 62 | 61/62 | mod 1009
+101 | 40804 | 202 | 201/202 | mod 1009
+7 rank fixtures; complete tagged moment tables checked for r=5,7,11.
+
+All checks passed.
