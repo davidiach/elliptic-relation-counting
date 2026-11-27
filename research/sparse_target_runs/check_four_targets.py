@@ -139,6 +139,10 @@ def verify(case):
 
     matrix = pinned_matrices(blocks,r)
     nullities = [n-rank(matrix(t),r) for t in range(r)]
+    run_logs = {k * step % r for k in range(length)}
+    for t, value in enumerate(nullities):
+        if t not in run_logs:
+            assert value == m, ("ordinary target nullity", t, value, m)
     exceptional = [t for t,v in enumerate(nullities) if v>m]
     assert exceptional == case['exceptional_logs']
     sampled = []
