@@ -30,8 +30,7 @@
   #set par(justify: false)
   #text(size: 21pt, weight: "semibold")[#title]
   #v(0.5em)
-  #text(size: 12pt)[Elliptic Relation Counting Project] \
-  #text(size: 10pt)[#project-credit] \
+  #text(size: 11pt)[Technical report of the Elliptic Relation Counting Project] \
   #text(size: 10pt)[27 November 2026]
 ]
 #v(0.55em)
@@ -42,14 +41,15 @@
 
 #block(inset: (x: 6mm))[
   #set text(size: 10pt)
-  *Contributions and verification.* AI agents helped develop the mathematical arguments and the computational experiments. Codex revised the manuscript and reran the checks for the fixed-shift matrices, the deterministic evaluation lists, and the neighboring fibers. Their counts and ranks matched the recorded outputs. A separate run reproduced every entry in @pinned. These checks cover finite examples. Independent human verification of the general proof of Theorem 1 remains undocumented.
+  *Project credit.* #project-credit. \
+  *AI use and verification.* AI agents helped develop the mathematical arguments and experiments. OpenAI Codex edited the manuscript and reproduced the finite counts and ranks for the fixed-shift matrices, evaluation lists, and neighboring fibers, as well as every entry in @pinned. @evidence gives the data and programs. The project has no recorded independent human verification of the general proof of Theorem 1.
 ]
 
 = Introduction
 
 A fixed displacement gives a linear equation for each pair of representations of neighboring group elements. Liu, Zhang and Ren (LZR) show that a factor base covering the group supplies enough such equations to determine every label @lzr. There can be far more equations than unknowns. One way to compress the system is to sum the outer products of its rows. Over a finite field this can destroy a direction even when the original rows span the entire space. On a six-column cyclic example, the ordinary Gram matrix has rank five.
 
-We attach a weight to each relation using the addresses of its slots. The ordered addresses distinguish a basis term in the determinant, while the digits of each address factor into weights that the counting algorithm can evaluate. This yields a certificate for the entire table at one specialization. It uses the closed contraction bound in LZR, Theorem 2.2. LZR's uniform deterministic end-to-end bound, $2^(O(b slash sqrt(log_2 log_2 b)))$, also invokes the terminal-preserving construction from Appendix D of the upstream work @upstream. Our earlier counting paper treats independently hashed slots under a different finite-packet assumption @prior.
+We attach a weight to each relation using the addresses of its slots. The ordered addresses distinguish a basis term in the determinant, while the digits of each address factor into weights that the counting algorithm can evaluate. This yields a certificate for the entire table at one specialization. It uses the closed contraction bound in LZR, Theorem 2.2. LZR's uniform deterministic end-to-end bound, $2^(O(b slash sqrt(log_2 log_2 b)))$, also invokes the terminal-preserving construction from Appendix D of the upstream work @upstream. The earlier project report treats independently hashed slots under a different finite-packet assumption @prior.
 
 *Theorem 1 (fixed-shift certificate).* Let $p>3$ be prime and let $G=E(bb(F)_p)$ be the group of rational points of a nonsingular elliptic curve, of prime order $r$. Given a generator $P$ and a target $Q in G$, put $b=ceil(log_2 p)$ and $L=log_2 b$. Assume LZR's uniform closed Boolean tensor-contraction bound. There is an implicit square matrix polynomial $B$ over $bb(F)_r$ and a polynomial vector $h$ such that $det B != 0$ and $h=B lambda$, where $lambda$ is the table of base-$P$ logarithms, including the target column. At any specified field point, evaluation, rank testing and solution at full rank take $2^(O(b slash L^(1 slash 4)))$ bit time and at most that many bits of space. Independent trials give a verified answer in the same expected time using $O(b)$ expected fair bits. With $O(b)$ bits of advice per input length, the time bound holds deterministically in the worst case.
 
