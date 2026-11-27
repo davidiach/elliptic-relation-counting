@@ -1,0 +1,40 @@
+PACKED HIGHER-ORDER SIDON PROBES
+K | order | auxiliary prime | plane prime | multiset sums checked
+7 | 2 | 7 | 13 | 35
+8 | 4 | 11 | 1693 | 494
+8 | 6 | 11 | 226991 | 3002
+7 | 8 | 11 | 43046747 | 6434
+9 | 5 | 11 | 132661 | 2001
+37 | 4 | 37 | 21031 | 101269
+113235 exact distinct multiset sums; failed-guard control exhibits a collision.
+
+EXHAUSTIVE SMALL BIPARTITE GRAPH CONTROLS
+n=3 graphs=512: no short cycles h=2 334 max edges 6; h=3 328 max edges 5
+n=4 graphs=65536: no short cycles h=2 18521 max edges 9; h=3 16217 max edges 8
+
+TWO-FACTOR PROBE CONSTRUCTIONS
+n=12 order=4 probes=37 plane prime=21031 max hit=23
+n=20 order=4 probes=81 plane prime=108247 max hit=39
+n=12 order=6 probes=37 plane prime=10218323 max hit=23
+n=32 order=6 probes=97 plane prime=192100057 max hit=63
+124 finite cover exclusions (one constructed large intersection per fixture).
+
+HIGH-GIRTH GRAPH SIGNATURE CONTROLS
+m=3 random slots=6 edges=6 girth=forest degree=1 matching colors=1: 264 good signatures, 63 double signatures, exhaustive=True
+m=4 random slots=8 edges=16 girth=16 degree=2 matching colors=2: 4352 good signatures, 144 double signatures, exhaustive=True
+m=5 random slots=300 edges=900 girth=8 degree=4 matching colors=4: 9252 good signatures, 225750 double signatures, exhaustive=False
+m=6 random slots=1000 edges=4000 girth=10 degree=5 matching colors=5: 18862 good signatures, 9000 double signatures, exhaustive=False
+32730 good tuple signatures and 234957 double signatures checked.
+
+LIMITED-INDEPENDENCE AND CHARACTER-MOMENT CONTROLS
+25 uniform marginals, 820 nonzero linear forms, 16 exact character-moment combinatorial bounds.
+
+FINITE HIGH-GROWTH COVER FIXTURES
+m | r | n | prescribed points | full axes | |S| / n^m | min subset fraction | min double fraction | good-tuple collisions
+3 | 101 | 15 | 7 | True | 2764/3375 | 2764/3375 | 105/120 | 0
+4 | 1009 | 21 | 21 | True | 175414/194481 | 175414/194481 | 211/231 | 19
+3 | 10007 | 40 | 40 | False | 63986/64000 | 63986/64000 | 1/1 | 12
+4 | 100003 | 16 | 31 | False | 65536/65536 | 1/1 | 1/1 | 0
+4 full finite covers; all subset and double-sum bounds verified. Axis-free controls are not full-projection claims.
+
+All checks passed.
