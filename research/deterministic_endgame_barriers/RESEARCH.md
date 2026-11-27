@@ -64,6 +64,12 @@ The number of pairs with the same $t=P+A-B$ depends on the differences in the bl
 
 A weighted example separates one pin from two. Over $\mathbb F_7$, take blocks $(1,2,3),(1,2,4),(1,3,5)$ with respective weights $(3,2,3),(1,5,4),(5,3,5)$ and one occurrence per block on each side. The source-only and target-only one-pin stacks each have rank 5 and annihilate the coordinate vector for label 2 in the first block. The stack with one pin on each side detects this vector and has full shift rank 6.
 
+### Integer minors of finite two-pin stacks
+
+The verifier enumerates 18 unweighted fixtures. Eleven use shift equality over the integers and seven use a shift modulo 7 or 11. In every case the outer products and the stacked Gram matrices have integer entries. Let $d=\sum_i(|F_i|-1)$. Each incidence difference sums to zero on each block. Hence the final row and column of each block in a pinned Gram are integer combinations of the others. Dropping one reference coordinate per block on each axis preserves the GCD of all $d$-by-$d$ minors of the stack.
+
+Integer Euclidean row operations then give a triangular $d$-row matrix above zero rows. The absolute product of its pivots is the GCD. Fifteen fixtures give 1, two give 3, and one gives 27. Thus three of the eighteen integer stacks lose rank upon reduction modulo 3. For a fixture using a modular shift, the shift modulus determines which tuple pairs enter the fixed integer matrix. The prime used to test its rank can be chosen independently.
+
 ### Decoupled $B_{\mathrm{shift}}(x, y)$ Evaluations (Regime A-I)
 On the order-19 curve over $\mathbb F_{13}$, the verifier compares the weighted shift Gram matrix with direct enumeration of all ordered shift pairs. It also evaluates $Bu$ and $u^\top B u$ from separate source and target fiber sums.
 
@@ -103,14 +109,15 @@ B3 requires balanced edge multiplicities and measures the width of binary contra
 
 ## 3. Reproducibility
 
-Both scripts require only Python 3.10+ standard library (run from the repository root):
+The three scripts require only Python 3.10+ standard library (run from the repository root):
 
 ```sh
 python3 -B research/deterministic_endgame_barriers/check_pinning_barriers.py
 python3 -B research/deterministic_endgame_barriers/check_residual_barriers.py
+python3 -B research/deterministic_endgame_barriers/check_integer_minor_gcd.py
 ```
 
-The command outputs are recorded in `research/deterministic_endgame_barriers/verification.txt`. The scripts exercise finite-field examples, finite samples of B1’s cost estimates, exact rational covariance and balanced cut fractions.
+The command outputs are recorded in `research/deterministic_endgame_barriers/verification.txt`. The scripts exercise finite-field examples, integer minors, finite samples of B1’s cost estimates, exact rational covariance and balanced cut fractions.
 
 ## 4. Open Frontier
 

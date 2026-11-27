@@ -27,3 +27,7 @@ Proposition B2: same-position covariance is 1/q-1/D for a full tie and (R-1)/D f
 Proposition B2: across 64 four-edge labelings, the mean packing potential is 4 and the minimum is 0.
 Theorem B3: minimum balanced cut fraction over four tested aspect ratios is 7289/16384 >= 4/9.
 CHECK_RESIDUAL_BARRIERS: ALL CHECKS PASSED.
+
+$ python3 -B research/deterministic_endgame_barriers/check_integer_minor_gcd.py
+Two-pin integer stacks: 18 fixtures; maximal-minor GCD 1 in 15, 3 in 2, 27 in 1.
+CHECK_INTEGER_MINOR_GCD: ALL CHECKS PASSED.
