@@ -1,0 +1,8 @@
+Shifts (7,), ranks [6], stack 6/7, raw score increments (0,).
+Shifts (3, 8), ranks [6, 6], stack 6/7, raw score increments (0, 0).
+Shifts (1, 2), ranks [4, 3], stack 4/5, raw score increments (0, 0).
+Shifts (2, 3, 9), ranks [2, 2, 3], stack 3/4, raw score increments (18, 18, 0).
+C7: full tuple support, raw contrast rank 4, pin-mean rank 3; all seven raw scores occur, every centered pin sum is zero.
+C23: all three punctured supports have size 22; raw rank 14 at all 23 shifts.
+Symmetric masks: 996 accepted block pairs; 636 deficient nonzero sign classes; 0 with further rank loss under pin averaging.
+Fixed lists failing on at least one accepted pair: 36/36 pairs, 15/84 triples, 0/126 quadruples.

@@ -85,6 +85,7 @@ def main():
     d=int(sp.Matrix(gram(E+S,n)).det());assert d%(r*r)==0
     W,k=adaptive([E+S],r,n)
     V,l=adaptive([E,S],r,n,E)
+    assert not kernel(W,r,n) and not kernel(V,r,n)
     print(f'C7 determinant mass fails modulo 49; adaptive combined-family rank {n-len(kernel(W,r,n))}/{n}; partitioned rank {n-len(kernel(V,r,n))}/{n}.')
     rng=Random(847);cases=0;rescued=0;stuck=0
     for r in [3,5,7,11]:

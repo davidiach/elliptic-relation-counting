@@ -1,4 +1,5 @@
 Conditional means: 68 dense-support fixtures (20 elliptic); 544 nonaffine directions; minimum bad-displacement fraction 1.000000.
+Exact ranks: 6/2264 nonidentity displacements and 18/68 identity displacements are deficient.
 Short-tuple gap: 50 false candidates, chi-square=0.00017147, minimum best violation fraction=0.952760.
 Moment support: 862 exact randomized fixtures with deterministic extraction; quadratic cancellation control and multiplicative-subgroup obstruction passed.
 C7 determinant mass fails modulo 49; adaptive combined-family rank 8/8; partitioned rank 8/8.

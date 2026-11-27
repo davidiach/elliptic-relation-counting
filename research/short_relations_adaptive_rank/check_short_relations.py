@@ -93,6 +93,7 @@ def curve13():
 
 def mean_checks():
     rng=Random(3102); fixtures=0; dirs=0; minbad=1.; elliptic=0
+    nonidentity = deficient = identity_deficient = 0
     for r,m,k,attempts in [(19,2,5,20),(31,2,6,20),(43,3,4,20),(59,3,5,10)]:
         for it in range(attempts):
             B=[tuple(sorted(rng.sample(range(1,r),k))) for _ in range(m)]
@@ -100,6 +101,11 @@ def mean_checks():
             f=short_fixture(r,B,cy,add)
             if 6*m*f['missing']>=r or 2*len(f['d'])<=r:continue
             assert rank(f['rows'],r,f['n'])==f['n']-m-1
+            expected = f['n'] - m - 1
+            ranks = [rank(rows, r, f['n']) for rows in f['by_t']]
+            identity_deficient += ranks[0] < expected
+            nonidentity += r - 1
+            deficient += sum(value < expected for value in ranks[1:])
             fixtures+=1;elliptic+=r==19
             for _ in range(8):
                 u=[rng.randrange(r) for _ in range(f['n'])]
@@ -109,6 +115,9 @@ def mean_checks():
                 dirs+=1;minbad=min(minbad,bad/r)
     assert fixtures and elliptic and dirs
     print(f'Conditional means: {fixtures} dense-support fixtures ({elliptic} elliptic); {dirs} nonaffine directions; minimum bad-displacement fraction {minbad:.6f}.')
+    assert (fixtures, identity_deficient, deficient, nonidentity) == (68, 18, 6, 2264)
+    print(f'Exact ranks: {deficient}/{nonidentity} nonidentity displacements and '
+          f'{identity_deficient}/{fixtures} identity displacements are deficient.')
 
 
 def robust_checks():

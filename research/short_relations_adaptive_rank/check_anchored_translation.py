@@ -220,6 +220,7 @@ def summed_obstruction():
     assert rank(sums+E,r,N)==N-1
     short=sorted({sgn*pow(2,k,r)%r for k in range(r.bit_length()) for sgn in (-1,1)})
     rr=rank((row_at(n,v,r,0,s,j)[0] for s,j in [(s,None) for s in short]+[(s,j) for j,s in enumerate(vals)]),r,N)
+    assert rr == N
     print(f'Obstruction on E/F29, order 37: counts {min(n)}..{max(n)}, summed rank {N-1}/{N}, unchanged with chosen explicit rows, complete stack {N}/{N}, one-start short-list rank {rr}/{N}.')
 
 
