@@ -1,0 +1,23 @@
+Exact circular sums and complements: 240 interval cases and 240 rectangle cases, all against brute force.
+Bounded line-cover branching: 75 synthetic cases, every returned cover contains all labels.
+Large scalar support: r=65537, lower bound 1531>500, 28 interval sums, gap 1659.
+Large scalar support: r=1000003, lower bound 1531>500, 28 interval sums, gap 1537.
+Affine-flat avoidance: 90 exact random unions; every returned point outside every flat.
+Persistent line cover r=101, corank=2: 6 affine lines; homogeneous support >=r; 2 decompositions, full rank 24/24.
+Persistent line cover r=257, corank=3: 10 affine lines; homogeneous support >=r; 3 decompositions, full rank 38/38.
+Persistent line cover r=1009, corank=4: 15 affine lines; homogeneous support >=r; 4 decompositions, full rank 70/70.
+Digital r=101, m=2, base=11: 42 genuine rows, count formula exact; short fibers 4..7, pins 88..145, no-wrap False.
+Digital completion r=101, m=2: 41/42 -> 42/42; 419 distinct projected short tuples; all 102 scalar directions surjective; [2, 2] per-block boxes, 4 joint boxes, 1 bases tested, one verified new row.
+Digital r=257, m=3, base=7: 39 genuine rows, count formula exact; short fibers 8..16, pins 1568..3133, no-wrap False.
+Digital completion r=257, m=3: 38/39 -> 39/39; 2282 distinct projected short tuples; all 258 scalar directions surjective; [2, 2, 2] per-block boxes, 8 joint boxes, 1 bases tested, one verified new row.
+Digital r=1009, m=2, base=32: 126 genuine rows, count formula exact; short fibers 4..6, pins 256..301, no-wrap True.
+Digital completion r=1009, m=2: 125/126 -> 126/126; 4001 distinct projected short tuples; all 1010 scalar directions surjective; [2, 2] per-block boxes, 4 joint boxes, 1 bases tested, one verified new row.
+Digital r=4093, m=2, base=64: 254 genuine rows, count formula exact; short fibers 4..6, pins 512..521, no-wrap True.
+Digital completion r=4093, m=2: 253/254 -> 254/254; 16249 distinct projected short tuples; all 4094 scalar directions surjective; [2, 2] per-block boxes, 4 joint boxes, 1 bases tested, one verified new row.
+PR12 r=101, m=2, extra=0: 67/68 -> 68/68; 762 distinct projected short tuples; all 102 scalar directions surjective; [2, 2] per-block boxes, 4 joint boxes, 1 bases tested, one verified new row.
+PR12 r=257, m=3, extra=0: 53/54 -> 54/54; 3833 distinct projected short tuples; all 258 scalar directions surjective; [2, 2, 2] per-block boxes, 8 joint boxes, 1 bases tested, one verified new row.
+PR12 r=1009, m=2, extra=0: 131/132 -> 132/132; 4185 distinct projected short tuples; all 1010 scalar directions surjective; [2, 2] per-block boxes, 4 joint boxes, 1 bases tested, one verified new row.
+PR12 r=101, m=2, extra=8: 83/84 -> 84/84; 1329 distinct projected short tuples; all 102 scalar directions surjective; [10, 9] per-block boxes, 90 joint boxes, 1 bases tested, one verified new row.
+PR12 r=257, m=3, extra=12: capped line-cover test failed; no rank claim.
+PR12 r=1009, m=2, extra=10: 151/152 -> 152/152; 5622 distinct projected short tuples; all 1010 scalar directions surjective; [12, 12] per-block boxes, 144 joint boxes, 1 bases tested, one verified new row.
+Joint-cover completion passed 5/6 dictionary and augmented controls; unsuccessful probes are retained.
