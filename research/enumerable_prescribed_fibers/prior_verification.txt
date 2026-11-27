@@ -1,0 +1,3 @@
+PR12 C101: identity short fiber 16 tuples, 13 distinct quotient scores; one genuine zero-shift contrast raises rank 83 to 84.
+PR12 C257: identity short fiber 115 tuples, 82 distinct quotient scores; one genuine zero-shift contrast raises rank 89 to 90.
+PR12 C1009: identity short fiber 6 tuples, 6 distinct quotient scores; one genuine zero-shift contrast raises rank 151 to 152.
