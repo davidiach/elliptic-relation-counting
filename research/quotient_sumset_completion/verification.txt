@@ -1,0 +1,21 @@
+r=257, m=2, block sizes=[63, 63], palette=21: 260 genuine rows, selected rational rank 124, modular rank 123.
+  Exact minimum augmented circular width 258 at (0, 1); per-block minima [129, 129]; largest quotient fractions ['4/7', '4/7'].
+  Short fibers (6, 31); pin counts (813, 1290); no-wrap False.
+  Copies=1: projection support 117/257; missing 14; group fiber 96; verified zero-value score 140; full recovery.
+  Copies=2: projection support 257/257, missing-value branch correctly reports no missing value.
+r=1009, m=2, block sizes=[100, 100], palette=46: 442 genuine rows, selected rational rank 198, modular rank 197.
+  Exact minimum augmented circular width 1360 at (0, 1); per-block minima [680, 680]; largest quotient fractions ['9/25', '7/20'].
+  Short fibers (2, 25); pin counts (729, 1672); no-wrap False.
+  Copies=1: projection support 490/1009; missing 6; group fiber 723; verified zero-value score 6; full recovery.
+  Copies=2: projection support 1009/1009, missing-value branch correctly reports no missing value.
+r=2039, m=2, block sizes=[104, 104], palette=34: 440 genuine rows, selected rational rank 206, modular rank 205.
+  Exact minimum augmented circular width 2040 at (0, 1); per-block minima [1020, 1020]; largest quotient fractions ['67/104', '67/104'].
+  Short fibers (2, 24); pin counts (355, 1700); no-wrap True.
+  Copies=1: projection support 331/2039; missing 15; group fiber 700; verified zero-value score 270; full recovery.
+  Copies=2: projection support 1895/2039; missing 241; group fiber 72; verified zero-value score 241; full recovery.
+Joint support branch: r=101, initial corank 2, support 4; exactly 2 new verified zero-value rows recover full rank.
+Joint support branch: r=101, initial corank 3, support 8; exactly 3 new verified zero-value rows recover full rank.
+Joint support branch: r=257, initial corank 4, support 16; exactly 4 new verified zero-value rows recover full rank.
+PR12 control r=101: short homogeneous score support 101/101; every nonzero augmented scalar projection is surjective by the two dictionary encodings.
+PR12 control r=257: short homogeneous score support 257/257; every nonzero augmented scalar projection is surjective by the two dictionary encodings.
+PR12 control r=1009: short homogeneous score support 1009/1009; every nonzero augmented scalar projection is surjective by the two dictionary encodings.
