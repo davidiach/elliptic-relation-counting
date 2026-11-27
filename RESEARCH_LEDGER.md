@@ -22,11 +22,14 @@
 
 ## Follow-up results
 
+The [research index](research/README.md) connects the fixed-shift results, prescribed-fiber, additive-avoidance and moment papers to their proofs and recorded checks.
+
 - Accepted reduced-floor affine seeds give four consecutive targets with excess pinned nullity at order 223 and five at orders 67 and 109. Each stack has the forced joint nullity. [Seeds, symmetry argument and verification](research/sparse_target_runs/RESEARCH.md)
 - At orders 109 and 271, a nonconstant vector survives six consecutive pinned matrices. A completion-count identity explains the common rank loss, and a block-size bound excludes this two-point construction at sufficiently large original parameters. [Six-target witnesses and limitation](research/sparse_target_runs/SIX_TARGETS.md)
 - Prescribed fibers can be made enumerable at the quarter-power scale under the closed-contraction assumption. The four-block, two-pin fixture on the group of order three checks the finite moment bound. [Prescribed fibers](research/enumerable_prescribed_fibers/RESEARCH.md)
 - The quotient results give a universal compression bound and reduce the remaining rank question to planar additive range avoidance. Common translation covers supply the required coverage and strict tuple-product bound at quarter-power setup cost. The efficient deterministic avoidance step remains open. [Quotient compression](research/universal_quotient_compression/RESEARCH.md) · [Common translation covers](research/translation_cover/RESEARCH.md)
 - Exact coordinate moments can agree for populations of different modular ranks. For sparse abstract rows, the support bound uses the smaller of the alphabet cap and the field size. Explicit Newton certificates and the weight-four and weight-five examples describe where moment separation becomes possible. [Moment-oracle examples](research/exact_moment_oracle_barriers/RESEARCH.md) · [Support bound](research/exact_moment_oracle_barriers/moment_rank_boundary/RESEARCH.md) · [Newton certificates](research/exact_moment_oracle_barriers/moment_rank_boundary/newton_sparse_rank/RESEARCH.md)
+- Higher-order additive probes give near-linear explicit lists for two small factors. Carry-aware digit lifts connect the growing-arity case to finding points outside a sparse span. Hidden rank geometry and supplied trees with small interfaces give two structured cases. [Higher-order probes](research/high_growth_additive_probes/RESEARCH.md) · [Digit lift](research/digit_lift_avoidance/RESEARCH.md) · [Structured remote syndromes](research/structured_remote_points/RESEARCH.md)
 
 ## Reproduction
 

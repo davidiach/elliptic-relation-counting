@@ -1,6 +1,6 @@
 # Can the sampled slots make joint curve arithmetic cheaper?
 
-**20 November 2026.** For general primes in the project's input class, the best conditional log-time bound we can justify is still $(24.00245996+o(1))Z_b$, where $b=\lceil\log_2p\rceil$ and $Z_b=b/(\log_2 b)^{1/4}$. This uses the previously derived mixed sampler and the supplied finite-packet Assumption A.1, graph-contraction estimate and verified outer reduction. We obtained a shorter description of the answer on successful seeds, two restrictions on how to compute it, and a sufficient condition for a faster algorithm. Constructing a uniformly cheaper public-seed verifier remains open.
+**20 November 2026.** For the mixed fixed-bit sampler and general primes in the project's input class, the conditional log-time bound is $(24.00245996+o(1))Z_b$, where $b=\lceil\log_2p\rceil$ and $Z_b=b/(\log_2 b)^{1/4}$. This uses the previously derived mixed sampler and the supplied finite-packet Assumption A.1, graph-contraction estimate and verified outer reduction. We obtained a shorter description of the answer on successful seeds, two restrictions on how to compute it, and a sufficient condition for a faster algorithm. Constructing a uniformly cheaper public-seed verifier remains open.
 
 ## What the slots buy
 

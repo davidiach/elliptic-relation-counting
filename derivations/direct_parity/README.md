@@ -1,6 +1,6 @@
 # Direct evaluation of the signed zero count
 
-**21 November 2026.** On a regular isolated relation, $M_0(r)-M_{p-1}(r)$ is the sign of the witness address under the binary challenge $r$. We give exact ways to evaluate it without reconstructing a moment recurrence. The most useful reduction makes checking a proposed elliptic section polynomial in the bit length and number of slots, independently of their width. Finding that section from all the seeds at a competitive cost remains open. The project's best conditional log-time bound for general primes in the inherited input class is still $(24.00245996+o(1))b/(\log_2 b)^{1/4}$. [Baseline and outer costs](../sampled_slots/README.md)
+**21 November 2026.** On a regular isolated relation, $M_0(r)-M_{p-1}(r)$ is the sign of the witness address under the binary challenge $r$. We give exact ways to evaluate it without reconstructing a moment recurrence. The most useful reduction makes checking a proposed elliptic section polynomial in the bit length and number of slots, independently of their width. Finding that section from all the seeds at a competitive cost remains open. For the mixed fixed-bit sampler studied here, the conditional general-prime log-time bound is $(24.00245996+o(1))b/(\log_2 b)^{1/4}$. [Baseline and outer costs](../sampled_slots/README.md)
 
 ## Where the cost went
 
