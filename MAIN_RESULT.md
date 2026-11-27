@@ -52,6 +52,8 @@ Each scalar contraction uses polynomial space in the network size and descriptio
 
 ## Uniform worst-case question
 
+A subsequent quotient reduction has a separate conditional bound. Common translation covers achieve its quarter-power setup cost under LZR Theorem 2.2. A uniform deterministic end-to-end bound at that scale still requires an efficient two-dimensional additive range-avoidance algorithm. [Quotient reduction](research/universal_quotient_compression/RESEARCH.md) · [Translation-cover result](research/translation_cover/RESEARCH.md)
+
 The follow-up in [Deterministic points](DETERMINISTIC_POINTS.md) gives an explicit target-budget list for the original $B$. Its stack contains all explicit rows and detects every direction with a bounded-degree sparse polynomial consequence. A separate density theorem locates many violations for each residual direction. Uniform full rank of this list remains unproved.
 
 [Exact neighboring fibers](NEIGHBORING_FIBERS.md) settles the full-grid fallback for every eligible curve on that branch. It also gives the exact all-displacement rank and explains why that identity does not settle the prescribed shift on the short list.

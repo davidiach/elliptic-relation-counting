@@ -8,7 +8,11 @@
 
 The manuscript also reduces the number of terms in LZR’s deterministic partial expansion. The residual contraction still gives the uniform deterministic time bound $2^{O(b/\sqrt{\log_2\log_2 b})}$ under LZR’s Appendix D assumptions. [Expansion proof](PARTIAL_EXPANSION.md) · [Bit complexity](COMPLEXITY_AUDIT.md) · [Open questions](OPEN_PROBLEMS.md)
 
-**Research follow-up under review.** PR 4 proposes shorter fixed-shift relations, a system of conditional means with full rank after normalization and consistency constraints, and adaptive prime-adic rank certificates. Selecting enough displacements deterministically within the target time bound remains open. [Follow-up note and finite checks](https://github.com/davidiach/elliptic-relation-counting/pull/4)
+**Common translation covers.** Under the same closed-contraction assumption, a constant-size block of translates gives full coverage with tuple product below the square of the group order at the quarter-power setup cost. The quotient reduction still requires an efficient deterministic algorithm for two-dimensional additive range avoidance to obtain the corresponding end-to-end bound. The finite verifier checks the coefficient-bit choices and a single pair of translations that repairs two different deletion subsets. [Coverage theorem](research/translation_cover/RESEARCH.md) · [Recorded checks](research/translation_cover/verification.txt) · [Quotient reduction](research/universal_quotient_compression/RESEARCH.md)
+
+**What exact moments determine.** For abstract integer row populations, the homogeneous rank-separation degree bound is sharp at active weights three, four and five under the respective assumptions. The weight-three example has fewer rows than the modulus. At weight four, distinct balanced signed-unit rows show that degree six is necessary for every prime $r>4$. The tagged populations each have $4r^2$ rows. Sharpness with fewer than $r$ rows remains open at weights four and five. [Moment bounds](research/exact_moment_oracle_barriers/moment_rank_boundary/RESEARCH.md) · [Newton certificates and examples](research/exact_moment_oracle_barriers/moment_rank_boundary/newton_sparse_rank/RESEARCH.md) · [Cycle construction and finite checks](research/exact_moment_oracle_barriers/moment_rank_boundary/balanced_incidence_moments/RESEARCH.md)
+
+Full reconstruction has a separate degree bound. For one balanced signed-unit block of positive mass at most $w$ on at least $3w$ labels, moments through degree $3w$ recover every row multiplicity, and this degree is sharp. For products of $m$ general balanced blocks with at least three labels per block, the exact degrees are $3m$ for one copy per block and $6m$ for two. [Interpolation and product theorems](research/exact_moment_oracle_barriers/moment_rank_boundary/balanced_incidence_moments/RESEARCH.md) · [Recorded verifier output](research/exact_moment_oracle_barriers/moment_rank_boundary/balanced_incidence_moments/verification.txt)
 
 ## Earlier paper and version history
 
@@ -50,6 +54,8 @@ At slightly narrower mixed-sampler widths, almost every successful seed has one 
 The paper also treats guarded-to-ordinary count conversion, fixed-target isolation, generic packet span, optimal separated approximation, derivative readout, and the time–space tradeoff for implicit resultants. The square-root-in-bitlength objective and a cheaper decoder for typical large pools remain open. These comparisons concern asymptotic formulas and finite counting experiments. This repository has no demonstrated end-to-end cryptographic-scale speedup.
 
 ## Reproduce the experiments
+
+From the repository root, run `python -B research/translation_cover/check_translation_cover.py` with Python 3.10 or later and assertions enabled. It uses the standard library. [Expected translation-cover output](research/translation_cover/verification.txt)
 
 Run the three fixed-shift checks from the repository root in a Python 3.12 environment. Each prints a transcript for comparison with the recorded results.
 
