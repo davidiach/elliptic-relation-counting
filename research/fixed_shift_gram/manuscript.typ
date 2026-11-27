@@ -1,5 +1,6 @@
 #let title = [A polynomial certificate for deterministic elliptic-curve relation systems]
-#set document(title: "A polynomial certificate for deterministic elliptic-curve relation systems", author: "Elliptic Relation Counting Project", date: datetime(year: 2026, month: 11, day: 27))
+#let author = "David Iach"
+#set document(title: "A polynomial certificate for deterministic elliptic-curve relation systems", author: author, date: datetime(year: 2026, month: 11, day: 27))
 #set page(paper: "a4", margin: (x: 29mm, top: 23mm, bottom: 23mm), numbering: "1",
   header: context if counter(page).get().first() > 1 [
     #set text(size: 8.5pt, fill: luma(85))
@@ -25,8 +26,8 @@
   #set par(justify: false)
   #text(size: 21pt, weight: "semibold")[#title]
   #v(0.5em)
-  #text(size: 12pt)[Elliptic Relation Counting Project] \
-  #text(size: 10pt)[27 November 2026]
+  #text(size: 12pt)[#author] \
+  #text(size: 10pt)[Elliptic Relation Counting Project · 27 November 2026]
 ]
 #v(0.55em)
 #block(inset: (x: 6mm))[
