@@ -2,7 +2,7 @@
 from collections import Counter
 from itertools import product, combinations
 from fractions import Fraction
-from math import prod, isqrt
+from math import comb, prod, isqrt
 from random import Random
 
 
@@ -86,6 +86,7 @@ def hidden_ball(q,s,k):
 
 def overlaps(B,q,d):
     """Count ordered differences, deduplicating the input set."""
+    B = {tuple(x) for x in B}
     if q==2:
         def pack(v):return sum(x<<i for i,x in enumerate(v))
         D=[pack(v) for v in B];C=Counter(x^y for x in D for y in D if x!=y)
@@ -144,12 +145,22 @@ def analytic_checks():
 def rank_recovery_checks():
     rng=Random(2807);cases=0;preserves=0;noisy=0
     B0=hidden_ball(2,2,1); C0=overlaps(B0,2,4)
-    assert len(set(C0.values()))==1 and len(C0)==15
+    assert C0 == {v: 6 for v in product(range(2), repeat=4) if any(v)}, "incorrect binary overlap counts"
     print("  Retained negative control F_2 2x2: all 15 nonzero shifts have overlap 6; rank-one recovery fails as expected outside the guard.")
     for q,s,k,w in [(2,3,1,2),(3,2,1,1),(7,2,1,1),(2,3,2,1),(2,5,1,2)]:
         d=s*s;B=hidden_ball(q,s,k);hidden=random_basis(d,q,rng);T=lambda v:lincomb(hidden,v,q,d);inv=coordinate_map(hidden,q,d)
         D={T(v) for v in B};R={T(v) for v in B if matrank(v,q,s)==1}
         C=overlaps(D,q,d);mx=max(C.values());assert {v for v,n in C.items() if n==mx}==R
+        if (q,s,k) in [(2,3,1),(3,2,1)]:
+            counts = {}
+            for shift in product(range(q), repeat=d):
+                if any(shift):
+                    count = sum(add(x, shift, q) in D for x in D)
+                    if count:
+                        counts[shift] = count
+            repeated = [list(x) for x in [*D, min(R), min(R), (0,)*d]]
+            assert overlaps(repeated, q, d) == C == counts, "duplicate atoms changed overlap counts"
+            print(f'  Duplicate atoms: exact overlap counts unchanged at all {q**d-1} nonzero shifts over F_{q}.')
         G=recover_grid(R,q,s);co=coordinate_map(G,q,d)
         for x in D:
             assert matrank(co(x),q,s)==matrank(inv(x),q,s);preserves+=1
@@ -175,7 +186,6 @@ def rank_recovery_checks():
             E=(D-drop)|outs;C2=overlaps(E,q,d);M=max(C2.values());R2={v for v,n in C2.items() if 2*n>M};assert R2==R
             G2=recover_grid(R2,q,s);co2=coordinate_map(G2,q,d)
             assert {x for x in E if matrank(co2(x),q,s)>k}==outs
-            center_basis=basis([co2(x) for x in outs],q,d)
             codeword,cc,nn=outlier_remote(q,s,k,w,[co2(x) for x in outs]);assert cc<nn
             y2=lincomb(G2,codeword,q,d);X={pack(x) for x in E};Y={0}
             for _ in range(w):Y={x^z for x in X for z in Y}
@@ -236,9 +246,46 @@ def sparse_centers(O,q,w,d):
             for a in product(range(1,q),repeat=i):X.add(lincomb(I,a,q,d))
     return X
 
+def outlier_centers(outliers, q, w, d):
+    """Cover the sparse centers using the smaller enumeration bound."""
+    generators = basis(outliers, q, d)
+    span_size = q**len(generators)
+    count = len(outliers)
+    sparse_bound = sum(comb(count, j) * (q-1)**j for j in range(min(w, count)+1))
+    if span_size < sparse_bound:
+        return set(span(generators, q, d))
+    return sparse_centers(outliers, q, w, d)
+
+def center_checks():
+    # These dependent atoms give 1,941 coefficient choices but only 16 centers.
+    dense = list(product(range(2), repeat=4))
+    assert outlier_centers(dense[1:], 2, 4, 4) == set(dense)
+
+    # Here the full span strictly contains the sparse centers. The two routes
+    # give observably different covers, even after deduplication.
+    atoms = [v+(0,0) for v in product(range(2), repeat=3) if any(v)] + units(5)[3:]
+    choices = {(0,)*5, *atoms}
+    reachable = {add(a, b, 2) for a in choices for b in choices}
+    full = outlier_centers(atoms, 2, 2, 5)
+    assert len(reachable) == 25 and reachable < full
+    assert full == set(product(range(2), repeat=5))
+    sparse = outlier_centers(units(5), 2, 1, 5)
+    assert sparse == {(0,)*5, *units(5)}
+
+    # Embed the same dependent atoms as nonzero even-weight diagonals (rank >= 2).
+    def diagonal(v):
+        entries = (*v, sum(v)%2)
+        return tuple(entry if i == j else 0 for i, entry in enumerate(entries) for j in range(6))
+    witness, count, probes = outlier_remote(2, 6, 1, 2, [diagonal(v) for v in atoms])
+    assert count == len(full) and probes == count+1, "constructor did not use the cheaper span"
+    assert all(matrank(sub(witness, diagonal(v), 2), 2, 6) > 2 for v in reachable)
+    print(f'Center enumeration: 16 span elements for 1,941 coefficient choices; '
+          f'{len(full)} span elements cover {len(reachable)} sparse centers; '
+          f'{probes} probes certify the matrix witness; sparse route visits {len(sparse)} choices for a 32-element span.')
+
 def outlier_remote(q,s,k,w,O):
     d=s*s;R=w*k;ell=s-2*R;assert ell>=1
-    centers=sparse_centers(O,q,w,d);n=len(centers)+1;assert n<=q**(s*ell)
+    centers=outlier_centers(O,q,w,d);n=len(centers)+1;assert n<=q**(s*ell)
     probes=list(mr_code(q,s,ell,n));assert len(set(probes))==n
     assert all(matrank(sub(a,b,q),q,s)>=2*R+1 for a,b in combinations(probes,2))
     missing=[x for x in probes if all(matrank(sub(x,c,q),q,s)>R for c in centers)]
@@ -246,14 +293,37 @@ def outlier_remote(q,s,k,w,O):
 
 def outlier_checks():
     rng=Random(118);checks=0
-    for q,s,k,w,L in [(2,3,1,1,3),(3,3,1,1,4),(2,5,1,1,9),(2,5,1,2,3),(3,5,1,2,2)]:
+    fixtures = [(2,3,1,1,3),(3,3,1,1,4),(2,5,1,1,9),(2,5,1,2,3),(3,5,1,2,2),
+                (2,4,1,1,16)]
+    for q,s,k,w,L in fixtures:
         d=s*s;O=[]
         while len(O)<L:
             x=tuple(rng.randrange(q) for _ in range(d))
             if matrank(x,q,s)>k and x not in O:O.append(x)
         x,c,n=outlier_remote(q,s,k,w,O);checks+=n*(n-1)//2
+        # Build the true sparse centers one slot at a time, independently of
+        # the constructor's choice between a full span and sparse combinations.
+        zero = (0,)*d
+        choices = {scale(atom, a, q) for atom in O for a in range(q)} | {zero}
+        actual_centers = {zero}
+        for _ in range(w):
+            actual_centers = {add(v, a, q) for v in actual_centers for a in choices}
+        assert len(actual_centers) <= c and n == c+1
+        assert len(x) == d and all(0 <= a < q for a in x)
+        assert all(matrank(sub(x, v, q), q, s) > w*k for v in actual_centers), "invalid returned syndrome"
+        if (q,s,k,w,L) == (2,4,1,1,16):
+            assert n == q**s + 2
+            probes = list(mr_code(q, s, s-2*w*k, n))
+            square, mixed = probes[q**s:]
+            mul, _ = field_ops(q, s)
+            for v in product(range(q), repeat=s):
+                squared = mul(v, v)
+                for matrix, value in [(square, squared), (mixed, add(v, squared, q))]:
+                    image = tuple(dot(matrix[j:j+s], v, q) for j in range(0, d, s))
+                    assert image == value, "incorrect higher coefficient"
+            print(f'  Second coefficient: probes {q**s} and {q**s+1} evaluate to x^2 and x+x^2 on all {q**s} extension elements.')
         print(f'  Rank-metric outlier test F_{q}, s={s}, w={w}: {L} outliers, {c} centers, {n} probes, certified missing syndrome.')
-    print(f'Rank-metric pair-distance checks: {checks} across 5 additional outlier fixtures.')
+    print(f'Rank-metric pair-distance checks: {checks} across {len(fixtures)} outlier fixtures; all returned witnesses independently checked.')
 
 
 
@@ -280,7 +350,8 @@ def affine_noise_check():
     assert h0 is not None and O is not None
     # Conservative center set: all field multiples of the shared offset and
     # all combinations of at most w high-rank difference atoms.
-    Z={add(scale(h0,a,q),c,q) for a in range(q) for c in sparse_centers(O,q,w,d)}
+    centers = outlier_centers(O, q, w, d)
+    Z={add(scale(h0,a,q),c,q) for a in range(q) for c in centers}
     ell=s-4*w*k;assert ell>=1 and len(Z)<q**(s*ell)
     probes=list(mr_code(q,s,ell,len(Z)+1))
     ys=[x for x in probes if all(matrank(sub(x,c,q),q,s)>2*w*k for c in Z)]
@@ -330,17 +401,38 @@ def tree(lo,hi):
     if hi-lo==1:return Node(i=lo)
     mid=(lo+hi)//2;return Node(left=tree(lo,mid),right=tree(mid,hi))
 
-def exact_cost_profiles(tables,q,d,w,verify=False):
-    z=(0,)*d;cap=w+1;root=tree(0,len(tables));stats={'width':0,'max_profiles':0,'pair_tests':0,'leaf_candidates':0,'node_profiles':0}
-    def setup(n):
+def exact_cost_profiles(tables,q,d,w,verify=False,*,root=None):
+    """Use the supplied leaf-labeled tree, or a balanced tree in table order."""
+    if not tables:
+        raise ValueError('expected at least one leaf table')
+    if root is None:
+        root = tree(0, len(tables))
+    cap=w+1;stats={'width':0,'max_profiles':0,'pair_tests':0,'leaf_candidates':0,'node_profiles':0}
+    nodes = [root]
+    seen = set()
+    remaining = set(range(len(tables)))
+    for n in nodes:
+        if not isinstance(n, Node) or n in seen:
+            raise ValueError('expected a binary tree of distinct nodes')
+        seen.add(n)
+        if n.i is None:
+            nodes.extend((n.left, n.right))
+        elif n.left is not None or n.right is not None or type(n.i) is not int or n.i not in remaining:
+            raise ValueError('expected one leaf per table index')
+        else:
+            remaining.remove(n.i)
+    if remaining:
+        raise ValueError('missing table indices in the supplied tree')
+    for n in reversed(nodes):
         if n.i is not None:n.V=basis(tables[n.i],q,d)
-        else:setup(n.left);setup(n.right);n.V=basis((*n.left.V,*n.right.V),q,d)
-    setup(root)
-    def assign(n,out):
+        else:n.V=basis((*n.left.V,*n.right.V),q,d)
+    outside = {root: ()}
+    for n in nodes:
+        out = outside.pop(n)
         n.S=intersection(n.V,out,q,d);n.si=span(n.S,q,d);stats['width']=max(stats['width'],len(n.S))
         if n.i is None:
-            assign(n.left,basis((*out,*n.right.V),q,d));assign(n.right,basis((*out,*n.left.V),q,d))
-    assign(root,())
+            outside[n.left] = basis((*out, *n.right.V), q, d)
+            outside[n.right] = basis((*out, *n.left.V), q, d)
     def missing_coset(V,S,support):
         B,piv=rref(S,q,d);Q,qp=rref([normal(v,B,piv,q) for v in V],q,d)
         def idx(v):
@@ -363,7 +455,7 @@ def exact_cost_profiles(tables,q,d,w,verify=False):
             n.P=P
             if verify:n.actual=T
         else:
-            combine(n.left);combine(n.right);pindex={x:i for i,x in enumerate(n.si)};pairs=[]
+            pindex={x:i for i,x in enumerate(n.si)};pairs=[]
             for i,x in enumerate(n.left.si):
                 for j,y in enumerate(n.right.si):
                     s=add(x,y,q)
@@ -387,7 +479,8 @@ def exact_cost_profiles(tables,q,d,w,verify=False):
             actual={tuple(n.actual.get(add(y,s,q),cap) for s in n.si) for y in span(n.V,q,d)}
             assert set(n.P)==actual
             for P,y in n.P.items():assert P==tuple(n.actual.get(add(y,s,q),cap) for s in n.si)
-    combine(root)
+    for n in reversed(nodes):
+        combine(n)
     return root.P,stats
 
 def profile_checks():
@@ -403,6 +496,23 @@ def profile_checks():
                 tables.append(T)
             P,S=exact_cost_profiles(tables,q,d,3,verify=True);checks+=1;profiles+=S['node_profiles']
     print(f'Exact tree profile comparisons: {checks} random weighted/sparse inputs, {profiles} distinct stored node profiles independently checked.')
+    # Keep table indices fixed. The two trees put equal columns on opposite
+    # sides of the root, or together in sibling leaves.
+    d = 4
+    tables = [{(0,)*d: 0, v: 1} for v in units(d)*2]
+    pairs = [Node(left=Node(i=i), right=Node(i=i+d)) for i in range(d)]
+    paired = Node(left=Node(left=pairs[0], right=pairs[1]),
+                  right=Node(left=pairs[2], right=pairs[3]))
+    widths = []
+    for supplied, width in [(tree(0, 8), 4), (paired, 1)]:
+        root_profiles, stats = exact_cost_profiles(tables, 2, d, 2, verify=True, root=supplied)
+        assert stats['width'] == width, "incorrect supplied tree width"
+        assert set(root_profiles) == {(0,), (1,), (2,), (3,)}
+        for (cost,), witness in root_profiles.items():
+            assert cost == min(3, sum(witness))
+        widths.append(stats['width'])
+    print(f'Same eight labeled leaves: separated copies have width {widths[0]}, '
+          f'sibling copies have width {widths[1]}; both realize capped costs 0 through 3.')
     # 64 one-choice edge lists, each atom covers at most one coordinate.
     q=2;d=65;E=units(d);z=(0,)*d;tables=[{z:0,E[i]:0,E[i+1]:0} for i in range(d-1)]
     P,S=exact_cost_profiles(tables,q,d,0);assert (1,) in P and sum(P[(1,)])==65
@@ -421,4 +531,4 @@ def profile_checks():
 
 if __name__=='__main__':
     if not __debug__:raise SystemExit('Assertions required')
-    analytic_checks();rank_recovery_checks();outlier_checks();affine_noise_check();extra_rank_boundaries();profile_checks()
+    analytic_checks();rank_recovery_checks();center_checks();outlier_checks();affine_noise_check();extra_rank_boundaries();profile_checks()
