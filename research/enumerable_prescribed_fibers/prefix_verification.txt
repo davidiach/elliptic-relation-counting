@@ -1,0 +1,5 @@
+Actual E/F5, order 7: 39 exact conditional-expectation prefix identities; initial potential 43.304531; final 2.382935; direct equality exact.
+  Selected block sizes [5, 5, 5, 5]; anchors (0, 1, 3); finite guard False (asymptotic K not available here).
+  t=0: 89 genuine short tuples; modular contrast rank 15/15.
+  t=1: 90 genuine short tuples; modular contrast rank 15/15.
+  t=3: 89 genuine short tuples; modular contrast rank 15/15.
