@@ -1,0 +1,7 @@
+Cauchy-Binet and unique minimum: 50 full-rank row subsets, all five field points; unweighted cancellation control passed.
+C5 fixed shifts: 51 ordered pairs, 6 columns, 307 nonsingular and 318 singular points; all-ones rank 5.
+One-pin separator: every one of 490 nonzero evaluations returned a violated ordered pair by prefix extraction.
+Odd-field digit reconstruction: 56 assignments, 27 digit tuples; Newton filter matched all 81 signed differences.
+Block-respecting C11 M-matrix: 20 columns, nullity 2; normalized false table also passes the chosen single-point consistency rows.
+E(F13), order 19: 379 direct group-law shifts; all 17 nonsingular evaluations recovered the eight labeled points.
+Packet orientation: 40 symbol-pair patterns across five group counts; all shift localities, tile valuations and class multiplicities passed.

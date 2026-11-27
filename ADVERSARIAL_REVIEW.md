@@ -1,0 +1,24 @@
+# Adversarial review
+
+This is a second, skeptical pass by the research author, backed by independent finite computations. It is neither an external referee report nor a kernel certification.
+
+| Challenge | Disposition |
+|---|---|
+| Different bases could have identical sums of distinct weights. | They can. Only uniqueness of the **minimum** matters. The greedy basis reaches each rank first and has coordinatewise minimal ordered weights. Every competing basis is strictly larger somewhere. |
+| Squaring minors can cancel over a prime field. | The least key-sum coefficient is a single nonzero square. A specialization can still cancel. Exhaustive tests find 318 singular points among 625 on a small fixture, including all ones. The asymptotic probability argument explicitly requires a bigger sample set relative to degree. |
+| Duplicate block points, tuple permutations, or $P=Q$ break rank. | Labels index columns, while keys index ordered rows. Explicit rows tie duplicate columns to their decompositions. Even parallel row vectors get distinct keys. The consistency argument applies also to $Q=O$ or $Q=P$. |
+| Hash address versus table column can disagree. | Keep each slot's own parity-specific canonical index on its dedicated wires. An indicator pin constrains a canonical point in the correct block. The proof uses injectivity within a block and preserves the order of all four occurrences per block. |
+| A low-degree polynomial may vanish at every base-field point. | Split the address into digits and choose $D^2<r$ with $2Ns(D-1)<D^2/2$ eventually. Prove formal nonvanishing before applying the finite-set root bound. |
+| Matrix specialization requires field extensions or exponential-degree interpolation. | Each specified evaluation uses only the prime field and repeated squaring. Interpolating the entire polynomial would be too costly and is excluded from the algorithm. |
+| The modular field answer cannot be lifted through $2^P$. | Canonical nonnegative digits are contracted and bounded over the integers; conversion to $\mathbb F_r$ follows exact recovery. Keeping all $b$-bit coefficients unsplit would violate the linear precision cap. |
+| Arbitrary tables could be hidden in a tensor entry program. | The new address tensors only do public powering on at most $\lceil\sqrt b\rceil$ address bits. Arbitrary table coefficients $y_j$ occur outside the graph in the optional one-pin separator. Input descriptions, $N^2$ entries and dense elimination are all charged. |
+| The minimum basis costs exponential time to construct. | Greedy proves a coefficient is nonzero. The machine never enumerates the row family or constructs this basis. It checks nonsingularity at its chosen point by exact elimination. |
+| Random draws have been treated as free derandomization. | The complete challenge has $O(b)$ bits, verified success, and bounded time per trial. Independent retries have unbounded worst-case count. Advice is explicitly nonuniform. |
+| The scalar recursion might distribute all siblings in the improved expansion. | The root is the only distributed node. Pinned descendants multiply 64 scalar answers sequentially; their mode and inherited-precision costs are charged. The new root's label array still has polynomial size. |
+| Splitting the lookup is being ruled out for the actual log vectors. | The rank and information lower bounds quantify over arbitrary legal tables in specified models. Surviving candidates may have added structure. Neither bound excludes the symbolic matrix method. |
+| A single norm formally evaluates the weighted separator. | Its split coefficient module can have $2^\beta$ coordinates. Local jets repair the geometric condition but do not supply a cheap trace in the dyadic ring. |
+| Remark 3.4 alone determines the logs. | The explicit $C_{11}$ nullity-two example passes the specified consistency rows. The determinant bound saves some possible cuts and gives no universal nullity-one theorem. |
+| The Lean badge establishes that the closed scalar theorem formally implies every step. | The actual premise explicitly supplies both a closed scheduled machine and a boundary-aware step interface. An alternative implementation statement is open. No transitive axiom list was available for the accepted main proof. |
+| The new result improves the uniform deterministic ECDLP exponent. | **Objection sustained.** Neither deterministic point selection nor a faster residual contraction was proved. The strongest end-to-end result here is randomness-efficient Las Vegas on the prime-order intersection. |
+
+The finite verifier cross-checks matrix products computed by two different algorithms, including signs, same-slot pins, $0^0$, unused rows and singular matrices. It also checks Cauchy–Binet against individual minors and integer digit reconstruction before taking a field residue. It does not implement the asymptotic tensor contractor.
