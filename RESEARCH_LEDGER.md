@@ -24,7 +24,7 @@
 
 The finite checks include 490 nonzero one-candidate evaluations with extracted witnesses, 379 fixed-shift pairs computed by the elliptic group law over $\mathbb F_{13}$, and packet orientation checks at five group counts. On the order-19 curve each of 17 nonsingular evaluations recovered all eight labeled columns. The packet fixtures cover equal and unequal symbol pairs under positive and negative shifts.
 
-Run the following from the repository root using its Python dependencies. The first script reuses the existing curve fixtures. The second records mutable public source evidence and requires network access unless supplied a directory containing the saved HTML pages.
+Run the following from the repository root using its Python dependencies. The three fixed-shift scripts run on finite fixtures. The separate `inspect_fixed_shift_formal.py` script reads public declaration pages online. To replay saved pages offline, pass `--cache DIR` with the matching `lzr-*.html` files.
 
 ~~~sh
 python -B checks/check_fixed_shift_gram.py
@@ -37,4 +37,6 @@ python -B reproduce.py --source-archives /path/to/original/archives
 typst compile research/fixed_shift_gram/manuscript.typ
 ~~~
 
-Compare the new transcripts in evidence/fixed_shift_gram.txt and evidence/fixed_shift_formal.txt. The existing archive manifest and v4 paper are preserved at the source revision identified in COMPARATIVE_AUDIT.md. The editable paper in this branch is research/fixed_shift_gram/manuscript.typ.
+Compare the first four outputs with their recorded transcripts in command order. The formal transcript records public declaration hashes. [Gram](evidence/fixed_shift_gram.txt) · [Deterministic points](evidence/fixed_shift_points.txt) · [Neighboring fibers](evidence/neighboring_fibers.txt) · [Public declarations](evidence/fixed_shift_formal.txt)
+
+The comparative audit identifies the source revision for the archive and the v4 paper. [Comparative audit](COMPARATIVE_AUDIT.md) · [Fixed-shift manuscript](research/fixed_shift_gram/manuscript.pdf) · [Editable source](research/fixed_shift_gram/manuscript.typ)

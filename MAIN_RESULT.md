@@ -1,6 +1,8 @@
 # A lookup-free polynomial certificate for fixed-shift relations
 
-Research branch, 27 November 2026. Logarithms in resource bounds are binary. The deterministic result is a symbolic rank certificate and an algorithm to evaluate it at a specified point. Random selection gives a Las Vegas theorem with a linear expected random-bit budget.
+Fixed-shift manuscript, 27 November 2026. [PDF](research/fixed_shift_gram/manuscript.pdf) · [Typst source](research/fixed_shift_gram/manuscript.typ)
+
+Logarithms in resource bounds are binary. The deterministic result is a symbolic rank certificate and an algorithm to evaluate it at a specified point. Random selection gives a Las Vegas theorem with a linear expected random-bit budget.
 
 ## Theorem
 
@@ -14,7 +16,7 @@ The theorem uses the whole prime-order group. No finite-packet A.1 assumption, c
 
 ## Construction and rank
 
-Use the deterministic seed, indexed blocks and canonical decompositions of LZR Theorem 3.1. Retain duplicate points across blocks as distinct columns. Set $N=N_0+2$, including distinct columns for $P,Q$. Form the explicit $N+1$ consistency and normalization rows from (4.1). Append conceptually every ordered fixed-shift pair from (4.2). Write $A$ for the resulting matrix of row vectors $a_i^t$ and $c_i$ for their right sides. Occurrences on opposite sides contribute opposite signs. The valid system contains $\lambda$. Two tuples for $g$ share a successor at $g+P$, so any solution assigns both the same label sum. Advancing by $P$ increments this function by one. The row at $P$ fixes the offset. The consistency rows then fix every column. Hence $\ker A=0$.
+Use the deterministic seed, indexed blocks and canonical decompositions of LZR Theorem 3.1. Retain duplicate points across blocks as distinct columns. Set $N=N_0+2$, including distinct columns for $P,Q$. Form the explicit $N+1$ consistency and normalization rows from (4.1). Append conceptually every ordered fixed-shift pair from (4.2). Write $A$ for the resulting matrix of row vectors $a_i^t$ and $c_i$ for their right sides. Occurrences on opposite sides contribute opposite signs. The valid system contains $\lambda$. Two tuples for $g$ share a successor at $g+P$, so any solution assigns both the same label sum. Advancing by $P$ increments this function by one. The row at $P$ fixes the offset. The consistency rows then fix every column. Hence $\ker A=0$. [LZR, Theorem 3.1 and its decomposition procedure](https://eprint.iacr.org/2026/3020.pdf#page=11)
 
 Concatenating the $4m$ fixed-length slot addresses gives a distinct $\beta$-bit integer $v$ for each ordered pair. Set $C=N+1$. Give the explicit rows keys $0,\ldots,C-1$, and the pair rows keys $C+v$. Define
 
@@ -34,11 +36,11 @@ For the advice statement use canonical field coordinates for the boundedly many 
 
 ## Bit cost of a single evaluation
 
-Add the explicit rows directly. On the other rows $a_j$ is a signed sum of at most $4m$ indicators of a slot equaling column $j$. Expand $a_j a_k$ into at most $16m^2$ signed pairs of point pins. Incompatible pins on one slot give zero, and compatible identical pins give a single pin. For the right side use single pins since every shift row has $c_i=1$. Apply signs outside the counts. Each summand is the weighted count of ordinary shift pairs under at most two pins. Parsimony follows from the full group law, including repeats, inverses and identities, and the per-block address injection.
+Add the explicit rows directly. On the other rows $a_j$ is a signed sum of at most $4m$ indicators of a slot equaling column $j$. Expand $a_j a_k$ into at most $16m^2$ signed pairs of point pins. Incompatible pins on one slot give zero, and compatible identical pins give a single pin. For the right side use single pins since every shift row has $c_i=1$. Apply signs outside the counts. Each summand is the weighted count of ordinary shift pairs under at most two pins. Parsimony follows from the full group law, including repeats, inverses and identities, and the per-block address injection. [LZR, Lemma 2.5](https://eprint.iacr.org/2026/3020.pdf#page=10)
 
 Within each base-$D$ digit cut the address into contiguous pieces of length at most $\lceil\sqrt b\rceil$, also splitting at slot boundaries. A piece of value $v'$ starting at bit $j$ of digit $i$ contributes the canonical field representative of $X_i^{2^j v'}$, using binary powering and $0^0=1$. There are $q=O(\sqrt b+m+1)$ pieces. Attach a tensor per piece to the dedicated wires and subdivide as usual. This graph has $E=O(mb)$ Boolean edges, polynomial description length, and maximum degree $O(b^{3/4}+\sqrt b)$. Entry time is polynomial in $b,m$.
 
-The contractor works modulo powers of two. Choose $S=\Theta(mb)$ large enough to dominate $E+b$. Split each nonnegative field representative into digits of $t=\max(1,\lfloor S/(q+1)\rfloor)$ bits. There are $J=\lceil\lceil\log r\rceil/t\rceil$ positions. Enumerate the $J^q$ choices of one digit per weight. Every such scalar contraction is an integer less than $2^{E+qt+1}$. Apply Theorem 2.2 with scalar ring, precision $E+qt+1=O(S)$ and size parameter a sufficiently large constant times $S$. Take the canonical integer residue, multiply by $2^{t\sum j_v}\bmod r$, and sum modulo $r$. Apply the common public factor $M_C$ once. This proves exact recovery without a ring map from dyadic residues to $\mathbb F_r$. The logarithm of the digit enumeration overhead is $O(q\log(b+2))$.
+The contractor works modulo powers of two. Choose $S=\Theta(mb)$ with $S\ge E+b+q+1$. Split each nonnegative field representative into digits of $t=\lfloor S/(q+1)\rfloor\ge1$ bits, so $qt\le S$. There are $J=\lceil\lceil\log r\rceil/t\rceil$ positions. Enumerate the $J^q$ choices of one digit per weight. Every such scalar contraction is an integer less than $2^{E+qt+1}$. Apply Theorem 2.2 with scalar ring, precision $E+qt+1=O(S)$ and size parameter a sufficiently large constant times $S$. Take the canonical integer residue, multiply by $2^{t\sum j_v}\bmod r$, and sum modulo $r$. Apply the common public factor $M_C$ once. This proves exact recovery without a ring map from dyadic residues to $\mathbb F_r$. The logarithm of the digit enumeration overhead is $O(q\log(b+2))$.
 
 For growing $m\le L^{O(1)}$, in the regime $b/m\gg\log b$, log bit time for evaluations, Stage I, explicit rows, elimination and verification is
 
@@ -46,7 +48,7 @@ $$
  O\left(b/m+mb/\sqrt{\log(mb)}+(\sqrt b+m)\log(b+2)\right).
 $$
 
-Each count streams in polynomial space; matrices, tables and sequential tape scans cost polynomial resources in $N,b$. Balance the first two terms at $m=\Theta(L^{1/4})$. No counterexample search or candidate iteration is needed.
+Each scalar contraction uses polynomial space in the network size and description length. Matrices, tables and sequential tape scans cost polynomial resources in $N,b$. Balance the first two terms at $m=\Theta(L^{1/4})$. [LZR, Theorem 2.2](https://eprint.iacr.org/2026/3020.pdf#page=7)
 
 ## Uniform worst-case question
 
@@ -56,4 +58,4 @@ The follow-up in [Deterministic points](DETERMINISTIC_POINTS.md) gives an explic
 
 At the prescribed generator itself, the same note proves full shift rank for two partitions of the unweighted sum. One retains each source tuple, and the other retains its group value and one slot on each side. The guarded branch still requires rank after weighting each ordered pair at the listed points and summing across all classes.
 
-The construction and each specified evaluation are deterministic. Enumerating the full interpolation grid costs $2^{O(b)}$ by this proof. An explicit hitting list constructible in $2^{O(b/L^{1/4})}$ time, of at most that cardinality and guaranteed to contain a nonsingular specialization for each eligible input, would give the target uniform worst-case bound. A list may depend on the input if its construction is charged. The original LZR separator remains a worst-case fallback.
+The construction and each specified evaluation are deterministic. Enumerating the full interpolation grid costs $2^{O(b)}$ by this proof. A deterministic list whose evaluations stack to full column rank for every eligible input would give the target uniform worst-case bound if construction and testing together cost $2^{O(b/L^{1/4})}$ bit time. A single nonsingular evaluation is sufficient, and several singular evaluations can also attain full rank together. A list may depend on the input if its construction is charged. The original LZR separator remains a worst-case fallback.
