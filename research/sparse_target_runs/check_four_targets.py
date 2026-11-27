@@ -2,7 +2,7 @@
 
 import json
 from fractions import Fraction
-from itertools import product
+from itertools import combinations, product
 from math import isqrt, prod
 from pathlib import Path
 
@@ -61,22 +61,52 @@ def rank(matrix, r):
     return nmod_mat(matrix.tolist(), r).rank()
 
 
+def verify_two_point_contrast(source, blocks, shift, matrices, step, expected_counts):
+    """Check the antisymmetric mode on two tagged translates of the same pair."""
+    r = len(matrices)
+    pair = source[0]
+    assert len(pair) == 2 and np.array_equal(pair, source[1])
+    v = np.zeros(sum(map(len, blocks)), dtype=np.int64)
+    for x, sign in zip(pair, (1, -1)):
+        v[np.flatnonzero(blocks[0] == (x+shift) % r).item()] = sign
+        v[2 + np.flatnonzero(blocks[1] == x).item()] = -sign
+    # Removing two pins from the four slots on the duplicate blocks leaves
+    # two copies of the half-list source[1:]. Use integer cyclic convolution.
+    remaining = sum_counts([*source[1:], *source[1:]], r)
+    weights = np.roll(remaining, (2*shift + int(pair.sum())) % r)
+    for weight, matrix in zip(weights, matrices):
+        assert np.array_equal(matrix @ v, 2*weight*v)
+    at_run = [int(weights[k*step % r]) for k in range(len(expected_counts))]
+    assert at_run == expected_counts and all(w % r == 0 for w in at_run)
+    print(f'shared contrast completion counts={at_run}')
+
+
 def enumerate_target(t, buckets, logs, block_sizes, r):
     """Join all ordered half-tuples and independently count the pinned rows."""
     m, n = len(block_sizes), len(logs)
-    pairs = []
+    total = sum(len(left)*len(buckets[(t-s) % r]) for s, left in enumerate(buckets))
+    sample_indices = np.linspace(0, total-1, min(16*n, total), dtype=int)
+    sample = np.empty((len(sample_indices), 2*m), dtype=np.int64)
+    matrix = np.zeros(n*n, dtype=np.int64)
+    pins = np.zeros(n, dtype=np.int64)
+    offset = 0
     for s, left in enumerate(buckets):
         right = buckets[(t-s) % r]
-        if len(left) and len(right):
-            pairs.append(np.column_stack((np.repeat(left, len(right), axis=0),
-                                          np.tile(right, (len(left), 1)))))
-    slots = np.vstack(pairs)
-    assert np.all(logs[slots].sum(axis=1) % r == t)
-    matrix = np.zeros(n*n, dtype=np.int64)
-    pins = np.bincount(slots[:, :m].ravel(), minlength=n)
-    for pin in slots[:, :m].T:
-        for slot in slots.T:
-            matrix += np.bincount(pin*n + slot, minlength=n*n)
+        if not len(left) or not len(right):
+            continue
+        slots = np.column_stack((np.repeat(left, len(right), axis=0),
+                                 np.tile(right, (len(left), 1))))
+        assert np.all(logs[slots].sum(axis=1) % r == t)
+        columns = np.ascontiguousarray(slots.T)
+        for pin in columns[:m]:
+            pins += np.bincount(pin, minlength=n)
+            row_index = pin*n
+            for slot in columns:
+                matrix += np.bincount(row_index+slot, minlength=n*n)
+        lo, hi = np.searchsorted(sample_indices, [offset, offset+len(slots)])
+        sample[lo:hi] = slots[sample_indices[lo:hi]-offset]
+        offset += len(slots)
+    assert offset == total
 
     # A certified lower bound on the full incidence rank from genuine rows.
     # The m-1 block contrasts and the shifted logarithm give the upper bound.
@@ -87,13 +117,12 @@ def enumerate_target(t, buckets, logs, block_sizes, r):
         forced[offsets[-2]:, j] = -1
     forced[:, -1] = (2*m*logs-t) % r
     assert rank(forced, r) == m
-    sample = slots[np.linspace(0, len(slots)-1, min(16*n,len(slots)), dtype=int)]
     rows = np.zeros((len(sample), n), dtype=np.int64)
     for slot in sample.T:
         rows[np.arange(len(sample)), slot] += 1
     assert not np.any(rows @ forced % r)
     assert rank(rows, r) == n-m
-    return matrix.reshape(n,n), len(slots), int(np.count_nonzero(pins % r == 0))
+    return matrix.reshape(n,n), total, int(np.count_nonzero(pins % r == 0))
 
 
 def verify(case):
@@ -138,10 +167,12 @@ def verify(case):
     print(f'half-tuples={w}, energy={energy}, half-sum support={len(hist)}, Phi={phi}')
 
     matrix = pinned_matrices(blocks,r)
-    nullities = [n-rank(matrix(t),r) for t in range(r)]
-    run_logs = {k * step % r for k in range(length)}
+    matrices = [matrix(t) for t in range(r)]
+    nullities = [n-rank(mat,r) for mat in matrices]
+    # The shared-mode witnesses also have documented exceptions outside the run.
+    expected_bad = set(case['exceptional_logs'])
     for t, value in enumerate(nullities):
-        if t not in run_logs:
+        if t not in expected_bad:
             assert value == m, ("ordinary target nullity", t, value, m)
     exceptional = [t for t,v in enumerate(nullities) if v>m]
     assert exceptional == case['exceptional_logs']
@@ -149,7 +180,7 @@ def verify(case):
     for k in range(length):
         t = k*step % r
         direct, total, missing = enumerate_target(t,buckets,logs,sizes,r)
-        assert np.array_equal(matrix(t),direct)
+        assert np.array_equal(matrices[t],direct)
         assert nullities[t] == case['nullities'][k] > m
         assert missing == case['zero_pins_mod_r'][k]
         sampled.append(direct)
@@ -160,6 +191,13 @@ def verify(case):
     next_nullity = nullities[length*step % r]
     assert next_nullity == case['next_nullity']
     print(f'exceptional logs={exceptional}, joint nullity={joint}, nullity at {length}P={next_nullity}')
+    if 'contrast_counts' in case:
+        verify_two_point_contrast(source, blocks, shift, matrices, step, case['contrast_counts'])
+    if 'every_pair_nullity' in case:
+        pair_nullity = case['every_pair_nullity']
+        for a, b in combinations(matrices, 2):
+            assert n-rank(np.vstack((a,b)),r) == pair_nullity
+        print(f'all {r*(r-1)//2} distinct target pairs have joint nullity {pair_nullity}')
 
 
 if __name__ == '__main__':

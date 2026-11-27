@@ -21,3 +21,33 @@ k=2, log=20, tuples=177406, incidence rank=25, pinned rank=24, nullity=6, zero p
 k=3, log=30, tuples=175188, incidence rank=25, pinned rank=24, nullity=6, zero pins mod r=1
 k=4, log=40, tuples=172955, incidence rank=25, pinned rank=24, nullity=6, zero pins mod r=2
 exceptional logs=[0, 10, 20, 30, 40], joint nullity=4, nullity at 5P=5
+r=67, m=4, T=6, sizes=[2, 10, 10, 10], P=(18, 9)
+half-tuples=2000, energy=60884, half-sum support=67, Phi=5621207153621045549/5599351508706312192
+k=0, log=0, tuples=59653, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=1, log=22, tuples=59614, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=2, log=44, tuples=59323, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=3, log=66, tuples=59323, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=4, log=21, tuples=59614, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=5, log=43, tuples=59653, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+exceptional logs=[0, 21, 22, 43, 44, 66], joint nullity=3, nullity at 6P=4
+all 2211 distinct target pairs have joint nullity 3
+r=109, m=6, T=4, sizes=[2, 2, 4, 6, 8, 8], P=(4, 66)
+half-tuples=6144, energy=348112, half-sum support=109, Phi=2674241382816338354696941832713/2640492748413577099820018958336
+k=0, log=0, tuples=346245, incidence rank=24, pinned rank=23, nullity=7, zero pins mod r=0
+k=1, log=20, tuples=345936, incidence rank=24, pinned rank=23, nullity=7, zero pins mod r=1
+k=2, log=40, tuples=346154, incidence rank=24, pinned rank=23, nullity=7, zero pins mod r=0
+k=3, log=60, tuples=346154, incidence rank=24, pinned rank=23, nullity=7, zero pins mod r=0
+k=4, log=80, tuples=345936, incidence rank=24, pinned rank=23, nullity=7, zero pins mod r=1
+k=5, log=100, tuples=346245, incidence rank=24, pinned rank=23, nullity=7, zero pins mod r=0
+exceptional logs=[0, 11, 20, 23, 33, 40, 60, 67, 77, 80, 89, 100], joint nullity=6, nullity at 6P=7
+shared contrast completion counts=[86437, 86328, 86437, 86437, 86328, 86437]
+r=271, m=7, T=4, sizes=[2, 2, 4, 6, 6, 6, 8], P=(40, 87)
+half-tuples=27648, energy=2872400, half-sum support=271, Phi=193506126831541866107521113412050196229891/183574601516103525711898214400000000000000
+k=0, log=0, tuples=2799562, incidence rank=27, pinned rank=26, nullity=8, zero pins mod r=0
+k=1, log=150, tuples=2850113, incidence rank=27, pinned rank=26, nullity=8, zero pins mod r=0
+k=2, log=29, tuples=2809147, incidence rank=27, pinned rank=26, nullity=8, zero pins mod r=0
+k=3, log=179, tuples=2809147, incidence rank=27, pinned rank=26, nullity=8, zero pins mod r=0
+k=4, log=58, tuples=2850113, incidence rank=27, pinned rank=26, nullity=8, zero pins mod r=0
+k=5, log=208, tuples=2799562, incidence rank=27, pinned rank=26, nullity=8, zero pins mod r=0
+exceptional logs=[0, 29, 58, 86, 103, 105, 122, 150, 179, 208, 236, 243], joint nullity=7, nullity at 6P=7
+shared contrast completion counts=[699451, 714085, 701348, 701348, 714085, 699451]

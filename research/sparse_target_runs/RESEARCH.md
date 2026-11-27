@@ -1,4 +1,9 @@
-# Four and five consecutive targets with excess pinned nullity
+# Consecutive targets with excess pinned nullity
+
+Six consecutive targets can also lose rank together. At orders 109 and 271
+an explicit nonconstant vector survives all six pinned matrices. A seed at order
+67 has the same run length while every distinct target pair has optimal shared
+kernel. [Six-target results and the original-parameter limitation](SIX_TARGETS.md)
 
 ## Four targets at order 223
 
