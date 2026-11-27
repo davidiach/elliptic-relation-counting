@@ -1,0 +1,36 @@
+SUBSPACE PROBES AND SHORT-DEPENDENCY CERTIFICATES
+q=2, d=3, dictionaries=127, subspaces=8, tests=2032, covered=765, defects checked=2555
+q=3, d=3, dictionaries=75, subspaces=14, tests=2100, covered=824, defects checked=7528
+4132 probe tests, 1589 covering certificates, 10083 exact short defects; max extracted rank 5
+3024 projective defects and 70 half-density bound checks
+Full and projective certificates both rejected a wrong syndrome and a weight-two witness at radius one.
+
+DIRECT-SUM PROJECTIVE COVER CONTROLS
+q=2, w=1, ell=4, K=15, exact e=11, information-set lower bound=11
+q=3, w=1, ell=3, K=13, exact e=10, information-set lower bound=10
+q=2, w=2, ell=6, K=14, exact e=8, information-set lower bound=5
+q=3, w=2, ell=4, K=8, exact e=4, information-set lower bound=3
+q=2, w=3, ell=6, K=9, exact e=3, information-set lower bound=1
+
+CERTIFIED SHORT-DEPENDENCY PEELING
+100 exact finite peeling certificates; 13 multi-round rescues
+path/core q=2, w=1, K=10, peeling rounds=[2, 2, 2, 1], E=1, probes=7, absent=4
+path/core q=3, w=2, K=10, peeling rounds=[2, 2, 2, 1], E=1, probes=40, absent=29
+affine-line design t=3, a=3, q=2, w=1, d=27, K=117, full nullity=90, E=0, probes=3, absent=3
+affine-line design t=7, a=2, q=2, w=2, d=49, K=56, full nullity=7, E=0, probes=7, absent=7
+
+PLANTED HIGH-GROWTH SPARSE-SPAN DICTIONARIES
+q=2, d=16, K=40, Delta=3, L=8, planted=24, all radii=[(1, 41, 41, 41, 0), (2, 818, 821, 525, 0), (3, 9951, 10701, 2445, 23)]
+q=2, d=21, K=96, Delta=4, L=16, planted=64, all radii=[(1, 97, 97, 97, 0), (2, 4651, 4657, 3441, 2), (3, 142303, 147537, 55601, 772)]
+q=3, d=12, K=35, Delta=3, L=7, planted=21, all radii=[(1, 71, 71, 71, 0), (2, 2429, 2451, 1415, 8), (3, 51237, 54811, 8415, 82)]
+q=5, d=12, K=20, Delta=3, L=4, planted=12, all radii=[(1, 81, 81, 81, 0), (2, 3061, 3121, 817, 0), (3, 70253, 76081, 1329, 0)]
+289130 sparse patterns enumerated, 67790 injective formal signatures, 16 exact collision inequalities
+
+UNIFORM MATCHING MARGINALS AND POLYNOMIAL/RANK CONTROLS
+q=2, shape=2x2, singular fraction=10/16
+q=3, shape=2x2, singular fraction=33/81
+q=5, shape=2x2, singular fraction=145/625
+q=3, shape=2x3, singular fraction=105/729
+353 exact matching assignments, 1451 matrix rank comparisons, 1502 nonzero polynomial zero-count checks
+
+All checks passed.
