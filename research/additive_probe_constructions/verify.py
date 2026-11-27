@@ -167,7 +167,13 @@ def check_cycles():
             # Translate the first list; the same witnesses cover the translated H.
             sets[0]={add(a,shift,p) for a in sets[0]}
             assert all(len(A)<=n for A in sets) and shift in sets[0]
-            if m==2: assert {add(a,shift,p) for a in H}<=sumsets(sets,p)
+            # Check the final translated lists against every prescribed point.
+            split = m // 2
+            left = sumsets(sets[:split], p)
+            right = sumsets(sets[split:], p)
+            for point in H:
+                target = add(point, shift, p)
+                assert any(sub(target, a, p) in right for a in left), ("uncovered target", target)
             total+=1
         print(f'r={p} m={m} n={n} k={k} threshold={s} extra/pair={g} cover size={K}')
     print(f'{total} complete constructed covers; {cycles} disjoint cycles.')
