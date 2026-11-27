@@ -1,0 +1,5 @@
+Integral-lattice theorem: 50 full-support fixtures; all three Smith forms exact; 150 target-augmentation rank checks; maximum distinct shift rows 314.
+Order-13 curve, copies per block=1: all individual target rows ambiguous for shifts [3, 4, 5, 6, 7, 8, 9, 10]; distinct target-row counts [26, 26, 26, 26, 26, 26, 26, 26]; rational basis determinant ±13, modular rank 5/6.
+Order-13 curve, copies per block=2: all individual target rows ambiguous for shifts [5, 6, 7, 8]; distinct target-row counts [526, 528, 528, 526]; rational basis determinant ±13, modular rank 5/6.
+Exact Gram trade: 11 primes through 65 bits (multiplicities compressed); identical Gram and RHS, full rational rank, modular ranks n−1 versus n, squared row norm <=11.
+Oracle fixture: 8 hidden-block possibilities of 64 rows; exact whole-block and untouched-prefix replies agree.
