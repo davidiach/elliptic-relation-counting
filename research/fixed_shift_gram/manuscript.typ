@@ -1,6 +1,10 @@
 #let title = [A polynomial certificate for deterministic elliptic-curve relation systems]
-#let author = "David Iach"
-#set document(title: "A polynomial certificate for deterministic elliptic-curve relation systems", author: author, date: datetime(year: 2026, month: 11, day: 27))
+#let project-credit = "David Iach, project lead and repository maintainer"
+#set document(
+  title: "A polynomial certificate for deterministic elliptic-curve relation systems",
+  description: "Research report of the Elliptic Relation Counting Project. " + project-credit + ".",
+  date: datetime(year: 2026, month: 11, day: 27),
+)
 #set page(paper: "a4", margin: (x: 29mm, top: 23mm, bottom: 23mm), numbering: "1",
   header: context if counter(page).get().first() > 1 [
     #set text(size: 8.5pt, fill: luma(85))
@@ -26,13 +30,19 @@
   #set par(justify: false)
   #text(size: 21pt, weight: "semibold")[#title]
   #v(0.5em)
-  #text(size: 12pt)[#author] \
-  #text(size: 10pt)[Elliptic Relation Counting Project · 27 November 2026]
+  #text(size: 12pt)[Elliptic Relation Counting Project] \
+  #text(size: 10pt)[#project-credit] \
+  #text(size: 10pt)[27 November 2026]
 ]
 #v(0.55em)
 #block(inset: (x: 6mm))[
   #set text(size: 10pt)
   *Abstract.* Given a prime-order elliptic-curve group over a prime field, the relations between ordered representations of neighboring points determine a table of discrete logarithms. Directly summing their outer products can lose rank in the scalar field. We assign each ordered pair a monomial weight and prove that the resulting matrix polynomial has nonzero determinant. Its entries require counts with at most two prescribed slots. Under the closed Boolean tensor-contraction bound of Liu, Zhang and Ren, a single random specialization shared by all entries yields a Las Vegas algorithm whose expected bit time has binary logarithm $O(b slash (log_2 b)^(1 slash 4))$ and whose expected random-bit cost is $O(b)$, where $b$ is the field bit length. The full field grid suffices deterministically. A uniform choice of evaluations with the same time bound remains open.
+]
+
+#block(inset: (x: 6mm))[
+  #set text(size: 10pt)
+  *Contributions and verification.* AI agents helped develop the mathematical arguments and the computational experiments. Codex revised the manuscript and reran the checks for the fixed-shift matrices, the deterministic evaluation lists, and the neighboring fibers. Their counts and ranks matched the recorded outputs. A separate run reproduced every entry in @pinned. These checks cover finite examples. Independent human verification of the general proof of Theorem 1 remains undocumented.
 ]
 
 = Introduction
@@ -155,7 +165,7 @@ The sparse-target experiments ask a related question with a different matrix. Fo
 
 There are constructive results for restricted inputs. Two lists of size at most $n$ admit an explicit probe set of size $n^(1+o(1))$ as $n$ tends to infinity with $n=r^(o(1))$. A carry-aware digit lift gives a related sparse-span problem. Hidden bounded-rank matrix dictionaries and dictionaries with a supplied tree of small linear interfaces admit structured solutions. The general growing-arity setting still requires either an efficient uniform probe construction or a different argument for full rank. A short stack of evaluations in the original certificate would also suffice.
 
-*Data, proofs and attribution.* The #artifact("checks")[verification programs] and #artifact("evidence")[recorded transcripts] accompany the proofs. The #artifact("research/sparse_target_runs")[sparse-target data] include the affine seeds and an independent enumeration of the pinned entries. The #artifact("research")[research supplement] contains the proofs for the alternative reductions. David Iach leads and maintains the project. The derivations, synthesis and experiments used AI assistance. The complexity estimates assume the contraction theorem. The finite checks and the public declaration audit do not constitute a formal proof of that premise.
+*Data and verification records.* The #artifact("checks")[verification programs] and #artifact("evidence")[recorded transcripts] give the finite counts and ranks. The #artifact("research/sparse_target_runs")[sparse-target data] include the affine seeds and an independent enumeration of the pinned entries. The #artifact("research")[research supplement] gives the proofs for the alternative reductions. The #artifact("COMPARATIVE_AUDIT.md")[formal-source audit] identifies the public theorem statements inspected. The complexity estimates assume the closed contraction bound of LZR.
 
 #heading(numbering: none)[Appendix. A smaller partial expansion]
 
