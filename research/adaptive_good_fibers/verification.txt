@@ -1,0 +1,22 @@
+The verifier rejected optimized Python before producing output.
+Two-slot collision at sum 30 rejected. Only length-four signed patterns detected it. The collision-free control passed.
+Translation validation rejected scalar sums, deleted or misplaced slots, a changed pin, an incorrect shift and an incomplete family.
+The rectangle boundary passed and a smaller positive mass failed. Malformed, off-code and equal-residue score witnesses were rejected.
+Direct shared-pin checks: 31080 integer energy entries, including strength four and empty blocks; 720 signed relation-pattern comparisons; 14 finite girth controls.
+Actual affine prefix E/F5, order 7: 497 mean inequalities, 70 pattern bounds, 30 exact bit-prefix identities. Sizes [3, 3, 3, 3, 3], selected toy penalty 354.2; asymptotic guard False.
+Actual affine law E/F7, order 13, m=6, h=3, deletion 1: 2574 higher-pin mean inequalities and 96 relation-pattern bounds.
+  Synthetic translation cover C13: 3 doubled-tuple shifts [12, 3, 12]; exact prefix identities 23; all targets covered.
+  Synthetic translation cover C19: 3 doubled-tuple shifts [4, 18, 14]; exact prefix identities 28; all targets covered.
+  Synthetic translation cover C31: 2 doubled-tuple shifts [25, 18]; exact prefix identities 15; all targets covered.
+  Synthetic translation cover C47: 2 doubled-tuple shifts [22, 2]; exact prefix identities 23; all targets covered.
+  Actual affine masks E/F13, order 19, h=1, k=1, families=6, block sizes [6, 4, 7, 2, 4]. Checked 21 translations, 231 exact prefix identities and 95 proper-subset targets (relaxed finite threshold).
+  Actual affine masks E/F13, order 19, h=2, k=0, families=1, block sizes [3, 4, 3, 4]. Checked 6 translations, 79 exact prefix identities and 0 proper-subset targets (relaxed finite threshold).
+Translation selection total: 399 exact prefix identities; 463 retained-subset/target cover checks; 3250 translated tuples verified by curve group law.
+Adaptive known-incidence selector: 43 successful finite selections, 91 target requests, 667 exact prefix identities; up to 2 pre-pinned translate slots; 209 expanded shared-pin mean terms checked, 19 real-curve branches (relaxed threshold).
+All 120 measured rectangle probabilities attained the lower bound or exceeded it. All 120 admissible witness pairs had distinct scores in F_q (83 with diffuse blocks). The two-constraint OA control passed.
+Trimmed-cylinder rank controls: 960 exact one/two-pin marginal ratios, 24 exact variance bounds. Distinct-label example: original circular width 5388, trimmed width 378 < 1009, loss 2, modal distance 388/5; actual score extrema 0, 375.
+  b=65536, m=128, h=16, k=2, shift count 3450: conservative seed/cover guard False.
+  b=1048576, m=128, h=16, k=2, shift count 3450: conservative seed/cover guard True.
+  b=2097152, m=256, h=24, k=3, shift count 4682: conservative seed/cover guard True.
+  b=4194304, m=256, h=32, k=4, shift count 3543: conservative seed/cover guard True.
+  b=16777216, m=512, h=48, k=6, shift count 4767: conservative seed/cover guard True.
