@@ -1,0 +1,7 @@
+r=223, m=5, T=6, sizes=[2, 8, 8, 8, 10], P=(204, 101)
+half-tuples=10240, energy=473400, half-sum support=223, Phi=2372513226408939176812671967937/2197618292246305904679118307328
+k=0, log=0, tuples=469952, incidence rank=31, pinned rank=30, nullity=6, zero pins mod r=0
+k=1, log=120, tuples=469728, incidence rank=31, pinned rank=30, nullity=6, zero pins mod r=0
+k=2, log=17, tuples=469728, incidence rank=31, pinned rank=30, nullity=6, zero pins mod r=0
+k=3, log=137, tuples=469952, incidence rank=31, pinned rank=30, nullity=6, zero pins mod r=0
+exceptional logs=[0, 17, 120, 137], joint nullity=4, nullity at 4P=5
