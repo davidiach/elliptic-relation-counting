@@ -76,7 +76,7 @@ Consequently matched degree-t exact moments, one list annihilating z and the oth
 
 ## 6. Reproduction and limitations
 
-Run from this directory with Python 3.10+ and NetworkX installed (the completed run used Python 3.13.5 and networkx 3.6.1):
+NetworkX 3.6.1 requires Python 3.11 or later and excludes Python 3.14.1. The recorded run used Python 3.13.5. Run these commands from this directory with assertions enabled.
 
     python -m pip install networkx==3.6.1
     python -B graph_base.py

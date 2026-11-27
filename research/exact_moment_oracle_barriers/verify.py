@@ -133,13 +133,16 @@ def check_tags():
         for i in js:
             assert stats(base[i*L:(i+1)*L],d)==stats(mixed[i*L:(i+1)*L],d)
         for _ in range(20):
-            i=rng.choice(free);l,u=sorted(rng.sample(range(len(base)+1),2))
-            if l<=i*L and (i+1)*L<=u:
-                v=tags[i][0]; changed=[v+w for w in J]
-                assert stats(base[i*L:(i+1)*L],d)==stats(changed,d)
-                interval_checks+=1
-            elif u<=i*L or (i+1)*L<=l:
-                interval_checks+=1
+            i = rng.choice(free)
+            lo, hi = sorted(rng.sample(range(len(base)+1), 2))
+            start, stop = i*L, (i+1)*L
+            contains_block = lo <= start and stop <= hi
+            disjoint = hi <= start or stop <= lo
+            if contains_block or disjoint:
+                swapped = base.copy()
+                swapped[start:stop] = [tags[i][0] + row for row in J]
+                assert stats(base[lo:hi], d) == stats(swapped[lo:hi], d), (p, h, i, lo, hi)
+                interval_checks += 1
         print(f'{p} | {h} | {q} | {len(tags)} | {len(base)} | {d} | {norm} | {d-1} | {d} | {violations}')
     print(f'{len(cases)} full tagged rank checks; {interval_checks} interval checks.')
 
@@ -172,6 +175,8 @@ def check_score_support():
             ex+=1
     print(f'{ex} sharp finite-field score distributions.')
 
-if __name__=='__main__':
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Assertions required')
     check_cosets();check_tags();check_score_support()
     print('\nAll checks passed.')

@@ -193,4 +193,7 @@ def main():
         print(f'{p} | {D} | {L} | {viol}/{total} | {M}')
     print(f'{len(ps)} dense fixtures; all path-edge deletions and nonzero scores checked exactly.')
 
-if __name__=='__main__': main()
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Assertions required')
+    main()
