@@ -1,0 +1,10 @@
+r=19: full rank 11/11, summed-family rank 11/11, anchor chi-square=0.00668724, all 9 pin bounds passed.
+r=37: full rank 14/14, summed-family rank 14/14, anchor chi-square=0.00398663, all 12 pin bounds passed.
+r=101: full rank 22/22, summed-family rank 22/22, anchor chi-square=0.00091, all 20 pin bounds passed.
+r=127: full rank 18/18, summed-family rank 18/18, anchor chi-square=0.000381428, all 16 pin bounds passed.
+r=257: full rank 34/34, summed-family rank 34/34, anchor chi-square=0.000229836, all 32 pin bounds passed.
+Anchored translations: 5 fixtures (1 elliptic), 244 wrong candidates, minimum best violation fraction 0.945946, minimum anchor support 1.000000.
+All-displacement sums are an experimental fast path, not a theorem: [(19, 11, 11), (37, 14, 14), (101, 22, 22), (127, 18, 18), (257, 34, 34)]
+Support selector: 1028 translated two-count bundles with genuine zeros covered by 2 starts: [0, 256].
+Elliptic support selector: 171 bundles covered by 1 starts.
+Obstruction on E/F29, order 37: counts 2..7, summed rank 15/16, unchanged with chosen explicit rows, complete stack 16/16, one-start short-list rank 16/16.
