@@ -3,6 +3,7 @@
 *.txt text eol=lf
 *.tex text eol=lf
 *.typ text eol=lf
+*.bib text eol=lf
 *.py text eol=lf
 *.md text eol=lf
 # Preserve the bytes used in historical run hashes on every checkout.

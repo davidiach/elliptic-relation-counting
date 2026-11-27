@@ -1,6 +1,6 @@
 # Testing chord equality without the two half lists
 
-**21 November 2026.** On regular sampled grids the two determinant products modulo $p^2$ can be compared exactly from the seeds without storing either original half list. The best exact time bound obtained here still has log time $b/2+O(b/m+m+\log b)$, with $b=\lceil\log_2p\rceil$. The project's conditional general-prime end-to-end bound remains $(24.00245996+o(1))\,b/(\log_2 b)^{1/4}$. [End-to-end assumptions and accounting](../sampled_slots/README.md)
+**21 November 2026.** On regular sampled grids the two determinant products modulo $p^2$ can be compared exactly from the seeds without storing either original half list. The best exact time bound obtained here still has log time $b/2+O(b/m+m+\log b)$, with $b=\lceil\log_2p\rceil$. The mixed fixed-bit sampler used in this comparison has conditional general-prime log-time bound $(24.00245996+o(1))\,b/(\log_2 b)^{1/4}$. [End-to-end assumptions and accounting](../sampled_slots/README.md)
 
 | Question | Result |
 |---|---|
