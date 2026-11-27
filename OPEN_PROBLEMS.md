@@ -16,4 +16,8 @@ The deterministic list in [Deterministic points](DETERMINISTIC_POINTS.md) reduce
 
 A uniform positive intermediate saving $\delta<1/4$ follows if an instance-specific list is constructible and testable in $2^{O(b/(\log b)^\delta)}$ time. A coefficient improvement in an expected pilot calculation or a lower cost for partial expansion alone does not imply this result.
 
-The follow-up under review in PR 4 proposes homogeneous conditional-mean equations that eliminate the unknown displacement logarithms. Deterministically selecting enough displacements remains open. Its adaptive prime-adic tests also identify cases where rank extraction stalls. [Follow-up proofs and finite checks](https://github.com/davidiach/elliptic-relation-counting/pull/4)
+The short-relations follow-up gives homogeneous conditional-mean equations that eliminate the unknown displacement logarithms. Deterministically selecting enough displacements within its budget remains open. [Short-relations proofs and finite checks](research/short_relations_adaptive_rank/RESEARCH.md)
+
+The quotient reduction poses a separate question. When the product of the explicit list sizes is below the square of the group order, can a deterministic algorithm find a point outside their planar sumset within the required time? Common translations supply the full-coverage input at quarter-power setup cost under the closed-contraction assumption. The avoidance step is still open. [Quotient reduction](research/universal_quotient_compression/RESEARCH.md) · [Coverage result and assumptions](research/translation_cover/RESEARCH.md)
+
+For abstract moment certificates, sharpness at weights four and five is known with multiplicities. Sharpness with the row count below the modulus at these weights remains open. [Constructions and limitations](research/exact_moment_oracle_barriers/moment_rank_boundary/newton_sparse_rank/RESEARCH.md)
