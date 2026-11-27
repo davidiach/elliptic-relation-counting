@@ -4,3 +4,4 @@ Varying affine-cover fixtures: 30 successes, 300 exact averaging checks, 30 fixt
 Joint-only repetition example: ambient 16807, product 2401, support 210, single-shadow support 16807 for both primes; all singleton projections full. Joint initial potential 15625/16807, candidate cap 4, actual peak 3, absent (4, 0, 1, 0, 0).
 All-field full-rank negative: product 4116 < 16807, joint affine relaxation still covers the ambient space.
 Joint-only CRT-code fixture: list sizes [34, 34, 10, 10], product 115600, support 8535, ambient 923521; all singleton projections full. All three balanced unfolding ranks over F101: [404, 404, 403]. Joint potential 747631/923521, cap 4, peak 3, absent (16, 19, 0, 0).
+Bound 2 at potential 2/3 rejected cap 1. Two searches at cap 2 returned (2,) and preserved branch membership.

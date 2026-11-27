@@ -88,34 +88,49 @@ def children(br, j, p, z, states):
 
 
 def choose(branches, ps, cap=None):
-    start=sum(len(br['states'])*br['suf'][0] for br in branches)
+    live = [br['states'] for br in branches]
+    start=sum(len(states)*br['suf'][0] for br,states in zip(branches,live))
     bound=sum(br['L']*prod(br['B']) for br in branches)
     if start>=1 or (cap is not None and bound>cap):
         return None,start,bound,0,0
-    prefix=[];peak=sum(len(br['states']) for br in branches); checks=0
+    prefix=[];peak=sum(map(len,live)); checks=0
     potential=start
     for j,p in enumerate(ps):
         best=None
         allcounts=[0]*len(branches)
         mass=0
         for z in range(p):
-            ns=[children(br,j,p,z,br['states']) for br in branches]
+            ns=[children(br,j,p,z,states) for br,states in zip(branches,live)]
             val=sum(len(st)*br['suf'][j+1] for st,br in zip(ns,branches))
             for i,st in enumerate(ns):allcounts[i]+=len(st)
             mass+=val
             if best is None or val<best[0]:best=(val,z,ns)
-        for br,count in zip(branches,allcounts):
-            assert Fraction(count,p)<=len(br['states'])*br['a'][j]
+        for br,count,states in zip(branches,allcounts,live):
+            assert Fraction(count,p)<=len(states)*br['a'][j]
             checks+=1
         assert mass/p<=potential
-        potential,z,ns=best
+        potential,z,live=best
         assert potential<1
         prefix.append(z)
-        for br,st in zip(branches,ns):br['states']=st
-        peak=max(peak,sum(map(len,ns)))
+        peak=max(peak,sum(map(len,live)))
         assert peak<=bound
-    assert not any(br['states'] for br in branches)
+    assert not any(live)
     return tuple(prefix),start,bound,peak,checks
+
+
+def check_selector_reuse_and_cap():
+    ps = (3,)
+    lists = [[(0,)]]
+    corrections = [(0,), (1,)]
+    br = branch(lists, ps, (2,), corrections)
+    actual = set(convolve(lists, ps, corrections))
+    assert choose([br], ps, cap=1) == (None, Fraction(2, 3), 2, 0, 0), 'cap 1 must reject before searching'
+    first = choose([br], ps, cap=2)
+    assert first[0] == (2,) and first[0] not in actual
+    second = choose([br], ps, cap=2)
+    assert second == first, 'reusing a branch changed the selector result'
+    assert {z for z in product(range(3)) if feasible(br, ps, z)} == actual
+    print(f'Bound {first[2]} at potential {first[1]} rejected cap 1. Two searches at cap 2 returned {first[0]} and preserved branch membership.')
 
 
 def brute_states(br, ps, z):
@@ -296,3 +311,4 @@ def run_code_fixture():
 
 if __name__=='__main__':
     run_small();run_union();run_repetition();run_code_fixture()
+    check_selector_reuse_and_cap()
