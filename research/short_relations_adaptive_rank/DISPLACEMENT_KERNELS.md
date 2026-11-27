@@ -93,3 +93,6 @@ These masks implement the finite coordinate rule. The large-input seed construct
 Run `python -B check_displacement_kernels.py` in this directory; see [the transcript](displacement_kernel_verification.txt). The verifier computes ranks over the group-order field and independently enumerates raw tuple incidences for every deficient class and each named witness. It prunes a longer list only when a subset already has full rank. The original fixture totals can be reproduced using `python -B check_short_relations.py`.
 
 Run `python -B check_seed_potential.py` for the exhaustive minimizer and deterministic-prefix comparisons. The [seed transcript](seed_potential_verification.txt) records their results.
+
+
+[Simultaneous pin loss](SIMULTANEOUS_PIN_LOSS.md) gives a sufficient connectedness condition for one averaged displacement, classifies the extra kernels for blocks missing one group element, and exhibits a shared nonaffine direction invisible at every shift in a family outside the resilient seed regime.
