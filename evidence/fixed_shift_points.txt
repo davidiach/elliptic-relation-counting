@@ -1,0 +1,7 @@
+E(F13): 379 shifts; explicit projection rank 7; shift-row rank 4; original stack rank 8 with 2 retained points out of 9.
+Two singular evaluations (six-bit groups) on the same curve: (0, 0, 0) rank 1, (1, 4, 0) rank 7, stacked rank 8.
+Parity-affine curve blocks: sizes 4 and 6, 18/19 half sums, explicit rank 10, fiber-sum stack rank 12/12 at 2 retained points.
+Sparse list: 12 generated points, 560 three-term supports tested at full column rank over F257.
+Dense 100-term input: its four-term polynomial multiple was hit.
+Zero-sum control: 5 distinct unit-coefficient monomials vanish at both points over F5: ((0, 0), (0, 1), (0, 2), (1, 1), (2, 2)).
+Dense half sums: 17/19 residues; collision-row rank 7; 2040 directions checked, minimum 8905/20652 violating shifts.

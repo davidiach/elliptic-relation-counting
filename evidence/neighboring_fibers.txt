@@ -1,0 +1,8 @@
+E/F5 (a,b)=(2,0), r=2: 2 distinct unguarded points; ranks across all 2 targets [5, 5]/6.
+Both complete 256-point F2 grids: rank 6; direct pairs agree with neighboring fibers at every point.
+E/F5 (a,b)=(4,2), r=3: 4 distinct unguarded points; ranks across all 3 targets [8, 8, 8]/8.
+E/F5 (a,b)=(3,2), r=5: 12 distinct unguarded points; ranks across all 5 targets [12, 12, 12, 12, 12]/12.
+E/F5 (a,b)=(2,1), r=7: 22 distinct unguarded points; ranks across all 7 targets [16, 16, 16, 16, 16, 16, 16]/16.
+Order-19 affine-mask control: aggregate shift rank 8; 10 nonconstant coordinate directions have cyclic translate rank 19.
+Fixed generator (0, 1) on E/F13 of order 19: half energy 38, identity fiber size 38, first moments nonzero in all 19 fibers; fixed-source rank 8, group-value and two-pin rank 8, summed rank 7.
+Order-257 affine-mask control: 242 half sums; zero coefficient at the generator for (t,h,nonzero displacements)=(4, 48, 254); positive order at one (t,h,order)=(2, 1, 1).
