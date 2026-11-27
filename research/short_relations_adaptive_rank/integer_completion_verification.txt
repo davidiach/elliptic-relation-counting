@@ -1,0 +1,5 @@
+Order-13 curve subset: 12 genuine fixed-shift rows, rank 6/6, initial rank 5. Diagonals [6, 6, 7, 5, 8, 6]; quadratic mass 845; completion mass 169; squared W volume 36. Integer completion rank 6/6.
+Exact sparse arrays: 44 volume bounds and real completions; 22 direct Cauchy-Binet checks; 44 modular suffix completions. 0 real completions full rank despite mass divisible by p^2.
+Complete fixed-shift cyclic fixtures: 10 real-basis and modular rank bounds checked.
+Complete C13 obstruction: 55 fixed-shift rows, full rank 6; a possible rational-basis ordering returns determinant +/-13 and modular rank 5. This fixture has wrap and is not a canonical-order counterexample.
+Doubled-tuple fixtures: 10 complete-group relation matrices verified, squared row norm <=8m and integer determinant bound passed.
