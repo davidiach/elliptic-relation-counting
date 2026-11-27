@@ -52,4 +52,6 @@ Each count streams in polynomial space; matrices, tables and sequential tape sca
 
 The follow-up in [Deterministic points](DETERMINISTIC_POINTS.md) gives an explicit target-budget list for the original $B$. Its stack contains all explicit rows and detects every direction with a bounded-degree sparse polynomial consequence. A separate density theorem locates many violations for each residual direction. Uniform full rank of this list remains unproved.
 
+[Exact neighboring fibers](NEIGHBORING_FIBERS.md) settles the full-grid fallback for every eligible curve on that branch. It also gives the exact all-displacement rank and explains why that identity does not settle the prescribed shift on the short list.
+
 The construction and each specified evaluation are deterministic. Enumerating the full interpolation grid costs $2^{O(b)}$ by this proof. An explicit hitting list constructible in $2^{O(b/L^{1/4})}$ time, of at most that cardinality and guaranteed to contain a nonsingular specialization for each eligible input, would give the target uniform worst-case bound. A list may depend on the input if its construction is charged. The original LZR separator remains a worst-case fallback.

@@ -14,6 +14,9 @@
 12. **Extract the explicit subsystem by evaluations.** The all-ones projection kills each balanced shift incidence vector and preserves every consistency row with nonzero row sum. Ordinary Vandermonde interpolation gives actual evaluations containing all these rows. On the order-19 fixture the projected rank is seven and the stack has rank eight.
 13. **Test sparse polynomial consequences.** Constructed a prime-field list by deterministic primitive-root construction, integer slope separation and geometric progressions. Every surviving direction has no nonzero sparse consequence at the stated degree and term bounds. Determinant nonvanishing alone does not supply such a consequence.
 14. **Use every ordered edge of the shift graph.** The dense one-per-block sumset gives a quantitative lower bound on violations. Comparing half-tuple differences characterizes the tables constant on each full fiber. A zero-sum argument then shows that near-complete subfamilies can retain the full row span and lose their entire evaluated contribution at a prescribed list. The exact complete-neighbor-fiber identity is the information this counterexample discards. Proofs and resource accounting are in DETERMINISTIC_POINTS.md.
+15. **Check the stack branch by branch.** Individual-degree interpolation proves full-grid rank for $r>2$. The order-two curve over $\mathbb F_5$ gives unguarded rank five, with a concrete common kernel vector. Boolean multilinear coefficients recover the full rank of six on the fallback. The fixed no-wrap guard necessarily selects the full grid for $m\le45$.
+16. **Sum over the displacement.** The complete fibers give independent source and target tuples after summing over $T$. Their block covariance has exact rank $N_0-m$. Selecting rank-increasing displacements by prefix counts meets the target cost. Arbitrary selected displacements have unknown logarithms, and the all-one sequence has a coordinate of maximal cyclic recurrence order for each nonconstant direction.
+17. **Test the elementary weighted convolutions at fixed addresses.** A binomial Vandermonde bound controls the order at one of each slot factor in the group algebra. In the guarded regime their product always survives. A complete order-257 arithmetic control has a vanishing coefficient at $P$ but 254 surviving coefficients. NEIGHBORING_FIBERS.md records the precise scope of both conclusions.
 
 ## Reproduction
 
@@ -24,6 +27,7 @@ Run the following from the repository root using its Python dependencies. The fi
 ~~~sh
 python -B checks/check_fixed_shift_gram.py
 python -B checks/check_fixed_shift_points.py
+python -B checks/check_neighboring_fibers.py
 python -B checks/inspect_fixed_shift_formal.py
 python -B archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit.py
 python -B archive/research/chat_2026_11_23_24/verify_archive.py
