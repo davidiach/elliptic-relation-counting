@@ -1,7 +1,10 @@
 """Check the fixed-bit transfer and signed group-character Gram identities."""
 from cmath import exp, pi
+from collections import Counter
 from itertools import product
 from math import prod, sqrt
+
+from flint import acb, arb, ctx
 
 from check_address_parity import character
 from check_nonlinear_branches import mixed_fixture
@@ -61,6 +64,21 @@ def check_fixed_bits(probe):
     print(f"  Checked {tested_completions} incomplete hybrid sums by direct Fourier completion.")
 
 
+def coherence_keys(totals, n):
+    # Compare magnitudes rounded to 10 decimal places. Certify each rounding
+    # with a complex ball before using it to select the finite fixture's modes.
+    counts = Counter(totals)
+    with ctx.workprec(96):
+        roots = [(acb(2*k)/n).exp_pi_i() for k in range(n)]
+        keys = []
+        for d in range(n):
+            ratio = sum(count * roots[d*t % n] for t, count in counts.items())
+            key = (abs(ratio)*10**10 + arb(1)/2).floor().unique_fmpz()
+            assert key is not None, "coherence rounding is unresolved"
+            keys.append(int(key))
+    return keys
+
+
 def check_gram(probe):
     n, block, size = probe.n, probe.block, probe.size
     roots = roots_of_unity(n)
@@ -95,10 +113,12 @@ def check_gram(probe):
     coefficients = [1+2j, 2-1j, -1+1j, -2+0j]
     ratios = [prod(sum(roots[(d*point) % n] for point, _ in slot) for slot in slots)
               for d in range(n)]
+    keys = coherence_keys(grid.values(), n)
     modes = [0]
     while len(modes) < len(coefficients):
         modes.append(min((d for d in range(n) if d not in modes),
-                         key=lambda d: max(abs(ratios[(d-e) % n]) for e in modes)))
+                         key=lambda d: (max(keys[(d-e) % n] for e in modes), d)))
+    assert modes == [0, 9, 52, 61], "published rounded-coherence mode order"
     features = []
     for d in modes:
         row = []
@@ -124,7 +144,7 @@ def check_gram(probe):
     assert lower_eigenvalue > 0
     bound = sqrt(len(modes)/lower_eigenvalue)
     assert abs(coefficient) <= bound+1e-10 < 1
-    print(f"  Checked all {size} challenges for four selected modes on {legal} legal "
+    print(f"  Checked all {size} challenges for modes {modes} on {legal} legal "
           f"addresses and all {len(modes)**2} Gram entries.")
     print(f"  Guarded singleton T=[{target}]G, normalized witness coefficient "
           f"{abs(coefficient):.6f}, Gram upper bound {bound:.6f}.")

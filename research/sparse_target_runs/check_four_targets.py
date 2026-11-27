@@ -12,7 +12,17 @@ from flint import nmod_mat
 from research.deterministic_endgame_barriers.check_pinning_barriers import curve_cycle
 
 
-# The three claims in SIX_TARGETS.md, keyed by group order and generator.
+# Published table rows, keyed by group order and generator with their run lengths.
+PUBLISHED_RUNS = {
+    (223, (204, 101)): 4,
+    (67, (4, 50)): 5,
+    (109, (36, 51)): 5,
+    (67, (18, 9)): 6,
+    (109, (4, 66)): 6,
+    (271, (40, 87)): 6,
+}
+
+# Additional checks for the three six-target claims.
 SIX_TARGET_CHECKS = {
     (109, (4, 66)): 'contrast_counts',
     (271, (40, 87)): 'contrast_counts',
@@ -155,7 +165,6 @@ def verify(case):
     length = len(case['nullities'])
     required = SIX_TARGET_CHECKS.get((r, tuple(case['P'])))
     if required is not None:
-        assert length == 6, "expected all six run targets"
         assert required in case, f"missing required {required} check"
     step = cycle.index(tuple(case['P']))
     assert step and 1 <= length < r
@@ -226,7 +235,9 @@ if __name__ == '__main__':
     if not __debug__:
         raise RuntimeError('Run with assertions enabled.')
     fixtures = json.loads(Path(__file__).with_name('witnesses.json').read_text())
-    present = {(case['r'], tuple(case['P'])) for case in fixtures}
-    assert SIX_TARGET_CHECKS.keys() <= present, "missing required six-target fixture"
+    runs = {(case['r'], tuple(case['P'])): len(case['nullities']) for case in fixtures}
+    assert len(runs) == len(fixtures), "duplicate sparse-target fixture"
+    for key, length in PUBLISHED_RUNS.items():
+        assert runs.get(key) == length, f"expected {length} published targets for {key}"
     for fixture in fixtures:
         verify(fixture)
