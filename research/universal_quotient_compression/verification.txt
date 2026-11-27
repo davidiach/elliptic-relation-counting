@@ -1,0 +1,8 @@
+Partition cover C101: D=20, 81 flats, dimension <= 12; corank 19->11, 8 verified increases.
+Partition cover C127: D=22, 81 flats, dimension <= 12; corank 21->11, 10 verified increases.
+Partition cover C257: D=30, 256 flats, dimension <= 12; corank 29->11, 18 verified increases.
+Partition cover C1009: D=24, 64 flats, dimension <= 24; corank 23->23, 0 verified increases.
+2D reduction C17: 8 independent increases; maximum toy projected support 40 < 289. (Exhaustive toy avoidance.)
+2D reduction C31: 11 independent increases; maximum toy projected support 114 < 961. (Exhaustive toy avoidance.)
+2D reduction C101: 20 independent increases; maximum toy projected support 402 < 10201. (Exhaustive toy avoidance.)
+Short-fiber transport C17: 888 genuine contrasts, 12 columns; Smith invariants [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 17]; exact inclusion 17Z^D verified by HNF.
