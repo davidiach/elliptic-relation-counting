@@ -1,0 +1,9 @@
+Pairwise moment bounds: 16 unpinned and 24 selected-pin expectations checked exactly; maximum E/mean 101/216.
+Actual E/F13, order 19: 270 exact affine-mask marginal and within-parity pair checks (including zero slopes).
+Shared-pin count identity: 225 exact direct pair comparisons.
+Explicit cyclic fibers r=19, m=4, n=9: 18/18 attain maximum modular contrast rank; largest deficiency from maximum 0.
+Explicit cyclic fibers r=31, m=4, n=12: 24/24 attain maximum modular contrast rank; largest deficiency from maximum 0.
+Explicit cyclic fibers r=101, m=4, n=12: 24/24 attain maximum modular contrast rank; largest deficiency from maximum 0.
+Explicit cyclic fibers r=101, m=3, n=6: 0/22 attain maximum modular contrast rank; largest deficiency from maximum 14.
+Covariance guard: 6 qualifying dense fixtures, 12 exact positive-definiteness inequalities; modular maximum rank in 72/94 total nonempty fibers.
+Multipoint compiler arithmetic: 84 Toom-Cook multiplication comparisons, 84 product/remainder-tree evaluations (72 with repeated points), 108951 recursive multiplication calls.
