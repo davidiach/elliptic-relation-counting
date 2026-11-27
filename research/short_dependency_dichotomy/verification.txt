@@ -3,6 +3,7 @@ q=2, d=3, dictionaries=127, subspaces=8, tests=2032, covered=765, defects checke
 q=3, d=3, dictionaries=75, subspaces=14, tests=2100, covered=824, defects checked=7528
 4132 probe tests, 1589 covering certificates, 10083 exact short defects; max extracted rank 5
 3024 projective defects and 70 half-density bound checks
+Full and projective certificates both rejected a wrong syndrome and a weight-two witness at radius one.
 
 DIRECT-SUM PROJECTIVE COVER CONTROLS
 q=2, w=1, ell=4, K=15, exact e=11, information-set lower bound=11

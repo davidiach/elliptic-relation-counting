@@ -67,10 +67,19 @@ def short_rank(H,w,q):
     return rank((dense(c,len(H)) for c in sparse_patterns(len(H),3*w,q) if eval_sparse(H,c,q)==zero(len(H[0]))),q)
 
 
+def checked_witness(H, W, target, w, q):
+    word = tuple(v % q for v in W[target])
+    assert len(word) == len(H), 'witness has the wrong length'
+    terms = [(i, v) for i, v in enumerate(word) if v]
+    assert len(terms) <= w, 'witness exceeds the weight limit'
+    assert eval_sparse(H, terms, q) == target, 'witness has the wrong syndrome'
+    return word
+
+
 def defect_certificate(H,B,W,w,q):
     ell=len(B);K=len(H);T=list(product(range(q),repeat=ell));Z=zero(ell)
     units=[tuple(int(i==j) for i in range(ell)) for j in range(ell)]
-    f={a:W[lincomb(B,a,q)] for a in T};assert f[Z]==zero(K)
+    f={a:checked_witness(H,W,lincomb(B,a,q),w,q) for a in T};assert f[Z]==zero(K)
     defects=[]
     for a in T:
         supp=[i for i,v in enumerate(a) if v]
@@ -94,7 +103,7 @@ def defect_certificate(H,B,W,w,q):
 def projective_defect_certificate(H,B,W,w,q):
     ell=len(B);K=len(H);P=canonical_lines(q,ell)
     units=[tuple(int(i==j) for i in range(ell)) for j in range(ell)]
-    f={a:W[lincomb(B,a,q)] for a in P}
+    f={a:checked_witness(H,W,lincomb(B,a,q),w,q) for a in P}
     def lift(a):
         if not any(a):return zero(K)
         c=next(v for v in a if v)
@@ -115,6 +124,25 @@ def projective_defect_certificate(H,B,W,w,q):
 
 def canonical_lines(q,d):
     return [a for a in product(range(q),repeat=d) if any(a) and next(x for x in a if x)==1]
+
+
+def check_invalid_witnesses():
+    basis = [(1, 0), (0, 1)]
+    plane = {x: x for x in product(range(2), repeat=2)}
+    # The repeated column cannot generate the second basis vector.
+    wrong_syndrome = ([(1, 0), (1, 0)], basis, plane, 2, 2)
+    # The extra nonzero coefficient is on a zero column, so the syndrome is correct.
+    overweight = (basis + [(0, 0)], basis[:1], {(0, 0): (0, 0, 0), (1, 0): (1, 0, 1)}, 1, 2)
+    for certificate in (defect_certificate, projective_defect_certificate):
+        for args, reason in ((wrong_syndrome, 'witness has the wrong syndrome'),
+                             (overweight, 'witness exceeds the weight limit')):
+            try:
+                certificate(*args)
+            except AssertionError as error:
+                assert str(error) == reason, error
+            else:
+                raise AssertionError(f'{certificate.__name__} accepted an invalid witness')
+    print('Full and projective certificates both rejected a wrong syndrome and a weight-two witness at radius one.')
 
 
 def subspaces(q,d,ell):
@@ -325,4 +353,4 @@ def check_marginals():
     print(f'{checks} exact matching assignments, {matchecks} matrix rank comparisons, {polychecks} nonzero polynomial zero-count checks')
 
 if __name__=='__main__':
-    check_defects();check_sharpness();check_peel();check_planted();check_marginals();print('\nAll checks passed.')
+    check_defects();check_invalid_witnesses();check_sharpness();check_peel();check_planted();check_marginals();print('\nAll checks passed.')
