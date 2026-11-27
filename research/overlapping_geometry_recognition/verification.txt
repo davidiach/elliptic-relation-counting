@@ -1,0 +1,63 @@
+HAMMING BALL INTERSECTION IDENTITIES
+Q=2, L=5, t=2: overlaps=[16, 10, 10, 6, 6, 0]
+Q=3, L=5, t=2: overlaps=[51, 27, 21, 12, 6, 0]
+Q=3, L=7, t=3: overlaps=[379, 219, 179, 123, 86, 50, 20, 0]
+Q=4, L=5, t=2: overlaps=[106, 52, 34, 18, 6, 0]
+Q=5, L=5, t=2: overlaps=[181, 85, 49, 24, 6, 0]
+Q=3, L=3, t=1: overlaps=[7, 3, 2, 0]
+Q=7, L=4, t=1: overlaps=[25, 7, 2, 0, 0]
+41 exact overlap counts; 28 strict gaps; 2 positive binary ties.
+
+HIDDEN COMMUTING-OPERATOR ARCS
+field: p=3, block dimension=2, s=4, g=10, algebra(dim,Frobenius rank,fixed)=(2, 2, 1), 630 exhaustive maximal-subset checks
+field: p=2, block dimension=3, s=4, g=9, algebra(dim,Frobenius rank,fixed)=(3, 3, 1), 378 exhaustive maximal-subset checks
+field: p=5, block dimension=2, s=3, g=10, algebra(dim,Frobenius rank,fixed)=(2, 2, 1), 360 exhaustive maximal-subset checks
+field: p=7, block dimension=1, s=3, g=8, algebra(dim,Frobenius rank,fixed)=(1, 1, 1), 168 exhaustive maximal-subset checks
+dual numbers: p=7, block dimension=2, s=3, g=8, algebra(dim,Frobenius rank,fixed)=(2, 1, 1), 168 exhaustive maximal-subset checks
+product ring: p=5, block dimension=2, s=3, g=6, algebra(dim,Frobenius rank,fixed)=(2, 2, 2), 60 exhaustive maximal-subset checks
+8 noncommutative flag-lifted arcs; 448 maximal-subset checks; 24 nonzero nilpotent ratio residuals
+26 recognized layouts; 2212 maximal-subset checks; 21 negative controls rejected.
+Over the primes 2^61-1 and 2^89-1, dependent frames were rejected and transformed five-group arcs certified.
+Rejected singular anchor, nonnilpotent commutator ideal (rank 5/6), and failed ratio residual (rank 2/3).
+
+OVERLAPPING HIDDEN BLOCK-BALL RECOVERY
+ordinary p=3: L=5, Q=3, t=2, rank=5, K=51, difference shifts=211, exact decompositions=51
+ordinary p=5: L=5, Q=5, t=2, rank=5, K=181, difference shifts=2101, exact decompositions=181
+ordinary p=3: L=9, Q=3, t=2, rank=8, K=163, difference shifts=2851, exact decompositions=163
+projected GF(9): L=10, Q=9, t=1, rank=8, K=81, difference shifts=2961, exact decompositions=81
+projected GF(8): L=9, Q=8, t=2, rank=24, K=1828, difference shifts=333166, exact decompositions=1828
+2304 exact block decompositions used inferred radii. All 341290 overlap counts matched their shifts.
+Inferred radius 3 from the complete dictionary and recovered a point requiring three blocks.
+Rejected counts 12 and 6 exchanged on opposite shift pairs with an unchanged histogram.
+
+DETERMINISTIC PERTURBATION GUARDS
+p=3, L=7, t=2, gap=10, edits=2: 3 recovery trials, outliers rejected
+p=5, L=7, t=2, gap=60, edits=3: 3 recovery trials, outliers rejected
+p=3, L=8, t=3, gap=60, edits=3: 3 recovery trials, outliers rejected
+p=7, L=5, t=1, gap=5, edits=1: 3 recovery trials, outliers rejected
+3201 exact inlier decompositions after deterministic perturbations.
+
+AFFINE CENTER AND BINARY STAR RECOVERY
+p=3, L=5, t=2, rank=5, edits=1: 3 exact affine recoveries
+p=5, L=5, t=2, rank=5, edits=2: 3 exact affine recoveries
+p=2, L=7, t=2, rank=7, edits=0: 3 exact affine recoveries
+p=2, L=13, t=3, rank=12, edits=0: 3 exact affine recoveries
+p=2, L=9, t=2, rank=8, edits=0: 3 exact affine recoveries
+15 center recoveries, 9 recovered binary star layouts, 2052 input points checked.
+After one binary radius-two deletion, 28 shifts attained the peak. The midpoint recovered all 45 edge shifts and the full ball.
+
+SEEDED THINNING CONTROLS (NO CLAIM THE ANALYTICAL GUARD HOLDS)
+retention=3/4, sample size=1376: every retained vector recovered
+retention=1/2, sample size=873: every retained vector recovered
+retention=1/4, sample size=423: guard not met; recognition failed
+retention=1/8, sample size=234: guard not met; recognition failed
+2 successful and 2 failed thinning controls.
+Translated 3/4 thinning recovered the absent center (1, 4, 2, 0, 3) by 143 to 67. All 143 retained points factored. Tied centers were rejected.
+
+ANALYTICAL THINNING GUARDS (NO LARGE BALL ENUMERATION)
+L=100, Q=3, t=2, retention=0.5: log failure bound=111.628, guard=False
+L=10000, Q=3, t=4, retention=0.5: log failure bound=-223083.367, guard=True
+L=2000, Q=7, t=5, retention=0.5: log failure bound=-672591180.596, guard=True
+L=2000, Q=4, t=5, retention=0.5: log failure bound=-83393764.744, guard=True
+
+All checks passed.
