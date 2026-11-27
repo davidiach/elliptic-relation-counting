@@ -1,0 +1,39 @@
+PREFIX-COMPLETE HYPERPLANE TESTS
+q=2 dim=3 budget=1 mode=hyperplane ext=3 nodes=5 terminal=7 probes=7 tests=21
+q=3 dim=3 budget=2 mode=hyperplane ext=2 nodes=7 terminal=12 probes=13 tests=286
+q=3 dim=4 budget=2 mode=hyperplane ext=3 nodes=10 terminal=38 probes=40 tests=9880
+q=5 dim=3 budget=2 mode=hyperplane ext=2 nodes=7 terminal=16 probes=20 tests=4495
+q=7 dim=4 budget=3 mode=hyperplane ext=2 nodes=13 terminal=55 probes=93 tests=1200
+q=13 dim=5 budget=2 mode=hyperplane ext=1 nodes=13 terminal=13 probes=53 tests=1200
+q=2 dim=4 budget=2 mode=independent ext=5 nodes=22 terminal=15 probes=15 tests=420
+q=2 dim=5 budget=3 mode=independent ext=6 nodes=61 terminal=31 probes=31 tests=996
+q=3 dim=5 budget=3 mode=independent ext=5 nodes=161 terminal=121 probes=121 tests=1074
+19572 exact hyperplane-family checks.
+
+EXACT SMALL LOCALITY AND PREFIX PROBES
+q=2 d=3 w=1: partitions=4139 local=386 guard=266 covered no-guard=1 short words=112
+q=3 d=2 w=1: partitions=51 local=21 guard=10 covered no-guard=1 short words=16
+q=2 d=3 w=2: partitions=4139 local=288 guard=84 covered no-guard=92 short words=168
+8329 exact partitions, 695 local, 360 triggered certificates, 94 covered nontriggering controls; 296 short words.
+
+DISJOINT-INFORMATION-SET LOCALITY CERTIFICATES
+q=7 lines=56 d=49 span-rank=34 columns=448 local short-rank lower=336 info sets=3 probe-dim=3 probes=11 absent checked
+q=13 lines=182 d=169 span-rank=103 columns=2548 local short-rank lower=2184 info sets=6 probe-dim=5 probes=53 absent checked
+overlapping-core fixture: 10 columns, 30 short words, removed groups=[2, 3], remaining merged groups=[0, 1]
+
+COARSENED OVERLAPPING-LIFT CERTIFICATES
+60 overlapping lifts, 2274 exact short-word checks, 38 nontrivial merges, 52 triggered probe certificates.
+
+OVERLAPPING BLOCK LIFTS AND AUTOMATIC DENSE-LINE RECOGNITION
+q=11 w=1 d=12 groups=8 columns=103 line spans=4719 dense lines=8 triple components=1 block-independence checks=28 lifted probes=110
+q=17 w=2 d=24 groups=14 columns=265 line spans=32826 dense lines=14 triple components=1 block-independence checks=91 lifted probes=2793
+
+CONNECTED HIGH-SHORT-RANK COMPRESSION BARRIER
+q=7 w=2 d=7 K=15 independent-short lower=7 span=3793/3871 min radius-preserving replacement=15 circuit components=1
+q=11 w=2 d=10 K=35 independent-short lower=23 span=59411/59851 min radius-preserving replacement=35 circuit components=1
+q=17 w=2 d=11 K=53 independent-short lower=41 span=352529/353617 min radius-preserving replacement=53 circuit components=1
+q=7 w=3 d=11 K=15 independent-short lower=3 span=96241/102151 min radius-preserving replacement=15 circuit components=1
+q=31 w=1 d=7 K=127 independent-short lower=119 span=3811/3811 min radius-preserving replacement=127 circuit components=1
+523301 exact sparse coefficient patterns across five fixtures.
+
+All checks passed.
