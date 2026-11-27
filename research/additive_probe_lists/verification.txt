@@ -1,0 +1,18 @@
+Exact modular rectangle counts: 1176; complete avoidance instances: 168; bisection queries: 1096; largest enumerated half: 120.
+Constructive lower-bound covers: 125.
+Universal probes p=3, sizes=[2, 2]: 66 distinct sumsets, minimum=4, counting bounds [4,9], witness=[(0, 0), (0, 1), (0, 2), (1, 0)].
+Universal probes p=3, sizes=[2, 3]: 168 distinct sumsets, minimum=7, counting bounds [5,9], witness=[(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0)].
+Universal probes p=3, sizes=[2, 2, 2]: 60 distinct sumsets, minimum=8, counting bounds [5,9], witness=[(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1)].
+Universal probes p=5, sizes=[2, 2]: 1950 distinct sumsets, minimum=4, counting bounds [4,6], witness=[(0, 0), (0, 1), (0, 2), (1, 0)].
+Universal-list reuse: 24 synthetic calibrated completions, 40 verified rank increments, 96 decomposition probes; 16 increments at probes actually in the projected support.
+Polynomial probe cover: p=10000019, m=5, degree=2, 1 curves, 4096 parameters each, max list size 316, product 4831998976.
+Polynomial probe cover: p=2305843009213693951, m=7, degree=3, 2 curves, 1000 parameters each, max list size 776, product 5586931417088000.
+Polynomial probe cover: p=1009, m=2, degree=1, 1 curves, 16 parameters each, max list size 7, product 28.
+Polynomial probe cover: p=1000000007, m=5, degree=2, 2 curves, 343 parameters each, max list size 254, product 1836119264.
+Polynomial probe interpolation: 6798 exhaustive small probe checks, 400 large arithmetic checks; large segment length 2^108, upper list-size bits 45, product bound below field-plane size.
+Multivariate polynomial cover: degree 3, 4 lists, 1296 parameter pairs; max list size 441; product below plane size.
+Whole-line cover: p=257, 3 lines, 2 lists; max size 51; product 1683 < 66049.
+Whole-line cover: p=1009, 9 lines, 3 lists; max size 99; product 819819 < 1018081.
+Whole-line cover: p=4093, 8 lines, 3 lists; max size 128; product 1874048 < 16752649.
+Whole-line identities: 42596.
+Incidence-code checks: 61453 pair-agreement comparisons, 16210 singleton-subset comparisons, 12 exact finite union-bound estimates.
