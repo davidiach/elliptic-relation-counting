@@ -1,0 +1,9 @@
+r=13, m=4, D=2, block sizes [7, 7, 7, 7]: 36 genuine rows, rational rank 24, modular rank 23, selected lattice index 13; individual targets 13/13 (bound 13); short fibers (181, 190); pin counts (63263, 63428).
+  Every selected row also checked with actual group operations on E/F7 of order 13.
+r=23, m=3, D=4, block sizes [10, 10, 10]: 45 genuine rows, rational rank 27, modular rank 26, selected lattice index 23; individual targets 23/23 (bound 23); short fibers (40, 47); pin counts (4324, 4378).
+r=31, m=2, D=8, block sizes [15, 15]: 50 genuine rows, rational rank 28, modular rank 27, selected lattice index 31; individual targets 31/31 (bound 31); short fibers (4, 10); pin counts (97, 123).
+r=101, m=3, D=8, block sizes [15, 15, 15]: 75 genuine rows, rational rank 42, modular rank 41, selected lattice index 101; individual targets 49/101 (bound 49); short fibers (26, 43); pin counts (7285, 7809).
+r=257, m=3, D=8, block sizes [15, 15, 15]: 75 genuine rows, rational rank 42, modular rank 41, selected lattice index 257; individual targets 49/257 (bound 49); short fibers (5, 20); pin counts (2611, 3329).
+r=1009, m=2, D=32, block sizes [40, 40]: 150 genuine rows, rational rank 78, modular rank 77, selected lattice index 1009; individual targets 33/1009 (bound 33); short fibers (1, 5); pin counts (48, 132).
+r=4093, m=3, D=16, block sizes [22, 22, 22]: 117 genuine rows, rational rank 63, modular rank 62, selected lattice index 4093; individual targets 49/4093 (bound 49); short fibers (1, 18); pin counts (829, 3776).
+Weighted moment checks: 10 exact centered/raw identities on 64 seeds each; 838 partition rank/count checks.
