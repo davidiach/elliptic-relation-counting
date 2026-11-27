@@ -3,6 +3,8 @@
 from collections import Counter
 from itertools import combinations, product
 from math import comb
+from operator import index
+from unittest import TestCase
 from random import Random
 import numpy as np
 
@@ -10,9 +12,14 @@ if not __debug__:
     raise RuntimeError('Run with assertions enabled.')
 
 
-def V(a,p): return np.asarray(a,dtype=np.int64)%p
+# Modular products can overflow int64 before reduction, even in a 2x2 frame.
+# operator.index also converts NumPy integer scalars to Python integers.
+as_integers = np.frompyfunc(index, 1, 1)
 
-def mul(a,b,p): return (a@b)%p
+
+def V(a,p): return as_integers(a) % p
+
+def mul(a,b,p): return (V(a,p) @ V(b,p)) % p
 
 def rref(a,p):
     a=V(a,p).copy(); k=0; piv=[]
@@ -31,7 +38,7 @@ def rank(a,p):return len(rref(a,p)[1])
 
 def inv(a,p):
     n=len(a);assert a.shape==(n,n)
-    b,piv=rref(np.hstack([a,np.eye(n,dtype=np.int64)]),p)
+    b,piv=rref(np.hstack([V(a,p),identity(n)]),p)
     if piv[:n]!=list(range(n)):raise ValueError('singular')
     return b[:,n:]
 
@@ -155,7 +162,7 @@ def matrix_algebra(gens,p,a):
 def span_mats(rows,p,a):
     basis={}
     for X in rows:
-        x=np.asarray(X,dtype=np.int64).reshape(-1)%p
+        x=V(X,p).reshape(-1)
         for j,b in sorted(basis.items()):
             if x[j]:x=(x-x[j]*b)%p
         nz=np.flatnonzero(x)
@@ -188,6 +195,8 @@ def ideal_test(gens,p,a):
 
 def recognize_arc(groups,p):
     """Exact certificate, independent of how the candidate groups were obtained."""
+    p=index(p)
+    groups=[V(B,p) for B in groups]
     g=len(groups);d,a=groups[0].shape
     if d%a:raise ValueError('ambient dimension')
     s=d//a
@@ -199,7 +208,7 @@ def recognize_arc(groups,p):
     anchor=mul(Mi,groups[s],p)
     align=[inv(anchor[i*a:(i+1)*a],p) for i in range(s)]
     if g==s+1:return s,a,None
-    G=[];I=identity(a);O=np.zeros((a,a),dtype=np.int64)
+    G=[];I=V(identity(a),p);O=np.zeros_like(I)
     for B in groups[s:]:
         C=mul(Mi,B,p);C=[mul(align[i],C[i*a:(i+1)*a],p) for i in range(s)]
         C0=inv(C[0],p);G.append([inv(mul(x,C0,p),p) for x in C])
@@ -221,6 +230,50 @@ def recognize_arc(groups,p):
     # Field diagnostics optional; recognition itself does not require a field.
     diag=matrix_algebra(finite,p,a) if not J else ('triangular',len(A),len(J),nz)
     return s,a,diag
+
+
+def certificate_regressions():
+    for p, dtype in [(2**61 - 1, np.int64), (2**89 - 1, object)]:
+        v = np.array([[2], [2]], dtype=dtype)
+        opposite = np.array([[p-2], [p-2]], dtype=dtype)
+        assert rank(np.hstack([v, opposite]), p) == 1, 'overflow in modular elimination'
+        with TestCase().assertRaisesRegex(ValueError, '^singular$'):
+            recognize_arc([v, opposite], p)
+        # A nearby independent frame and nonreference groups must still certify.
+        transform = np.array([[p-1, p-2], [p-3, p-5]], dtype=dtype)
+        assert mul(transform, inv(transform, p), p).tolist() == [[1, 0], [0, 1]]
+        columns = [(1, 0), (0, 1), (1, 1), (1, 2), (1, 3)]
+        arc = [mul(transform, np.array([col]).T, p) for col in columns]
+        assert recognize_arc(arc, p)[:2] == (2, 1)
+    print('Over the primes 2^61-1 and 2^89-1, dependent frames were rejected and transformed five-group arcs certified.')
+
+    # The g=s+1 shortcut must check every projection of the anchor.
+    frame = identity(2)
+    axes = [frame[:, i:i+1] for i in range(2)]
+    with TestCase().assertRaisesRegex(ValueError, '^singular$'):
+        recognize_arc(axes + [axes[0]], 5)
+
+    # All other guards pass on these two fixtures. The indicated subset
+    # ranks witness dependence independently of the certificate's decision.
+    p = 7
+    I = identity(2)
+    O = np.zeros_like(I)
+    axes = [np.vstack([I if i == j else O for i in range(3)]) for j in range(3)]
+    beta = np.diag([3, 5])
+    z = np.array([[0, 1], [6, 3]])
+    groups = axes + [np.vstack([I, I, I]), np.vstack([I, 2*I, 3*I]),
+                     np.vstack([I, inv(beta, p), inv(z, p)])]
+    assert rank(np.hstack([groups[i] for i in (0, 3, 5)]), p) == 5
+    with TestCase().assertRaisesRegex(ValueError, '^commutator ideal is not nilpotent$'):
+        recognize_arc(groups, p)
+
+    frame = identity(3)
+    axes = [frame[:, i:i+1] for i in range(3)]
+    triple = [np.array([v]).T for v in [(1, 1, 1), (1, 2, 3), (1, 3, 5)]]
+    assert rank(np.hstack(triple), p) == 2
+    with TestCase().assertRaisesRegex(ValueError, '^ratio identity fails on a diagonal$'):
+        recognize_arc(axes + triple, p)
+    print('Rejected singular anchor, nonnilpotent commutator ideal (rank 5/6), and failed ratio residual (rank 2/3).')
 
 
 def arc_checks():
@@ -336,7 +389,7 @@ def recover_blocks(S,p,L=None,Q=None,t=None,e=0,retention=(1,1)):
         if len(R)!=L*(Q-1):raise ValueError('wrong core size')
         groups=split_core(R,p)
         if len(groups)!=L or any(p**B.shape[1]!=Q for B in groups):raise ValueError('wrong core component size')
-    return C,R,groups
+    return C,R,groups,t
 
 
 def factor(x,C,R,p,t):
@@ -347,6 +400,50 @@ def factor(x,C,R,p,t):
         cur=sub(cur,v,p);pieces.append(v)
     if cur!=z:return None
     return tuple(sorted(pieces))
+
+
+def check_shift_counts(observed, cores, p, t):
+    """Enumerate formal supports in the planted blocks, independently of pair counts."""
+    L = len(cores)
+    Q = len(cores[0]) + 1
+    zero = (0,) * len(cores[0][0])
+    expected = [overlap_formula(L, Q, t, j) for j in range(2*t + 1)]
+    remaining = dict(observed)
+
+    def visit(shift, first, weight):
+        assert remaining.pop(shift, None) == expected[weight], 'incorrect overlap for formal shift'
+        if weight < 2*t:
+            for i in range(first, L):
+                for v in cores[i]:
+                    visit(plus(shift, v, p), i + 1, weight + 1)
+
+    visit(zero, 0, 0)
+    assert not remaining, 'unexpected shifts in difference table'
+
+
+def recovery_regressions():
+    L, p = 7, 3
+    axes = [identity(L)[:, i:i+1] for i in range(L)]
+    ball, _ = make_ball(axes, p, 3)
+    counts3, core, _, radius = recover_blocks(list(ball), p)
+    x = (1, 1, 1, 0, 0, 0, 0)
+    assert radius == 3, 'incorrect inferred radius'
+    assert factor(x, counts3, core, p, radius) == ball[x]
+    assert factor(x, counts3, core, p, radius-1) is None
+    print('Inferred radius 3 from the complete dictionary and recovered a point requiring three blocks.')
+
+    ball, cores = make_ball([identity(5)[:, i:i+1] for i in range(5)], p, 2)
+    observed = counts(list(ball), p)
+    swapped = observed.copy()
+    for sign in (1, 2):
+        u = (sign, sign, sign, 0, 0)
+        v = (sign, sign, sign, sign, 0)
+        assert (observed[u], observed[v]) == (12, 6)
+        swapped[u], swapped[v] = observed[v], observed[u]
+    assert Counter(swapped.values()) == Counter(observed.values())
+    with TestCase().assertRaisesRegex(AssertionError, '^incorrect overlap for formal shift$'):
+        check_shift_counts(swapped, cores, p, 2)
+    print('Rejected counts 12 and 6 exchanged on opposite shift pairs with an unchanged histogram.')
 
 
 def recovery_checks():
@@ -362,14 +459,12 @@ def recovery_checks():
     F=Extension(2,(1,1,0));fixtures.append(('projected GF(8)',2,9,2,eval_groups([F.mat(x) for x in range(8)]+[None],8,3,2,rng)))
     for name,p,L,t,groups in fixtures:
         out,cores=make_ball(groups,p,t);S=list(out);Q=len(cores[0])+1
-        C,R,G=recover_blocks(S,p)
+        C,R,G,radius=recover_blocks(S,p)
+        assert radius==t, 'incorrect inferred radius'
         assert R==set(x for core in cores for x in core)
         assert {frozenset(core) for core in cores}=={frozenset(tup(mul(B,np.array(x),p)) for x in product(range(p),repeat=B.shape[1]) if any(x)) for B in G}
-        # Every observed difference has the theoretical count for its unique weight;
-        # check the histogram, without enumerating all difference representations.
-        hist=Counter(C.values());expected=Counter({overlap_formula(L,Q,t,j):comb(L,j)*(Q-1)**j for j in range(2*t+1)})
-        assert hist==expected
-        for x,v in out.items():assert factor(x,C,R,p,t)==v;total+=1
+        check_shift_counts(C,cores,p,t)
+        for x,v in out.items():assert factor(x,C,R,p,radius)==v;total+=1
         if name.startswith('projected GF'):
             s,a,diag=recognize_arc(G,p);assert s>=4*t and (diag is None or diag[0]==a)
         # Earlier rich-line criterion cannot separate the blocks when t>=2 and p>=3:
@@ -379,23 +474,27 @@ def recovery_checks():
             assert all(plus(x,tuple(v*j%p for v in y),p) in out for j in range(p))
         print(f'{name}: L={L}, Q={Q}, t={t}, rank={rank(np.hstack(groups),p)}, K={len(S)}, difference shifts={len(C)}, exact decompositions={len(S)}')
         counts_total+=len(C)
-    print(f'{total} exact block decompositions; {counts_total} exact overlap counts (histogram verified).')
+    print(f'{total} exact block decompositions used inferred radii. All {counts_total} overlap counts matched their shifts.')
 
 
 def perturbed_checks():
     print('\nDETERMINISTIC PERTURBATION GUARDS')
     rng=Random(201);n=0
-    for p,L,t in [(3,7,2),(5,7,2),(3,8,3)]:
+    for p,L,t in [(3,7,2),(5,7,2),(3,8,3),(7,5,1)]:
         A=random_inv(L,p,rng);groups=[A[:,j:j+1] for j in range(L)];out,cores=make_ball(groups,p,t)
-        gap=min(overlap_formula(L,p,t,j)-overlap_formula(L,p,t,j+1) for j in range(t))
-        e=min(3,(gap-1)//4);assert e>=1
+        last_gap = max(1, t-1)
+        gap = min(shell_gap(L, p, t, j) for j in range(1, last_gap+1))
+        e = min(3, (gap-1)//4)
+        assert 1 <= e and 4*e < gap
+        if t == 1:
+            assert (gap, e) == (5, 1), 'incorrect radius-one edit budget'
         for _ in range(3):
             S=set(out);deleted=rng.sample(sorted(S),e-1);S.difference_update(deleted)
             outside=next(x for x in (tup([rng.randrange(p) for _ in range(L)]) for _ in range(200)) if x not in out)
-            S.add(outside);C,R,G=recover_blocks(list(S),p,L,p,t,e=e)
+            S.add(outside);C,R,G,radius=recover_blocks(list(S),p,L,p,t,e=e)
             assert R==set(x for core in cores for x in core)
             for x in S:
-                v=factor(x,C,R,p,t)
+                v=factor(x,C,R,p,radius)
                 if x in out:assert v==out[x];n+=1
                 else:assert v is None
         print(f'p={p}, L={L}, t={t}, gap={gap}, edits={e}: 3 recovery trials, outliers rejected')
@@ -416,15 +515,37 @@ def recover_center(S,B,p,e):
 
 
 def binary_layout(S,L,t):
-    p=2;C=counts(S,p);z=(0,)*len(S[0]);mx=max(v for x,v in C.items() if x!=z)
-    R={x for x,v in C.items() if x!=z and v==mx}
-    assert len(R)==comb(L+1,2)
+    p=2;C=counts(S,p);z=(0,)*len(S[0])
+    threshold_twice=overlap_formula(L,2,t,2)+overlap_formula(L,2,t,3)
+    R={x for x,v in C.items() if x!=z and 2*v>threshold_twice}
+    assert len(R)==comb(L+1,2), 'incorrect binary edge set size'
     e=min(R);f=next(x for x in sorted(R) if plus(x,e,p) in R)
     U={e,f}|{x for x in R if x!=e and x!=f and plus(x,e,p) in R and plus(x,f,p) in R}
     assert len(U)==L+1
     star=[x for x in U if sum(y!=x and plus(x,y,p) in R for y in U)>2]
     assert len(star)==L
     return [np.array(x,dtype=np.int64).reshape(-1,1) for x in sorted(star)]
+
+
+def binary_edit_regression():
+    L, t = 9, 2
+    original, _ = make_ball([identity(L)[:, i:i+1] for i in range(L)], 2, t)
+    missing = (1,) + (0,) * (L-1)
+    sample = set(original) - {missing}
+    assert 4 < shell_gap(L, 2, t, 2) == 12
+    observed = counts(list(sample), 2)
+    del observed[(0,) * L]
+    peak = max(observed.values())
+    assert sum(v == peak for v in observed.values()) == 28
+    midpoint = (overlap_formula(L, 2, t, 2) + overlap_formula(L, 2, t, 3)) // 2
+    edges = {x for x, v in observed.items() if v > midpoint}
+    assert edges == {x for x in product(range(2), repeat=L) if 1 <= sum(x) <= 2}
+    assert len(edges) == 45
+    star = binary_layout(list(sample), L, t)
+    ball, _ = make_ball(star, 2, t)
+    center = recover_center(sample, ball, 2, 1)
+    assert center == (0,) * L and set(ball) == set(original)
+    print('After one binary radius-two deletion, 28 shifts attained the peak. The midpoint recovered all 45 edge shifts and the full ball.')
 
 
 def affine_binary_checks():
@@ -446,7 +567,7 @@ def affine_binary_checks():
             if p==2:
                 G2=binary_layout(list(S),L,t);stars+=1
             else:
-                C,R,G2=recover_blocks(list(S),p,L,p,t,e=e)
+                C,R,G2,_=recover_blocks(list(S),p,L,p,t,e=e)
             B2,_=make_ball(G2,p,t)
             center=recover_center(S,B2,p,e)
             assert len(S.symmetric_difference({plus(x,center,p) for x in B2}))<=e
@@ -461,6 +582,40 @@ def affine_binary_checks():
 
 
 
+def recover_thinned_center(sample, ball, p):
+    """Maximize the number of retained points explained by a translate."""
+    ball = set(ball)
+    scores = Counter(sub(x, b, p) for x in set(sample) for b in ball)
+    leaders = scores.most_common(2)
+    if not leaders or (len(leaders) == 2 and leaders[0][1] == leaders[1][1]):
+        raise ValueError('no unique center')
+    return leaders[0][0]
+
+
+def translated_thinning_check():
+    p, L, t = 5, 5, 2
+    center = (1, 4, 2, 0, 3)
+    original, _ = make_ball([identity(L)[:, i:i+1] for i in range(L)], p, t)
+    rng = Random(0)
+    sample = {plus(x, center, p) for x in sorted(original) if rng.randrange(4) < 3}
+    assert len(sample) == 143 and center not in sample
+    C, R, groups, radius = recover_blocks(list(sample), p, L, p, t, retention=(3, 4))
+    ball, _ = make_ball(groups, p, radius)
+    recovered = recover_thinned_center(sample, ball, p)
+    assert recovered == center, 'incorrect thinned center'
+    # Direct intersections over this small ambient space check both leading scores.
+    rivals = (c for c in product(range(p), repeat=L) if c != recovered)
+    best = sum(sub(x, recovered, p) in ball for x in sample)
+    runner_up = max(sum(sub(x, c, p) in ball for x in sample) for c in rivals)
+    assert (best, runner_up) == (143, 67)
+    for x in sample:
+        residual = sub(x, recovered, p)
+        assert factor(residual, C, R, p, radius) == original[residual]
+    with TestCase().assertRaisesRegex(ValueError, '^no unique center$'):
+        recover_thinned_center([min(sample)], ball, p)
+    print(f'Translated 3/4 thinning recovered the absent center {recovered} by {best} to {runner_up}. All {len(sample)} retained points factored. Tied centers were rejected.')
+
+
 def thinning_examples():
     print('\nSEEDED THINNING CONTROLS (NO CLAIM THE ANALYTICAL GUARD HOLDS)')
     rng=Random(622);p=2;F=Extension(2,(1,1,0));t=2;L=9;Q=8
@@ -469,9 +624,9 @@ def thinning_examples():
     for a,b in [(3,4),(1,2),(1,4),(1,8)]:
         S=[x for x in sorted(B) if rng.randrange(b)<a]
         try:
-            C,R,G2=recover_blocks(S,p,L,Q,t,retention=(a,b))
+            C,R,G2,radius=recover_blocks(S,p,L,Q,t,retention=(a,b))
             assert R==R0
-            assert all(factor(x,C,R,p,t)==B[x] for x in S)
+            assert all(factor(x,C,R,p,radius)==B[x] for x in S)
         except (ValueError,AssertionError):
             print(f'retention={a}/{b}, sample size={len(S)}: guard not met; recognition failed');fail+=1
         else:
@@ -489,5 +644,15 @@ def thinning_guards():
 
 
 if __name__=='__main__':
-    hamming_checks();arc_checks();recovery_checks();perturbed_checks();affine_binary_checks();thinning_examples();thinning_guards()
+    hamming_checks()
+    arc_checks()
+    certificate_regressions()
+    recovery_checks()
+    recovery_regressions()
+    perturbed_checks()
+    affine_binary_checks()
+    binary_edit_regression()
+    thinning_examples()
+    translated_thinning_check()
+    thinning_guards()
     print('\nAll checks passed.')
