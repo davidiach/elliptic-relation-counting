@@ -352,7 +352,7 @@ def verify_theorem_a1_lucas_collapse():
 
 def verify_theorem_a2_small_m_binomial():
     """Verify Theorem A2: strict 4m < r, |D_0| = r, positive binomial weights => K_{A1..Ap} == 0 for p <= m - 3."""
-    for r, m, d in [(31, 5, 6), (37, 6, 6)]:
+    for r, m, d in [(19, 3, 6), (29, 4, 7), (31, 5, 6), (37, 6, 6)]:
         assert m * d == r - 1 and 4 * m < r and d >= 5
         F = list(range(1, d + 2))
         L = d + 1
@@ -365,49 +365,57 @@ def verify_theorem_a2_small_m_binomial():
         mom_1 = slot_factored_moments(blks, 2, base_w, r)
         assert all(v == 0 for row in shift_gram_from_moments(mom_1, mom_1, r) for v in row)
 
-        moms_pin = {}
-        for i in range(m):
-            for idx in range(L):
-                wp = [list(row) for row in base_w]
-                wp[2 * i] = [w[idx] if t == idx else 0 for t in range(L)]
-                mx = slot_factored_moments(blks, 2, wp, r)
-                moms_pin[(i, idx)] = mx
-                assert all(v == 0 for row in shift_gram_from_moments(mx, mom_1, r) for v in row)
-        for mx in moms_pin.values():
-            for my in moms_pin.values():
-                assert all(v == 0 for row in shift_gram_from_moments(mx, my, r) for v in row)
+        # After p external pins, a Gram entry fixes at most p+2 slots.
+        # Sum the integer binomial coefficients in every possible residue class.
+        for fixed in range(m):
+            free_degree = (4 * m - fixed) * d
+            for residue in range(r - 1 - fixed * d, r):
+                count = sum(comb(free_degree, k) for k in range(residue, free_degree + 1, r))
+                assert count % r == 0
 
-        # Valid deficient explicit matrix E
+        if m >= 4:  # One external pin is in range.
+            pinned = []
+            for i in range(m):
+                for idx in range(L):
+                    wp = [list(row) for row in base_w]
+                    wp[2 * i] = [w[idx] if t == idx else 0 for t in range(L)]
+                    mx = slot_factored_moments(blks, 2, wp, r)
+                    pinned.append(mx)
+                    assert all(v == 0 for row in shift_gram_from_moments(mx, mom_1, r) for v in row)
+            if m >= 5:  # One external pin on each side is in range.
+                for mx, my in product(pinned, repeat=2):
+                    assert all(v == 0 for row in shift_gram_from_moments(mx, my, r) for v in row)
+
         n_full = n0 + 2
         labels = F * m + [1, 2]
-        u_ker = [0] * n_full
-        u_ker[1] = 1
-        u_ker[L + 1] = r - 1
-        explicit = [[int(j == n_full - 2) for j in range(n_full)]]
+        u_ker = [int(g == d + 1) for g in labels]
+        normalization = [int(j == n_full - 2) for j in range(n_full)]
+        assert any(u_ker) and u_ker[n_full - 2] == 0
+        explicit = [normalization]
+        tuples = {}
+        for g in F:
+            entries = [d + 1] if g == d + 1 else []
+            reserved = len(entries)
+            remaining = (g - 2 * m - reserved * d) % r
+            for _ in range(2 * m - reserved):
+                increment = min(d - 1, remaining)
+                entries.append(1 + increment)
+                remaining -= increment
+            assert remaining == 0 and sum(entries) % r == g
+            assert len(entries) == 2 * m and all(value in F for value in entries)
+            assert entries.count(d + 1) == int(g == d + 1)
+            tuples[g] = entries
         for col_j, g in enumerate(labels):
-            need = (g - 2 * m) % r
-            cnt = [0] * n_full
-            if col_j == 1:
-                cnt[1] += 1; cnt[0] += 1; cnt[L] += 2; rem = need - 1
-            elif col_j == L + 1:
-                cnt[0] += 2; cnt[L + 1] += 1; cnt[L] += 1; rem = need - 1
-            else:
-                cnt[0] += 2; cnt[L] += 2; rem = need
-            for bi in range(2, m):
-                for _ in range(2):
-                    take = min(d, rem)
-                    cnt[bi * L + take] += 1
-                    rem -= take
-            assert rem == 0
-            assert sum(cnt[j] * labels[j] for j in range(n_full)) % r == g
-            row = [int(j == col_j) - cnt[j] for j in range(n_full)]
+            row = [int(j == col_j) for j in range(n_full)]
+            for slot, value in enumerate(tuples[g]):
+                row[(slot // 2) * L + value - 1] -= 1
             assert sum(a * b for a, b in zip(row, u_ker)) % r == 0
             explicit.append(row)
         sp_E = RowSpace(r, n_full)
         sp_E.add_matrix(explicit)
         assert sp_E.rank < n_full
-        print(f"Theorem A2 (small-m binomial collapse, r={r}, m={m}, d={d}, 4m={4*m}<{r}, |D0|={r}/{r}): "
-              f"all1=K1=K2=0 mod {r}; rank(E)=rank(E+K2)={sp_E.rank}/{n_full}.")
+        print(f"Theorem A2 (r={r}, m={m}, d={d}): binomial residue sums vanish through p={m - 3}; "
+              f"all {len(tuples)} target decompositions verified; rank(E)={sp_E.rank}/{n_full}.")
 
     # Also verify cpb=1 dense small-m binomial collapse (r=13, m=4, d=3 -> K2=5/12; r=19, m=6, d=3 -> K2=1/18)
     for r, m, d, expected_k2 in [(13, 4, 3, 5), (19, 6, 3, 1)]:
@@ -457,6 +465,14 @@ def verify_proposition_a3_forest_theorem():
 
 def verify_unweighted_4m_lt_r_controls():
     """Verify unweighted 0/1 exhaustive controls at 2*cpb*m < r, elliptic curves, and Paley QR blocks."""
+    # An unweighted interval can repeat a nonzero difference even well below sqrt(r).
+    interval = range(1, 9)
+    prime = 65537
+    unit_differences = sum((a - b) % prime == 1 for a, b in product(interval, repeat=2))
+    assert unit_differences == len(interval) - 1
+    print(f"Difference multiplicity: an eight-element interval modulo {prime} has "
+          f"{unit_differences} ordered pairs with difference one.")
+
     def canon_classes(r, min_sz=2):
         seen = {}
         for sz in range(min_sz, r):

@@ -2,12 +2,15 @@ $ python3 -B research/deterministic_endgame_barriers/check_pinning_barriers.py
 Decoupled fiber-moment evaluator: exact match against brute-force pairs on C_5 (decoupled random weights).
 Theorem A1 (Lucas collapse, r=11, m=10, F={1,2}): all1=K1=K2=K4=0 mod 11; rank(E)=rank(E+K2)=20/22.
 Theorem A1 (Lucas collapse, r=13, m=12, F={1,2}): all1=K1=K2=K4=0 mod 13; rank(E)=rank(E+K2)=24/26.
-Theorem A2 (small-m binomial collapse, r=31, m=5, d=6, 4m=20<31, |D0|=31/31): all1=K1=K2=0 mod 31; rank(E)=rank(E+K2)=34/37.
-Theorem A2 (small-m binomial collapse, r=37, m=6, d=6, 4m=24<37, |D0|=37/37): all1=K1=K2=0 mod 37; rank(E)=rank(E+K2)=41/44.
+Theorem A2 (r=19, m=3, d=6): binomial residue sums vanish through p=0; all 7 target decompositions verified; rank(E)=22/23.
+Theorem A2 (r=29, m=4, d=7): binomial residue sums vanish through p=1; all 8 target decompositions verified; rank(E)=32/34.
+Theorem A2 (r=31, m=5, d=6): binomial residue sums vanish through p=2; all 7 target decompositions verified; rank(E)=36/37.
+Theorem A2 (r=37, m=6, d=6): binomial residue sums vanish through p=3; all 7 target decompositions verified; rank(E)=43/44.
 Theorem A2 (cpb=1 variant, r=13, m=4, d=3, 2m=8<13, |D0|=13/13): K2 rank=5/12 (nullity=7).
 Theorem A2 (cpb=1 variant, r=19, m=6, d=3, 2m=12<19, |D0|=19/19): K2 rank=1/18 (nullity=17).
 Proposition A3 (Forest Theorem, m=2, cpb=1, r=5): all 66 subset pairs match true shift rank.
 Proposition A3 (Forest Theorem, m=2, cpb=1, r=7): all 1653 subset pairs match true shift rank.
+Difference multiplicity: an eight-element interval modulo 65537 has 7 ordered pairs with difference one.
 Unweighted exhaustive control (r=7, m=3, cpb=1, 2m=6<7): 0/969 K1/K2 drops (vs 66 dense drops of 1-row lambda^T K1).
 Unweighted exhaustive control (r=11, m=2, cpb=2, 4m=8<11): 0/185 identical (F,F) K1/K2 drops (130 dense).
 Elliptic curve controls: E/F13(r=19) all1=7/8 rescued to K1(b0)=8/8; PR#4 r=37 all1=12/12; E/F251(r=257) all1=50/50.
@@ -16,8 +19,9 @@ Regime A-I fixed-list adversary (r=7, dense m=2): coupled L=2 drops to 4/6; 1-si
 CHECK_PINNING_BARRIERS: ALL CHECKS PASSED.
 
 $ python3 -B research/deterministic_endgame_barriers/check_residual_barriers.py
-Theorem B1 (core-only 1/6 ceiling): all 9 guards pass for L in [1e10, 1e24]; (E_core/b)/L^(-1/6) -> 2896.3 (theory 2896.3), while lookup-pinned rho_actual stays in [7, 15].
-Theorem B1 (multi-level & m'=m*t floor): d=1 strictly dominates d>=2; optimal m' remains >= 1.35/sqrt(log2 L).
-Theorem B2 (slot-co-location variance barrier): exact rational covariances 1/sqrt(D)-1/D and (R-1)/D verified; packing guard violated by >= 4096*m^3 (full) and >= 1024*m^2 (1-coord) even at u=1.
-Theorem B3 (bipartite K_{R,4m} cutwidth): exhaustive scan over 4 aspect ratios confirms balanced cut fraction >= 0.444885 >= 4/9 (0.444444).
+Proposition B1: core budget terms agree and sampled guards pass for m=(64, 128, 256); the lookup degree caps rho at log2(4m) in each sample.
+Proposition B1: one level minimizes the comparison expression in all tested two- and three-level splits.
+Proposition B2: same-position covariance is 1/q-1/D for a full tie and (R-1)/D for one coordinate; opposite-position covariance is zero in both models.
+Proposition B2: across 64 four-edge labelings, the mean packing potential is 4 and the minimum is 0.
+Theorem B3: minimum balanced cut fraction over four tested aspect ratios is 7289/16384 >= 4/9.
 CHECK_RESIDUAL_BARRIERS: ALL CHECKS PASSED.
