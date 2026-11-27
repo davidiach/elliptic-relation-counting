@@ -1,6 +1,6 @@
 # What the complete neighboring-fiber sum implies for the proposed stack
 
-The full-field-grid branch of DETERMINISTIC_POINTS.md always has full column rank. A genuine prime-order curve loses rank if the two displayed lists are used outside their guard. The same curve has full rank under the prescribed fallback. For the guarded short list, the calculation below proves a rank identity over all displacements and isolates the difficulty with fixing a single generator. It does not decide the uniform short-list question.
+The full field grid gives full column rank on every eligible curve (Proposition 1). An order-two example shows why the proposed list needs its full-grid fallback. For inputs satisfying the short-list guard, Propositions 3 and 4 prove full shift rank at the prescribed generator when matrices are stacked by source tuple, or by source group value and a specified slot on each side. The short list returns sums across those classes with coupled address weights. Their joint rank on every guarded input remains open. [Construction of the list](DETERMINISTIC_POINTS.md)
 
 ## The full-grid branch
 

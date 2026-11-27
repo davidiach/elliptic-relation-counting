@@ -1,8 +1,8 @@
 # Deterministic points for the fixed-shift matrix
 
-The matrix, digit map, row keys and field are exactly those of MAIN_RESULT.md. Below is a deterministic, target-budget list with a rank guarantee on every input and a checkable full-rank outcome on individual inputs. Full rank of this list on **every** eligible curve remains open. Only the closed contraction theorem is used for the computational bounds.
+The matrix, digit map, row keys and field are exactly those of MAIN_RESULT.md. The proposed list can be constructed and its rank tested within the target bit budget. On the guarded branch its stack contains all explicit rows and detects every direction admitting a sparse consequence within the stated degree bound. Only the closed contraction theorem is used for the computational bounds.
 
-[The neighboring-fiber analysis](NEIGHBORING_FIBERS.md) proves full rank on the prescribed full-grid branch, including the order-two exception to the polynomial degree argument. The two displayed point families lose rank on an eligible order-two curve if used without their guard. The open question concerns the guarded short list at the specified generator.
+[The neighboring-fiber analysis](NEIGHBORING_FIBERS.md) proves full rank on the prescribed full-grid branch, including the order-two exception to the polynomial degree argument. The two displayed point families lose rank on an eligible order-two curve if used without their guard. At the prescribed generator, separately retaining the source tuple or the source group value and two slot pins preserves full shift rank. Whether the coupled evaluations on the guarded short list always have full column rank remains open.
 
 ## 1. Interpolating the explicit rows inside the actual stack
 

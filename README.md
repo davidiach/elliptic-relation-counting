@@ -1,4 +1,14 @@
-# Counting relations in independently hashed elliptic-curve slots
+# Elliptic-curve relation counting
+
+**Current manuscript · 27 November 2026.** *A polynomial certificate for deterministic elliptic-curve relation systems* studies elliptic curves over prime fields of characteristic greater than three whose rational points form a group of prime order. Assuming Liu–Zhang–Ren (LZR) Theorem 2.2 on closed Boolean tensor contraction, the fixed-shift equations give a matrix polynomial of full generic rank. For field bit length $b$, the resulting Las Vegas algorithm verifies each answer and takes $2^{O(b/(\log_2 b)^{1/4})}$ expected bit time and $O(b)$ expected random bits. With $O(b)$ bits of advice per input length the same time bound holds deterministically. [Manuscript (PDF)](research/fixed_shift_gram/manuscript.pdf) · [Typst source](research/fixed_shift_gram/manuscript.typ) · [Theorem and assumptions](MAIN_RESULT.md)
+
+**What is proved about deterministic evaluation?** Stacking evaluations over the full field grid gives full column rank on every eligible curve. At the prescribed generator, the unweighted shift matrices also retain full shift rank when kept separate by source tuple, or by source group value and one specified slot on each side, under the short list’s parameter conditions. A finite example outside that regime illustrates how rank can fall when classes are added. On the order-19 curve the class matrices have joint rank eight and their sum has rank seven. Whether the proposed short list of weighted evaluations always has full column rank remains open. [Deterministic points](DETERMINISTIC_POINTS.md) · [Neighboring-fiber proofs](NEIGHBORING_FIBERS.md) · [Recorded ranks](evidence/neighboring_fibers.txt)
+
+The manuscript also reduces the number of terms in LZR’s deterministic partial expansion. The residual contraction still gives the uniform deterministic time bound $2^{O(b/\sqrt{\log_2\log_2 b})}$ under LZR’s Appendix D assumptions. [Expansion proof](PARTIAL_EXPANSION.md) · [Bit complexity](COMPLEXITY_AUDIT.md) · [Open questions](OPEN_PROBLEMS.md)
+
+## Earlier paper and version history
+
+*Counting relations in independently hashed elliptic-curve slots* gives numerical bounds under a separate finite-packet assumption.
 
 [Read the v4 paper (PDF)](paper.pdf) · [Editable Typst source](paper.typ) · [Mathematical supplement](derivations/README.md) · [Recorded experiments](evidence/) · [Historical reports](archive/README.md)
 
@@ -10,7 +20,7 @@ For a fixed elliptic-curve target $T$ with $2T\ne O$, any adaptive predictor tha
 
 **Version 2 · 21 November 2026.** The twelfth moment resolves all 168,480 eligible counts in Table 2 over $\mathbb F_{13}$. This revision also made the planting hypotheses explicit and partitioned the fresh hits in both larger-field trials. [Version 2 PDF](https://github.com/davidiach/elliptic-relation-counting/blob/9dcbb4ed9e58fd69d2adf0f39c0deeb25bfbf171/paper.pdf)
 
-## Results
+### Results
 
 At slightly narrower mixed-sampler widths, almost every successful seed has one signed relation whose address takes $b+O(m)$ bits. A verifier that keeps each seed local faces a communication lower bound. A signed determinant score computed from all public seeds has exponentially small correlation with that address at growing arity. [Sampled-slot results](derivations/sampled_slots/README.md) · [Joint determinant test](derivations/sampled_slots/signed_moment.md)
 
@@ -37,14 +47,20 @@ The paper also treats guarded-to-ordinary count conversion, fixed-target isolati
 
 ## Reproduce the experiments
 
-The recorded runs used Python 3.12.2. In a Python 3.12 environment run the following from the repository root.
+Run the three fixed-shift checks from the repository root in a Python 3.12 environment. Each prints a transcript for comparison with the recorded results.
 
 ```sh
 python -m pip install -r requirements.txt
-python reproduce.py
+python -B checks/check_fixed_shift_gram.py
+python -B checks/check_fixed_shift_points.py
+python -B checks/check_neighboring_fibers.py
 ```
 
-The default suite compares 52 outputs with their committed transcripts. To include the four C38 integration checks, pass the directory containing the original `ECDLP_v6_complete.zip` and `simplex-alphabet-ecdl-v6.zip`. The runner checks both archive hashes, loads four reference modules into a temporary directory, and compares all 56 outputs. The historical checkpoint replay has its own inputs and instructions. [Historical checks](archive/README.md#replay-the-historical-checks)
+The checks cover the symbolic certificate on finite examples, the evaluation lists, and the rank of the conditioned sums at the prescribed generator. [Gram transcript](evidence/fixed_shift_gram.txt) · [Point-list transcript](evidence/fixed_shift_points.txt) · [Neighboring-fiber transcript](evidence/neighboring_fibers.txt) · [Research ledger and source checks](RESEARCH_LEDGER.md#reproduction)
+
+### Earlier paper and archive checks
+
+Run `python reproduce.py` for the v4 suite. The recorded runs used Python 3.12.2. The default suite compares 52 outputs with their committed transcripts. To include the four C38 integration checks, pass the directory containing the original `ECDLP_v6_complete.zip` and `simplex-alphabet-ecdl-v6.zip`. The runner checks both archive hashes, loads four reference modules into a temporary directory, and compares all 56 outputs. The historical checkpoint replay has its own inputs and instructions. [Historical checks](archive/README.md#replay-the-historical-checks)
 
 Run the section-norm component check separately with `python -B archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit.py`. It compares regular norm certificates with direct group sums and exercises lifted residuals on two finite polynomial rings. The growing-degree bound follows from Section 2. [Recorded output](archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit_output.txt)
 
@@ -79,11 +95,20 @@ The reference code enumerates small curves and tuples to establish ground truth.
 
 ## Build the paper
 
-The PDF was built with the Python package `typst==0.15.2` (Typst engine 0.15.1). From the repository root, run `python -c "import typst; typst.compile('paper.typ', output='paper.pdf')"`. With the Typst CLI, use `typst compile paper.typ paper.pdf`.
+From the repository root, the following commands use the Python package `typst==0.15.2` to build the current manuscript and the earlier v4 paper at their published paths.
+
+```sh
+python -m pip install typst==0.15.2
+python -c "import typst; typst.compile('research/fixed_shift_gram/manuscript.typ', output='research/fixed_shift_gram/manuscript.pdf')"
+python -c "import typst; typst.compile('paper.typ', output='paper.pdf')"
+```
+
+With the Typst CLI, use `typst compile research/fixed_shift_gram/manuscript.typ` for the current manuscript or `typst compile paper.typ` for v4.
 
 ## Attribution and provenance
 
-- **Public baseline.** Akshima, Renas Bacho, Yu-Hsuan Huang, Eike Kiltz, Aysan Nishaburi, Samin Nooripoor, Noah Tittelbach and Emiel Wiedijk, *A Subexponential Time Algorithm for Elliptic Curve Discrete Logarithm*, v0.2, 29 October 2026. The authors give a conditional big-O bound and leave its numerical leading coefficient unspecified. [Authors’ manuscript at the cited revision](https://github.com/bochum-crypto/subexponential-ecdl/blob/1ee44e562b1b9a50ea339f3b8f81112b5a24b96f/subexponential-ecdl.pdf)
+- **Fixed-shift manuscript.** Shuchang Liu, Bingsheng Zhang and Kui Ren supply the contraction theorem, arithmetic gadgets, and deterministic factor base used in the certificate. [LZR preprint](https://eprint.iacr.org/2026/3020) · [Comparison of assumptions](COMPARATIVE_AUDIT.md)
+- **Public baseline for v4.** Akshima, Renas Bacho, Yu-Hsuan Huang, Eike Kiltz, Aysan Nishaburi, Samin Nooripoor, Noah Tittelbach and Emiel Wiedijk, *A Subexponential Time Algorithm for Elliptic Curve Discrete Logarithm*, v0.2, 29 October 2026. The authors give a conditional big-O bound and leave its numerical leading coefficient unspecified. [Authors’ manuscript at the cited revision](https://github.com/bochum-crypto/subexponential-ecdl/blob/1ee44e562b1b9a50ea339f3b8f81112b5a24b96f/subexponential-ecdl.pdf)
 - **Supplied intermediate sources.** *Simplex Alphabets and Backward Secants for Elliptic-Curve Discrete Logarithms*, v6.0, and *Compressed Relation Search and Reusable Preprocessing for Elliptic-Curve Discrete Logarithms*, both dated 31 October 2026. The supplied simplex manuscript reports 32.1569516597 for the common project comparison class. The compressed-relation manuscript reports 27.0138774237 and states Assumption A.1. These manuscripts are credited separately from the public baseline and from this project’s contributions. The SHA-256 digests of the supplied ZIPs are, respectively, `b4ed0d2ab9bf5dae521e3e63634ccbfee8a85af234b709053c10abfe60901f6c` and `95f2078edf80cc3ce1090be7a4216fa1f407e91044d376d035c99ebf7b9204c5`.
 - **Geometric background.** Qi Cheng, *Hard Problems of Algebraic Geometry Codes*, 2005. [Author’s preprint](https://arxiv.org/abs/cs/0507026)
 

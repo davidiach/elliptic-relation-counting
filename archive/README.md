@@ -6,7 +6,7 @@
 | 31 October 2026 | [Compressed relation-search audit](research/hillclimb_004/README.txt) · [Recorded audit result](research/hillclimb_004/runs/20261031T180405.300821Z/independent_audit.json) | Review of the pilot-reuse argument, unit selectors and spectral join, with independent finite checks. |
 | 17 November 2026 | [Progress toward the square-root ECDLP goal (PDF)](2026-11-17-research-progress.pdf) | A dated account of the conditional bounds and open problems. |
 
-The [research directory](research/) preserves the earlier checking programs, checkpoint reports, and the latest successful run records from each of the nine October checkpoints. Its filenames and source hashes follow the original workspace layout. The [current paper](../paper.pdf) and [derivations index](../derivations/README.md) give the current results and their hypotheses.
+The [research directory](research/) preserves the earlier checking programs, checkpoint reports, and the latest successful run records from each of the nine October checkpoints. Its filenames and source hashes follow the original workspace layout. The 27 November manuscript gives the fixed-shift theorem and its assumptions. The v4 paper documents the earlier counting results. [Current manuscript](../research/fixed_shift_gram/manuscript.pdf) · [v4 paper](../paper.pdf) · [v4 derivations](../derivations/README.md)
 
 ## Replay the historical checks
 
@@ -18,4 +18,4 @@ Install the dependencies in the [main README](../README.md#reproduce-the-experim
 python archive/replay.py /path/to/original/workspace
 ```
 
-The replay uses the three ZIPs named in the source manifest, `compressed_relation_search_package.zip`, and the original `_review` inputs for the package audit and spectrum check. These inputs include the compressed-package review manifest, its independently rerun records under `reruns/compressed_relation_search_20261031`, and the sharper-package paper sources. For the current paper and supplement, use [the release runner](../README.md#reproduce-the-experiments).
+The replay uses the three ZIPs named in the source manifest, `compressed_relation_search_package.zip`, and the original `_review` inputs for the package audit and spectrum check. These inputs include the compressed-package review manifest, its independently rerun records under `reruns/compressed_relation_search_20261031`, and the sharper-package paper sources. The repository README gives separate commands for the current manuscript’s checks and the v4 release suite. [Reproduction instructions](../README.md#reproduce-the-experiments)
