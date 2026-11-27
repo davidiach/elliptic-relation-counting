@@ -1,0 +1,48 @@
+CARTESIAN DUAL SUPPORT BOUNDS
+alphabet | dimension | degree+1 | bound | sub-bound supports | modulus
+2 | 3 | 1 | 2 | 8 | 5
+2 | 3 | 2 | 4 | 92 | 5
+2 | 3 | 3 | 8 | 254 | 5
+3 | 2 | 1 | 2 | 9 | 7
+3 | 2 | 2 | 3 | 45 | 7
+3 | 2 | 3 | 6 | 381 | 7
+3 | 2 | 4 | 9 | 510 | 7
+5 | 2 | 1 | 2 | 25 | 11
+5 | 2 | 2 | 3 | 325 | 11
+5 | 2 | 3 | 4 | 2625 | 11
+3 | 3 | 3 | 6 | 100 | 7
+3 | 3 | 4 | 9 | 100 | 7
+3 | 3 | 5 | 18 | 100 | 7
+3 | 3 | 6 | 27 | 100 | 7
+5 | 2 | 4 | 5 | 100 | 11
+5 | 2 | 5 | 10 | 100 | 11
+5 | 2 | 6 | 15 | 100 | 11
+5 | 2 | 7 | 20 | 100 | 11
+5 | 2 | 8 | 25 | 100 | 11
+5174 sub-bound support rank checks; 19 sharp unrestricted-weight examples.
+
+NONNEGATIVE SPARSE RANK CERTIFICATES
+d | W | prime | directions | grid size | max degree | max terms
+2 | 2 | 5 | 24 | 13 | 2 | 3
+2 | 3 | 5 | 24 | 25 | 4 | 5
+2 | 3 | 7 | 48 | 25 | 4 | 5
+2 | 4 | 7 | 48 | 41 | 6 | 8
+3 | 3 | 7 | 11 | 63 | 4 | 15
+3 | 4 | 11 | 11 | 129 | 6 | 33
+3 | 5 | 11 | 11 | 231 | 8 | 61
+4 | 3 | 11 | 12 | 129 | 4 | 19
+4 | 4 | 13 | 12 | 321 | 6 | 69
+236 exact sign-character interpolation checks on complete balls.
+201 rational polynomial certificates; 14133 exact point evaluations.
+
+THREE-ACTIVE-COORDINATE CUBIC COUNTEREXAMPLES
+fan k | prime | spanning trees | rows | dimension | ranks | max active norm_1 | distinct violations
+11 | 89 | 17711 | 84 | 23 | 22/23 | 3 | 40
+11 | 199 | 17711 | 84 | 23 | 22/23 | 3 | 42
+13 | 233 | 121393 | 100 | 27 | 26/27 | 3 | 48
+13 | 521 | 121393 | 100 | 27 | 26/27 | 3 | 50
+17 | 1597 | 5702887 | 132 | 35 | 34/35 | 3 | 64
+17 | 3571 | 5702887 | 132 | 35 | 34/35 | 3 | 66
+6 exact full-rational-rank, no-wrap, distinct-row fan examples.
+
+All checks passed.
