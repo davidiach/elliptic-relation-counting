@@ -1,0 +1,14 @@
+Polynomial hash: 310 fixed-leading-coefficient evaluation maps, 90530 seeds checked, all bijections.
+Collision partitions: 82 patterns, 13106 equal-sum tuple arrays, all rank/count bounds passed.
+Joint seed fixture r=19: 256 seeds, 5 retained subsets, mean 2.00907, selected 0.714901.
+Joint seed fixture r=31: 256 seeds, 5 retained subsets, mean 5.56406, selected 1.21962.
+Joint seed fixture r=43: 243 seeds, 6 retained subsets, mean 0.503507, selected 0.216583.
+Joint potential: 3 finite seed libraries, 16 retained-subset checks.
+Rational phase polynomial: 32 low-variance toy fixtures, 64604 relations, 32 positive-mass witnesses extracted.
+Concentrated obstruction: r=101, d=4, exact moment agreement through degree 3, parity-binomial density ratio in [1/2,2].
+Concentrated obstruction: r=257, d=8, exact moment agreement through degree 7, parity-binomial density ratio in [1/2,2].
+Concentrated obstruction: r=521, d=16, exact moment agreement through degree 15, parity-binomial density ratio in [1/2,2].
+Concentrated obstruction: r=1009, d=32, exact moment agreement through degree 31, parity-binomial density ratio in [1/2,2].
+Concentrated obstruction: r=65537, d=64, exact moment agreement through degree 63, parity-binomial density ratio in [1/2,2].
+Concentrated obstruction: 124 exact moment identities.
+Punctured means: 32 full-support no-wrap fixtures; complete rank passed. C101 regression: full rank 27, summed rank 26, full counts 28..53, minimum puncture counts [1, 1, 1, 1].

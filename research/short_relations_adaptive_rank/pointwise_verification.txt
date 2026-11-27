@@ -1,0 +1,5 @@
+Partition bound: 4965 nonisolated patterns, 14895 modular rank/support checks passed.
+Exact centered moment expansion: 4608 independent-mask seeds, 15 target checks, 4466 realized partition patterns.
+Full-coverage/no-wrap rank: 150 fixed-shift fixtures, 40 singular Gram matrices, 40 rescued, maximum contrast pin-average rank loss 0.
+First singular-Gram rescue: (7, [[4, 5, 6], [2, 4, 6]], 4, 1, 4, 5)
+Curve E/F5, y^2=x^3+2x+1, order 7: 11 actual group-law relations, fiber counts 1..2, pin masses 3..5, Gram rank 3/4, adaptive rank 4/4.

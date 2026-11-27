@@ -1,0 +1,8 @@
+Curve: E/F953, y^2=x^3+5x+19, order 1009 (direct point count).
+Fixture seed 0; radix 8; kappa 2; block sizes [28, 28, 28, 28]; 162 genuine linear rows, rank 113/114.
+All 5 retained subsets: full support, max fiber 698 < 1009; max chi-square 0.07248452.
+All 1008 nonzero multipliers and every circular cut (exact): minimum aggregate variance 0.18133368, per block average 0.04533342, multiplier 331.
+Every block varies on the residual line, target coordinate nonzero; all proper block-support intersections are zero.
+Modal mass E=3.42857143, collision deficit=3.79591837; exact comparison passed.
+Block-support search: 60 residual subspaces, 480 intersection tests matched exhaustive enumeration; dimension bound passed.
+Trim inequality: 40 fixtures; punctured epsilon=9.98e-13, tau upper bound=0.1000, predicted bound=0.0791491, max observed chi-square=1.82e-16.

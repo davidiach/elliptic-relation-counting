@@ -1,0 +1,15 @@
+C5, m=1, k=1: raw target 2, rank at every nonzero shift 2, complete stacked rank 2.
+C5, m=2, k=3: raw target 5, rank at every nonzero shift 5, complete stacked rank 5.
+C5, m=3, k=0: raw target 8, rank at every nonzero shift 7, complete stacked rank 7.
+C5, m=5, k=4: raw target 14, rank at every nonzero shift 14, complete stacked rank 14.
+C7, m=3, k=5: raw target 14, rank at every nonzero shift 14, complete stacked rank 14.
+C7, m=4, k=0: raw target 19, rank at every nonzero shift 17, complete stacked rank 17.
+C5, m=6, k=1: raw target 17, rank at every nonzero shift 12, complete stacked rank 17.
+C7, m=8, k=1: raw target 39, rank at every nonzero shift 32, complete stacked rank 39.
+C11, m=2, k=3: raw target 17, rank at every nonzero shift 17, complete stacked rank 17.
+C11, m=6, k=0: raw target 53, rank at every nonzero shift 49, complete stacked rank 49.
+C11 unequal progressions: every consecutive edge has nonzero mass, rank 7/7.
+C101: tuple counts 1..2, every pin mass 64..92; at shifts 25 and 26 all 169 scores per shift are nonzero and every pinned sum is zero. Raw ranks 6, individual and joint cross-mean ranks 5.
+C7 binary blocks: tuple counts 4..5, punctured counts 1..4, raw rank 4, shifts (1, 2) have ranks [3, 2] and joint rank 3.
+C17 binary blocks: tuple counts 4..12, punctured counts 1..8, raw rank 6, shifts (2, 3) have ranks [2, 5] and joint rank 5.
+C5 unequal blocks: tuple counts 2..4; all nonzero shifts together give rank 3, adding the identity restores rank 4.
