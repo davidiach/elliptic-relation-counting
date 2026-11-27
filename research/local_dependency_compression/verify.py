@@ -71,7 +71,11 @@ def projective(p,d):
         for tail in product(range(p),repeat=d-j-1):yield (0,)*j+(1,)+tail
 
 def prefix_probes(p,l,b):
-    assert b>=1 and l>=1
+    assert b>=0 and l>=1
+    if b == 0:
+        # The lift is zero. Basis directions also hit each nonzero linear form.
+        directions = [coord(i, l) for i in range(l)]
+        return directions, directions.copy(), 0, 0, 'zero-budget'
     n=min(b+1,l)
     if p>b:m=n*(l-1)+1;mode='hyperplane'
     else:m=((p**n-1)//(p-1))*(l-1)+1;mode='independent'
@@ -111,6 +115,12 @@ def check_hit():
         total+=n
         print(f'q={p} dim={l} budget={b} mode={mode} ext={k} nodes={m} terminal={len(G)} probes={len(H)} tests={n}')
     print(f'{total} exact hyperplane-family checks.')
+    probes, terminals, nodes, degree, mode = prefix_probes(3, 2, 0)
+    covered = sparse([zero(2)], 3, 1)
+    assert probes and all(len(x) == 2 and x not in covered for x in probes)
+    assert all(any(dot(form, x, 3) for x in terminals) for form in projective(3, 2))
+    assert (nodes, degree, mode) == (0, 0, 'zero-budget')
+    print(f'Zero budget over F3 returned {len(probes)} absent basis probes in dimension 2.')
 
 def patterns(K,p,w):
     for j in range(min(w,K)+1):
@@ -352,8 +362,16 @@ def check_compression_barrier():
     for p,w,L,d,seed in [(7,2,2,7,194),(11,2,3,10,91),(17,2,3,11,731),(7,3,2,11,606),(31,1,4,7,17)]:
         H,e=connected_code_fixture(p,w,L,d,seed);K=len(H);v=Ball(p,K,w);S=sparse(H,p,w);total+=v
         lower=compress_lower(p,K,w,len(S))
+        assert lower == K and Ball(p, lower-1, w) < len(S) <= Ball(p, lower, w)
         print(f'q={p} w={w} d={d} K={K} independent-short lower={e} span={len(S)}/{v} min radius-preserving replacement={lower} circuit components=1')
     print(f'{total} exact sparse coefficient patterns across five fixtures.')
+    dictionary = [(1, 0), (0, 1), (1, 1)]
+    span = sparse(dictionary, 2, 2)
+    assert span == sparse(dictionary[:2], 2, 2) and len(span) == 4
+    lower = compress_lower(2, len(dictionary), 2, len(span))
+    assert lower == 2, 'three columns compress to two at radius two'
+    assert Ball(2, lower-1, 2) < len(span) <= Ball(2, lower, 2)
+    print(f'Binary radius-two fixture retained all {len(span)} syndromes with {lower} of three columns. One column covers at most {Ball(2, lower-1, 2)}.')
 
 if __name__=='__main__':
     check_hit();check_partitions();check_info();check_general_lifts();check_bridges();check_compression_barrier()

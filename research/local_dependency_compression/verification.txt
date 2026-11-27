@@ -9,6 +9,7 @@ q=2 dim=4 budget=2 mode=independent ext=5 nodes=22 terminal=15 probes=15 tests=4
 q=2 dim=5 budget=3 mode=independent ext=6 nodes=61 terminal=31 probes=31 tests=996
 q=3 dim=5 budget=3 mode=independent ext=5 nodes=161 terminal=121 probes=121 tests=1074
 19572 exact hyperplane-family checks.
+Zero budget over F3 returned 2 absent basis probes in dimension 2.
 
 EXACT SMALL LOCALITY AND PREFIX PROBES
 q=2 d=3 w=1: partitions=4139 local=386 guard=266 covered no-guard=1 short words=112
@@ -35,5 +36,6 @@ q=17 w=2 d=11 K=53 independent-short lower=41 span=352529/353617 min radius-pres
 q=7 w=3 d=11 K=15 independent-short lower=3 span=96241/102151 min radius-preserving replacement=15 circuit components=1
 q=31 w=1 d=7 K=127 independent-short lower=119 span=3811/3811 min radius-preserving replacement=127 circuit components=1
 523301 exact sparse coefficient patterns across five fixtures.
+Binary radius-two fixture retained all 4 syndromes with 2 of three columns. One column covers at most 2.
 
 All checks passed.
