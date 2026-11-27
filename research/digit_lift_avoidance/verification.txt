@@ -1,0 +1,21 @@
+Scalar carry identities: 64645 exhaustive and 5000 seeded random tuples passed.
+Plane lifts: 12 complete instances; 4 exact carry factorization identities; 147 original-support inclusions; 581359 safe absent-vector lifts.
+Anchored truncation: 192 exact evaluation-span identities; 186 strictly smaller restricted supports.
+  F_3^4, m=2, t=1: |B_t|=9, |mB_t|=33, reduced support-degree <= 2 evaluation rank 33, first annihilator degree 3.
+  F_3^5, m=3, t=1: |B_t|=11, |mB_t|=131, reduced support-degree <= 3 evaluation rank 131, first annihilator degree 4.
+  F_5^4, m=2, t=1: |B_t|=17, |mB_t|=113, reduced support-degree <= 2 evaluation rank 113, first annihilator degree 3.
+  F_3^5, m=2, t=2: |B_t|=51, |mB_t|=211, reduced support-degree <= 4 evaluation rank 211, first annihilator degree 5.
+Hamming ball obstructions: 4 exact support and full interpolation-rank checks.
+Sparse syndrome fixtures: 30 exhaustive missing-syndrome checks (4 non-full-row-rank dictionaries).
+  F_3 graph product: 81 support points, full affine span, all scalar projections surjective, quadratic selector succeeded.
+  F_5 graph product: 625 support points, full affine span, all scalar projections surjective, quadratic selector succeeded.
+  F_7 graph product: 2401 support points, full affine span, all scalar projections surjective, quadratic selector succeeded.
+  Carry-box obstruction: r=127, q=11, 3025 lifted points, full rank on all 70 monomials of total degree <= 4.
+  Carry-box obstruction: r=173, q=13, 4225 lifted points, full rank on all 70 monomials of total degree <= 4.
+Algebraic selector: 3 quadratic successes with surjective scalar projections, 2 exact carry-box negative controls.
+  b=1048576, m=4, c=16: volume guard passes; conservative uncolored sparse-span guard fails (finite rounding).
+  b=1048576, m=32, c=16: at most 38 lifted lists, carry chunks <= 5; volume and uncolored sparse-span guards hold by integer bit bounds.
+  b=4194304, m=64, c=24: at most 72 lifted lists, carry chunks <= 7; volume and uncolored sparse-span guards hold by integer bit bounds.
+  b=16777216, m=128, c=48: at most 135 lifted lists, carry chunks <= 6; volume and uncolored sparse-span guards hold by integer bit bounds.
+  b=33554432, m=256, c=24: at most 281 lifted lists, carry chunks <= 24; volume and uncolored sparse-span guards hold by integer bit bounds.
+Parameter guards: 4 passing conservative large-bitlength cases and 1 finite failure retained; no large prime or factor-base enumeration.
