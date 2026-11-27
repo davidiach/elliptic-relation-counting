@@ -20,7 +20,7 @@
 #set figure(gap: 0.6em)
 #show figure.caption: set text(size: 9.5pt)
 #let repository = "https://github.com/davidiach/elliptic-relation-counting/"
-#let revision = "d9488fa24a53344b05cbe4f701f52f8070c3ef3d"
+#let revision = "a3df19e2e3dadbced2565b15d1a5a14bbc726af1"
 #let artifact(path, body) = {
   let route = if path.ends-with(".md") { "blob" } else { "tree" }
   link(repository + route + "/" + revision + "/" + path, body)
@@ -48,6 +48,8 @@
 = Introduction
 
 A fixed displacement gives a linear equation for each pair of representations of neighboring group elements. Liu, Zhang and Ren (LZR) show that a factor base covering the group supplies enough such equations to determine every label @lzr. There can be far more equations than unknowns. One way to compress the system is to sum the outer products of its rows. Over a finite field this can destroy a direction even when the original rows span the entire space. On a six-column cyclic example, the ordinary Gram matrix has rank five.
+
+Akshima et al. already obtained the conditional expected-time bound $2^(O(b slash (log_2 b)^(1 slash 4)))$ for prime-order curves by independently hashing factor bases and collecting relations @akshima. Our result attains that scale using LZR's deterministic family of fixed-shift equations. All matrix entries share a single random specialization, and the proof bounds the expected number of fair bits by $O(b)$. The comparison below with LZR concerns their uniform deterministic worst-case guarantee.
 
 We attach a weight to each relation using the addresses of its slots. The ordered addresses distinguish a basis term in the determinant, while the digits of each address factor into weights that the counting algorithm can evaluate. This yields a certificate for the entire table at one specialization. It uses the closed contraction bound in LZR, Theorem 2.2. LZR's uniform deterministic end-to-end bound, $2^(O(b slash sqrt(log_2 log_2 b)))$, also invokes the terminal-preserving construction from Appendix D of the upstream work @upstream. The earlier project report treats independently hashed slots under a different finite-packet assumption @prior.
 
@@ -81,7 +83,7 @@ A rank test detects failure. On success, solving gives $lambda$ and the proposed
 
 Cut each digit at slot boundaries and into pieces of length at most $ceil(sqrt(b))$. A piece of value $u$ starting at bit $j$ in digit $i$ contributes the field weight $X_i^(2^j u)$, with $0^0=1$. Binary powering computes its canonical residue in polynomial bit time. The $q=O(sqrt(b)+m+s)$ pieces attach to address wires. After subdivision the network has $E_0=O(m b)$ Boolean edges, degree $O(b^(3/4)+sqrt(b))$, and polynomial description length.
 
-The contraction returns residues modulo powers of two. To recover the desired scalar modulo $r$, choose $S=Theta(m b)$ with $S>=E_0+b+q+1$ and let $t=floor(S/(q+1))$. Split each of the $q$ nonnegative field representatives into $J=ceil(ceil(log_2 r)/t)$ digits of $t$ bits. For each of the $J^q$ choices of digit positions, the corresponding network has an integer count below $2^(E_0+q t+1)$. Apply the closed theorem at truncation length one and precision $E_0+q t+1=O(S)$. The least dyadic residue is the exact count. Multiply it by the appropriate power of $2^t$, sum modulo $r$, and apply the public factor $M_C$. This charges the precision required to pass between the two rings.
+The contraction returns residues modulo powers of two. To recover the desired scalar modulo $r$, choose $S=Theta(m b)$ with $S>=E_0+b+q+1$ and let $t=floor(S/(q+1))$. Split each of the $q$ nonnegative field representatives into $J=ceil(ceil(log_2 r)/t)$ digits of $t$ bits. For each of the $J^q$ choices of digit positions, the corresponding network has an integer count below $2^(E_0+q t+1)$. Apply the closed theorem at truncation length one and precision $E_0+q t+1=O(S)$. The least dyadic residue is the exact count. Multiply it by the appropriate power of $2^t$, sum modulo $r$, and apply the public factor $M_C$. The #artifact("COMPARATIVE_AUDIT.md")[comparison with LZR Theorem 2.2] checks the bipartite graph, truncation length, scalar precision and uniform entry programs against its hypotheses.
 
 *Time, space and advice.* Polynomial factors in $N,b$ cover the explicit rows, all $N^2$ entries, elimination and verification. Each closed contraction costs $2^(O(S slash sqrt(log S)))$ up to polynomial factors. Digit choices add $O(q log(b+2))$ to the log cost. Thus for growing polylogarithmic $m$ in the stated regime,
 $ log_2 T_"trial" = O(b/m + (m b)/sqrt(log(m b)) + (sqrt(b)+m)log(b+2)). $
