@@ -1,4 +1,6 @@
-# Four consecutive targets can all have excess nullity
+# Four and five consecutive targets with excess pinned nullity
+
+## Four targets at order 223
 
 On $y^2=x^3+x+1$ over $\mathbb F_{211}$, the rational group has prime order
 $r=223$. For the generator $P=(204,101)$, a sparse affine seed with $m=5$
@@ -75,6 +77,31 @@ gives $A_t^\mathsf{T}A_t=2M_t$. The one-dimensional rank loss occurs
 when relations are summed modulo 223. Every pin count is nonzero modulo
 223 at all four targets.
 
+## Five targets at order 67
+
+On $y^2=x^3+x+13$ over $\mathbb F_{59}$, take $B=(1,29)$ and
+$P=29B=(4,50)$. The reduced-floor affine seed has four blocks of sizes
+$2,10,10,10$. All five targets $kP$ for $0\le k\le4$ have nullity 5
+over $\mathbb F_{67}$. The remaining 62 targets have nullity 4. Stacking
+the five matrices gives nullity 3, the forced block-contrast dimension.
+
+At threshold $T=6$, the 2,000 half-tuples cover every group element.
+Their collision count is $C=60{,}876$ and the exact potential is
+$151752917869129250809/151182490735070429184<64/57$.
+The ordered tuple counts at the five targets, in order, are 59,566,
+60,419, 60,876, 60,419, and 59,566. Each raw incidence matrix has rank
+28 on 32 columns. Each pinned matrix has rank 27.
+
+For a five-term run, start with negation-symmetric blocks and check the
+three source targets $0,P,2P$. A failure at each gives failures at
+$-2P,-P,0,P,2P$ by symmetry. Translating the first block by $P$ shifts
+every full target by $2P$ and permutes the half-sum histogram. For this
+witness the first block used $(43,34)$ for both parities before translation.
+The translated mask uses $(24,46)$ on even $y$ and $(22,4)$ on odd $y$.
+The verifier checks equality of the translated point set and the affine mask.
+
+## Reproduction
+
 Run from the repository root with NumPy and python-flint installed.
 
 ```sh
@@ -82,6 +109,6 @@ python -B -m research.sparse_target_runs.check_four_targets
 ```
 
 The verifier computes all target ranks by counting the remaining slots.
-At each of the four targets it also joins the half-tuples, counts every
+At each target in a claimed run it also joins the half-tuples, counts every
 pinned matrix entry directly, and checks equality over the integers before
 reducing modulo $r$. [Verifier](check_four_targets.py) · [Recorded output](verification.txt)

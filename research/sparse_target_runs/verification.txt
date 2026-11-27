@@ -5,3 +5,11 @@ k=1, log=120, tuples=469728, incidence rank=31, pinned rank=30, nullity=6, zero 
 k=2, log=17, tuples=469728, incidence rank=31, pinned rank=30, nullity=6, zero pins mod r=0
 k=3, log=137, tuples=469952, incidence rank=31, pinned rank=30, nullity=6, zero pins mod r=0
 exceptional logs=[0, 17, 120, 137], joint nullity=4, nullity at 4P=5
+r=67, m=4, T=6, sizes=[2, 10, 10, 10], P=(4, 50)
+half-tuples=2000, energy=60876, half-sum support=67, Phi=151752917869129250809/151182490735070429184
+k=0, log=0, tuples=59566, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=2
+k=1, log=29, tuples=60419, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=2, log=58, tuples=60876, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=2
+k=3, log=20, tuples=60419, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=0
+k=4, log=49, tuples=59566, incidence rank=28, pinned rank=27, nullity=5, zero pins mod r=2
+exceptional logs=[0, 20, 29, 49, 58], joint nullity=3, nullity at 5P=4

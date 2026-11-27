@@ -1,4 +1,4 @@
-"""Verify affine-mask witnesses for four consecutive singular pinned matrices."""
+"""Verify affine-mask witnesses for consecutive targets with excess pinned nullity."""
 
 import json
 from fractions import Fraction
@@ -109,10 +109,12 @@ def verify(case):
     sizes = list(map(len,blocks))
     n = sum(sizes)
     assert sizes == case['sizes']
-    d = case['d']
-    step = 2*d % r
-    shift = 3*d*pow(2,-1,r) % r
-    assert step and cycle[step] == tuple(case['P'])
+    length = len(case['nullities'])
+    step = cycle.index(tuple(case['P']))
+    assert step and 1 <= length < r
+    # Translating one block by H shifts every full target by 2H.
+    # The new run has midpoint (length-1)P/2, so 4H=(length-1)P.
+    shift = (length-1)*step*pow(4,-1,r) % r
     old = affine_block(cycle,p,threshold,[case['source_first_map']]*2)
     source = [old, *blocks[1:]]
     assert all(set(v) == set(-v % r) for v in source)
@@ -140,7 +142,7 @@ def verify(case):
     exceptional = [t for t,v in enumerate(nullities) if v>m]
     assert exceptional == case['exceptional_logs']
     sampled = []
-    for k in range(4):
+    for k in range(length):
         t = k*step % r
         direct, total, missing = enumerate_target(t,buckets,logs,sizes,r)
         assert np.array_equal(matrix(t),direct)
@@ -151,8 +153,9 @@ def verify(case):
               f'pinned rank={n-nullities[t]}, nullity={nullities[t]}, zero pins mod r={missing}')
     joint = n-rank(np.vstack(sampled),r)
     assert joint == case['joint_nullity']
-    assert nullities[4*step % r] == case['next_nullity']
-    print(f'exceptional logs={exceptional}, joint nullity={joint}, nullity at 4P={nullities[4*step % r]}')
+    next_nullity = nullities[length*step % r]
+    assert next_nullity == case['next_nullity']
+    print(f'exceptional logs={exceptional}, joint nullity={joint}, nullity at {length}P={next_nullity}')
 
 
 if __name__ == '__main__':
