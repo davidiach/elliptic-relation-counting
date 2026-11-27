@@ -1,0 +1,35 @@
+EXHAUSTIVE GRADED PROFILE INCLUSIONS
+p=2 d=2: 120 unordered pairs, 4 strict leading-profile inclusions
+p=2 d=3: 32640 unordered pairs, 5996 strict leading-profile inclusions
+p=3 d=2: 130816 unordered pairs, 36396 strict leading-profile inclusions
+360 seeded multi-factor checks; 201 strict inclusions; 218 refined bounds stronger than scalar completeness
+
+EXACT TRUNCATED PRODUCT-SPACE ALGORITHM
+280 exact product-space comparisons, 140 general lower sets, 191 degree >= characteristic, 840 group-algebra identities, 128 certified absent points
+
+THICK-BALL TRANSLATION-COMPLEXITY THRESHOLD
+p=2 d=3 L=1 h=1: missing=4, threshold=4, 15 separator checks
+p=3 d=2 L=2 h=1: missing=1, threshold=9, 2 separator checks
+p=3 d=3 L=2 h=1: missing=7, threshold=9, 40 separator checks
+p=3 d=3 L=1 h=1: missing=20, threshold=4, 40 separator checks
+p=5 d=2 L=3 h=0: missing=16, threshold=4, 40 separator checks
+p=2 d=4 L=1 h=2: missing=5, threshold=8, 31 separator checks
+6 sharp threshold fixtures, 168 exact separator translation ranks
+
+ORIGINAL-PLANE HIGH-GROWTH GRID CONTROLS
+m=2 p=101 core=7 grid=9x9 actual support=191 translation dimension >= 10
+m=3 p=4001 core=6 grid=27x27 actual support=3044 translation dimension >= 28
+m=4 p=10009 core=5 grid=16x16 actual support=5768 translation dimension >= 17
+3 packed-core and square-grid controls (small fixtures do not impose the asymptotic axis/product guards)
+
+HIDDEN HANKEL CERTIFICATES
+64 hidden-curve successes, 32 honest failures, 8486 enumerated sumset points, 1600 sampled rank bounds, 640 sparse-span rank bounds
+1 affine-slice adjustments; one heterogeneous rank budget [1,2] passed
+
+NORM-COSET MOMENT CURVES
+p=5 s=3 m=2 n=31 full support=961 hidden rank certificate passed
+p=7 s=3 m=3 n=57 full support=185193 hidden rank certificate passed
+196134 exact retained-support points, 5951 distinct unordered doubles, 100 sampled character-count checks, 40 sampled scalar projections
+4 augmented-ball support and completeness controls
+
+All checks passed.
