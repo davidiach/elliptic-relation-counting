@@ -173,9 +173,11 @@ def prepare(tables,dims,cap):
         for A in tables:
             T=sparse_tt(A,dims,p)
             rank=max(a.shape[-1] for a in T)
+            maxrank = max(maxrank, rank)
             if rank>cap:return None,rank
             G=T if G is None else conv_tt(G,T,p)
-            rank=max(a.shape[-1] for a in G);maxrank=max(maxrank,rank)
+            rank=max(a.shape[-1] for a in G)
+            maxrank = max(maxrank, rank)
             if rank>cap:return None,rank
         GG.append(G)
     return (M,ps,GG),maxrank
@@ -266,6 +268,45 @@ def tt_tests():
     G,rank=prepare([Counter({(i,i):1 for i in range(5)})],(5,5),2)
     assert G is None and rank==5
     print(f'Tensor train: {cases} exact tensors, {values} point evaluations, {ranks} unfolding-rank comparisons, {convs} convolutions, {gaps+1} certified absent points; one rank-cap failure retained.')
+    input_rank_test()
+    intermediate_rank_cap_test()
+
+
+def input_rank_test():
+    dims = (2, 2, 3)
+    first = Counter([(0, 0, 0), (1, 0, 0)])
+    second = Counter([(0, 0, 0), (1, 1, 0)])
+    tables = [first, second]
+    final = conv_dict(first, second, dims)
+    # The third coordinate is fixed, so only the first cut can have rank above one.
+    for p in small_primes_bound(sum(final.values())):
+        ranks = [sparse_matrix_rank(t, (0,), (1, 2), p) for t in (first, second, final)]
+        assert ranks == [1, 2, 1]
+    rejected, width = prepare(tables, dims, cap=1)
+    assert rejected is None and width == 2
+    point, peak, _, _ = absent(tables, dims, cap=2)
+    assert point is not None and final[point] == 0
+    assert peak == 2, 'reported peak must include the rank-two input'
+    print(f'Input ranks 1 and 2 convolved to rank 1. Reported peak {peak}, cap 1 rejected.')
+
+
+def intermediate_rank_cap_test():
+    dims = (4, 4, 2)
+    first = Counter([(0, 0, 0), (1, 1, 0)])
+    second = Counter([(0, 0, 0), (2, 2, 0)])
+    third = Counter((i, 0, 0) for i in range(4))
+    tables = [first, second, third]
+    intermediate = conv_dict(first, second, dims)
+    final = conv_dict(intermediate, third, dims)
+    for p in small_primes_bound(sum(final.values())):
+        ranks = [sparse_matrix_rank(t, (0,), (1, 2), p)
+                 for t in (*tables, intermediate, final)]
+        assert ranks == [2, 2, 1, 4, 1]
+    rejected, width = prepare(tables, dims, cap=2)
+    assert rejected is None and width == 4, 'cap 2 must reject the rank-four intermediate'
+    point, peak, _, _ = absent(tables, dims, cap=4)
+    assert point is not None and final[point] == 0 and peak == 4
+    print(f'Intermediate rank {width} exceeded cap 2. Cap {peak} passed with final rank 1.')
 
 
 def block_codes(q,L,k,blocks):
@@ -433,6 +474,28 @@ def shadow_tests():
     z,k,n,g=shadow(A,(11,)*5,[(0,)*5],7,1000)
     assert z is None and k==5
     print(f'All-order width/carry tests: {cases} mixed MDS fixtures, {cuts} balanced cuts, {projection_checks} full low-coordinate projections; {certs} certified shadow successes; full-rank negative control retained.')
+    translated_shadow_tests()
+
+
+def translated_shadow_tests():
+    from fractions import Fraction
+    dims = (5, 5)
+    lists = [[(0, 1), (1, 2)]]
+    corrections = [(0, 0)]
+    ambient = set(product(*(range(p) for p in dims)))
+    point, rank, count, guard = shadow(lists, dims, corrections, 5, cap=1)
+    assert (rank, count, guard) == (1, 1, Fraction(1, 5))
+    assert point in ambient - support(lists + [corrections], dims), 'translated shadow returned a represented or invalid point'
+    print(f'Translated affine line over F5 returned {point}, verified absent with guard {guard}.')
+
+    corrections = [(0, 0), (0, 1)]
+    rejected, rank, bound, guard = shadow(lists, dims, corrections, 5, cap=1)
+    assert (rank, bound, guard) == (1, 2, Fraction(2, 5))
+    assert rejected is None, 'candidate cap 1 must reject a bound of two'
+    point, rank, count, same_guard = shadow(lists, dims, corrections, 5, cap=2)
+    assert (rank, count, same_guard) == (1, bound, guard)
+    assert point in ambient - support(lists + [corrections], dims)
+    print(f'Candidate bound {bound} with guard {guard} rejected at cap 1 and certified {point} absent at cap 2.')
 
 
 def sparse_matrix_rank(table,I,J,p):

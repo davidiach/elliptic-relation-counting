@@ -1,5 +1,7 @@
 CRT lift: 36 exact plane fixtures, 854 represented-point inclusions, 6811 safe absent decodings, 12780 reverse-lift point checks.
 Tensor train: 240 exact tensors, 3600 point evaluations, 480 unfolding-rank comparisons, 80 convolutions, 31 certified absent points; one rank-cap failure retained.
+Input ranks 1 and 2 convolved to rank 1. Reported peak 2, cap 1 rejected.
+Intermediate rank 4 exceeded cap 2. Cap 4 passed with final rank 1.
 Mixed CRT fixture: r=211, R=210, distinct primes=[2, 3, 5, 7], list sizes=[36, 53, 4], 7632 tuple choices < 44100 ambient; every single-prime pair projection full; peak bond 25, 6 coefficient primes, 34 child counts.
 Product-code fixture: q=5, 48 coordinates, 12 explicit lists of 25 entries; ambient=5^48, choices=25^12; all projections onto <= 2 coordinates full; exact peak bond 25, 15 coefficient primes, 240 child counts.
 Common-field shadow fixture: Q=5, d=4, rank=3, choices=125, correction size=4, shadow guard fails.
@@ -8,6 +10,8 @@ Common-field shadow fixture: Q=11, d=6, rank=4, choices=14641, correction size=4
 Common-field shadow fixture: Q=7, d=4, rank=2, choices=49, correction size=4, shadow guard fails.
 Shadow rescue: d=12, all 12 single-coordinate projections full, rank=3, 3 initial affine candidates, exact guard=53747712/11120699475619; absent point verified.
 All-order width/carry tests: 4 mixed MDS fixtures, 52 balanced cuts, 29 full low-coordinate projections; 2 certified shadow successes; full-rank negative control retained.
+Translated affine line over F5 returned (0, 0), verified absent with guard 1/5.
+Candidate bound 2 with guard 2/5 rejected at cap 1 and certified (0, 0) absent at cap 2.
 Exact high-width rescue: 10 distinct balanced unfoldings have ranks 1263..2169 over F101; common-field affine rank 3, 8 initial candidates, shadow certifies absence.
 Numeric guard b=1024, m=4: d=196, Q=439, k=117, C=2; PASS; conservative log2(rank lower bound) >= 482.
 Numeric guard b=8192, m=5: d=1220, Q=2777, k=717, C=2; PASS; conservative log2(rank lower bound) >= 4514.
