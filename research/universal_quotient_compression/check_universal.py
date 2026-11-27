@@ -4,11 +4,15 @@ No elliptic-curve solver or tensor-contraction implementation. The finite
 range-avoidance oracle in the 2D test exhausts the toy support; it does not
 implement the unresolved efficient avoidance algorithm.
 """
+from collections import Counter
 from itertools import product
 from math import prod, ceil
 from random import Random
 from sympy import Matrix, ZZ
 from sympy.matrices.normalforms import smith_normal_form, hermite_normal_form
+
+if not __debug__:
+    raise SystemExit('Assertions required: run this verifier with optimization disabled.')
 
 
 def add(a,b,p): return tuple((x+y)%p for x,y in zip(a,b))
@@ -122,7 +126,15 @@ def compression():
     rng=Random(822)
     for p,m,n,w,t in [(101,2,11,2,3),(127,2,12,2,3),(257,2,16,2,4),(1009,3,9,2,2)]:
         toy=Toy(p,[rng.sample(range(1,p),n) for _ in range(m)],w)
-        groups,k,C=partition_cover(toy,t); assert C<p
+        groups,k,C=partition_cover(toy,t)
+        assert len(groups) == len(toy.cols), f'C{p}: missing or extra partition block'
+        for block, classes in zip(toy.cols, groups):
+            counts = Counter(column for group in classes for column in group)
+            assert counts == Counter(block), f'C{p}: partition must contain each column exactly once'
+            assert 1 <= len(classes) <= t
+            assert all(1 <= len(group) <= ceil(len(block)/t) for group in classes)
+        assert C == prod(len(groups[i]) for i in toy.slots) < p
+        assert k == sum(max(len(group)-1 for group in groups[i]) for i in toy.slots)
         a=toy.calibrated();U=[];initial=toy.n-1;steps=0
         while True:
             h,proj,lift=quotient(U,p,toy.n)
@@ -151,11 +163,16 @@ def plane_reduction():
             try:toy=Toy(p,[rng.sample(range(1,p),n) for _ in range(m)],1);break
             except AssertionError:pass
         assert n**m<p*p
+        choices = [range(len(toy.B[i])) for i in toy.slots]
+        tuple_incidences = [toy.inc(indices) for indices in product(*choices)]
         a=toy.calibrated();U=[];Mmax=0;steps=0
         while True:
             h,proj,lift=quotient(U,p,toy.n)
             if h==1:break
-            S=projected_sum(toy,proj,2);Mmax=max(Mmax,len(S))
+            S=projected_sum(toy,proj,2)
+            direct_support = {proj(incidence)[:2] for incidence in tuple_incidences}
+            assert S == direct_support, f'C{p}: projected support differs from direct tuple enumeration'
+            Mmax=max(Mmax,len(S))
             z=next(z for z in product(range(p),repeat=2) if z not in S)
             z=z+(0,)*(h-2);row=toy.row(z,lift)
             assert proj(row)[:2]!=(0,0)
