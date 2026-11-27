@@ -1,7 +1,7 @@
 #let project-credit = "David Iach, project lead and repository maintainer"
 #set document(
   title: "Counting relations in independently hashed elliptic-curve slots",
-  description: "Research report of the Elliptic Relation Counting Project. " + project-credit + ".",
+  description: "Version 4. Research report of the Elliptic Relation Counting Project. " + project-credit + ".",
   date: datetime(year: 2026, month: 11, day: 24),
 )
 #set page(paper: "a4", margin: (x: 23mm, top: 22mm, bottom: 22mm),
@@ -26,12 +26,12 @@
 #v(4pt)
 #text(size: 14pt)[Conditional complexity, planted distributions, and certificates from determinant moments]
 #v(4pt)
-#link(project)[Elliptic Relation Counting Project] · Version 4 \
-#project-credit
+#link(project)[Technical report of the Elliptic Relation Counting Project] · Version 4
 #v(9pt)
 #label[Abstract.] For general field primes in the stated curve and subgroup class, the field-affine thin-slot sampler and an elliptic section norm give leading coefficients of *11.31486814* for log expected bit time and *5.65743407* for log space on the scale $b/(log_2 b)^(1/4)$. The bounds assume the supplied finite dyadic packet interface (A.1) and the inherited contraction and reduction estimates. A uniform quotient bound makes the modular norm check exact. Testing the raw masks preserves constant coverage. The mixed fixed-bit sampler gives 24.00246 on the same scale. For independent dyadic affine hashes at the sparse widths and $2T != O$, the probability of one relation is $lambda+O(lambda^2)$ and an adaptive predictor leaving a whole slot unread has error at least $lambda-O(lambda^2)$. Here $lambda$ is the product of nominal slot sizes divided by the group order. Twelve determinant moments resolve all 168,480 eligible finite counts over $bb(F)_13$. Efficient moment decoding at growing arity remains open.
 
-#text(size: 10pt)[*Contributions and verification.* AI agents helped develop the derivations and computational experiments. Codex reran the 56 v4 checks and the separate section-norm audit. Their outputs matched the recorded transcripts. @v4-provenance describes the finite cases covered.]
+#text(size: 10pt)[*Project credit.* #project-credit. \
+*AI use and verification.* AI agents helped develop the derivations and experiments. OpenAI Codex edited the manuscript and reproduced the recorded outputs of 52 standalone checks, four C38 integration checks, and a separate section-norm audit. @v4-provenance gives the inputs, results, and scope of those checks.]
 
 #v(5pt)
 = The question and its baselines
@@ -255,7 +255,7 @@ The supplement extends this calculation to cofactor groups when the target has o
 
 *Elliptic evaluation codes.* Qi Cheng. _Hard Problems of Algebraic Geometry Codes_, 2005. The divisor criterion on an elliptic curve supplies the geometric input for the determinant. #link("https://arxiv.org/abs/cs/0507026")[arXiv:cs/0507026.]
 
-*Supplied working manuscripts.* _Simplex Alphabets and Backward Secants for Elliptic-Curve Discrete Logarithms_, v6.0, 31 October 2026, and _Compressed Relation Search and Reusable Preprocessing for Elliptic-Curve Discrete Logarithms_, 31 October 2026, especially Assumption A.1. These are separate sources supplied to the project. The latter lists no named author. Their numerical baselines and finite-packet premises are attributed to those documents. Archive hashes are recorded in the repository README. The authors of the public baseline are not attributed these later constants.
+*Supplied working manuscripts.* _Simplex Alphabets and Backward Secants for Elliptic-Curve Discrete Logarithms_, v6.0, 31 October 2026, gives the simplex baseline. _Compressed Relation Search and Reusable Preprocessing for Elliptic-Curve Discrete Logarithms_, 31 October 2026, gives the compressed-relation baseline and Assumption A.1. The latter manuscript lists no named author. The #link(project + "/blob/main/derivations/v4-guide.md#sources-and-archive-hashes")[v4 guide] identifies each source archive by its SHA-256 digest.
 
 *Supplement.* The repository contains the project’s mathematical derivations for the inverse-hash accounting, circuit joins, target isolation, packet span, determinant moments, planted certificates, and the norm, section-product and field-unit alternatives. The topic index maps them to the sections of this paper. These are working proofs, including scope conditions and failed approaches, available for independent review.
 

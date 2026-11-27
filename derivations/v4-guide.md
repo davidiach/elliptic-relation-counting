@@ -73,6 +73,15 @@ python reproduce.py --source-archives /path/to/local/archives
 
 The reference code enumerates small curves and tuples to establish ground truth. Its running time does not measure the asymptotic contractor. Fixed pseudorandom seeds reproduce the trials. The empirical confidence statements in the supplement concern the specified finite distributions and model classes.
 
+## Sources and archive hashes
+
+Akshima, Renas Bacho, Yu-Hsuan Huang, Eike Kiltz, Aysan Nishaburi, Samin Nooripoor, Noah Tittelbach and Emiel Wiedijk give the public conditional big-O bound in *A Subexponential Time Algorithm for Elliptic Curve Discrete Logarithm* (v0.2, 29 October 2026). They leave the numerical leading coefficient unspecified. Qi Cheng’s *Hard Problems of Algebraic Geometry Codes* (2005) supplies the elliptic divisor criterion used in the determinant construction. [Public baseline at the cited revision](https://github.com/bochum-crypto/subexponential-ecdl/blob/1ee44e562b1b9a50ea339f3b8f81112b5a24b96f/subexponential-ecdl.pdf) · [Cheng’s preprint](https://arxiv.org/abs/cs/0507026)
+
+Two working manuscripts dated 31 October 2026 give numerical baselines for the shared comparison class.
+
+- *Simplex Alphabets and Backward Secants for Elliptic-Curve Discrete Logarithms*, v6.0, reports a leading coefficient of 32.1569516597. The SHA-256 digest of `simplex-alphabet-ecdl-v6.zip` is `b4ed0d2ab9bf5dae521e3e63634ccbfee8a85af234b709053c10abfe60901f6c`.
+- *Compressed Relation Search and Reusable Preprocessing for Elliptic-Curve Discrete Logarithms* reports a leading coefficient of 27.0138774237 and states finite-packet Assumption A.1. The SHA-256 digest of `compressed_relation_search_package.zip` is `95f2078edf80cc3ce1090be7a4216fa1f407e91044d376d035c99ebf7b9204c5`.
+
 ## Build v4
 
 From the repository root, run `typst compile paper.typ` or use the Typst Python package pinned in the [main build instructions](../README.md#build-the-paper).

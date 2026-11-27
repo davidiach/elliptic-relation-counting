@@ -1,8 +1,11 @@
 \documentclass[11pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsthm,geometry,hyperref}
+\usepackage{hyperxmp}
 \geometry{margin=1.02in}
-\hypersetup{hidelinks,pdftitle={Target certificates from prescribed sum fibers}}
+\newcommand{\projectcredit}{David Iach, project lead and repository maintainer}
+\hypersetup{hidelinks,pdftitle={Target certificates from prescribed sum fibers in a group of prime order},
+  pdfsubject={Research note of the Elliptic Relation Counting Project. \projectcredit.}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -11,13 +14,18 @@
 \newcommand{\aff}{\operatorname{aff}}
 \newcommand{\im}{\operatorname{im}}
 \title{Target certificates from prescribed sum fibers\\in a group of prime order}
-\author{Elliptic relation counting project\\ \small AI-assisted research note for review}
-\date{27 November 2026}
+\author{}
+\date{\normalsize Research note of the Elliptic Relation Counting Project\\27 November 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
 Let the values of a finite tuple system occupy $s$ elements of a cyclic group of prime order $r$. If $3s>2r+1$, the integral differences between representations of any prescribed three-sum generate the entire lattice of value-zero relations in reduced block coordinates. We prove this by bounding the number of two-sums on which a nonaffine score takes different values. Both the two-sum bound and the three-sum density threshold are sharp for abelian-group-valued scores. For a modular subsystem containing a known nonzero displacement, every target fiber affinely spans the entire quotient by its row space. This gives certificates involving at most one more target representation than the dimension of the quotient. A short integer lift of the augmented equations yields a deterministic two-witness certificate at corank one, including a count-query reduction for the concurrent pointwise-flat obstruction. Under the closed Boolean contraction premise, we also construct a target certificate deterministically at quarter-power cost when the largest quotient class in each block retains a fixed positive joint fraction. The algorithm finds representations in explicitly trimmed blocks using only untrimmed counts with constantly many point pins. On a deletion-resilient seed the certificate may omit an entire fixed fraction below one half of completely unresolved blocks. The required concentration on the remaining blocks is open for general extracted subsystems.
 \end{abstract}
+
+\begin{quote}\small
+\textbf{Project credit.} \projectcredit.\\
+\textbf{AI use and verification.} AI agents assisted in preparing this note. OpenAI Codex edited the attribution and reproduced the three recorded finite checks on prescribed fibers, restricted selectors, and two-witness certificates. The \href{https://github.com/davidiach/elliptic-relation-counting/tree/e833763d99b9e17e3c3544e0e01ad409bc111ed6/research/prescribed_fiber_rigidity}{supplement} contains the programs and transcripts.
+\end{quote}
 
 The algorithmic application has input a nonsingular elliptic curve over $\F_p$, $p>3$ prime, with the whole rational group of prime order $r$, a generator $P$ and a target $Q$. Put $b=\lceil\log_2 p\rceil$ and choose the original Stage I arity $m\asymp(\log b)^{1/4}$. A genuine equation has a known right side for the true reduced logarithm table. Time below denotes worst-case bit operations on a uniform deterministic multitape machine. Most of the structural argument only needs an abstract prime cyclic group.
 
@@ -201,9 +209,9 @@ The proof uses Cauchy--Davenport and integer and finite-field linear algebra. No
 \bibitem{cd} {\'E}. Balandraud, \emph{Addition theorems in $\mathbb F_p$ via the polynomial method}, \href{https://arxiv.org/abs/1702.06419}{arXiv:1702.06419}.
 \bibitem{cg} D. Conlon and W. T. Gowers, \emph{Freiman homomorphisms on sparse random sets}, \href{https://www.its.caltech.edu/~dconlon/homomorphisms.pdf}{authors' manuscript}.
 \bibitem{lzr} S. Liu, B. Zhang and K. Ren, \emph{A Deterministic Subexponential-time Algorithm for the Discrete Logarithm Problem}, \href{https://eprint.iacr.org/2026/3020}{ePrint 2026/3020}.
-\bibitem{repo} Elliptic relation counting project, \emph{A polynomial certificate for deterministic elliptic-curve relation systems}, \href{https://github.com/davidiach/elliptic-relation-counting/tree/7e77dd0fcd222dd39780d4e1d5eb1c464c3b3a87}{revision 7e77dd0}, 2026.
-\bibitem{prten} Elliptic relation counting project, \emph{Pointwise flatness and the failure of single-pair target identification}, \href{https://github.com/davidiach/elliptic-relation-counting/pull/10}{PR 10}, revision febe120, 2026.
-\bibitem{prnine} Elliptic relation counting project, \emph{Integral relation lattices and limits of Gram-prefix recovery}, \href{https://github.com/davidiach/elliptic-relation-counting/pull/9}{PR 9}, revision c88236d, 2026.
+\bibitem{repo} \emph{A polynomial certificate for deterministic elliptic-curve relation systems}, Elliptic Relation Counting Project, \href{https://github.com/davidiach/elliptic-relation-counting/tree/7e77dd0fcd222dd39780d4e1d5eb1c464c3b3a87}{revision 7e77dd0}, 2026.
+\bibitem{prten} \emph{Pointwise flatness and the failure of single-pair target identification}, Elliptic Relation Counting Project, \href{https://github.com/davidiach/elliptic-relation-counting/pull/10}{PR 10}, revision febe120, 2026.
+\bibitem{prnine} \emph{Integral relation lattices and limits of Gram-prefix recovery}, Elliptic Relation Counting Project, \href{https://github.com/davidiach/elliptic-relation-counting/pull/9}{PR 9}, revision c88236d, 2026.
 \bibitem{long} Long Mathematics, \emph{Conditional extensions of deterministic discrete logarithm algorithms: Smaller space, reusable coordinates, and full abelian presentations}, theorem on short relation presentations, \href{https://github.com/long-mathematics/deterministic-discrete-logarithms/tree/b11be05092e0f95862d9c7a8aef57e27e9a231c2}{revision b11be05}, 2026.
 \bibitem{fs} M. Forbes and A. Shpilka, \emph{Quasipolynomial-time identity testing of non-commutative and read-once oblivious algebraic branching programs}, \href{https://arxiv.org/abs/1209.2408}{arXiv:1209.2408}.
 \end{thebibliography}
