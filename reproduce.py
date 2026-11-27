@@ -78,21 +78,35 @@ C38_SOURCES = (
 
 
 def compare_checks(names, reference_dir=None):
+    """Run every check and return the names whose output or exit status differed."""
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     env.pop("PYTHONOPTIMIZE", None)
     if reference_dir is not None:
         env["PYTHONPATH"] = str(reference_dir)
+    failures = []
     for name in names:
         run = subprocess.run([sys.executable, "-B", str(ROOT / "checks" / (name+".py"))],
                              cwd=ROOT, capture_output=True, encoding="utf-8", env=env)
         sys.stdout.write(run.stdout)
         if run.returncode:
             sys.stderr.write(run.stderr)
-            raise SystemExit(run.returncode)
+            print(f"{name}: FAILED with exit status {run.returncode}.", flush=True)
+            failures.append(name)
+            continue
         expected = (ROOT / "evidence" / (name+".txt")).read_text(encoding="utf-8-sig")
         if expected.splitlines() != run.stdout.splitlines():
-            raise SystemExit(f"{name}: computed output differed from the recorded evidence.")
+            print(f"{name}: computed output DIFFERED from the recorded evidence.", flush=True)
+            failures.append(name)
+            continue
         print(f"{name}: matches recorded evidence.", flush=True)
+    return failures
+
+
+def finish(failures, total):
+    if failures:
+        raise SystemExit(f"{len(failures)} of {total} checks failed or differed: "
+                         + ", ".join(failures))
+    print(f"All {total} checks matched the recorded evidence.")
 
 
 def main():
@@ -101,8 +115,9 @@ def main():
                         help="also run the four C38 integration checks with the original ZIPs in DIR")
     args = parser.parse_args()
     if args.source_archives is None:
-        compare_checks(CHECKS)
+        failures = compare_checks(CHECKS)
         print("Four C38 integration checks are available with --source-archives DIR.")
+        finish(failures, len(CHECKS))
         return
     with TemporaryDirectory() as tmp:
         for filename, digest, members in C38_SOURCES:
@@ -114,8 +129,9 @@ def main():
             with ZipFile(path) as archive:
                 for member in members:
                     (Path(tmp) / Path(member).name).write_bytes(archive.read(member))
-        compare_checks(C38_CHECKS, tmp)
-    compare_checks(CHECKS)
+        failures = compare_checks(C38_CHECKS, tmp)
+    failures += compare_checks(CHECKS)
+    finish(failures, len(C38_CHECKS)+len(CHECKS))
 
 
 if __name__ == "__main__":
