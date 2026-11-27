@@ -13,6 +13,15 @@ def add(a,b,p):
     return ((a[0]+b[0])%p,(a[1]+b[1])%p)
 
 
+def is_plane_point(point, p):
+    return len(point) == 2 and all(type(c) is int and 0 <= c < p for c in point)
+
+
+def direct_tuple_sums(lists, p):
+    for row in product(*lists):
+        yield (sum(x for x, y in row) % p, sum(y for x, y in row) % p)
+
+
 def literal_sumset(lists,p):
     s={(0,0)}
     for L in lists:
@@ -96,14 +105,16 @@ def range_tests():
             # Repetitions are intentional: tuple multiplicities matter.
             L=[[rng.choice(G) for j in range(s)] for s in sizes]
             j=rng.randrange(m+1);A=partial_sums(L[:j],p);B=partial_sums(L[j:],p)
-            C=Counter(add(a,b,p) for a in A for b in B)
+            C = Counter(direct_tuple_sums(L, p))
             for k in range(7):
                 x,X=sorted((rng.randrange(p+1),rng.randrange(p+1)))
                 y,Y=sorted((rng.randrange(p+1),rng.randrange(p+1)))
                 c=sum(v for (a,b),v in C.items() if x<=a<X and y<=b<Y)
                 assert rectangle_count(A,B,(x,X,y,Y),p)==c
                 tests+=1
-            z,q,h=avoid(L,p);assert z not in C
+            z,q,h=avoid(L,p)
+            assert is_plane_point(z, p), f'Noncanonical avoidance point for p={p}: {z}'
+            assert z not in C, f'Returned point occurs in the sumset: {z}'
             cases+=1;sumqueries+=q;maxhalf=max(maxhalf,h)
     print(f'Exact modular rectangle counts: {tests}; complete avoidance instances: {cases}; bisection queries: {sumqueries}; largest enumerated half: {maxhalf}.')
 
@@ -152,7 +163,15 @@ def universal_tests():
     rng=Random(1729);nchecks=0
     for p,ss in [(3,[2,2]),(3,[2,3]),(3,[2,2,2]),(5,[2,2]),(7,[2,3,4])]:
         G=list(product(range(p),repeat=2));D=1+sum(n-1 for n in ss)
-        for j in range(25):normalized_cover(rng.sample(G,rng.randrange(1,D+1)),ss,p);nchecks+=1
+        for _ in range(25):
+            probes = rng.sample(G, rng.randrange(1,D+1))
+            blocks = normalized_cover(probes, ss, p)
+            assert [len(block) for block in blocks] == ss, f'Incorrect returned block sizes for caps {ss}'
+            for block in blocks:
+                assert all(is_plane_point(point, p) for point in block)
+                assert len(set(block)) == len(block)
+            assert set(probes) <= set(direct_tuple_sums(blocks, p)), 'Returned blocks do not cover all probes'
+            nchecks += 1
     print(f'Constructive lower-bound covers: {nchecks}.')
     for p,ss in [(3,[2,2]),(3,[2,3]),(3,[2,2,2]),(5,[2,2])]:
         k,S,E=universe_minimum(p,ss)
@@ -327,6 +346,15 @@ def girth_tests():
     rng=Random(521);pairs=0;subs=0;analytic=0
     for q,m,d in [(5,5,1),(7,7,2),(11,9,2)]:
         T=incidence_rows(q,m,d);assert len(T)==q**(d+1) and len(set(T))==len(T)
+        for row in T:
+            assert len(row) == m, f'Incorrect incidence row width for m={m}'
+            assert all(type(x) is int and 0 <= x < q for x in row), f'Invalid incidence label for q={q}'
+        # Evaluate the coefficient formula directly, independently of peval's Horner loop.
+        expected_rows = {
+            tuple(sum(c * j**i for i, c in enumerate(coeffs)) % q for j in range(m))
+            for coeffs in product(range(q), repeat=d+1)
+        }
+        assert set(T) == expected_rows, f'Incorrect polynomial evaluation rows for q={q}, m={m}, d={d}'
         # Pair agreements <= degree, exactly the hypothesis of the singleton proof.
         if len(T)<=350:ps=combinations(T,2)
         else:ps=(rng.sample(T,2) for _ in range(2500))
