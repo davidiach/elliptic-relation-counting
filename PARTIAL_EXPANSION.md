@@ -12,7 +12,7 @@ A term has $O(m)$ stopped tensors, each with $O(\beta/m)$ terminal bits. Its coe
 
 ## Derivation
 
-Substitute $R=2^{\lceil\log\max(64,4m)\rceil}$ groups for 64 **at the first step only**. Write $u=\lfloor\epsilon\lambda/\log R\rfloor$, $a=2u$, $W=2^a$, $D=R^{2a}$, with $\epsilon=2^{-17}$. For large $b$, $u\ge1$, $D^2\le S^{8\epsilon}$, $WD\le S^{6\epsilon}$, and all arrays and labels can be enumerated in polynomial time. The extension degree is $4\lambda$. The scalar continuation uses 64 groups. The constant-size initial range is handled directly.
+Substitute $R=2^{\lceil\log\max(64,4m)\rceil}$ groups for 64 **at the first step only**. Write $u=\lfloor\epsilon\lambda/\log R\rfloor$, $a=2u$, $W=2^a$, $D=R^{2a}$, with $\epsilon=2^{-17}$. For large $b$, $u\ge1$, $D^2\le 2^{8\epsilon\lambda}\le(2S)^{8\epsilon}$, $WD\le 2^{6\epsilon\lambda}\le(2S)^{6\epsilon}$, and all arrays and labels can be enumerated in polynomial time. The extension degree is $4\lambda$. The scalar continuation uses 64 groups. The constant-size initial range is handled directly.
 
 Let $M$ be the root's internal edge count. If $M\le H=\lceil S/\lfloor\sqrt\lambda\rfloor\rceil$, keep a single tensor. Each terminal host retains its distinct internal port, so $\beta\le2M=O(\beta/m)$ in this branch at the stated tuning; asymptotically the branch cannot occur for the full specified boundary. Its evaluation costs $2^H$ times a polynomial. Otherwise $M>H$ and $(a+2)D^2\lceil S^{9/10}\rceil=o(H)$. The packing guards $M\ge WD$, $2W\le\lceil S^{9/10}\rceil$, and $M(2W-1)+1\le 2^{4\lambda}$ also hold.
 
