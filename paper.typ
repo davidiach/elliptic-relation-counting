@@ -1,4 +1,9 @@
-#set document(title: "Counting relations in independently hashed elliptic-curve slots", author: "davidiach research repository", date: datetime(year: 2026, month: 11, day: 24))
+#let project-credit = "David Iach, project lead and repository maintainer"
+#set document(
+  title: "Counting relations in independently hashed elliptic-curve slots",
+  description: "Research report of the Elliptic Relation Counting Project. " + project-credit + ".",
+  date: datetime(year: 2026, month: 11, day: 24),
+)
 #set page(paper: "a4", margin: (x: 23mm, top: 22mm, bottom: 22mm),
   footer: context [#set text(size: 8.5pt, fill: rgb("#425450"))
     Hashed elliptic-curve relations #h(1fr) #counter(page).display("1")])
@@ -21,9 +26,12 @@
 #v(4pt)
 #text(size: 14pt)[Conditional complexity, planted distributions, and certificates from determinant moments]
 #v(4pt)
-Published by #link(project)[davidiach] · AI-assisted mathematical research · Version 4
+#link(project)[Elliptic Relation Counting Project] · Version 4 \
+#project-credit
 #v(9pt)
 #label[Abstract.] For general field primes in the stated curve and subgroup class, the field-affine thin-slot sampler and an elliptic section norm give leading coefficients of *11.31486814* for log expected bit time and *5.65743407* for log space on the scale $b/(log_2 b)^(1/4)$. The bounds assume the supplied finite dyadic packet interface (A.1) and the inherited contraction and reduction estimates. A uniform quotient bound makes the modular norm check exact. Testing the raw masks preserves constant coverage. The mixed fixed-bit sampler gives 24.00246 on the same scale. For independent dyadic affine hashes at the sparse widths and $2T != O$, the probability of one relation is $lambda+O(lambda^2)$ and an adaptive predictor leaving a whole slot unread has error at least $lambda-O(lambda^2)$. Here $lambda$ is the product of nominal slot sizes divided by the group order. Twelve determinant moments resolve all 168,480 eligible finite counts over $bb(F)_13$. Efficient moment decoding at growing arity remains open.
+
+#text(size: 10pt)[*Contributions and verification.* AI agents helped develop the derivations and computational experiments. Codex reran the 56 v4 checks and the separate section-norm audit. Their outputs matched the recorded transcripts. @v4-provenance describes the finite cases covered.]
 
 #v(5pt)
 = The question and its baselines
@@ -242,7 +250,7 @@ The supplement extends this calculation to cofactor groups when the target has o
 *The missing algorithm.* At $m asymp L^(1/4)sqrt(g)$, $g=log_2 L$, a fresh predictor with absolute error $O(L^(-2))$ at each eligible target and log bit cost $O(b/m)$, with setup charged, would give an outer exponent of order $b/(L^(1/4)sqrt(g))$. The fixed-width reduction rerandomizes a slot to read a dyadic branch and lists the sparse set of possibly wrong branch decisions. At $m asymp sqrt(b)$, an exact restricted-window parity oracle of cost $2^(tilde(O)(sqrt(b)))$, uniform over the adaptive transcript, would reach the square-root-in-bitlength objective under the outer reduction. Both evaluator hypotheses remain open. In the first regime a typical seed has on the order of $N lambda/2^m=2^(b-o(b))$ sign orbits. The two-orbit certificate gives no inexpensive way to combine them.
 
 #pagebreak()
-= Provenance and reproducibility
+= Provenance and reproducibility <v4-provenance>
 *Public baseline.* Akshima, Renas Bacho, Yu-Hsuan Huang, Eike Kiltz, Aysan Nishaburi, Samin Nooripoor, Noah Tittelbach and Emiel Wiedijk. _A Subexponential Time Algorithm for Elliptic Curve Discrete Logarithm_, version 0.2, 29 October 2026, especially Theorems 1, 2 and 4. #link(public)[Authors’ manuscript at the pinned revision.]
 
 *Elliptic evaluation codes.* Qi Cheng. _Hard Problems of Algebraic Geometry Codes_, 2005. The divisor criterion on an elliptic curve supplies the geometric input for the determinant. #link("https://arxiv.org/abs/cs/0507026")[arXiv:cs/0507026.]
@@ -251,6 +259,8 @@ The supplement extends this calculation to cofactor groups when the target has o
 
 *Supplement.* The repository contains the project’s mathematical derivations for the inverse-hash accounting, circuit joins, target isolation, packet span, determinant moments, planted certificates, and the norm, section-product and field-unit alternatives. The topic index maps them to the sections of this paper. These are working proofs, including scope conditions and failed approaches, available for independent review.
 
-*Reproduction.* The release contains 52 standalone checks and four C38 integration checks, each with a recorded transcript. Run `python reproduce.py` for the standalone checks. With the two original source ZIPs available locally, run `python reproduce.py --source-archives DIR` for all 56. The integration checks exercise the fixed-bit compiler, the general-prime reciprocal, sparse quotient digits and weighted transforms on finite inputs. Other checks compare the counting and decoding results with direct elliptic addition or determinant enumeration. The section-norm check separately compares regular divisors with direct group sums and checks lifted identities on two finite rings. #checkpoint("08_section_norm/section_norm_audit_output.txt")[Section-norm transcript.] The 29 historical replay entries have separate inputs and instructions. #link(project)[Reproduction instructions and recorded evidence.]
+*Reproduction.* Run `python reproduce.py` for the 52 standalone checks. Given the two original source ZIPs, `python reproduce.py --source-archives DIR` verifies their SHA-256 digests and also runs four C38 integration checks. Those four exercise the fixed-bit compiler, the general-prime reciprocal, sparse quotient digits and weighted transforms on finite inputs. The standalone checks include the exhaustive comparison over $bb(F)_13$ in which the raw twelfth moment recovered all 168,480 eligible counts. #link(project + "/blob/69065a93e20df53a2e2c893b56ef237b0b7b18f9/evidence/check_pooled_zero.txt")[Count transcript.]
 
-*Status.* This is an AI-assisted working paper prepared for public scrutiny. The algebraic propositions have direct arguments and finite checks under their stated hypotheses. The end-to-end numerical bound remains conditional on the named upstream ingredients. No full-scale timing or independent peer review is claimed.
+The separate section-norm audit enumerated 276,077 normalized sections. The norm test and direct divisor enumeration found the same 1,422 hits. The audit also checked lifted identities on two finite rings. #checkpoint("08_section_norm/section_norm_audit_output.txt")[Section-norm transcript.] The 29 historical replay entries have their own inputs and instructions. #link(project)[Reproduction instructions and recorded evidence.]
+
+*Scope of verification.* The finite checks establish agreement on the enumerated inputs and reproduce the reported sampling trials. The asymptotic time and space bounds rely on the derivations in Section 2, the finite-packet Assumption A.1 and the inherited contraction and reduction estimates. Independent human verification of the general proofs remains undocumented.

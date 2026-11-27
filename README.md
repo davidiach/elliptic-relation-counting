@@ -1,5 +1,7 @@
 # Elliptic-curve relation counting
 
+[David Iach, project lead and repository maintainer](https://github.com/davidiach)
+
 **[Read the fixed-shift paper (PDF)](research/fixed_shift_gram/manuscript.pdf)** · [Typst source](research/fixed_shift_gram/manuscript.typ) · [Theorem and assumptions](MAIN_RESULT.md) · [Research index](research/README.md)
 
 Can a family of elliptic-curve relations too large to enumerate be used to recover a discrete logarithm? The current preprint, *A polynomial certificate for deterministic elliptic-curve relation systems*, encodes the relations in a matrix whose determinant is a nonzero polynomial. A full-rank evaluation determines the logarithm, and scalar multiplication verifies the answer.
@@ -43,11 +45,11 @@ python -c "import typst; typst.compile('research/fixed_shift_gram/manuscript.typ
 
 *Counting relations in independently hashed elliptic-curve slots* (v4, 24 November 2026) derives numerical coefficients under the separate finite-packet Assumption A.1 and the inherited reduction estimates. For its general-prime field-affine sampler, the leading coefficients on $b/(\log_2 b)^{1/4}$ are 11.31486814 for log expected bit time and 5.65743407 for log space. The v4 guide includes the release history, all 52 default checks, and the four optional C38 checks with their archive requirements. [v4 paper](paper.pdf) · [Typst source](paper.typ) · [v4 guide](derivations/v4-guide.md) · [Archived research](archive/README.md)
 
+AI agents helped develop the v4 derivations and computational experiments. Codex reran all 52 standalone checks and four C38 integration checks with the two original source archives. All 56 outputs matched their recorded transcripts, including the recovery of all 168,480 eligible counts over $\mathbb F_{13}$ from the raw twelfth moment. A separate section-norm audit also matched its transcript. These runs verify the finite examples and sampling results. The general time and space bounds remain conditional on A.1 and the inherited estimates. [Count transcript](evidence/check_pooled_zero.txt) · [Section-norm transcript](archive/research/chat_2026_11_23_24/08_section_norm/section_norm_audit_output.txt)
+
 ## Attribution and provenance
 
 - **Fixed-shift manuscript.** Shuchang Liu, Bingsheng Zhang and Kui Ren supply the contraction theorem, arithmetic gadgets, and deterministic factor base used in the certificate. [LZR preprint](https://eprint.iacr.org/2026/3020) · [Comparison of assumptions](COMPARATIVE_AUDIT.md)
 - **Public baseline for v4.** Akshima, Renas Bacho, Yu-Hsuan Huang, Eike Kiltz, Aysan Nishaburi, Samin Nooripoor, Noah Tittelbach and Emiel Wiedijk, *A Subexponential Time Algorithm for Elliptic Curve Discrete Logarithm*, v0.2, 29 October 2026. The authors give a conditional big-O bound and leave its numerical leading coefficient unspecified. [Authors’ manuscript at the cited revision](https://github.com/bochum-crypto/subexponential-ecdl/blob/1ee44e562b1b9a50ea339f3b8f81112b5a24b96f/subexponential-ecdl.pdf)
 - **Supplied intermediate sources.** *Simplex Alphabets and Backward Secants for Elliptic-Curve Discrete Logarithms*, v6.0, and *Compressed Relation Search and Reusable Preprocessing for Elliptic-Curve Discrete Logarithms*, both dated 31 October 2026. The supplied simplex manuscript reports 32.1569516597 for the common project comparison class. The compressed-relation manuscript reports 27.0138774237 and states Assumption A.1. These manuscripts are credited separately from the public baseline and from this project’s contributions. The SHA-256 digests of the supplied ZIPs are, respectively, `b4ed0d2ab9bf5dae521e3e63634ccbfee8a85af234b709053c10abfe60901f6c` and `95f2078edf80cc3ce1090be7a4216fa1f407e91044d376d035c99ebf7b9204c5`.
 - **Geometric background.** Qi Cheng, *Hard Problems of Algebraic Geometry Codes*, 2005. [Author’s preprint](https://arxiv.org/abs/cs/0507026)
-
-**Project lead and repository maintainer** · [David Iach (@davidiach)](https://github.com/davidiach). The synthesis, derivations and experimental work used AI assistance. The named external researchers are credited for their prior work. This is a working preprint for independent checking.
