@@ -132,6 +132,7 @@ def orbit(a,p=7):
 def expand(spec):
     C=Counter()
     for a,n in spec:
+        assert type(n) is int and n > 0, f'Orbit {a} requires a positive integer multiplicity, got {n!r}'
         for x in orbit(a): C[x]+=n
     return C
 
@@ -203,6 +204,9 @@ def check_tags():
         assert len(set(x for S in tags for x in S))==sum(map(len,tags))
         ref=tags[0]
         for S in tags:
+            for tag in S:
+                assert len(tag) == d, f'Expected a tag of length {d}, got {tag!r}'
+                assert all(type(bit) is int and bit in (0, 1) for bit in tag), f'Expected a binary tag, got {tag!r}'
             assert rank([x+(1,) for x in S],7)==d+1
             assert rank([x+(1,) for x in S],1009)==d+1
             for j in range(t+1):
