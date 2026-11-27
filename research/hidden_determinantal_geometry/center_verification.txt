@@ -1,0 +1,5 @@
+AFFINE CENTER AVOIDANCE: FULL-RANK MATRIX PENCILS
+1170 center matrices, 6200 full-rank scalar-shift checks.
+COMMON KERNEL/IMAGE CENTER SPACES
+48 center spaces, 5392 full-rank checks; insufficient common kernel control rejected.
+All checks passed.

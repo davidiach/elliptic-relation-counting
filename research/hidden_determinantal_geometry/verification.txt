@@ -1,0 +1,14 @@
+HIDDEN DETERMINANTAL GEOMETRY FROM POLYNOMIALLY COMPLETE SAMPLES
+2x3 k=1 p=7 affine=False samples=56 eval-rank=25 rank-path=[1] search=0 rank-tests=75 two-list=False
+3x3 k=1 p=7 affine=True samples=110 eval-rank=46 rank-path=[1] search=0 rank-tests=100 two-list=True
+3x4 k=1 p=11 affine=True samples=182 eval-rank=73 rank-path=[1] search=0 rank-tests=100 two-list=True
+3x3 k=2 p=13 affine=False samples=440 eval-rank=219 rank-path=[2, 1] search=16 rank-tests=100 two-list=False
+3x3 k=2 p=13 affine=True samples=440 eval-rank=219 rank-path=[2, 1] search=9 rank-tests=100 two-list=False
+3x4 k=2 p=13 affine=True samples=910 eval-rank=451 rank-path=[2, 1] search=9 rank-tests=100 two-list=False
+4x4 k=2 p=13 affine=True samples=1938 eval-rank=953 rank-path=[2, 1] search=3 rank-tests=125 two-list=True
+7 recovered hidden layouts; 4076 training vectors; 700 independent exact rank checks; 37 projective rank-reduction candidates.
+All affine centers were exact and all one-point training samples were rejected.
+Mixed-rank second list [1, 2] raised the budget to 3 and blocked the reachable identity.
+Center-first 2x2 ball over F_5 had 145 samples and evaluation rank 14 (1 rank zero and 144 rank one).
+4x4 rank descent over F_7 followed [3, 2, 1] in 20 projective trials and returned rank 1.
+All checks passed.
