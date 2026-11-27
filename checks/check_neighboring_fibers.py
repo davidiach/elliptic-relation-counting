@@ -187,6 +187,94 @@ def displacement_identity():
           f"{tested} nonconstant coordinate directions have cyclic translate rank 19.")
 
 
+def fixed_source_successor_sums():
+    p, r, threshold = 13, 19, 3
+    cycle = curve_cycle(p, 4, 1)
+    assert len(cycle) == r
+    blocks = []
+    for alpha, beta in ((1, 0), (4, 1)):
+        block = []
+        for point in cycle[1:]:
+            address = (alpha*point[0]+beta) % p
+            if address < threshold:
+                block.append((point, address+threshold*(point[1] % 2)))
+        blocks.append(block)
+    half = np.zeros(r, dtype=np.int64)
+    for (a, _), (b, _) in product(*blocks):
+        half[cycle.index(add(a, b, p, 4))] += 1
+    energy = int(half @ half)
+    assert np.count_nonzero(half)*8 > 7*r
+    assert energy**2 < r**2*len(blocks[1])
+
+    tuples, width = full_tuples(blocks, cycle)
+    side = moments(tuples, (1,)*width, r)
+    n = side[0][1].size
+    logs = np.array([cycle.index(point) for block in blocks for point, _ in block]
+                    + [1, 0], dtype=np.int64)
+    space = RowSpace(r, n)
+    total = np.zeros((n, n), dtype=np.int64)
+    identity = np.eye(n, dtype=np.int64)
+    for value, fiber in enumerate(tuples):
+        successor = (value+1) % r
+        counts = np.array([row for _, row in tuples[successor]], dtype=np.int64)
+        mass, moment, second = side[successor]
+        block_occurrences = counts[:, len(blocks[0]):-2].sum(axis=0)
+        assert np.all(block_occurrences % 2 == 0)
+        pins = block_occurrences // 2
+        assert np.all(pins**2*len(blocks[1]) <= energy**2)
+        assert np.any(moment) and mass == len(counts) % r
+        for _, row in fiber:
+            source = np.array(row, dtype=np.int64)
+            shift_rows = counts-source
+            assert np.all(shift_rows @ logs % r == 1)
+            matrix = (shift_rows.T @ shift_rows) % r
+            transformed = (identity+np.outer(source, logs)) @ matrix
+            assert np.array_equal(transformed % r, (second-np.outer(moment, source)) % r)
+            for matrix_row in matrix.tolist():
+                space.add(matrix_row)
+            total += matrix
+    possible_rank = sum(len(block)-1 for block in blocks)
+    summed_rank = rank_and_det((total % r).tolist(), r)[0]
+    assert len(tuples[0]) == 2*r and side[0][0] == 0 and np.any(side[0][1])
+    assert np.array_equal(total % r, displacement(side, side, 1, r))
+    assert space.rank == possible_rank == 8 and summed_rank == 7
+
+    # The first occurrence of the last block is the penultimate address field.
+    slot_bits = width // (2*len(blocks))
+    layers = []
+    for fiber in tuples:
+        classes = {}
+        for address, row in fiber:
+            pin = (address >> slot_bits) & ((1 << slot_bits)-1)
+            classes.setdefault(pin, []).append(row)
+        layer = []
+        for rows in classes.values():
+            counts = np.array(rows, dtype=np.int64)
+            assert 0 < len(rows) < r
+            inverse = pow(len(rows), -1, r)
+            mean = counts.sum(axis=0)*inverse % r
+            covariance = (inverse*(counts.T @ counts)-np.outer(mean, mean)) % r
+            assert not np.any(logs @ covariance % r)
+            layer.append((counts, mean, covariance))
+        layers.append(layer)
+    class_space = RowSpace(r, n)
+    partition_total = np.zeros_like(total)
+    for value, left in enumerate(layers):
+        for (a, za, va), (b, zb, vb) in product(left, layers[(value+1) % r]):
+            differences = (b[:, None, :]-a[None, :, :]).reshape(-1, n)
+            direct = (differences.T @ differences) % r
+            predicted = len(a)*len(b)*(va+vb+np.outer(zb-za, zb-za))
+            assert np.array_equal(direct, predicted % r)
+            partition_total += direct
+            for matrix_row in direct.tolist():
+                class_space.add(matrix_row)
+    assert class_space.rank == possible_rank and np.array_equal(partition_total % r, total % r)
+    print(f"Fixed generator {cycle[1]} on E/F13 of order {r}: half energy {energy}, "
+          f"identity fiber size {len(tuples[0])}, first moments nonzero in all {r} "
+          f"fibers; fixed-source rank {space.rank}, group-value and two-pin rank "
+          f"{class_space.rank}, summed rank {summed_rank}.")
+
+
 def order_at_one(coefficients, r):
     # Synthetic division by U-1, with ascending coefficients.
     coeff = [int(v) % r for v in coefficients]
@@ -270,4 +358,5 @@ if __name__ == "__main__":
         raise SystemExit("Run without Python optimization.")
     finite_grids()
     displacement_identity()
+    fixed_source_successor_sums()
     weighted_coefficients()

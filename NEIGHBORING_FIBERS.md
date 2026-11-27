@@ -63,3 +63,54 @@ This excludes a counterexample in which nonzero torus weights annihilate an enti
 The verifier illustrates the distinction on $y^2=x^3+20x+1$ over $\mathbb F_{251}$ with generator $(0,1)$ of order 257. The two arithmetic masks use $x$ and $x+23$ modulo 251, threshold 23, and the parity offset $23(y\bmod 2)$. Their sizes are 24 and 28, and the half sums cover 242 group elements. With six-bit addresses, radix four, $\gamma=3$ and $(t,h)=(4,48)$, the elementary sum at displacement $P$ is zero while 254 displacement coefficients are nonzero. All four slots on each side contribute, and the test uses their exact fiber distributions. These masks exercise the algebraic identity; this input size falls in LZR's small-group regime and the masks are not its prescribed fallback blocks. This is a control for a single coefficient, not a stack counterexample.
 
 For the guarded regime the unsolved statement is still $\bigcap_{x\in\mathcal L}\ker B_P(x)=0$ for the actual prescribed list $\mathcal L$. The full-grid theorem uses points outside that list, and the displacement construction changes $P$. Neither step resolves that statement.
+
+## Summing every successor at the prescribed generator
+
+The all-ones point belongs to the guarded list. At this point fix a source tuple $X$, write $c_X$ for its incidence column, and sum every successor in the original relation:
+
+$$K_X=\sum_{Y:\,\mathrm{val}(Y)=\mathrm{val}(X)+P}
+ (c_Y-c_X)(c_Y-c_X)^\top\quad\text{over }\mathbb F_r.$$
+
+**Proposition 3.** On every guarded input the vertical stack of the $K_X$ has rank $N_0-m$, exactly the rank of all individual fixed-shift rows. With the explicit rows it has full column rank. In fact each nonzero direction in the kernel of the explicit rows has $K_Xu\ne0$ for sources at more than $3r/8$ distinct group values. The matrix supplied at the all-ones evaluation contains the **sum** of the $K_X$. Keeping their rows separately is material to the proposition.
+
+**A fiber can have zero mass and still have a nonzero first moment.** Work first over the integers. Let $d$ count one-per-block tuples at each group value, let $\mathcal E=\sum_g d(g)^2$ and let $n_i=|F_i|$. The full-tuple count is $d*d$, where $*$ denotes convolution on $G$. For a block $i$, write $d_{-i}$ for the half-tuple count with that block omitted. Expanding the squared norm of $d=\sum_{A\in F_i}d_{-i}(\,\cdot-A)$ and retaining the diagonal gives $n_i\|d_{-i}\|_2^2\le\mathcal E$. The number of full tuples of value $g$ with the first occurrence in block $i$ pinned to $A$ consequently obeys
+
+$$0\le p_{g,i,A}=(d*d_{-i})(g-A)\le
+\|d\|_2\|d_{-i}\|_2\le \mathcal E/\sqrt{n_i}.$$
+
+Thus it suffices that $\mathcal E<r\sqrt{n_i}$ for one block. Every $g$ has a full tuple, so at least one such pin at $g$ has count between $1$ and $r-1$. The $(i,A)$ coordinate of $v_g=\sum_{Y:\,\mathrm{val}(Y)=g}c_Y$ is $2p_{g,i,A}$ by the two interchangeable slots. It survives reduction modulo the odd prime $r$.
+
+Here are explicit bounds from the actual seed. By the guard cutoff above $m\ge46$. The tuning gives $b+2>2^{(m-1)^4}$ and Hasse gives $r>2^{b-2}$. In particular $r^{1/m}>2^{20}m$, since $2^{(m-1)^4}-4>m(20+\log_2 m)$. Put $a=(16r)^{1/m}$. In LZR (3.2) the selected $q_*$ is $\lceil a\rceil$. The two ceilings give $q_{\rm blk}=(r-1)T/p\le a+3$ since $(r-1)/p<2$. Hence $\mu=q_{\rm blk}^m\le16r\exp(3m/a)<17r$. The Stage I potential yields $\mathcal E\le(373/336)\mu^2/r<321r$. Meanwhile the largest block has $n_i\ge |\mathrm{supp}(d)|^{1/m}>(7r/8)^{1/m}>321^2$. This proves $v_g\ne0$ for **every** $g$ even if the full cardinality $n_g=(d*d)(g)$ vanishes in the field.
+
+**Proof of the rank statement.** Let $H_g=\sum_{Y:\,\mathrm{val}(Y)=g}c_Yc_Y^\top$ and $g=\mathrm{val}(X)+P$. The true label vector $\lambda$ satisfies $\lambda^\top(c_Y-c_X)=1$ for every term. Consequently
+
+$$ (I+c_X\lambda^\top)K_X=H_g-v_gc_X^\top.$$
+
+If $K_Xu=0$ for every $X$, comparing two sources of the same value gives $v_g(c_X^\top u-c_{X'}^\top u)=0$. Since $v_g\ne0$, the tuple score depends only on the source value, defining a function $f:G\to\mathbb F_r$. Now $H_gu=v_g f(g)$. The identity gives $v_g(f(g)-f(g-P))=0$ at every $g$. Translation by the prescribed generator makes $f$ constant. Vary one slot with all others fixed to see that $u$ is constant within each block. Conversely these block constants and arbitrary dedicated coordinates kill each individual shift. Adding the explicit rows gives the asserted full rank by Proposition 4.1.
+
+For the quantitative statement, a mixed source fiber contains two distinct scores. The displayed identity prevents both corresponding $K_Xu$ from vanishing. Section 3 of [Deterministic points](DETERMINISTIC_POINTS.md) gives at least $(2|\mathrm{supp}(d)|-r)/2>3r/8$ mixed values unless the scores are affine in the group logarithm with block constants. The explicit equations exclude that exception for nonzero $u$ in their kernel.
+
+**Consequence for the address polynomial.** Set every radix variable whose bits lie wholly in the successor address to one, leaving the other variables formal. For a nonzero $u$ in the explicit kernel, the resulting $B_Pu$ is still a nonzero polynomial. To see this, remove the common nonzero offset monomial. Each surviving source bit retains its original radix position. Group coefficients by the complete source address, summing over any successor bits in the digit straddling the source/successor cut. The coefficient sum for source $X$ is exactly $K_Xu$. Proposition 3 gives a nonzero sum. This also accounts for layouts in which the cut is inside a digit.
+
+**Cost and remaining cancellation.** At a supplied $X$, all entries of $K_X$ are computable in the target bit budget by the closed scalar contractor with the source fixed and at most two successor pins. These are unsigned integer counts with $O(mb)$-bit precision, combined with signs after reconstruction and reduced modulo $r$. The proof uses $\lambda$ only for a row-space identity. There are $(\prod_i n_i)^2\ge|\mathrm{supp}(d)|^2$ ordered sources. Enumerating them costs $\Omega(r^2)$. The prescribed evaluations couple the source and successor weights and do not return the separate $K_Xu$. A surviving direction would have to cancel the nonzero source contributions above already at the all-ones point, then also vanish at every other listed point. The proposition settles the successor sum at this point and leaves simultaneous cancellation across the list open.
+
+The finite check uses $y^2=x^3+4x+1$ over $\mathbb F_{13}$, group order 19, and affine masks $x$ and $4x+1$ with threshold three and parity addresses. Here $\mathcal E=38$, the identity fiber has 38 full tuples, and its first moment survives modulo 19. At the prescribed nonidentity generator the individual $K_X$ stack to rank eight, while their sum has rank seven. This checks the distinction on concrete arithmetic masks. The guard fails at this bit length.
+
+### Keeping the group value and one slot on each side
+
+**Proposition 4.** Choose the block $i$ used in the pin bound. Partition tuples into nonempty classes $B=(g,A)$ by their group value and the point in the first slot of that block. For each pair of classes $B,D$ at $g,g+P$ let $K_{BD}$ sum $(c_Y-c_X)(c_Y-c_X)^\top$ over **all** $X\in B,Y\in D$. Over every guarded input the stack of these matrices also has rank $N_0-m$. This partitions the terms of the original all-ones evaluation by just one group value and two pins.
+
+Write $n_B$ for the size of a class. The pin bound proves $0<n_B<r$. In $\mathbb F_r$ form its mean $z_B=n_B^{-1}\sum_{X\in B}c_X$ and covariance $V_B=n_B^{-1}\sum_{X\in B}c_Xc_X^\top-z_Bz_B^\top$. Independence of the two choices inside their classes gives the exact identity
+
+$$\frac{K_{BD}}{n_Bn_D}
+=V_B+V_D+(z_D-z_B)(z_D-z_B)^\top.$$
+
+The tuple logarithm is constant inside each class. Hence $\lambda^\top V_B=0$ and $\lambda^\top(z_D-z_B)=1$ on each directed edge. If every $K_{BD}u=0$, multiplication by $\lambda^\top$ shows that $z_B^\top u$ has a common value $f$ on adjacent classes. The class graph is connected because every group value occurs and all edges between neighboring layers are present. The identity now gives $V_Bu=-V_Du$ on every edge. Choosing one class per group value gives a cycle of odd length $r$. Alternating signs around that cycle and using connectedness forces $V_Bu=0$ everywhere.
+
+Choose a full tuple uniformly in the field, which is valid since its total count $M=\prod_i n_i^2$ is invertible. For its incidence covariance $V$, expanding the second moment by classes gives $Vu=0$: each within-class covariance kills $u$ and each class mean has score $f$. The individual slots in this unconditional distribution are independent, so
+
+$$V=2\bigoplus_i\left(n_i^{-1}I_{n_i}-n_i^{-2}{\bf1}{\bf1}^\top\right)$$
+
+on the factor columns, with zeros on the dedicated columns. Its kernel consists precisely of the block constants and the dedicated coordinates. Those directions kill each $K_{BD}$, completing the proof.
+
+A specified $K_{BD}$ costs $\operatorname{poly}(N,b)$ closed scalar calls on $O(mb)$ edges. Fix the two slot pins, test the two group sums, and use up to two more pins to form the Gram entries. The normalizing divisions occur only in the proof. Even choosing one edge at each layer would require $r$ matrices. The edge identity applies before adding the layers. In the listed evaluations the contractor has already added them, so propagation around the cycle cannot be applied to those outputs.

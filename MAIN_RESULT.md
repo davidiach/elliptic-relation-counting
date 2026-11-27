@@ -54,4 +54,6 @@ The follow-up in [Deterministic points](DETERMINISTIC_POINTS.md) gives an explic
 
 [Exact neighboring fibers](NEIGHBORING_FIBERS.md) settles the full-grid fallback for every eligible curve on that branch. It also gives the exact all-displacement rank and explains why that identity does not settle the prescribed shift on the short list.
 
+At the prescribed generator itself, the same note proves full shift rank for two partitions of the unweighted sum. One retains each source tuple, and the other retains its group value and one slot on each side. The guarded branch still requires rank after weighting each ordered pair at the listed points and summing across all classes.
+
 The construction and each specified evaluation are deterministic. Enumerating the full interpolation grid costs $2^{O(b)}$ by this proof. An explicit hitting list constructible in $2^{O(b/L^{1/4})}$ time, of at most that cardinality and guaranteed to contain a nonsingular specialization for each eligible input, would give the target uniform worst-case bound. A list may depend on the input if its construction is charged. The original LZR separator remains a worst-case fallback.
