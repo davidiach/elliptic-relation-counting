@@ -121,15 +121,35 @@ def affine_case(p,a,b,T,m,do_prefix):
         return v
     initial=expectation();old=initial;steps=0
     assert initial==J*m**5*(1-theta)/q+sum(Q(r-1,r)*(aa/q)**len(I) for I in subsets)
-    # Each split is a binary split of the current canonical seed list.
+    width=(p-1).bit_length()
+    forced=0
     for i,par in product(range(m),range(2)):
-        while len(domains[i][par])>1:
-            S=domains[i][par];k=len(S)//2;left=S[:k];right=S[k:]
-            domains[i][par]=left;v=expectation()
-            domains[i][par]=right;w=expectation()
-            assert old*len(S)==v*len(left)+w*len(right)
-            domains[i][par]=left if v<=w else right
-            old=min(v,w);steps+=1
+        for coefficient in range(2):  # slope, then intercept, most significant bit first
+            prefix=0
+            for bit in reversed(range(width)):
+                parent=domains[i][par]
+                children=[tuple(seed for seed in parent if seed[coefficient] >> bit == 2*prefix+value)
+                          for value in (0,1)]
+                sizes=tuple(map(len,children))
+                assert sum(sizes)==len(parent)
+                if (i,par,coefficient,bit)==(0,0,0,width-1):
+                    first_split=sizes
+                    zero_slopes=1 << bit
+                    assert sizes==(p*zero_slopes, p*(p-zero_slopes))
+                if 0 in sizes:
+                    chosen=int(sizes[0]==0)
+                    forced+=1
+                else:
+                    domains[i][par]=children[0];left=expectation()
+                    domains[i][par]=children[1];right=expectation()
+                    assert old*len(parent)==left*sizes[0]+right*sizes[1]
+                    chosen=int(right<left)
+                    old=min(left,right)
+                    steps+=1
+                domains[i][par]=children[chosen]
+                prefix=2*prefix+chosen
+        assert len(domains[i][par])==1
+    assert steps+forced==4*m*width
     blocks=[]
     for pair in domains:
         seeds=[S[0] for S in pair]
@@ -146,7 +166,7 @@ def affine_case(p,a,b,T,m,do_prefix):
         for i in X:S=add(S,G[i])
         D[G.index(S)]+=1
     assert D==counts(r,blocks)
-    print(f'Affine-seed prefix E/F{p}, order {r}, m={m}: {steps} exact parent/child identities; block sizes {list(map(len,blocks))}; direct potential equals final {float(old):.6g} (initial {float(initial):.6g}).')
+    print(f'Affine-seed coefficient bits E/F{p}, order {r}, m={m}: first split {first_split[0]}/{first_split[1]}, {steps} exact parent/child identities, {forced} forced bits; block sizes {list(map(len,blocks))}; direct potential equals final {float(old):.6g} (initial {float(initial):.6g}).')
     return 8,steps
 
 
@@ -223,6 +243,41 @@ def nontrivial_pair(r,rng):
     raise AssertionError('No toy with the two-shift guard')
 
 
+def translated_support(r, support, shifts):
+    return {(g+t)%r for g in support for t in shifts}
+
+
+def check_returned_cover(r, blocks, histogram, shifts, before, after):
+    direct=[0]*r
+    for values in product(*blocks):
+        direct[sum(values)%r]+=1
+    assert direct==histogram, f'C{r}: stale tuple counts for the returned blocks'
+    assert 1 in shifts and all(0<t<r for t in shifts)
+    support={g for g,count in enumerate(direct) if count}
+    covered=translated_support(r,support,shifts)
+    assert before==r-len(support)
+    assert after==r-len(covered)==0, f'C{r}: returned shifts leave holes'
+    return support
+
+
+def check_common_cover(r, blocks, deleted, h, check_expand=False):
+    m=len(blocks)
+    subsets=[I for k in range(m-deleted,m+1) for I in combinations(range(m),k)]
+    retained=[[blocks[i] for i in I] for I in subsets]
+    ds=[counts(r,group) for group in retained]
+    shifts,ini,end,before,after,steps,checks=shift_select(r,ds,h,check_expand=check_expand)
+    assert end<=ini<1 and sum(before)>0
+    supports={}
+    double=[t+s for t,s in product(shifts,repeat=2)]
+    for I,group,d,b,a in zip(subsets,retained,ds,before,after,strict=True):
+        support=check_returned_cover(r,group,d,shifts,b,a)
+        supports[I]=support
+        # Check the case where both indexed copies of the translating block remain.
+        assert len(translated_support(r,support,double))==r
+    print(f'Common translation C{r}, m={m}, deletions={deleted}: {len(subsets)} retained subsets, total holes {sum(before)} -> {sum(after)}, shifts {shifts}, potential {float(ini):.6g} -> {float(end):.6g}, {steps} exact prefix identities.')
+    return supports,steps,checks
+
+
 def translation_checks():
     rng=Random(1864);st=0;ex=0
     for r in (19,31,101,257,1009):
@@ -234,27 +289,42 @@ def translation_checks():
             encoding=lambda x:(G[x][0]<<4)|G[x][1]
         else:encoding=None
         T,ini,end,h0,h1,n,c=shift_select(r,[d],2,encoding,check_expand=(r<=31))
-        assert ini<1 and end<1 and h0[0]>=1 and h1==[0]
+        check_returned_cover(r,[A,B],d,T,h0[0],h1[0])
+        assert ini<1 and end<1 and h0[0]>=1
         assert len(T)*len(A)*len(B)<r*r
         if G is not None:
             values={add(add(G[x],G[y]),G[t]) for x,y,t in product(A,B,T)}
             assert values==set(G)
         print(f'Two-shift coverage C{r}: holes {h0[0]} -> 0, shifts {T}, tuple product {len(T)*len(A)*len(B)} < {r*r}, potential {float(ini):.6g} -> {float(end):.6g}, {n} exact prefix identities.')
+        if r==257:
+            # Same block sizes as the fixture, paired with its stale histogram.
+            replacement=[137*i % r for i in range(1,129)]
+            try:
+                check_returned_cover(r,[replacement,replacement],d,T,h0[0],h1[0])
+            except AssertionError as error:
+                assert str(error)=='C257: stale tuple counts for the returned blocks'
+            else:
+                raise AssertionError('Accepted stale counts for replacement blocks')
+            print('C257 stale-count control: rejected the original histogram for two replacement blocks of size 128.')
         st+=n;ex+=c
     # Common translating block for all retained subsets.  The toy full
     # product is not required to fit the asymptotic r^2 guard here.
     for r,m,deleted,h in [(19,3,1,4),(31,4,2,4),(101,4,2,4)]:
         A,B,_=nontrivial_pair(r,rng);blocks=[A,B]+[rng.sample(range(1,r),(r-1)//2) for _ in range(m-2)]
-        Is=[I for k in range(m-deleted,m+1) for I in combinations(range(m),k)]
-        ds=[counts(r,[blocks[i] for i in I]) for I in Is]
-        T,ini,end,h0,h1,n,c=shift_select(r,ds,h,check_expand=(r==19))
-        assert end<1 and sum(h0)>0 and sum(h1)==0
-        # Duplicating the small shift block also allows one of its copies to be omitted.
-        for I,d in zip(Is,ds):
-            assert { (g+t)%r for g,x in enumerate(d) if x for t in T } == set(range(r))
-            assert { (g+t+s)%r for g,x in enumerate(d) if x for t,s in product(T,repeat=2)} == set(range(r))
-        print(f'Common translation C{r}, m={m}, deletions={deleted}: {len(Is)} retained subsets, total holes {sum(h0)} -> {sum(h1)}, shifts {T}, potential {float(ini):.6g} -> {float(end):.6g}, {n} exact prefix identities.')
+        _,n,c=check_common_cover(r,blocks,deleted,h,check_expand=(r==19))
         st+=n;ex+=c
+    r=23
+    group=set(range(r))
+    blocks=[sorted(group-{0,1,2}), sorted(group-{0,1,3,4}), [1,2]]
+    supports,n,c=check_common_cover(r,blocks,deleted=1,h=2,check_expand=True)
+    left,right=supports[0,2],supports[1,2]
+    assert group-left=={2,3} and group-right=={2,5}
+    assert group-translated_support(r,left,[1,2])=={4}
+    assert translated_support(r,right,[1,2])==group
+    assert translated_support(r,left,[1,4])==group
+    assert group-translated_support(r,right,[1,4])=={6}
+    print('C23 simultaneous repair: initial holes {2,3} and {2,5}; shifts [1,2] miss 4 in the first subset, [1,4] miss 6 in the second.')
+    st+=n;ex+=c
     print(f'Translation selection totals: {st} exact parent/child identities; {ex} direct-vs-expanded count comparisons.')
 
 
