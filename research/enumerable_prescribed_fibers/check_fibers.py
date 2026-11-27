@@ -18,28 +18,51 @@ def conv(r, blocks):
     return a
 
 
+def pin_moment_expectations(r, m, num, den, pin_sets):
+    masks = []
+    for mask in range(1 << (r-1)):
+        block = [value for value in range(1, r) if mask & (1 << (value-1))]
+        size = len(block)
+        masks.append((block, num**size * (den-num)**(r-1-size)))
+    sums = {pins: [0]*r for pins in pin_sets}
+    for selection in product(masks, repeat=m):
+        blocks = [block for block, _ in selection]
+        weight = prod(w for _, w in selection)
+        for pins, totals in sums.items():
+            free_blocks = [block for i, block in enumerate(blocks) if i not in pins]
+            mass = prod(map(len, free_blocks))
+            squared_error = (r*conv(r, free_blocks) - mass)**2
+            for values in product(*(blocks[i] for i in pins)):
+                shifted = np.roll(squared_error, sum(values) % r)
+                for target, error in enumerate(shifted):
+                    totals[target] += weight * int(error)
+    scale = den**((r-1)*m) * r**2
+    return {pins: tuple(F(total, scale) for total in totals) for pins, totals in sums.items()}
+
+
 def pairwise_moment_checks():
     cases = 0; pin_cases = 0; max_ratio = F(0)
     for r,m,num,den in [(3,2,1,2),(3,3,1,3),(5,2,1,3),(5,3,1,2)]:
-        nbits = (r-1)*m; q = F((r-1)*num,den); mu = q**m/r
-        masks = [([i+1 for i in range(r-1) if v>>i&1], num**v.bit_count()*(den-num)**(r-1-v.bit_count())) for v in range(1<<(r-1))]
-        sums = {I:[0]*r for s in range(0,min(2,m-1)+1) for I in combinations(range(m),s)}
-        for selection in product(masks,repeat=m):
-            Bs=[B for B,w in selection]; w=prod(w for B,w in selection)
-            for I, acc in sums.items():
-                J=[j for j in range(m) if j not in I]; W=prod(len(Bs[j]) for j in J)
-                d=conv(r,[Bs[j] for j in J]); E=(r*d-W)**2
-                for P in product(*(Bs[i] for i in I)):
-                    Eshift=np.roll(E,sum(P)%r)
-                    for g in range(r): acc[g]+=w*int(Eshift[g])
-        for I,acc in sums.items():
-            if len(I)==m-1: continue # theorem uses >=2 unpinned blocks
-            for v in acc:
-                ex=F(v,den**nbits*r*r); assert ex<=2*mu
+        q = F((r-1)*num,den); mu = q**m/r
+        # The bound requires at least two unpinned blocks.
+        pin_sets = (I for s in range(min(2, m-2)+1) for I in combinations(range(m), s))
+        for I, moments in pin_moment_expectations(r, m, num, den, pin_sets).items():
+            for ex in moments:
+                assert ex <= 2*mu
                 max_ratio=max(max_ratio,ex/mu)
                 if I: pin_cases+=1
                 else: cases+=1
     print(f'Pairwise moment bounds: {cases} unpinned and {pin_cases} selected-pin expectations checked exactly; maximum E/mean {max_ratio}.')
+
+    r, m = 3, 4
+    pin_pairs = list(combinations(range(m), 2))
+    moments = pin_moment_expectations(r, m, 1, 2, pin_pairs)
+    bound = 2 * F(r-1, 2)**m / r
+    expected = F(1, 8)
+    for pins in pin_pairs:
+        assert moments[pins] == (expected,)*r, (pins, moments[pins])
+        assert all(value <= bound for value in moments[pins])
+    print(f'C{r} four-block, two-pin moments: {len(pin_pairs)} pin pairs x {r} targets; all equal {expected}, bound {bound}.')
 
 
 def curve_affine_checks():

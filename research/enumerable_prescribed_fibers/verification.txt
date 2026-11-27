@@ -1,4 +1,5 @@
 Pairwise moment bounds: 16 unpinned and 24 selected-pin expectations checked exactly; maximum E/mean 101/216.
+C3 four-block, two-pin moments: 6 pin pairs x 3 targets; all equal 1/8, bound 2/3.
 Actual E/F13, order 19: 270 exact affine-mask marginal and within-parity pair checks (including zero slopes).
 Shared-pin count identity: 225 exact direct pair comparisons.
 Explicit cyclic fibers r=19, m=4, n=9: 18/18 attain maximum modular contrast rank; largest deficiency from maximum 0.
