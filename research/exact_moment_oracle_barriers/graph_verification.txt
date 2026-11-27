@@ -1,0 +1,31 @@
+r | V | E | rank(+) | rank(mixed) | max squared norm | tau/r
+3 | 3 | 3 | 3 | 4 | 4 | 1
+5 | 5 | 5 | 5 | 6 | 4 | 1
+7 | 5 | 7 | 7 | 8 | 5 | 3
+11 | 5 | 6 | 6 | 7 | 5 | 1
+13 | 7 | 9 | 9 | 10 | 5 | 3
+17 | 7 | 8 | 8 | 9 | 5 | 1
+19 | 7 | 8 | 8 | 9 | 5 | 1
+31 | 9 | 11 | 11 | 12 | 5 | 2
+101 | 10 | 15 | 15 | 16 | 5 | 7
+257 | 12 | 15 | 15 | 16 | 5 | 1
+1009 | 11 | 16 | 16 | 17 | 5 | 1
+65537 | 19 | 31 | 31 | 32 | 5 | 19
+104729 | 23 | 31 | 31 | 32 | 5 | 1
+13 graph fixtures; 1091 exact interval-invisibility checks; all passed.
+All 13 paired blocks agree through moment degree 3 and differ at degree 4.
+Dense variant: r | E | path length | violated rows / total | no-wrap M
+3 | 6 | 2 | 12/12 | 0
+5 | 5 | 3 | 10/10 | 0
+7 | 7 | 3 | 14/14 | 0
+11 | 11 | 4 | 22/22 | 0
+13 | 11 | 4 | 22/22 | 0
+17 | 11 | 5 | 22/22 | 0
+19 | 13 | 5 | 26/26 | 0
+31 | 11 | 5 | 22/22 | 0
+101 | 16 | 7 | 32/32 | 2
+257 | 22 | 9 | 44/44 | 4
+1009 | 23 | 10 | 46/46 | 20
+65537 | 39 | 17 | 78/78 | 838
+104729 | 40 | 17 | 80/80 | 1308
+13 dense fixtures; all path-edge deletions and nonzero scores checked exactly.

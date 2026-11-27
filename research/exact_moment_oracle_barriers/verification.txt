@@ -1,0 +1,36 @@
+HIGHER-ORDER BINARY COSETS
+r | t | d | rows/coset | #nonzero moment keys | rank H0 | rank H0+H1 | rational rank certificate
+2 | 2 | 4 | 4 | 11 | 3 | 4 | mod 1009
+3 | 2 | 7 | 9 | 26 | 6 | 7 | mod 1009
+3 | 4 | 11 | 81 | 342 | 10 | 11 | mod 1009
+3 | 6 | 15 | 729 | 3670 | 14 | 15 | mod 1009
+5 | 2 | 10 | 25 | 50 | 9 | 10 | mod 1009
+5 | 3 | 13 | 125 | 286 | 12 | 13 | mod 1009
+5 | 4 | 16 | 625 | 1567 | 15 | 16 | mod 1009
+5 | 5 | 19 | 3125 | 8378 | 18 | 19 | mod 1009
+7 | 2 | 10 | 49 | 56 | 9 | 10 | mod 1009
+7 | 3 | 13 | 343 | 374 | 12 | 13 | mod 1009
+7 | 4 | 16 | 2401 | 2447 | 15 | 16 | mod 1009
+11 | 2 | 13 | 121 | 89 | 12 | 13 | mod 1009
+11 | 3 | 17 | 1331 | 766 | 16 | 17 | mod 1009
+13 | 2 | 13 | 169 | 92 | 12 | 13 | mod 1009
+13 | 3 | 17 | 2197 | 826 | 16 | 17 | mod 1009
+17 | 2 | 16 | 289 | 125 | 15 | 16 | mod 1009
+31 | 2 | 16 | 961 | 137 | 15 | 16 | mod 1009
+17 exact coset fixtures passed, through degree 6.
+
+DISTINCT SPARSE TAGS (full exact finite ranks)
+r | h | q | blocks | rows | d | max norm^2 | rank H | rank mixed | violations
+257 | 2 | 2 | 4 | 176 | 25 | 7 | 24 | 25 | 44
+1009 | 2 | 4 | 16 | 736 | 30 | 7 | 29 | 30 | 184
+1009 | 3 | 2 | 8 | 368 | 27 | 8 | 26 | 27 | 92
+1009 | 4 | 2 | 16 | 736 | 28 | 9 | 27 | 28 | 230
+4099 | 2 | 8 | 64 | 3712 | 44 | 7 | 43 | 44 | 1392
+4099 | 3 | 4 | 64 | 3712 | 39 | 8 | 38 | 39 | 1566
+6 full tagged rank checks; 101 interval checks.
+
+NO-WRAP SCORE-SUPPORT BARRIER
+5824 exact score/moment cases; 167 zero-moment cases; all passed.
+36 sharp finite-field score distributions.
+
+All checks passed.
