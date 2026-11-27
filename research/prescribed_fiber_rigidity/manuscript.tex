@@ -1,0 +1,210 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,geometry,hyperref}
+\geometry{margin=1.02in}
+\hypersetup{hidelinks,pdftitle={Target certificates from prescribed sum fibers}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\F}{\mathbb F}
+\newcommand{\aff}{\operatorname{aff}}
+\newcommand{\im}{\operatorname{im}}
+\title{Target certificates from prescribed sum fibers\\in a group of prime order}
+\author{Elliptic relation counting project\\ \small AI-assisted research note for review}
+\date{27 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let the values of a finite tuple system occupy $s$ elements of a cyclic group of prime order $r$. If $3s>2r+1$, the integral differences between representations of any prescribed three-sum generate the entire lattice of value-zero relations in reduced block coordinates. We prove this by bounding the number of two-sums on which a nonaffine score takes different values. Both the two-sum bound and the three-sum density threshold are sharp for abelian-group-valued scores. For a modular subsystem containing a known nonzero displacement, every target fiber affinely spans the entire quotient by its row space. This gives certificates involving at most one more target representation than the dimension of the quotient. A short integer lift of the augmented equations yields a deterministic two-witness certificate at corank one, including a count-query reduction for the concurrent pointwise-flat obstruction. Under the closed Boolean contraction premise, we also construct a target certificate deterministically at quarter-power cost when the largest quotient class in each block retains a fixed positive joint fraction. The algorithm finds representations in explicitly trimmed blocks using only untrimmed counts with constantly many point pins. On a deletion-resilient seed the certificate may omit an entire fixed fraction below one half of completely unresolved blocks. The required concentration on the remaining blocks is open for general extracted subsystems.
+\end{abstract}
+
+The algorithmic application has input a nonsingular elliptic curve over $\F_p$, $p>3$ prime, with the whole rational group of prime order $r$, a generator $P$ and a target $Q$. Put $b=\lceil\log_2 p\rceil$ and choose the original Stage I arity $m\asymp(\log b)^{1/4}$. A genuine equation has a known right side for the true reduced logarithm table. Time below denotes worst-case bit operations on a uniform deterministic multitape machine. Most of the structural argument only needs an abstract prime cyclic group.
+
+\section{How many two-sums detect a score?}
+Write $G=\Z/r\Z$. Let $v:\mathcal X\to G$ be a map of nonempty finite sets, $S=v(\mathcal X)$, $s=|S|$. A score $u:\mathcal X\to H$ takes values in any abelian group. Call it affine in the value if $u(X)=c+\phi(v(X))$ with $\phi:G\to H$ a homomorphism. A center $h$ is mixed if the scores $u(X)+u(Y)$ of the ordered representations $v(X)+v(Y)=h$ take at least two values. No tuple distribution is specified.
+
+\begin{theorem}\label{th:mixed}
+Suppose $3s>2r$. Every score which is not affine in the value has at least $2s-r-1$ distinct mixed centers. This bound is attained over $\Z$ for each such $s$ and $r\ge 3$.
+\end{theorem}
+\begin{proof}
+If two half-tuples of the same value $x$ have different scores, append one representative of each $y\in S$ to both. This already gives $s$ mixed centers. Otherwise write the score as $f(x)$ on $S$. For $d\in G$ put $U_d=S\cap(S-d)$ and $\Delta_d(x)=f(x+d)-f(x)$. Each $U_d$ has size at least $2s-r$. If all these increments are constant, denote their values by $k(d)$. Given $d,e$, the intersection of $S,S-d,S-d-e$ has size at least $3s-2r>0$. At a point of intersection telescoping gives $k(d+e)=k(d)+k(e)$. Fixing any point of $S$ now gives affineness.
+
+Choose a nonconstant increment and partition $U_d$ as $A\sqcup B$ with $A$ one nonempty level set and $B$ its nonempty complement. For every $x\in A,y\in B$, the pairs $(x+d,y)$ and $(x,y+d)$ have the same sum and different scores. The mixed centers thus include $d+A+B$. The prime-order Cauchy--Davenport inequality gives
+\[
+|d+A+B|\ \ge\ |A|+|B|-1=|U_d|-1\ge 2s-r-1.
+\]
+For sharpness take $S=\{0,\ldots,s-1\}$ and use its integer representatives as scores. The integer two-sums exhaust $[0,2s-2]$, so exactly $2s-r-1$ residues have two lifts. The score is nonconstant and $\operatorname{Hom}(G,\Z)=0$.
+\end{proof}
+
+\begin{corollary}\label{cor:third}
+Fix any $t\in G$. If $3s>2r+1$ and $u$ is nonaffine, at least $3s-2r-1$ distinct values $z\in S$ admit two different scores on triples of value $t$ sharing the \emph{same third tuple} of value $z$. In particular, constant score on one prescribed triple fiber forces affineness. The strict density threshold for this implication, uniformly over abelian score groups, is sharp.
+\end{corollary}
+\begin{proof}
+Intersect the mixed centers with $t-S$ and append a common representative of the complementary value. For sharpness take $s=\lfloor(2r+1)/3\rfloor$, the same integer interval, and $t=r-1$ for primes $r\ge5$. The integer three-sums exhaust $[0,3s-3]$. This interval contains $r-1$ and ends strictly before $2r-1$, so every triple at $t$ has the same integer score. Translating the interval avoids zero if required and translates $t$ by three times the translation.
+\end{proof}
+
+The sharpness example concerns integer-valued scores. Reducing that particular score modulo $r$ gives an affine map. More generally, constancy on all double fibers in any set of more than $2(r-s)+1$ centers forces affineness under the hypothesis of Theorem~\ref{th:mixed}. For $S=G$, any two distinct centers suffice.
+
+\section{The integral lattice and its target projection}
+Let $\mathcal X=\prod_i F_i$ for indexed nonempty blocks $F_i\subseteq G$. Coordinates of a tuple sum in $G$. Choose $b_i\in F_i$ as references. Use a basis vector $e_{i,a}$ for every $a\in F_i\setminus\{b_i\}$, put $e_{i,b_i}=0$, and write $c(X)=\sum_i e_{i,X_i}$, $D=\sum_i(|F_i|-1)$. Set
+\[
+ \pi:\Z^D\to G,\quad e_{i,a}\mapsto a-b_i.
+\]
+For an ordered triple $T$ of half-tuples write $C(T)$ for its summed incidence vector. Write $\mathcal T_t$ for the triple fiber at $t$ and $L_t$ for the lattice generated by all $C(T)-C(T')$ with $T,T'\in\mathcal T_t$.
+
+\begin{theorem}\label{th:lattice}
+If $3s>2r+1$, then $L_t=\ker\pi$ for every $t\in G$. Generators may even be restricted to contrasts sharing the same third tuple. The integral cokernel is cyclic of order $r$, and the row rank after reduction modulo $r$ is $D-1$.
+\end{theorem}
+\begin{proof}
+Let $L$ be generated by the restricted contrasts. Then $L\subseteq L_t\subseteq\ker\pi$, since the reference offsets cancel. In $H=\Z^D/L$ give a half-tuple the score $[c(X)]$. Corollary~\ref{cor:third} forces this score to be $c_0+\phi(v(X))$. Change only slot $i$, from $b_i$ to $a$, to get $[e_{i,a}]=\phi(a-b_i)$. The map $\phi:G\to H$ thus generates the whole quotient. The homomorphism $\pi$ descends to $H\to G$. At least one block difference is nonzero because $s>1$, so $\pi$ is onto. The composition $G\to H\to G$ fixes all block differences and hence is the identity. It follows that $H\simeq G$ and all three lattices coincide. The Smith factors are $1,\ldots,1,r$. In particular the reduction of the integral kernel is the kernel of $\bar\pi:\F_r^D\to G$ viewed as a linear map over $\F_r$.
+\end{proof}
+
+As also proved in the concurrent integral lattice audit \cite{prnine}, the full fixed-generator shift lattice in reduced coordinates has index one over the integers whenever doubled tuples cover $G$. Indeed in the quotient by all shift rows two such tuples at value $g$ have identical class by comparison with a common successor. Translation by the generator then makes the class constant on $G$. Changing one slot kills every $e_{i,a}$. This separate lattice has nonhomogeneous right sides in the logarithm problem. Its integral span alone gives no algorithm for locating the coefficients.
+
+\begin{corollary}\label{cor:target}
+Under Theorem~\ref{th:lattice}, let $V=\F_r^D$ and $W\subseteq V$ be an explicit row space with $\bar\pi(W)=G$. Let $d=\dim(V/W)$. Fix any one $T_0\in\mathcal T_0$. For every target $t$,
+\[
+ \aff\{\, [C(T)-C(T_0)]\in V/W:T\in\mathcal T_t\,\}=V/W.
+\]
+In particular, zero is an affine combination of at most $d+1$ projected target vectors.
+\end{corollary}
+\begin{proof}
+The differences of the displayed vectors span the image of $\ker\bar\pi$ in $V/W$. This image is all of $V/W$ since $W+\ker\bar\pi=V$. Choose an affine basis from the set and express zero in it. The affine coefficients lie in $\F_r$ and sum to one. They can vanish or be negative as integer representatives.
+\end{proof}
+
+For the relation problem one genuine row of displacement $P\ne0$ suffices for $\bar\pi(W)=G$. With known right sides on $W$, a supplied affine certificate evaluates the target. The coefficient sum of one preserves the common target value. If $d>0$, at least one representation of \emph{every} target has nonzero projection. The theorem supplies neither a universally identifiable single representation nor a fast way to select the affine basis. The all-displacement analogue of the $d+1$ bound was already obtained in \cite{prnine}; here all target triples lie over the same prescribed group value. Allowing a combination changes the available target functional. It does not change membership of a previously fixed functional in $W$.
+
+\section{Two target witnesses from a short augmented lift}
+A different criterion applies even when every quotient class has negligible mass. Let $B$ be a matrix of known genuine reduced rows, with right side column $b_B$; thus $B\lambda=b_B$ over $\F_r$. A vector $v\in\Z^D$ includes a zero at each omitted block reference by convention. Put
+\[
+ R(v)=\sum_i\big(\max_{a\in F_i}v_{i,a}-\min_{a\in F_i}v_{i,a}\big).
+\]
+All ranges here are measured over the integers. The scalar $h$ in the next theorem can be zero modulo $r$.
+
+\begin{theorem}\label{th:height}
+Suppose $3s>2r+1$ and we are given $v,h$ with
+\[
+ Bv=h b_B\pmod r,\qquad 0<2R(v)<r.
+\]
+At \emph{any} prescribed $t$ one can deterministically find two triples $T_1,T_2$ with value $t$ and a common third tuple, whose incidence difference is outside the original $W=\operatorname{row}_{\F_r}(B)$. The search uses only a polynomial number of ordinary two-pin prefix counts on five copies of the short-tuple arithmetic. If $\operatorname{codim} W=1$, then for any supplied identity triple, the two target triples give a constructible affine certificate in $W$ for every target. Under the original Stage I predicates and LZR Theorem 2.2 the worst-case bit time and space are at quarter-power scale including any within-budget construction of the given system and lift.
+\end{theorem}
+\begin{proof}
+Score a half-tuple by the integer $\langle c(X),v\rangle$. This is nonconstant because one can vary a slot with nonzero range. Since $\operatorname{Hom}(G,\Z)=0$, it is nonaffine. By Corollary~\ref{cor:third}, some two triples over $t$ sharing their third have nonzero integer score difference $D_v$. Sum the nonnegative \emph{integer} $D_v^2$ over ordered witnesses $(X,Y,X',Y',Z)$ satisfying both prescribed sums. The third tuple cancels in the score. Expanding the square enumerates two pinned occurrences and their indices outside the unweighted graph, with signed integer coefficients. A positive prefix child always exists; a positive leaf has $D_v\ne0$. Since the two unshared copies on each side take within-block values in the indicated ranges, $|D_v|\le2R(v)<r$. Thus $D_v$ remains nonzero modulo $r$.
+
+Put $\Delta=C(T_1)-C(T_2)$. It has genuine right side zero. If $\Delta=\gamma^\top B$, truth of the equations would give $\gamma^\top b_B=\Delta\lambda=0$. But then $\Delta v=h\gamma^\top b_B=0\bmod r$, a contradiction. Hence the target projections differ. At corank one two distinct points affinely span the line. Relative to \emph{any} fixed identity triple, elimination finds weights of sum one whose weighted target difference lies in $W$, and evaluates it from $b_B$.
+
+The network has $O(mb)$ edges, with constant multiplicity of the ordinary group arithmetic; the shared $Z$ is enforced by bounded fan-out. There are $O(mb)$ prefix decisions, each using $O((m(N_0+1))^2)$ ordinary counts. Each count and the signed sum of squared discrepancies require $O(mb+\log(N_0+1)+\log(1+R(v)))$ bits up to constant factors, since reference normalization bounds each coefficient by $R(v)$. Ordinary field elimination on the explicit matrices and two witnesses costs polynomial bit time and space. The degree and contraction parameters are as in the original Stage I construction. At higher corank one obtains a new row, without a bound on the number of successful lift selections.
+\end{proof}
+
+\paragraph{Finding the lift.}
+For a genuine full-rational-rank square basis $B_0$ of unit-shift rows solve $B_0v=h\mathbf1$ over the integers for the primitive vector $(v,h)$, $h>0$, by exact rational elimination and denominator clearing. Its length in bits is polynomial in $D$ and the input bit length by minor bounds. Test the theorem's two conditions against the \emph{entire} supplied $B$. A large primitive lift supplies no guarantee. Alternatively, at modular corank one with a promised solution $h=1$, $|v_{i,a}|\le H$, write solutions as $y+z u$. At a pivot $u_j\ne0$, enumerate the $2H+1$ small lifts of that coordinate; each determines $z$. Take centered residues, then test the exact ranges. This requires polynomial work per candidate and is affordable for constant $H$.
+
+\paragraph{The pointwise-flat obstruction.}
+PR~10 \cite{prten} constructs unweighted, pointwise-flat blocks with a full rational basis of genuine unit-shift rows of modular corank one. On that basis only $\min(r,16m+1)$ displacements have any identifiable \emph{individual} doubled-tuple pair. In its notation every label is $[\kappa c_{i,a}+d_{i,a}]P$ with $d_{i,a}\in\{-2,-1,1,2\}$ and reference $P$ of offset one; $u=(c_{i,a})$ spans the residual kernel. Thus the true reduced table is $\kappa u+v$ with $v_{i,a}=d_{i,a}-1$. Every selected row has $av=1\bmod r$ and $|av|\le2R(v)\le8m$. For $r>8m+1$ this implies $av=1$ over the integers. Uniqueness of the rational solution recovers $v$ exactly with $h=1$, without knowledge of $\kappa$ or of the hidden offsets. It is nonconstant. In this example each quotient class has at most four labels in a block: fixing $c_{i,a}$ allows at most four distinct group values. Thus the retained-fraction criterion can fail on every nonempty subset.
+
+Theorem~\ref{th:height} nevertheless reduces \emph{every} target of that adversary to two target witnesses at one prescribed sum and their affordable-in-number two-pin queries. The asymptotic blocks in PR~10 are chosen by random augmentation and have no supplied Stage I circuit. For that existential family the conclusion is a count-query reduction. Quarter-power bit cost applies when the ordinary unweighted predicates have the charged Stage I implementation. This does not infer compact predicates for arbitrary explicitly listed subsets.
+
+\section{Constructing a target certificate from concentrated quotient labels}
+Write $p$ for the law of $v(X)$ when the entries of a short tuple are independent and uniform in their blocks. The original Stage I energy gives
+\[
+ \epsilon=r\sum_g p(g)^2-1<1/7.
+\]
+Indeed the potential is $x^2(1+\epsilon)+64(x-1)^2<64/57$ with $x$ the tuple count divided by its prescribed mean. Its minimum over $x$ is $64(1+\epsilon)/(65+\epsilon)$, which proves the claim.
+
+\begin{theorem}\label{th:trim}
+Fix a rational $0<\eta_0\le1$. Let $C_i\subseteq F_i$ be explicitly listed, with $\eta=\prod_i |C_i|/|F_i|\ge\eta_0$. Suppose $\epsilon\le1/7$. For all sufficiently large prime $r$, a constant $k=k(\eta_0)$ suffices to represent \emph{each} $t\in G$ by $k$ short tuples using only the $C_i$. Moreover a deterministic search requires only polynomially many untrimmed prefix counts with at most $J=J(\eta_0)$ individually specified point pins, measured in the explicit number of labels, $m$, and the slot encoding length. For the original Stage I arithmetic predicates, under LZR Theorem 2.2, construction takes $2^{O_{\eta_0}(b/(\log b)^{1/4})}$ worst-case bit time and space.
+\end{theorem}
+\begin{proof}
+Let $\nu$ be the sum law using the restricted blocks. Conditioning on the good event gives $\nu(g)\le p(g)/\eta$. Put $C=\lceil 8/(7\eta_0^2)\rceil$. Then $r\sum\nu^2\le C$. For $r\ge16C$, a nontrivial character on $G$ places at most $r/(16C)+1\le r/(8C)$ group elements in any arc of half-angle $\pi/(16C)$. Its $\nu$-mass is at most $1/\sqrt8$ by Cauchy--Schwarz. Choose the arc centered at the argument of the Fourier coefficient (ignore a zero coefficient). Projection gives
+\[
+ |\widehat\nu(\chi)|\le 1-\tfrac12(1-\cos(\pi/(16C)))\le \rho=1-1/(256C^2),
+\]
+using $1-\cos h\ge2h^2/\pi^2$ on $[0,\pi]$. Take $k\ge3$ with $C\rho^{k-2}\le1/2$. Fourier inversion and Parseval in the convention $\widehat\nu(\chi)=\sum_x\nu(x)\chi(x)$ give $\nu^{*k}(t)\ge1/(2r)$. The same identities give $|rp^{*j}(g)-1|\le\epsilon$ for $j\ge2$ since $|\widehat p|\le1$.
+
+Draw $k$ independent untrimmed tuples conditional on total $t$. Let $H_j$ count excluded entries of copy $j$, and let $H=\sum H_j$. The conditional probability $H=0$ is at least $\tau=\eta_0^k/[2(1+1/7)]$. The marginal on each copy under the conditioning is pointwise at most $A=(1+1/7)/(1-1/7)=4/3$ times its original product law by the bounds for $p^{*(k-1)}$ and $p^{*k}$. Writing $\delta_i=1-|C_i|/|F_i|$, H\"older on the conditional law, then independence within one \emph{unconditioned} copy, give
+\[
+ \mathbb E[3^H\mid t]\le
+ \prod_{j=1}^k\mathbb E[3^{kH_j}\mid t]^{1/k}
+ \le A\prod_i(1+(3^k-1)\delta_i)
+ \le A\eta_0^{-(3^k-1)}.
+\]
+Choose an odd $J$ with $(2/3)^J A\eta_0^{-(3^k-1)}<\tau$. The integer polynomial in the binomial basis $L_J(h)=\sum_{a=0}^J(-1)^a\binom ha$ equals $\mathbf1_{\{h=0\}}$ for $h\le J$. For $h>J$ it is $-\binom{h-1}J$. Thus the indicator exceeds its minorant by at most $(2/3)^J3^h$. The total signed mass of $L_J(H)$ on the prescribed fiber is positive.
+
+For each selected set of at most $J$ distinct slot occurrences, enumerate the excluded indexed points at those occurrences, and sum the original unweighted prefix counts with these points fixed. This computes exactly the binomial term of that order. Split prefixes, retaining a child of positive signed mass until a unique tuple remains. Its entries all belong to the $C_i$. This argument needs positivity at the parent; no conditional moment estimate at a child is necessary.
+
+With $N_0=\max_i |F_i|$, at most $(1+km(N_0+1))^{O(J+1)}$ terms suffice per prefix. There are $O(kmb)$ prefix decisions using unique encodings. Each closed arithmetic network has $O(kmb)$ edges with maximum degree $O(b^{3/4})$ for fixed $k$; equality to a fixed point and prefix bits use unary pins. Native addresses and affine seed predicates are the original ones. Each unweighted count fits in $O(kmb+1)$ bits, and the outside sum needs at most $O(kmb+(J+1)\log(2+km(N_0+1)))$ bits in addition to constant factors. Exact rational comparisons suffice to fix $k,J$ once $\eta_0$ is specified. The log time at $m\asymp(\log b)^{1/4}$ is $O_{\eta_0}(b/m+mb/\sqrt{\log b}+\log b)$. Sequential accumulation and the closed contractor use space at most time.
+\end{proof}
+
+\begin{corollary}\label{cor:construct}
+Given a genuine explicit row space $W$ with known right sides, partition each $F_i$ by equality of $e_{i,a}+W$ in $\F_r^D/W$. Suppose the product of the largest class fractions is at least a fixed $\eta_0>0$. For sufficiently large primes on the Stage I input class, every target admits a deterministically constructible certificate in $W$ at quarter-power cost, provided the size and construction cost of the given subsystem are within that budget.
+\end{corollary}
+\begin{proof}
+Compute classes by ordinary elimination and choose one largest class per block, breaking ties by address. Theorem~\ref{th:trim} constructs one retained $k$-tuple at $t$ and one at zero. The sum of quotient coordinates is the same on both, with $k$ entries of the chosen class per block. Subtracting cancels the reference offsets and gives a vector of $W$ whose known value is the desired logarithm. Elimination supplies the explicit linear combination of given rows. The finite range $r<16C$ can be handled by direct enumeration for the logarithm application; coverage of a singleton retained set in that range is not asserted.
+\end{proof}
+
+There is a small first-order case. If $\sum_i\delta_i<1/4$, take $k=3,J=1$ directly: $\mathbb E[H\mid t]\le3A\sum_i\delta_i<1$. Positive mass of $1-H$ suffices. In general the constants in Theorem~\ref{th:trim} can be very large. The product promise is testable on an explicit subsystem. No lower bound for this product follows here for the prescribed rank-extraction output. Earlier modal separators can also exploit bounded scalar modal deficits to obtain more rows; the present construction produces two decompositions using the given row space. The prescribed-fiber integral presentation above also differs from the translation presentation of \cite{long}, which imposes generator translations across the entire value group on a surjective domain.
+
+\begin{corollary}[Omitting unresolved blocks]\label{cor:omit}
+For a subset $I$ of blocks let $p_I$ denote the untrimmed short-sum law on $I$, and let $\eta_I$ be the product of the largest quotient class fractions on $I$, using the \emph{original full} row space $W$. It suffices that one nonempty $I$ has $r\sum p_I^2\le8/7$ and $\eta_I\ge\eta_0$. A suitable $I$ can be found at quarter-power cost. For the deletion-resilient seed of \cite{repo}, as developed in the accompanying short-relation notes, fix $0<\alpha<1/2$ and put $a=m-\lfloor\alpha m\rfloor$. For sufficiently large inputs it suffices that the product of the $a$ largest block class fractions exceeds or equals $\eta_0$. The other blocks may be completely unresolved.
+\end{corollary}
+\begin{proof}
+Embed incidences on $I$ in the full coordinate space by zeros outside $I$. Theorem~\ref{th:trim} applies without modification on $I$; subtraction cancels its own reference offsets. The result belongs to the original $W$, from which its right side is available. For the original arithmetic masks enumerate at most $2^m$ subsets. Write $M_I=\prod_{i\in I}|F_i|$. The chi-square guard is the exact comparison $7r\sum_g d_I(g)^2\le8M_I^2$, using a single unweighted collision count on two copies. With polynomial masks of fixed degree the same network bounds hold. The existing resilient seed gives the guard simultaneously on all subsets of size at least $a$, so sorting the class fractions suffices. Its seed construction and enumeration have the original quarter-power scale, with constants also depending on $\alpha$. For any blocks one may additionally pad both endpoints with the same labels outside $I$, translating both group values equally.
+
+The hypotheses can differ substantially from concentration on \emph{all} blocks. On the actual resilient family fix $|I|=a$. The genuine fixed-shift rows obtained from arbitrary doubled tuples on $I$ by identical padding outside $I$ span the entire coordinate space supported on $I$: doubled coverage there follows from the energy guard, and the common-successor argument applies in those coordinates. Let this be $W$. Then $\eta_I=1$, while $\eta_{[m]}=\prod_{j\notin I}|F_j|^{-1}$. In the resilient seed each block size is $(1+o(1))q$ for the growing nominal block size $q$, by dividing the simultaneous full and one-deletion tuple-count estimates. Thus the full product tends to zero. This is an existence and separation example for genuine row spaces. Constructing an explicit spanning set with known right sides on $I$ at the claimed cost is not implied by coverage.
+\end{proof}
+
+\paragraph{A genuine corank-one subsystem.}
+Here the concentration condition and the choice of identity reference can be seen on the original large-input Stage I blocks. Remove the reference point from each block and let $S'$ be the short support of the remaining labels. Write $M=\prod_i|F_i|$ and $u=\min_i|F_i|$. Under the Stage I parameters, $M=O(r)$: the expected product $\mu=(nT/p)^m$ is $O(r)$ by $nT/p=(16r)^{1/m}+O(1)$ for large $b$, and the potential bounds $M/\mu$. Also $M\ge s>7r/8$ and $|F_i|\le 2T=O(r^{1/m})$, so $u\ge r^{1/m}2^{-O(m)}$. Removal loses at most $Mm/u=o(r)$ tuples. Thus $|S'|>r/2$.
+
+Consider all doubled, entirely nonreference shift pairs of displacement $P$. Their rows identify all nonreference coordinate vectors within each block in the quotient by their span: doubled nonreference sums cover $G$, common successors identify all classes at a fixed sum, translation by $P$ makes these classes constant, and changing one slot gives the asserted equality. Denote the resulting common classes by $h_i$. For each pair $i,j$, fix one source half with only slot $i$ a reference, and a successor half with only slot $j$ a reference. Complete both by a nonreference half so the full displacement is $P$: two translates of $S'$ intersect. The added row imposes $h_i=h_j$. A tree on the block indices suffices. Every row used has total coordinate sum zero, so their span is exactly $W=\ker\mathbf1$, of corank one. It is generated by genuine known-displacement rows.
+
+Fix the all-reference triple, of group value $t_*=3\sum_i b_i$. Any triple representing $t_*+Q$ for $Q\ne0$ has between one and $3m<r$ nonreference occurrences, so its difference from this fixed baseline lies outside $W$. Conversely the nonreference class in each block has joint retained mass $1-o(1)$, and the first-order selector constructs \emph{two} compatible decompositions once $W$ and its right sides are supplied. This subsystem is contained in a rational hyperplane. It need not be the full-rational-rank basis returned by integer extraction, and implicit existence of its basis supplies no fast preprocessing. The construction only uses a known translated baseline; it does not assert an all-reference identity tuple.
+
+\section{What a pinned average can retain}
+Consider a single proper block $S\subset G$, with $3s>2r+1$ and odd $r$. Use unreduced incidence coordinates. At target $t$ fix the third entry $z$. For each ordered $(x,y)\in S^2$ with $x+y=t-z$, let the row vector be $v=e_x+e_y$. Define the unweighted cell matrix
+\[
+ K_z=\sum_{v,w}(v-w)(v-w)^\top
+\]
+using column conventions for $v,w$ and counting both orders.
+\begin{proposition}\label{prop:pin}
+For every $t$, the vertical stack of all $K_z$, $z\in S$, has exactly the raw triple-contrast kernel over $\F_r$. This kernel consists of the affine scores.
+\end{proposition}
+\begin{proof}
+The involution $x\mapsto t-z-x$ partitions the allowed entries into reflection orbits. Each orbit gives a distinct incidence vector $p_j$, of disjoint support from the other orbits. Its multiplicity $w_j$ is one or two. These vectors are independent, including the vector $2e_x$ on a fixed point. The cell mass $n=\sum w_j$ lies between $2s-r$ and $s<r$. With $V_0$ the matrix of columns $p_j$ and $w=(w_j)$,
+\[
+ K_z=2V_0\big(n\operatorname{diag}(w)-ww^\top\big)V_0^\top .
+\]
+The middle factor kills exactly the constant vectors since $n$ and every $w_j$ are units. Injectivity of $V_0$ shows that $K_z$ kills precisely scores constant on this cell. Apply Corollary~\ref{cor:third} across all cells. Every affine score satisfies those constraints.
+\end{proof}
+
+Unpinning need not preserve rank. Take $S=G\setminus\{0\}$, $r\ge5$, $t=0$. For all ordered triples in this fiber let $n$ be their number, $v$ the sum of their full incidences, $H$ the sum of their incidence outer products, $J$ the all-ones matrix, and $R$ the permutation $x\mapsto-x$. Direct slot counting gives
+\[
+ n=(r-1)(r-2),\quad v=3(r-2)\mathbf1,\quad H=3(r-2)I+6(J-R).
+\]
+The raw aggregate $K=2(nH-vv^\top)$ thus satisfies $K=-24(I+R)-48J$ over $\F_r$. It kills the constant and odd subspaces. On mean-zero even vectors it acts as $-48I$. These subspaces are complementary since $2$ and $r-1$ are units. The Gram rank is $(r-3)/2$ whereas the raw and one-pin ranks both equal $r-3$. This is an unweighted flat example for a three-sum architecture. Stage I's growing collection of small blocks and PR~7's shift-pair Gram are different hypotheses.
+
+\section{A width obstruction for discrepancy polynomials}
+Give each slot occurrence its own family of point variables. Let $M_X$ be the product of the selected variables in the first copy, and use separate variable families for $M_Y,M_Z$. For a field-valued nonaffine score and scalar $a$, form the multilinear polynomial
+\[
+ \sum_{v(X)+v(Y)+v(Z)=t}
+ (u(X)+u(Y)+u(Z)-a)\,M_XM_YM_Z .
+\]
+Separate the first copy from the other two. In the resulting coefficient matrix group rows by $x=v(X)$, columns by $v(Y)+v(Z)=t-x$. The blocks have disjoint rows and columns. Inside each block the entry is a row score plus a column score minus $a$. A block has rank two if both scores vary (the corresponding $2$-minor is a product of two nonzero differences), zero if every entry vanishes, and one otherwise. In particular every mixed center in $t-S$ contributes at least one to the rank. Theorem~\ref{th:mixed} gives a lower bound $3s-2r-1$ at this cut, for every choice of $a$.
+
+A read-once oblivious algebraic branching program reading the first copy before the others factors the coefficient matrix through its width. On Stage I support $s>7r/8$ this requires width exceeding $5r/8-1$. This argument concerns the occurrence-variable discrepancy even after including its score coefficients. Substitutions can collapse coefficient rank and a different variable encoding or variable order can have other widths.
+
+\section{Computational status}
+The proof uses Cauchy--Davenport and integer and finite-field linear algebra. No contraction hypothesis is needed for the structural results. The Stage I parameters of the repository cost $2^{O(b/(\log b)^{1/4})}$ bit operations under its closed-contraction premise. A witness tuple can be checked and its incidence computed in polynomial time in $m,b,D$. Testing a supplied certificate uses polynomial bit complexity in $D,m,b$ and in the size of the explicit subsystem. Each prescribed triple fiber already contains at least $s(2s-r)$ ordered triples: choose a first value in $S$ and complete it using two values in $S$. Listing the complete fiber exceeds the target cost. None of the rank or width arguments calculates a uniformly sufficient list of projected representatives in that budget. The deterministic exponent remains open.
+
+\begin{thebibliography}{9}
+\bibitem{cd} {\'E}. Balandraud, \emph{Addition theorems in $\mathbb F_p$ via the polynomial method}, \href{https://arxiv.org/abs/1702.06419}{arXiv:1702.06419}.
+\bibitem{cg} D. Conlon and W. T. Gowers, \emph{Freiman homomorphisms on sparse random sets}, \href{https://www.its.caltech.edu/~dconlon/homomorphisms.pdf}{authors' manuscript}.
+\bibitem{lzr} S. Liu, B. Zhang and K. Ren, \emph{A Deterministic Subexponential-time Algorithm for the Discrete Logarithm Problem}, \href{https://eprint.iacr.org/2026/3020}{ePrint 2026/3020}.
+\bibitem{repo} Elliptic relation counting project, \emph{A polynomial certificate for deterministic elliptic-curve relation systems}, \href{https://github.com/davidiach/elliptic-relation-counting/tree/7e77dd0fcd222dd39780d4e1d5eb1c464c3b3a87}{revision 7e77dd0}, 2026.
+\bibitem{prten} Elliptic relation counting project, \emph{Pointwise flatness and the failure of single-pair target identification}, \href{https://github.com/davidiach/elliptic-relation-counting/pull/10}{PR 10}, revision febe120, 2026.
+\bibitem{prnine} Elliptic relation counting project, \emph{Integral relation lattices and limits of Gram-prefix recovery}, \href{https://github.com/davidiach/elliptic-relation-counting/pull/9}{PR 9}, revision c88236d, 2026.
+\bibitem{long} Long Mathematics, \emph{Conditional extensions of deterministic discrete logarithm algorithms: Smaller space, reusable coordinates, and full abelian presentations}, theorem on short relation presentations, \href{https://github.com/long-mathematics/deterministic-discrete-logarithms/tree/b11be05092e0f95862d9c7a8aef57e27e9a231c2}{revision b11be05}, 2026.
+\bibitem{fs} M. Forbes and A. Shpilka, \emph{Quasipolynomial-time identity testing of non-commutative and read-once oblivious algebraic branching programs}, \href{https://arxiv.org/abs/1209.2408}{arXiv:1209.2408}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,11 @@
+Binary integer-score tables checked: 648
+Sharp interval counts checked: 56
+Full and common-third integral HNFs and modular rank, all dense one-block fibers on C3,C5,C7: 89
+Full and common-third integral HNFs and modular rank, multiblock fibers: 31
+C5 unpinned, third-slot-pinned, raw ranks: (1, 2, 2)
+C7 unpinned, third-slot-pinned, raw ranks: (2, 4, 4)
+C11 unpinned, third-slot-pinned, raw ranks: (4, 8, 8)
+C13 unpinned, third-slot-pinned, raw ranks: (5, 10, 10)
+C17 unpinned, third-slot-pinned, raw ranks: (7, 14, 14)
+Projected affine hulls on all seven targets, deficiency and targets lacking a single certificate: (3, [1, 2, 3, 4, 5, 6])
+Exhaustive third-slot stacks and discrepancy cut ranks: (74, 49)
