@@ -1,0 +1,40 @@
+UNIVERSAL CANDIDATE SETS (exhaustive small cases)
+prime | sizes | distinct sumsets | covered subsets checked | minimum | lower | upper (capped)
+3 | (2, 2) | 66 | 129 | 4 | 4 | 9
+3 | (2, 3) | 168 | 255 | 7 | 5 | 9
+3 | (2, 2, 2) | 60 | 255 | 8 | 5 | 9
+5 | (2, 2) | 1950 | 2625 | 4 | 4 | 6
+
+LOW-DEGREE PARAMETER COVER
+prime | degree | radix | digits | blocks | max block size | parameter checks
+101 | 1 | 5 | 3 | 3 | 5 | 125
+101 | 1 | 5 | 3 | 3 | 5 | 125
+65537 | 2 | 3 | 4 | 10 | 4 | 81
+65537 | 2 | 3 | 4 | 10 | 4 | 81
+65537 | 2 | 5 | 3 | 6 | 10 | 125
+65537 | 2 | 5 | 3 | 6 | 10 | 125
+1000003 | 3 | 3 | 3 | 7 | 5 | 27
+1000003 | 3 | 3 | 3 | 7 | 5 | 27
+2147483647 | 3 | 2 | 4 | 14 | 2 | 16
+2147483647 | 3 | 2 | 4 | 14 | 2 | 16
+2147483647 | 4 | 2 | 4 | 15 | 2 | 16
+2147483647 | 4 | 2 | 4 | 15 | 2 | 16
+780 exact parameter representations; 1060 vanishing higher mixed differences.
+
+FULL-PROJECTION SINGLE-BOX OBSTRUCTIONS
+prime | sizes | minimal box areas | product bound | actual sumset size | affine linear forms checked
+101 | (81, 81) | (7221, 7568) | 6561 | 4801 | 20400
+127 | (93, 93) | (12544, 12208) | 8649 | 6661 | 32256
+257 | (123, 123) | (51520, 53361) | 15129 | 13524 | 132096
+184752 exact linear-form arc checks; all projective scalar projections are full.
+
+COMBINED THREE-BLOCK CONTROL
+r=997, sizes=(86, 86, 87), product=643452, support=473941, minimum box areas=(678146, 669930, 658520).
+2982024 exact linear-form arc checks; both axes and all 9 quadratic prefix points present.
+
+TWO-BOX UNION CONTROL (standalone)
+r=7, sample=22, half-area=24, independent form pairs=1008, distinct boxes=215454.
+Initial patterned sample: found a two-box cover of area 24.
+Replacement sample: 19619 candidate boxes, 1151 eligible pairs examined; no cover of area <= half.
+
+All checks passed.
