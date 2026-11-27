@@ -109,7 +109,9 @@ def check_plane():
             for v in product(range(q),repeat=d):
                 if v not in sup:
                     x=lower_point(v,q,k)
-                    assert x[0]<r and x[1]<r and x not in raw
+                    assert all(0 <= coordinate < q**k for coordinate in x)
+                    assert lift(x, q, k) == v, "decoded point does not lift to its digit vector"
+                    assert x not in raw
                     outside_checks+=1
             fixtures+=1
     print(f'Plane lifts: {fixtures} complete instances; {factor_checks} exact carry factorization identities; {sum_checks} original-support inclusions; {outside_checks} safe absent-vector lifts.')
