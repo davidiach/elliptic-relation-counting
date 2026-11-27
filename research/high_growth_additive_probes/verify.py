@@ -3,6 +3,7 @@
 All examples are abstract finite additive planes. No curve implementation.
 """
 from collections import Counter, deque
+from fractions import Fraction
 from itertools import combinations, combinations_with_replacement, product
 from math import comb, isqrt, prod
 from random import Random
@@ -275,7 +276,14 @@ def axes_sets(m,r,full):
 def check_covers():
     print('\nFINITE HIGH-GROWTH COVER FIXTURES')
     print('m | r | n | prescribed points | full axes | |S| / n^m | min subset fraction | min double fraction | good-tuple collisions')
-    for m,r,l,full in [(3,101,6,True),(4,1009,10,True),(3,10007,39,False),(4,100003,15,False)]:
+    # The recorded minimum fractions are lower bounds for these finite fixtures.
+    fixtures = [
+        (3, 101, 6, True, Fraction(2764, 3375), Fraction(105, 120)),
+        (4, 1009, 10, True, Fraction(175414, 194481), Fraction(211, 231)),
+        (3, 10007, 39, False, Fraction(63986, 64000), Fraction(1)),
+        (4, 100003, 15, False, Fraction(1), Fraction(1)),
+    ]
+    for m, r, l, full, subset_floor, double_floor in fixtures:
         assert isprime(r) and r>2*l
         E,g,D=build_graph(m,l);F=axes_sets(m,r,full);d=len(F[0]);assert all(len(B)==d for B in F)
         n=l+d;M=n**m;assert M<r*r
@@ -308,6 +316,8 @@ def check_covers():
             C=Counter(sumkey([V[i][u],V[i][v]],r) for u,v in combinations_with_replacement(range(l),2))
             assert len(S)>=comb(l+1,2)-sum(comb(c,2) for c in C.values())
             if len(S)*mindouble[1]<mindouble[0]*den:mindouble=(len(S),den)
+        assert Fraction(*minratio) >= subset_floor, ("subset growth", r, minratio, subset_floor)
+        assert Fraction(*mindouble) >= double_floor, ("doubling", r, mindouble, double_floor)
         print(f'{m} | {r} | {n} | {len(H)} | {full} | {fullsize}/{M} | {minratio[0]}/{minratio[1]} | {mindouble[0]}/{mindouble[1]} | {collisions}')
     print('4 full finite covers; all subset and double-sum bounds verified. Axis-free controls are not full-projection claims.')
 
