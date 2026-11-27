@@ -5,6 +5,11 @@ an explicit nonconstant vector survives all six pinned matrices. A seed at order
 67 has the same run length while every distinct target pair has optimal shared
 kernel. [Six-target results and the original-parameter limitation](SIX_TARGETS.md)
 
+The matrix $M_t$ and the question of accepting one target individually are
+formalized in [single-target recovery](../single_target_recovery/RESEARCH.md).
+That note also checks that the explicit consistency rows together with $M_0$
+reach full rank for each seed in [the fixture](witnesses.json).
+
 ## Four targets at order 223
 
 On $y^2=x^3+x+1$ over $\mathbb F_{211}$, the rational group has prime order
