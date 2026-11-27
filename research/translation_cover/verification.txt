@@ -1,0 +1,12 @@
+Exact autocorrelation energy identity: 4 independent Bernoulli cases, 8512 complete mask arrays.
+Affine-seed prefix E/F5, order 7, m=4: 38 exact parent/child identities; block sizes [5, 5, 5, 5]; direct potential equals final 8.97684 (initial 213.471).
+Actual affine masks: 32 exact autocorrelation/energy identities across two curves, 38 seed prefix checks.
+Two-shift coverage C19: holes 1 -> 0, shifts [1, 10], tuple product 162 < 361, potential 0.401169 -> 0.0521063, 3 exact prefix identities.
+Two-shift coverage C31: holes 1 -> 0, shifts [1, 25], tuple product 450 < 961, potential 0.113571 -> 0.0380654, 5 exact prefix identities.
+Two-shift coverage C101: holes 1 -> 0, shifts [1, 80], tuple product 5000 < 10201, potential 0.039832 -> 0.00763476, 7 exact prefix identities.
+Two-shift coverage C257: holes 1 -> 0, shifts [1, 138], tuple product 32768 < 66049, potential 0.0148328 -> 0.00363793, 9 exact prefix identities.
+Two-shift coverage C1009: holes 1 -> 0, shifts [1, 721], tuple product 508032 < 1018081, potential 0.00351267 -> 0.000686529, 10 exact prefix identities.
+Common translation C19, m=3, deletions=1: 4 retained subsets, total holes 1 -> 0, shifts [1, 4, 11, 18], potential 0.00209397 -> 0.000225386, 12 exact prefix identities.
+Common translation C31, m=4, deletions=2: 11 retained subsets, total holes 1 -> 0, shifts [1, 15, 16, 27], potential 0.000802526 -> 0.000163695, 15 exact prefix identities.
+Common translation C101, m=4, deletions=2: 11 retained subsets, total holes 1 -> 0, shifts [1, 63, 86, 97], potential 2.08521e-05 -> 5.95743e-06, 19 exact prefix identities.
+Translation selection totals: 80 exact parent/child identities; 43 direct-vs-expanded count comparisons.
