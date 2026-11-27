@@ -1,0 +1,22 @@
+Analytic integer/rational guards: 84 parameter triples; autocorrelation separation <1/16 and hyperplane bound <1/3.
+  Retained negative control F_2 2x2: all 15 nonzero shifts have overlap 6; rank-one recovery fails as expected outside the guard.
+  F_2, 3x3, k=1, w=2: 50 distinct atoms, 49 rank-one vectors recovered, full-rank remote witness.
+  F_3, 2x2, k=1, w=1: 33 distinct atoms, 32 rank-one vectors recovered, full-rank remote witness.
+  F_7, 2x2, k=1, w=1: 385 distinct atoms, 384 rank-one vectors recovered, full-rank remote witness.
+  F_2, 3x3, k=2, w=1: 344 distinct atoms, 49 rank-one vectors recovered, full-rank remote witness.
+  F_2, 5x5, k=1, w=2: 962 distinct atoms, 961 rank-one vectors recovered, full-rank remote witness.
+  Noisy F_2 5x5: 4 deletions, 2 arbitrary outliers; all 961 rank-one differences recovered, 4 distinct outlier centers, 5 code probes, remote witness verified.
+Unknown-coordinate checks: 5 exact ball recoveries; 1774 individual rank equalities; 1 noisy outlier recoveries.
+  Rank-metric outlier test F_2, s=3, w=1: 3 outliers, 4 centers, 5 probes, certified missing syndrome.
+  Rank-metric outlier test F_3, s=3, w=1: 4 outliers, 9 centers, 10 probes, certified missing syndrome.
+  Rank-metric outlier test F_2, s=5, w=1: 9 outliers, 10 centers, 11 probes, certified missing syndrome.
+  Rank-metric outlier test F_2, s=5, w=2: 3 outliers, 7 centers, 8 probes, certified missing syndrome.
+  Rank-metric outlier test F_3, s=5, w=2: 2 outliers, 9 centers, 10 probes, certified missing syndrome.
+Rank-metric pair-distance checks: 183 across 5 additional outlier fixtures.
+Hidden affine/noisy ball: 961 supplied atoms, 3 deletions, 2 additions; tensor layout recovered; 2 recentered outliers, 6 centers, 7 probes, exact one-atom exclusion.
+Exact hyperplane control F_7 2x2: 400 projective hyperplanes, maximum 91/385 < 1/3.
+Hamming-ball rank-certificate obstruction: all 20160 invertible F_2 reshapes of dimension four checked.
+Random-thinning toy controls: 3/3 exact rank-one recoveries at retention 0.95 (binary controls outside asymptotic guard).
+Exact tree profile comparisons: 48 random weighted/sparse inputs, 6668 distinct stored node profiles independently checked.
+Large colored chain: 65 dimensions, 64 lists, 3^64 tuple choices, width 2, max profiles 5, 1183 profile pairs; missing all-ones vector found.
+Overlapping full local dictionaries: q=3, d=59, K=7764 nonzero atoms, exact covering radius 12, width 2, max profiles 41, 2580 profile pairs; no enumeration of ambient 3^59.
