@@ -221,23 +221,59 @@ def random_rank(rng,a,b,k,p):
         if rank(X,p)==k:return X.ravel()
 
 
+def max_list_rank(points, center, Ti, a, b, p):
+    matrices = ((points - center) @ Ti.T % p).reshape(-1, a, b)
+    return max(rank(matrix, p) for matrix in matrices)
+
+
+def recover_layout(X, p, a, b, k):
+    learned = learn(X, p, a, b, k)
+    if learned is None:
+        return None
+    center, forms, eval_rank = learned
+    Q = sym_forms(forms, a*b, p)
+    centered = (X - center) % p
+    nonzero = centered[np.any(centered, axis=1)]
+    if not len(nonzero):
+        return None
+    anchor = next((v for v in nonzero if zero(Q, v, p)), None)
+    if anchor is None:
+        if a % p == 0 or b % p == 0:
+            return None
+        actions = split_lie(stabilizer(forms, p, a, b), p, a, b)
+        anchor, path, checks = rank_one(Q, nonzero[0], p, actions)
+    else:
+        path, checks = [1], 0
+    T = layout(Q, anchor, p, a, b)
+    if max_list_rank(X, center, inv(T, p), a, b, p) > k:
+        return None
+    return center, T, eval_rank, path, checks
+
+
+def two_list_target(first, second, center, T, a, b, p):
+    Ti = inv(T, p)
+    budget = sum(max_list_rank(points, center, Ti, a, b, p) for points in (first, second))
+    if budget >= min(a, b):
+        return budget, None
+    full_rank = np.eye(a, b, dtype=np.int64).ravel()
+    return budget, (2*center + T @ full_rank) % p
+
+
+def contains_sum(first, second, target, p):
+    return any(np.all((first + v) % p == target, axis=1).any() for v in second)
+
+
 def hidden_fixture(rng,a,b,k,p,shifted):
     d=a*b;U=random_invertible(rng,d,p);Ui=inv(U,p)
     c=rng.integers(0,p,d,dtype=np.int64) if shifted else np.zeros(d,dtype=np.int64)
     t=k+1;E=sum((mons(d,j) for j in range(t+1)),[]);N=2*len(E)
     # Rank-exact samples test that no rank-one anchor is supplied for k>1.
     raw=np.array([random_rank(rng,a,b,k,p) for _ in range(N)]);X=(raw@U.T+c)%p
-    out=learn(X,p,a,b,k);assert out is not None
-    center,F,e=out;assert np.array_equal(center,c);Q=sym_forms(F,d,p)
-    x=(X[0]-center)%p
-    if k>1:
-        assert not zero(Q,x,p)
-        g=stabilizer(F,p,a,b);algs=split_lie(g,p,a,b)
-        x,path,checks=rank_one(Q,x,p,algs)
-        assert rank((Ui@x%p).reshape(a,b),p)==1 and path[0]==k and path[-1]==1
-    else:path=[1];checks=0
-    T=layout(Q,x,p,a,b);Ti=inv(T,p);R=(X-center)@Ti.T%p
-    assert all(rank(y.reshape(a,b),p)==k for y in R)
+    out=recover_layout(X,p,a,b,k);assert out is not None
+    center,T,e,path,checks=out;assert np.array_equal(center,c)
+    assert rank((Ui@T[:,0]%p).reshape(a,b),p)==1 and path[0]==k and path[-1]==1
+    Ti=inv(T,p)
+    assert all(rank(y.reshape(a,b),p)==k for y in ((X-center)@Ti.T%p))
     nchecks=0
     for j in range(min(a,b)+1):
         for _ in range(25):
@@ -246,16 +282,76 @@ def hidden_fixture(rng,a,b,k,p,shifted):
     z=T@np.eye(a,b,dtype=np.int64).ravel()%p
     assert rank((Ui@z%p).reshape(a,b),p)==min(a,b)>k
     B=np.array([(U@random_rank(rng,a,b,1,p)+c)%p for _ in range(12)])
-    bmax=max(rank((Ti@(y-c)%p).reshape(a,b),p) for y in B);budget=k+bmax
-    if budget<min(a,b):
-        target=(2*c+z)%p
+    budget,target=two_list_target(X,B,center,T,a,b,p)
+    assert budget==k+1 and (target is not None)==(budget<min(a,b))
+    if target is not None:
         assert rank((Ui@(target-2*c)%p).reshape(a,b),p)>budget
-        for v in X[:12]:
-            for w in B:assert np.any((v+w-target)%p)
-    bad=(c+z)%p;assert rank((Ti@(bad-c)%p).reshape(a,b),p)>k
-    assert learn(X[:1],p,a,b,k) is None
+        assert not contains_sum(X, B, target, p)
+    assert recover_layout(X[:1],p,a,b,k) is None
     print(f'{a}x{b} k={k} p={p} affine={shifted} samples={N} eval-rank={e} rank-path={path} search={checks} rank-tests={nchecks} two-list={budget<min(a,b)}',flush=True)
     return N,nchecks,checks
+
+
+def check_mixed_outlier():
+    p = 7
+    units = np.eye(9, dtype=np.int64)
+    center = np.zeros(9, dtype=np.int64)
+    identity = np.eye(3, dtype=np.int64).ravel()
+    # The only copy of E11 is the final entry, beyond the old 12-row prefix.
+    first = np.vstack((units[1:], 2*units[1:], units[0]))
+    second = units[:1]
+    budget, target = two_list_target(first, second, center, units, 3, 3, p)
+    assert budget == 2 and np.array_equal(target, identity)
+    assert not contains_sum(first, second, target, p)
+
+    mixed = np.vstack((second, identity - units[0]))
+    assert [rank(v.reshape(3, 3), p) for v in mixed] == [1, 2]
+    assert not contains_sum(first[:12], mixed, target, p)
+    assert np.array_equal((first[-1] + mixed[-1]) % p, target)
+    budget, target = two_list_target(first, mixed, center, units, 3, 3, p)
+    assert budget == 3 and target is None, 'mixed-rank outlier must block the certificate'
+    print(f'Mixed-rank second list [1, 2] raised the budget to {budget} and blocked the reachable identity.')
+
+
+def check_center_first():
+    p = 5
+    raw = np.array([v for v in product(range(p), repeat=4)
+                    if (v[0]*v[3] - v[1]*v[2]) % p == 0], dtype=np.int64)
+    U = random_invertible(np.random.default_rng(31), 4, p)
+    offset = np.array([1, 2, 3, 4], dtype=np.int64)
+    sample = (raw @ U.T + offset) % p
+    assert np.array_equal(sample[0], offset)
+    result = recover_layout(sample, p, 2, 2, 1)
+    assert result is not None, 'center-first rank ball must yield a layout'
+    center, T, eval_rank, path, checks = result
+    assert np.array_equal(center, offset) and eval_rank == 14
+    assert path == [1] and checks == 0
+    recovered = (sample - center) @ inv(T, p).T % p
+    ranks = [rank(v.reshape(2, 2), p) for v in recovered]
+    assert ranks == [0] + [1]*144
+    print(f'Center-first 2x2 ball over F_{p} had {len(ranks)} samples and evaluation rank {eval_rank} '
+          f'({ranks.count(0)} rank zero and {ranks.count(1)} rank one).')
+
+
+def check_rank_three_descent():
+    p, n = 7, 4
+    d = n*n
+    rng = np.random.default_rng(31)
+    U = random_invertible(rng, d, p)
+    # Learn the quadrics on this layout, then give the descent only a rank-three start.
+    training = np.array([random_rank(rng, n, n, 1, p) for _ in range(2*comb(d+2, 2))])
+    learned = learn(training @ U.T % p, p, n, n, 1)
+    assert learned is not None
+    center, forms, _ = learned
+    assert not np.any(center)
+    Q = sym_forms(forms, d, p)
+    actions = split_lie(stabilizer(forms, p, n, n), p, n, n)
+    start = np.diag([1, 1, 1, 0]).ravel()
+    point, path, checks = rank_one(Q, U @ start % p, p, actions)
+    actual_rank = rank((inv(U, p) @ point % p).reshape(n, n), p)
+    assert actual_rank == 1, f'descent returned original-coordinate rank {actual_rank}'
+    assert path == [3, 2, 1], f'expected rank descent [3, 2, 1], got {path}'
+    print(f'4x4 rank descent over F_{p} followed {path} in {checks} projective trials and returned rank {actual_rank}.')
 
 
 def main():
@@ -265,7 +361,10 @@ def main():
     for c in cases:
         x,y,z=hidden_fixture(rng,*c);count+=x;tests+=y;search+=z
     print(f'{len(cases)} recovered hidden layouts; {count} training vectors; {tests} independent exact rank checks; {search} projective rank-reduction candidates.')
-    print('All affine centers exact; insufficient-sample and outlier-cap controls checked.')
+    print('All affine centers were exact and all one-point training samples were rejected.')
+    check_mixed_outlier()
+    check_center_first()
+    check_rank_three_descent()
     print('All checks passed.')
 
 if __name__=='__main__':main()
