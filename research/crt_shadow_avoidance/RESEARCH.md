@@ -138,7 +138,7 @@ Over the rationals, a basis of t rows has union of supports of size at most t L 
 
     M/(L B1^2 t0) = Q^(2s-k)/(L t0 C0^(2s)).                  (5)
 
-For t0 polynomial in b (as in the actual reconstruction algorithm), the logarithm of (5) is b-o(b): s log Q=b-o(b), k log Q=b+O(log b), and s log C0=o(b). Every coordinate order has such a balanced cut. Hence **every** ordering forces an unfolding rank >=2^{b-o(b)} over Q-rationals, and at least one coefficient prime in an exact polynomial-length reconstruction system does so as well. In particular the exact train algorithm cannot use cap 2^{O(b/m)} on this family. This is a lower bound on one representation width, not on all algorithms, not on approximate numerical tensor methods, and not on the original (non-expanded) plane sumset.
+For t0 polynomial in b (as in the actual reconstruction algorithm), the logarithm of (5) is b-o(b): s log Q=b-o(b), k log Q=b+O(log b), and s log C0=o(b). Every coordinate order has such a balanced cut. Hence **every** ordering forces an unfolding rank >=2^{b-o(b)} over the rationals, and at least one coefficient prime in an exact polynomial-length reconstruction system does so as well. In particular the exact train algorithm cannot use cap 2^{O(b/m)} on this family. This is a lower bound on one representation width, not on all algorithms, not on approximate numerical tensor methods, and not on the original (non-expanded) plane sumset.
 
 ### 4.3 The same family has a polynomial-size common-field shadow certificate
 
