@@ -86,6 +86,12 @@ def recover_complete(S,p):
     assert covered==S
     return facets,attempts
 
+def reconstructs_point(contributions, point, p):
+    total = (0,) * len(point)
+    for vector in contributions.values():
+        total = add(total, vector, p)
+    return total == point
+
 def layers(facets,p,d):
     # Affine center may not be unique. Any common point works.
     C=set.intersection(*map(set,facets.values()));assert C
@@ -121,6 +127,7 @@ def layers(facets,p,d):
             for i in ids:
                 B=records[i][1];v=tuple(coeff[k:k+len(B)]@B%p);k+=len(B)
                 if any(v):out[i]=v
+            assert reconstructs_point(out, x0, p), "Layer contributions do not reconstruct the point"
             answers.append(out)
         assert answers and all(a==answers[0] for a in answers);n+=1
     return records,n,len(I)
@@ -158,6 +165,11 @@ def check_complete():
         total+=len(recovered);pts+=n
         print(f'q={p} blocks={len(dims)} rank={d} points={len(S)} facets={len(F)} layers={len(R)} intersections={I} extension attempts={attempts}')
     print(f'{total} exact facet recoveries; {pts} point decompositions consistent across every incident facet.')
+    contributions = {0: (1, 0), 1: (0, 2)}
+    assert reconstructs_point(contributions, (1, 2), 5)
+    zeroed = dict.fromkeys(contributions, (0, 0))
+    assert not reconstructs_point(zeroed, (1, 2), 5)
+    print('Zero layer contributions rejected for the nonzero centered point (1, 2).')
     # Sharp field-size failures: affine q=t+1; linear q=t.
     for p in (2,3,5,7):
         affine=[tuple((a-j)%p for j in range(p)) for a in range(p)]
@@ -212,6 +224,30 @@ def sample_complete(X,x,B,p,D):
         if inside(v,B,p):L.append(tuple(np.asarray(v)[J]@C%p))
     E=list(simplex(len(B),D));return bool(L) and len(basis(evalmat(L,E,p),p,len(E)))==len(E)
 
+def check_tangent_thresholds(samples, p, degree, center, groups, facets):
+    ambient = len(center)
+    comparisons = 0
+    for delta in range(1, degree + 1):
+        exponents, equations = ideal(sorted(samples), p, delta)
+        for facet in facets:
+            # Every original coordinate of an active block is one at this anchor.
+            offset = np.vstack([groups[i] for i in facet]).sum(axis=0) % p
+            anchor = add(center, tuple(offset), p)
+            visible = set(facet)
+            for j in range(len(groups)):
+                if j in facet:
+                    continue
+                thresholds = (len(subset) + 1
+                              for k in range(len(facet) + 1)
+                              for subset in combinations(facet, k)
+                              if not any(set(subset) | {j} <= set(f) for f in facets))
+                if min(thresholds) > delta:
+                    visible.add(j)
+            expected = basis(np.vstack([groups[i] for i in sorted(visible)]), p, ambient)
+            assert key(tangent(anchor, exponents, equations, p)) == key(expected)
+            comparisons += 1
+    return comparisons
+
 def check_samples():
     print('\nTHIN SAMPLE TANGENT RECOVERY')
     total=points=thresholds=0
@@ -228,24 +264,42 @@ def check_samples():
         truth={flat_key(c,V,p) for V in B};assert {flat_key(x,V,p) for x,V in R}==truth
         assert all(sample_complete(X,x,V,p,D) for x,V in R)
         if proj=='none':
-            for delta in range(1,D+1):
-                Ex,Ix=ideal(sorted(X),p,delta)
-                for f in F:
-                    x=add(c,tuple(np.vstack([G[i] for i in f]).sum(axis=0)%p),p)
-                    # Full-support anchor: every coordinate in each active block is one.
-                    visible=set(f)
-                    for j in range(len(dims)):
-                        if j in f:continue
-                        sizes=[len(J)+1 for k in range(len(f)+1) for J in combinations(f,k) if not any(set(J)|{j}<=set(g) for g in F)]
-                        if min(sizes)>delta:visible.add(j)
-                    V=basis(np.vstack([G[i] for i in sorted(visible)]),p,d)
-                    assert key(tangent(x,Ex,Ix,p))==key(V);thresholds+=1
+            thresholds += check_tangent_thresholds(X, p, D, c, G, F)
         total+=len(R);points+=len(X)
         print(f'q={p} ambient={d} facets={len(F)} D={D} monomials={len(E)} samples={len(X)} sum facet sizes={sum(p**len(V) for V in B)}')
     # A missing component cannot be inferred from samples from other components.
     X=[(x,0) for x in range(5)];R,_,_=recover_sample(X,5,2)
     assert len(R)==1 and len(R[0][1])==1
     print(f'{total} exact facet recoveries from {points} samples; {thresholds} exact tangent-threshold comparisons; one absent-component negative control.')
+
+    p = 5
+    exponents, equations = ideal([(1,)], p, 0)
+    assert key(tangent((1,), exponents, equations, p)) == ((1,),)
+    print('The full ambient line is recovered at degree 0.')
+
+    axes = np.eye(3, dtype=np.int64)
+    groups = [axes[[i]] for i in range(3)]
+    facets = list(combinations(range(3), 2))
+    origin = (0, 0, 0)
+    planes = [axes[list(facet)] for facet in facets]
+    samples = set.union(*(sample_grid(origin, plane, p, 3) for plane in planes))
+    assert all(sample_complete(samples, origin, plane, p, 3) for plane in planes)
+    comparisons = check_tangent_thresholds(samples, p, 3, origin, groups, facets)
+    anchor = (1, 1, 0)
+    for degree, expected in [(2, axes), (3, planes[0])]:
+        exponents, equations = ideal(sorted(samples), p, degree)
+        assert key(tangent(anchor, exponents, equations, p)) == key(expected)
+    print(f'{comparisons} tangent comparisons on three coordinate planes. At (1, 1, 0) degree 2 gives the ambient space and degree 3 gives z=0.')
+
+    offsets = (1, 3)
+    samples = [(x, y) for y in offsets for x in range(3)]
+    lines, _, _ = recover_sample(samples, p, 2)
+    expected_lines = {frozenset((x, y) for x in range(p)) for y in offsets}
+    actual_lines = {frozenset(add(point, v, p) for v in vs(direction, p))
+                    for point, direction in lines}
+    assert len(lines) == 2 and actual_lines == expected_lines
+    assert all(sample_complete(samples, point, direction, p, 2) for point, direction in lines)
+    print(f'Both parallel lines y=1 and y=3 recovered from {len(samples)} samples over F_5.')
 
 def check_general_arrangements():
     print('\nBOUNDED-REDUNDANCY MAXIMAL-RANK ARRANGEMENTS')
@@ -370,7 +424,17 @@ def check_jets():
     p=7;d=6
     assert certify_jets([jet([1,1],1,d,p),jet(pmul([1,1],[2,1],p),2,d,p)],p) is None
     V=jet([1,1,1],2,d,p);V[0,3]=(V[0,3]+1)%p;assert certify_jets([V],p) is None
-    print(f'{total} exact subset-rank comparisons; {frames} hidden-frame recoveries; 2 negative certificates rejected.')
+    # X and XY dehomogenize to 1 and y. Their only common factor is at infinity.
+    infinity = jet([1], 1, d, p)
+    infinity_and_zero = jet([0, 1], 2, d, p)
+    assert certify_jets([infinity], p) == [([1], 1)]
+    assert certify_jets([infinity_and_zero], p) == [([0, 1], 1)]
+    pair = [infinity, infinity_and_zero]
+    combined_rank = len(basis(np.vstack(pair), p, d))
+    assert combined_rank == 2 and sum(map(len, pair)) == 3
+    assert certify_jets(pair, p) is None
+    print(f'X and XY rejected for a shared factor at infinity. Combined rank {combined_rank}, sum of ranks 3.')
+    print(f'{total} exact subset-rank comparisons, {frames} hidden-frame recoveries, 3 negative certificates rejected.')
 
 if __name__=='__main__':
     check_complete();check_samples();check_general_arrangements();check_jets();print('\nAll checks passed.')
