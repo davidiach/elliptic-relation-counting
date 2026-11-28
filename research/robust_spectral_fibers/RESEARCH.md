@@ -249,11 +249,12 @@ only an existence proof separating the numerical exclusion tests.
 ## 4. All-target conditional spectral mixing
 
 We can turn the angular theorem into a stronger quantitative
-statement about the actual remaining directions. Continue with K
-containing the true affine slope lambda and the kernel of a good
-main fiber as in Section 2.1. Pick any complement basis of lambda in
-K, and use its scores on a uniform independent short tuple as a
-vector S in F_r^d (d=dim(K)-1). Write G for the scalar group value,
+statement about the actual remaining directions. Let C_F be the matrix
+of all within-fiber contrasts of a good main fiber F. As in Section 2.1,
+require span(lambda) to be contained in K and K to be contained in
+ker(C_F). Thus every score in K is constant on F. Pick any complement
+basis of lambda in K, and use its scores on a uniform independent short
+tuple as a vector S in F_r^d (d=dim(K)-1). Write G for the scalar group value,
 and mu for the joint law of (G,S). If d=0 there is no nonaffine
 residual direction, and the following statement is vacuous. The
 basis and scalar group coordinates are for the proof, not an oracle
@@ -387,8 +388,14 @@ circular-variance cuts, the strengthened tolerance and proof constants,
 wide-lift separation, h-wise modular conditioning and moments, and
 finite Fourier mixing / random-translation failure bounds. Certified
 rational trigonometric intervals are used for small-field Fourier
-checks, not floating-point acceptance. A full transcript records the
-actual counts. Synthetic modular arrays need not be full arithmetic
+checks, not floating-point acceptance. The verifier rejects optimized
+Python, checks all 1,010 distinct projective classes, and compares the
+paired moments through degree 256 with direct integer powers. The
+perturbation fixture checks the exact changes from adding a small atom
+to the uniform law. An additional three-copy example over F_11 has two
+positive failure counts that can be enumerated by hand. The transcript
+records the bad-fiber and constant-score counts separately.
+Synthetic modular arrays need not be full arithmetic
 fibers; the high-degree modular-conditioning controls deliberately
 illustrate that exact marginal uniformity alone is not full modular
 rank. None implements the asymptotic contraction oracle or deployed

@@ -5,6 +5,9 @@ from collections import Counter
 from math import factorial, isqrt
 from random import Random
 
+if not __debug__:
+    raise SystemExit("The spectral-fiber verifier requires assertions. Run without Python optimization.")
+
 
 def variance_num(xs):
     n=len(xs)
@@ -138,6 +141,7 @@ def separation_test():
         ref=next(t for t in range(1,4) if all((t+s*j)%r for j in range(3)))
         assert len({(ref+s*j)%r for j in range(3)})==3
     min_modal=m;minwidth=10**9
+    visited = set()
     for a,c in [(1,c) for c in range(r)]+[(0,1)]:
         nonconstant=sum((a*s+c)%r!=0 for s in slopes)
         # Three distinct residues in every nonconstant block; a retained
@@ -146,6 +150,12 @@ def separation_test():
         width=2*(nonconstant-h//4)
         assert E>F(h,16) and width>r
         min_modal=min(min_modal,E);minwidth=min(minwidth,width)
+        # c/a identifies a finite class, and (0,c) represents infinity.
+        assert a % r or c % r
+        slope = c * pow(a, -1, r) % r if a % r else None
+        assert slope not in visited, "Repeated projective class"
+        visited.add(slope)
+    assert visited == set(range(r)) | {None}, "Incomplete projective coverage"
     v=m*minvar([0,1,2],r)
     assert 0<v<F(h,60000)
     # Exact high-degree minorant on a wide-lift low-variance independent law.
@@ -160,7 +170,9 @@ def separation_test():
     # the high-order identity is separately tested on exact OA controls.
     d=diffs(hist);lo,hi=p_expect_bounds(d,r,4)
     assert lo>0
-    print(f'Wide-lift separation: r={r}, m={m}, h={h}, {r+1} projective slopes; modal deficit >= {min_modal}, trimmed-width lower bound {minwidth} > {r}, variance {v} < {F(h,60000)}. Certified positive degree-four independent minorant.')
+    print(f'Wide-lift separation checked {len(visited)} distinct projective classes at r={r}, m={m}, h={h}. '
+          f'Modal deficit >= {min_modal}, trimmed-width lower bound {minwidth} > {r}, variance {v} < {F(h,60000)}. '
+          'Certified positive degree-four independent minorant.')
 
 
 def high_moment_controls():
@@ -177,15 +189,24 @@ def high_moment_controls():
     assert restricted==Counter({-x:c for x,c in restricted.items()})
     ind=diffs(conv1(half,half));cond=diffs(conv1(restricted,restricted))
     I=even_moments(ind,h);C=even_moments(cond,h)
-    for a,b in zip(I,C):assert a*C[0]==b*I[0]
+    assert len(I) == len(C) == h//2 + 1
+    assert I[0] == 3**(4*n) and C[0] == 3**(4*(n-1))
+    # Direct exponentiation is independent of the iterative powers in even_moments.
+    for j, (a, b) in enumerate(zip(I, C)):
+        expected = moment(ind, 2*j)
+        assert expected > 0 and a == expected * I[0], "Incorrect independent even moment"
+        assert b == expected * C[0], "Incorrect conditioned even moment"
     assert all(x%r==0 for x in cond)
     v=2*n*minvar([-1%r,0,1],r)
     assert v>F(h,60000)
-    print(f'Exact two-constraint OA: m={2*n}, h={h}, {len(I)} paired even-moment identities through degree {h}; V={v} above the exclusion threshold. Abstract conditional array, not a full curve fiber.')
+    print(f'The two-constraint OA at m={2*n}, h={h} has {len(I)} positive paired even moments '
+          f'checked by direct powers through degree {h}. V={v} exceeds the exclusion threshold.')
 
 
 def approx_marginal_tests():
     rng=Random(45022);checks=0;marg=0
+    changed_marginals = 0
+    changed_moments = Counter()
     for _ in range(32):
         m=5;r=17;h=4;delta=F(1,10**8)
         labels=[[rng.randrange(r) for _ in range(2)] for i in range(m)]
@@ -195,23 +216,40 @@ def approx_marginal_tests():
         # uniform component weight den-len(words), plus atom len(words)
         weights={x:base-1+len(words)*(x==target) for x in words}
         assert sum(weights.values())==den
+        atom_mass = F(len(words), den)
         for l in range(h+1):
             for J in combinations(range(m),l):
                 hits=Counter()
                 for x,c in weights.items():hits[tuple(x[j] for j in J)]+=c
+                target_assignment = tuple(target[j] for j in J)
                 for a in product(range(2),repeat=l):
-                    assert abs(F(hits[a],den)*2**l-1)<=delta
+                    error = F(hits[a],den)*2**l-1
+                    expected = atom_mass * (2**l * (a == target_assignment) - 1)
+                    assert error == expected, "Incorrect marginal perturbation"
+                    assert abs(error) <= delta
+                    changed_marginals += (error != 0)
                     marg+=1
         a=Counter();b=Counter()
         for x in words:
             y=sum(labels[i][x[i]] for i in range(m));a[y]+=1;b[y]+=weights[x]
         v=sum(F((s[0]-s[1])**2,4*r*r) for s in labels)
         aa=diffs(a);bb=diffs(b)
+        target_score = sum(labels[i][bit] for i, bit in enumerate(target))
         for j in range(1,h//2+1):
             ma=moment(aa,2*j)/r**(2*j);mb=moment(bb,2*j)/r**(2*j)
-            assert abs(ma-mb)<=6*delta*m**(2*j-1)*v
+            # In a pair of mixture draws the two-atom term has zero difference.
+            cross = F(sum(c*(score-target_score)**(2*j) for score, c in a.items()),
+                      len(words)*r**(2*j))
+            expected = atom_mass * (2*(1-atom_mass)*cross - (2-atom_mass)*ma)
+            error = mb - ma
+            assert error == expected, "Incorrect paired moment perturbation"
+            assert abs(error) <= 6*delta*m**(2*j-1)*v
+            changed_moments[2*j] += (error != 0)
             checks+=1
-    print(f'Approximate pair-law perturbations: {marg} exact marginal tests; {checks} even-moment error bounds.')
+    assert changed_marginals and changed_moments[2] and changed_moments[4]
+    print(f'Of {marg} exact marginal tests, {changed_marginals} had nonzero deviations. '
+          f'Of {checks} even-moment error bounds, {changed_moments[2]} had nonzero deviations at degree 2 '
+          f'and {changed_moments[4]} at degree 4.')
 
 
 def conv2(a,b,r):
@@ -235,6 +273,55 @@ def char_hist(a,r,x,y):
 
 def corr(hist):
     r=len(hist);return [sum(hist[x]*hist[(x+j)%r] for x in range(r)) for j in range(r)]
+
+
+def translation_failures(main, marginal, good, translations, target, reference):
+    """Return disjoint multiplicities for bad fibers and constant-score good fibers."""
+    r = len(marginal)
+    bad = constant_score = 0
+    for (group, score), count in translations.items():
+        value = (target - group) % r
+        if not good[value]:
+            bad += count
+        elif main[value, (reference - score) % r] == marginal[value]:
+            constant_score += count
+    return bad, constant_score
+
+
+def check_translation_failure_counts():
+    r = 11
+    # At group 0 all eleven labels score zero. Group 1 has one label scoring
+    # zero. Each of the remaining nine groups has one label of each score.
+    main = Counter({(g, s): 1 for g in range(2, r) for s in range(r)})
+    main[0, 0] = r
+    main[1, 0] = 1
+    marginal = projection(main, r)
+    mass = sum(marginal)
+    good = [F(count, mass) >= F(1, 2*r) for count in marginal]
+    assert [g for g in range(r) if not good[g]] == [1]
+    translations = conv2(main, main, r)
+    total = sum(translations.values())
+    assert total == 111**2
+    bad, constant_score = translation_failures(main, marginal, good, translations, 0, 0)
+
+    # A bad completion needs group sum 10. Nine ordered group pairs have
+    # 11 choices on both sides, and the two involving group 1 have 11 each.
+    assert bad == 9*r*r + 2*r, "Incorrect bad-fiber failure count"
+    # A good constant completion needs group and score sums both zero. The
+    # (0,0) group pair gives 121 choices. Eight pairs of uniform groups give
+    # 11 each, and (1,10) and (10,1) give one choice each.
+    assert constant_score == r*r + 8*r + 2, "Incorrect constant-score failure count"
+
+    chi = F(r * sum(count**2 for count in marginal), mass**2) - 1
+    # For nontrivial score characters all nine uniform rows cancel.
+    rho = F(r + 1, mass)
+    eta = (1+chi)/(1-chi) * rho  # three copies
+    bad_bound = (1+chi) * F(1, r)
+    score_bound = 2*(1+chi) * (F(1, r) + eta)
+    assert F(bad, total) <= bad_bound and F(constant_score, total) <= score_bound
+    assert F(bad + constant_score, total) <= bad_bound + score_bound < 1
+    print(f'Of {total} ordered translations, {bad} hit a bad fiber and {constant_score} force '
+          'the reference score on a good fiber.')
 
 
 def mixing_tests():
@@ -294,11 +381,8 @@ def mixing_tests():
                     targets+=1
                     # Any actual reference score is a valid comparison value.
                     for ref in range(r):
-                        fail=0
-                        for (g,s),c in T.items():
-                            v=(t-g)%r
-                            if not good[v] or A[v,(ref-s)%r]==p[v]:fail+=c
-                        assert F(fail,sum(T.values()))<=bound
+                        bad, constant_score = translation_failures(A, p, good, T, t, ref)
+                        assert F(bad + constant_score, sum(T.values())) <= bound
                         failchecks+=1
                     if F(1,r)+eta<F(1,2):strong+=1
             # Heterogeneous/pinned copy bound: remove one slot from each of
@@ -333,4 +417,5 @@ if __name__=='__main__':
     separation_test()
     high_moment_controls()
     approx_marginal_tests()
+    check_translation_failure_counts()
     mixing_tests()
