@@ -1,0 +1,36 @@
+COMPLETE ARBITRARY SUPPORT COMPLEXES
+q=5 blocks=4 rank=4 points=49 facets=3 layers=4 intersections=4 extension attempts=97
+q=5 blocks=4 rank=5 points=245 facets=3 layers=4 intersections=5 extension attempts=468
+q=5 blocks=9 rank=8 points=181 facets=9 layers=9 intersections=18 extension attempts=1422
+q=13 blocks=13 rank=8 points=2029 facets=13 layers=13 intersections=26 extension attempts=24206
+q=7 blocks=5 rank=5 points=391 facets=3 layers=4 intersections=4 extension attempts=780
+q=5 blocks=5 rank=5 points=149 facets=2 layers=2 intersections=2 extension attempts=153
+33 exact facet recoveries; 3044 point decompositions consistent across every incident facet.
+Zero layer contributions rejected for the nonzero centered point (1, 2).
+8 sharp small-field obstruction families checked.
+
+THIN SAMPLE TANGENT RECOVERY
+q=17 ambient=6 facets=6 D=3 monomials=84 samples=37 sum facet sizes=1734
+q=101 ambient=6 facets=3 D=4 monomials=210 samples=94 sum facet sizes=105090803
+q=101 ambient=8 facets=16 D=3 monomials=165 samples=73 sum facet sizes=163216
+q=13 ambient=8 facets=13 D=3 monomials=165 samples=40 sum facet sizes=169
+38 exact facet recoveries from 244 samples; 78 exact tangent-threshold comparisons; one absent-component negative control.
+The full ambient line is recovered at degree 0.
+9 tangent comparisons on three coordinate planes. At (1, 1, 0) degree 2 gives the ambient space and degree 3 gives z=0.
+Both parallel lines y=1 and y=3 recovered from 6 samples over F_5.
+
+BOUNDED-REDUNDANCY MAXIMAL-RANK ARRANGEMENTS
+q=101 ambient=5 total rank=11 facets=7 D=4 samples=69 random sample=False
+q=101 ambient=5 total rank=14 facets=7 D=4 samples=420 random sample=True
+q=101 ambient=6 total rank=11 facets=6 D=4 samples=85 random sample=False
+317 exact subset rank checks; 20 generic maximal-rank facets recovered from 574 samples.
+
+HOMOGENEOUS CRT JET CERTIFICATES
+q=2 ambient=6 ranks=(2, 2, 3) verified subsets=7
+q=7 ambient=6 ranks=(2, 2, 2, 1) verified subsets=15
+q=23 ambient=6 ranks=(1, 1, 1, 1, 1, 1, 1, 1, 2, 2) verified subsets=1023
+q=31 ambient=5 ranks=(1, 1, 1, 1, 1, 1, 1, 2) verified subsets=255
+X and XY rejected for a shared factor at infinity. Combined rank 2, sum of ranks 3.
+1300 exact subset-rank comparisons, 2 hidden-frame recoveries, 3 negative certificates rejected.
+
+All checks passed.
